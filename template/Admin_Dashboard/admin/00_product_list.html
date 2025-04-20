@@ -1,0 +1,1213 @@
+<div class="page-content">
+  <!-- Start Container Fluid -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="card">
+          <div
+            class="card-header d-flex justify-content-between align-items-center gap-1"
+          >
+            <h4 class="card-title flex-grow-1">Danh Sách Sản Phẩm Nông Sản</h4>
+
+            <a href="product-add.html" class="btn btn-sm btn-primary">
+              <i class="bx bx-plus me-1"></i>Thêm Sản Phẩm
+            </a>
+
+            <div class="dropdown">
+              <a
+                href="#"
+                class="dropdown-toggle btn btn-sm btn-outline-light"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Tháng Này
+              </a>
+              <div class="dropdown-menu dropdown-menu-end">
+                <!-- item-->
+                <a href="#!" class="dropdown-item">Tải xuống</a>
+                <!-- item-->
+                <a href="#!" class="dropdown-item">Xuất Excel</a>
+                <!-- item-->
+                <a href="#!" class="dropdown-item">Nhập Excel</a>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <!-- Thêm bộ tìm kiếm và lọc -->
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm...">
+                  <button class="btn btn-primary" type="button">
+                    <i class="bx bx-search"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="col-md-6 text-end">
+                <button type="button" class="btn btn-outline-secondary me-1" data-bs-toggle="modal" data-bs-target="#filterModal">
+                  <i class="bx bx-filter-alt me-1"></i> Lọc
+                </button>
+                <button type="button" class="btn btn-outline-danger me-1">
+                  <i class="bx bx-reset me-1"></i> Reset
+                </button>
+              </div>
+            </div>
+            
+            <!-- Hiển thị bộ lọc đang áp dụng -->
+            <div class="mb-3 applied-filters" id="appliedFilters">
+              <div class="d-inline-block me-2 mb-1">
+                <span class="badge bg-light text-dark p-2">
+                  Danh mục: Trái Cây
+                  <a href="#" class="text-danger ms-1"><i class="bx bx-x"></i></a>
+                </span>
+              </div>
+              <div class="d-inline-block me-2 mb-1">
+                <span class="badge bg-light text-dark p-2">
+                  Giá: 50.000đ - 200.000đ
+                  <a href="#" class="text-danger ms-1"><i class="bx bx-x"></i></a>
+                </span>
+              </div>
+              <div class="d-inline-block me-2 mb-1">
+                <span class="badge bg-light text-dark p-2">
+                  Xuất xứ: Đà Lạt
+                  <a href="#" class="text-danger ms-1"><i class="bx bx-x"></i></a>
+                </span>
+              </div>
+            </div>
+            
+            <div class="table-responsive">
+              <table class="table align-middle mb-0 table-hover table-centered">
+                <thead class="bg-light-subtle">
+                  <tr>
+                    <th style="width: 20px">
+                      <div class="form-check ms-1">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="customCheck1"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="customCheck1"
+                        ></label>
+                      </div>
+                    </th>
+                    <th>Tên Sản Phẩm & Thông Tin</th>
+                    <th>Giá</th>
+                    <th>Tồn Kho</th>
+                    <th>Danh Mục</th>
+                    <th>Đánh Giá</th>
+                    <th>Thao Tác</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div class="form-check ms-1">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="customCheck2"
+                        />
+                        <label class="form-check-label" for="customCheck2"
+                          >&nbsp;</label
+                        >
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center gap-2">
+                        <div
+                          class="rounded bg-light avatar-md d-flex align-items-center justify-content-center"
+                        >
+                          <img
+                            src="assets/images/product/p-1.png"
+                            alt=""
+                            class="avatar-md"
+                          />
+                        </div>
+                        <div>
+                          <a href="#!" class="text-dark fw-medium fs-15"
+                            >Xoài Cát Hòa Lộc</a
+                          >
+                          <p class="text-muted mb-0 mt-1 fs-13">
+                            <span>Xuất xứ: </span>Tiền Giang
+                            <br>
+                            <span>Đơn vị: </span>kg
+                          </p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>80.000đ</td>
+                    <td>
+                      <p class="mb-1 text-muted">
+                        <span class="text-dark fw-medium">486 kg</span> Còn lại
+                      </p>
+                      <p class="mb-0 text-muted">155 kg Đã bán</p>
+                    </td>
+                    <td>Trái Cây</td>
+                    <td>
+                      <span class="badge p-1 bg-light text-dark fs-12 me-1"
+                        ><i
+                          class="bx bxs-star align-text-top fs-14 text-warning me-1"
+                        ></i>
+                        4.5</span
+                      >
+                      55 Đánh giá
+                    </td>
+                    <td>
+                      <div class="d-flex gap-2">
+                        <a href="#!" class="btn btn-light btn-sm"
+                          ><iconify-icon
+                            icon="solar:eye-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                        <a href="#!" class="btn btn-soft-primary btn-sm"
+                          ><iconify-icon
+                            icon="solar:pen-2-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                        <a href="#!" class="btn btn-soft-danger btn-sm"
+                          ><iconify-icon
+                            icon="solar:trash-bin-minimalistic-2-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="form-check ms-1">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="customCheck3"
+                        />
+                        <label class="form-check-label" for="customCheck3"
+                          >&nbsp;</label
+                        >
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center gap-2">
+                        <div
+                          class="rounded bg-light avatar-md d-flex align-items-center justify-content-center"
+                        >
+                          <img
+                            src="assets/images/product/p-2.png"
+                            alt=""
+                            class="avatar-md"
+                          />
+                        </div>
+                        <div>
+                          <a href="#!" class="text-dark fw-medium fs-15"
+                            >Rau Muống Sạch</a
+                          >
+                          <p class="text-muted mb-0 mt-1 fs-13">
+                            <span>Xuất xứ: </span>Hà Nội
+                            <br>
+                            <span>Đơn vị: </span>kg
+                          </p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>15.000đ</td>
+                    <td>
+                      <p class="mb-1 text-muted">
+                        <span class="text-dark fw-medium">784 kg</span> Còn lại
+                      </p>
+                      <p class="mb-0 text-muted">674 kg Đã bán</p>
+                    </td>
+                    <td>Rau Củ</td>
+                    <td>
+                      <span class="badge p-1 bg-light text-dark fs-12 me-1"
+                        ><i
+                          class="bx bxs-star align-text-top fs-14 text-warning me-1"
+                        ></i>
+                        4.1</span
+                      >
+                      143 Đánh giá
+                    </td>
+                    <td>
+                      <div class="d-flex gap-2">
+                        <a href="#!" class="btn btn-light btn-sm"
+                          ><iconify-icon
+                            icon="solar:eye-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                        <a href="#!" class="btn btn-soft-primary btn-sm"
+                          ><iconify-icon
+                            icon="solar:pen-2-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                        <a href="#!" class="btn btn-soft-danger btn-sm"
+                          ><iconify-icon
+                            icon="solar:trash-bin-minimalistic-2-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="form-check ms-1">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="customCheck4"
+                        />
+                        <label class="form-check-label" for="customCheck4"
+                          >&nbsp;</label
+                        >
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center gap-2">
+                        <div
+                          class="rounded bg-light avatar-md d-flex align-items-center justify-content-center"
+                        >
+                          <img
+                            src="assets/images/product/p-3.png"
+                            alt=""
+                            class="avatar-md"
+                          />
+                        </div>
+                        <div>
+                          <a href="#!" class="text-dark fw-medium fs-15"
+                            >Sầu Riêng Ri 6</a
+                          >
+                          <p class="text-muted mb-0 mt-1 fs-13">
+                            <span>Xuất xứ: </span>Bình Phước
+                            <br>
+                            <span>Đơn vị: </span>kg
+                          </p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>219.000đ</td>
+                    <td>
+                      <p class="mb-1 text-muted">
+                        <span class="text-dark fw-medium">769 kg</span> Còn lại
+                      </p>
+                      <p class="mb-0 text-muted">180 kg Đã bán</p>
+                    </td>
+                    <td>Trái Cây</td>
+                    <td>
+                      <span class="badge p-1 bg-light text-dark fs-12 me-1"
+                        ><i
+                          class="bx bxs-star align-text-top fs-14 text-warning me-1"
+                        ></i>
+                        4.4</span
+                      >
+                      174 Đánh giá
+                    </td>
+                    <td>
+                      <div class="d-flex gap-2">
+                        <a href="#!" class="btn btn-light btn-sm"
+                          ><iconify-icon
+                            icon="solar:eye-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                        <a href="#!" class="btn btn-soft-primary btn-sm"
+                          ><iconify-icon
+                            icon="solar:pen-2-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                        <a href="#!" class="btn btn-soft-danger btn-sm"
+                          ><iconify-icon
+                            icon="solar:trash-bin-minimalistic-2-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="form-check ms-1">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="customCheck2"
+                        />
+                        <label class="form-check-label" for="customCheck2"
+                          >&nbsp;</label
+                        >
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center gap-2">
+                        <div
+                          class="rounded bg-light avatar-md d-flex align-items-center justify-content-center"
+                        >
+                          <img
+                            src="assets/images/product/p-4.png"
+                            alt=""
+                            class="avatar-md"
+                          />
+                        </div>
+                        <div>
+                          <a href="#!" class="text-dark fw-medium fs-15"
+                            >Cà Chua Bi</a
+                          >
+                          <p class="text-muted mb-0 mt-1 fs-13">
+                            <span>Xuất xứ: </span>Lâm Đồng
+                            <br>
+                            <span>Đơn vị: </span>kg
+                            <br>
+                            <span>Ngày thu hoạch: </span>15/03/2024
+                          </p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>76.000đ</td>
+                    <td>
+                      <p class="mb-1 text-muted">
+                        <span class="text-dark fw-medium">571 kg</span> Còn lại
+                      </p>
+                      <p class="mb-0 text-muted">87 kg Đã bán</p>
+                    </td>
+                    <td>Rau Củ</td>
+                    <td>
+                      <span class="badge p-1 bg-light text-dark fs-12 me-1"
+                        ><i
+                          class="bx bxs-star align-text-top fs-14 text-warning me-1"
+                        ></i>
+                        4.2</span
+                      >
+                      23 Đánh giá
+                    </td>
+                    <td>
+                      <div class="d-flex gap-2">
+                        <a href="#!" class="btn btn-light btn-sm"
+                          ><iconify-icon
+                            icon="solar:eye-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                        <a href="#!" class="btn btn-soft-primary btn-sm"
+                          ><iconify-icon
+                            icon="solar:pen-2-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                        <a href="#!" class="btn btn-soft-danger btn-sm"
+                          ><iconify-icon
+                            icon="solar:trash-bin-minimalistic-2-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="form-check ms-1">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="customCheck2"
+                        />
+                        <label class="form-check-label" for="customCheck2"
+                          >&nbsp;</label
+                        >
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center gap-2">
+                        <div
+                          class="rounded bg-light avatar-md d-flex align-items-center justify-content-center"
+                        >
+                          <img
+                            src="assets/images/product/p-5.png"
+                            alt=""
+                            class="avatar-md"
+                          />
+                        </div>
+                        <div>
+                          <a href="#!" class="text-dark fw-medium fs-15"
+                            >Bưởi Da Xanh</a
+                          >
+                          <p class="text-muted mb-0 mt-1 fs-13">
+                            <span>Xuất xứ: </span>Bến Tre
+                            <br>
+                            <span>Đơn vị: </span>kg
+                            <br>
+                            <span>Ngày thu hoạch: </span>20/03/2024
+                          </p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>110.000đ</td>
+                    <td>
+                      <p class="mb-1 text-muted">
+                        <span class="text-dark fw-medium">241 kg</span> Còn lại
+                      </p>
+                      <p class="mb-0 text-muted">342 kg Đã bán</p>
+                    </td>
+                    <td>Trái Cây</td>
+                    <td>
+                      <span class="badge p-1 bg-light text-dark fs-12 me-1"
+                        ><i
+                          class="bx bxs-star align-text-top fs-14 text-warning me-1"
+                        ></i>
+                        4.4</span
+                      >
+                      109 Review
+                    </td>
+                    <td>
+                      <div class="d-flex gap-2">
+                        <a href="#!" class="btn btn-light btn-sm"
+                          ><iconify-icon
+                            icon="solar:eye-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                        <a href="#!" class="btn btn-soft-primary btn-sm"
+                          ><iconify-icon
+                            icon="solar:pen-2-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                        <a href="#!" class="btn btn-soft-danger btn-sm"
+                          ><iconify-icon
+                            icon="solar:trash-bin-minimalistic-2-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="form-check ms-1">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="customCheck2"
+                        />
+                        <label class="form-check-label" for="customCheck2"
+                          >&nbsp;</label
+                        >
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center gap-2">
+                        <div
+                          class="rounded bg-light avatar-md d-flex align-items-center justify-content-center"
+                        >
+                          <img
+                            src="assets/images/product/p-6.png"
+                            alt=""
+                            class="avatar-md"
+                          />
+                        </div>
+                        <div>
+                          <a href="#!" class="text-dark fw-medium fs-15"
+                            >Dưa Hấu Không Hạt</a
+                          >
+                          <p class="text-muted mb-0 mt-1 fs-13">
+                            <span>Xuất xứ: </span>Long An
+                            <br>
+                            <span>Đơn vị: </span>kg
+                            <br>
+                            <span>Ngày thu hoạch: </span>18/03/2024
+                          </p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>23.000đ</td>
+                    <td>
+                      <p class="mb-1 text-muted">
+                        <span class="text-dark fw-medium">821 kg</span> Còn lại
+                      </p>
+                      <p class="mb-0 text-muted">231 kg Đã bán</p>
+                    </td>
+                    <td>Trái Cây</td>
+                    <td>
+                      <span class="badge p-1 bg-light text-dark fs-12 me-1"
+                        ><i
+                          class="bx bxs-star align-text-top fs-14 text-warning me-1"
+                        ></i>
+                        4.2</span
+                      >
+                      200 Review
+                    </td>
+                    <td>
+                      <div class="d-flex gap-2">
+                        <a href="#!" class="btn btn-light btn-sm"
+                          ><iconify-icon
+                            icon="solar:eye-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                        <a href="#!" class="btn btn-soft-primary btn-sm"
+                          ><iconify-icon
+                            icon="solar:pen-2-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                        <a href="#!" class="btn btn-soft-danger btn-sm"
+                          ><iconify-icon
+                            icon="solar:trash-bin-minimalistic-2-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="form-check ms-1">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="customCheck2"
+                        />
+                        <label class="form-check-label" for="customCheck2"
+                          >&nbsp;</label
+                        >
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center gap-2">
+                        <div
+                          class="rounded bg-light avatar-md d-flex align-items-center justify-content-center"
+                        >
+                          <img
+                            src="assets/images/product/p-7.png"
+                            alt=""
+                            class="avatar-md"
+                          />
+                        </div>
+                        <div>
+                          <a href="#!" class="text-dark fw-medium fs-15"
+                            >Khoai Lang Tím</a
+                          >
+                          <p class="text-muted mb-0 mt-1 fs-13">
+                            <span>Xuất xứ: </span>Phú Yên
+                            <br>
+                            <span>Đơn vị: </span>kg
+                            <br>
+                            <span>Ngày thu hoạch: </span>22/03/2024
+                          </p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>89.000đ</td>
+                    <td>
+                      <p class="mb-1 text-muted">
+                        <span class="text-dark fw-medium">321 kg</span> Còn lại
+                      </p>
+                      <p class="mb-0 text-muted">681 kg Đã bán</p>
+                    </td>
+                    <td>Rau Củ</td>
+                    <td>
+                      <span class="badge p-1 bg-light text-dark fs-12 me-1"
+                        ><i
+                          class="bx bxs-star align-text-top fs-14 text-warning me-1"
+                        ></i>
+                        4.5</span
+                      >
+                      321 Review
+                    </td>
+                    <td>
+                      <div class="d-flex gap-2">
+                        <a href="#!" class="btn btn-light btn-sm"
+                          ><iconify-icon
+                            icon="solar:eye-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                        <a href="#!" class="btn btn-soft-primary btn-sm"
+                          ><iconify-icon
+                            icon="solar:pen-2-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                        <a href="#!" class="btn btn-soft-danger btn-sm"
+                          ><iconify-icon
+                            icon="solar:trash-bin-minimalistic-2-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="form-check ms-1">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="customCheck2"
+                        />
+                        <label class="form-check-label" for="customCheck2"
+                          >&nbsp;</label
+                        >
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center gap-2">
+                        <div
+                          class="rounded bg-light avatar-md d-flex align-items-center justify-content-center"
+                        >
+                          <img
+                            src="assets/images/product/p-8.png"
+                            alt=""
+                            class="avatar-md"
+                          />
+                        </div>
+                        <div>
+                          <a href="#!" class="text-dark fw-medium fs-15"
+                            >Bắp Cải Tím</a
+                          >
+                          <p class="text-muted mb-0 mt-1 fs-13">
+                            <span>Xuất xứ: </span>Đà Lạt
+                            <br>
+                            <span>Đơn vị: </span>kg
+                            <br>
+                            <span>Ngày thu hoạch: </span>25/03/2024
+                          </p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>132.000đ</td>
+                    <td>
+                      <p class="mb-1 text-muted">
+                        <span class="text-dark fw-medium">190 kg</span> Còn lại
+                      </p>
+                      <p class="mb-0 text-muted">212 kg Đã bán</p>
+                    </td>
+                    <td>Rau Củ</td>
+                    <td>
+                      <span class="badge p-1 bg-light text-dark fs-12 me-1"
+                        ><i
+                          class="bx bxs-star align-text-top fs-14 text-warning me-1"
+                        ></i>
+                        4.1</span
+                      >
+                      190 Review
+                    </td>
+                    <td>
+                      <div class="d-flex gap-2">
+                        <a href="#!" class="btn btn-light btn-sm"
+                          ><iconify-icon
+                            icon="solar:eye-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                        <a href="#!" class="btn btn-soft-primary btn-sm"
+                          ><iconify-icon
+                            icon="solar:pen-2-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                        <a href="#!" class="btn btn-soft-danger btn-sm"
+                          ><iconify-icon
+                            icon="solar:trash-bin-minimalistic-2-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="form-check ms-1">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="customCheck2"
+                        />
+                        <label class="form-check-label" for="customCheck2"
+                          >&nbsp;</label
+                        >
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center gap-2">
+                        <div
+                          class="rounded bg-light avatar-md d-flex align-items-center justify-content-center"
+                        >
+                          <img
+                            src="assets/images/product/p-9.png"
+                            alt=""
+                            class="avatar-md"
+                          />
+                        </div>
+                        <div>
+                          <a href="#!" class="text-dark fw-medium fs-15"
+                            >Thanh Long Ruột Đỏ</a
+                          >
+                          <p class="text-muted mb-0 mt-1 fs-13">
+                            <span>Xuất xứ: </span>Bình Thuận
+                            <br>
+                            <span>Đơn vị: </span>kg
+                            <br>
+                            <span>Ngày thu hoạch: </span>28/03/2024
+                          </p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>77.000đ</td>
+                    <td>
+                      <p class="mb-1 text-muted">
+                        <span class="text-dark fw-medium">784 kg</span> Còn lại
+                      </p>
+                      <p class="mb-0 text-muted">443 kg Đã bán</p>
+                    </td>
+                    <td>Trái Cây</td>
+                    <td>
+                      <span class="badge p-1 bg-light text-dark fs-12 me-1"
+                        ><i
+                          class="bx bxs-star align-text-top fs-14 text-warning me-1"
+                        ></i>
+                        3.5</span
+                      >
+                      298 Review
+                    </td>
+                    <td>
+                      <div class="d-flex gap-2">
+                        <a href="#!" class="btn btn-light btn-sm"
+                          ><iconify-icon
+                            icon="solar:eye-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                        <a href="#!" class="btn btn-soft-primary btn-sm"
+                          ><iconify-icon
+                            icon="solar:pen-2-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                        <a href="#!" class="btn btn-soft-danger btn-sm"
+                          ><iconify-icon
+                            icon="solar:trash-bin-minimalistic-2-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="form-check ms-1">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="customCheck2"
+                        />
+                        <label class="form-check-label" for="customCheck2"
+                          >&nbsp;</label
+                        >
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center gap-2">
+                        <div
+                          class="rounded bg-light avatar-md d-flex align-items-center justify-content-center"
+                        >
+                          <img
+                            src="assets/images/product/p-10.png"
+                            alt=""
+                            class="avatar-md"
+                          />
+                        </div>
+                        <div>
+                          <a href="#!" class="text-dark fw-medium fs-15"
+                            >Cà Rốt Baby</a
+                          >
+                          <p class="text-muted mb-0 mt-1 fs-13">
+                            <span>Xuất xứ: </span>Đà Lạt
+                            <br>
+                            <span>Đơn vị: </span>kg
+                            <br>
+                            <span>Ngày thu hoạch: </span>30/03/2024
+                          </p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>110.000đ</td>
+                    <td>
+                      <p class="mb-1 text-muted">
+                        <span class="text-dark fw-medium">650 kg</span> Còn lại
+                      </p>
+                      <p class="mb-0 text-muted">365 kg Đã bán</p>
+                    </td>
+                    <td>Rau Củ</td>
+                    <td>
+                      <span class="badge p-1 bg-light text-dark fs-12 me-1"
+                        ><i
+                          class="bx bxs-star align-text-top fs-14 text-warning me-1"
+                        ></i>
+                        4.1</span
+                      >
+                      156 Review
+                    </td>
+                    <td>
+                      <div class="d-flex gap-2">
+                        <a href="#!" class="btn btn-light btn-sm"
+                          ><iconify-icon
+                            icon="solar:eye-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                        <a href="#!" class="btn btn-soft-primary btn-sm"
+                          ><iconify-icon
+                            icon="solar:pen-2-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                        <a href="#!" class="btn btn-soft-danger btn-sm"
+                          ><iconify-icon
+                            icon="solar:trash-bin-minimalistic-2-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="form-check ms-1">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="customCheck2"
+                        />
+                        <label class="form-check-label" for="customCheck2"
+                          >&nbsp;</label
+                        >
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center gap-2">
+                        <div
+                          class="rounded bg-light avatar-md d-flex align-items-center justify-content-center"
+                        >
+                          <img
+                            src="assets/images/product/p-11.png"
+                            alt=""
+                            class="avatar-md"
+                          />
+                        </div>
+                        <div>
+                          <a href="#!" class="text-dark fw-medium fs-15"
+                            >Chuối Laba</a
+                          >
+                          <p class="text-muted mb-0 mt-1 fs-13">
+                            <span>Xuất xứ: </span>Lâm Đồng
+                            <br>
+                            <span>Đơn vị: </span>kg
+                            <br>
+                            <span>Ngày thu hoạch: </span>02/04/2024
+                          </p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>77.000đ</td>
+                    <td>
+                      <p class="mb-1 text-muted">
+                        <span class="text-dark fw-medium">98 kg</span> Còn lại
+                      </p>
+                      <p class="mb-0 text-muted">241 kg Đã bán</p>
+                    </td>
+                    <td>Trái Cây</td>
+                    <td>
+                      <span class="badge p-1 bg-light text-dark fs-12 me-1"
+                        ><i
+                          class="bx bxs-star align-text-top fs-14 text-warning me-1"
+                        ></i>
+                        3.4</span
+                      >
+                      201 Review
+                    </td>
+                    <td>
+                      <div class="d-flex gap-2">
+                        <a href="#!" class="btn btn-light btn-sm"
+                          ><iconify-icon
+                            icon="solar:eye-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                        <a href="#!" class="btn btn-soft-primary btn-sm"
+                          ><iconify-icon
+                            icon="solar:pen-2-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                        <a href="#!" class="btn btn-soft-danger btn-sm"
+                          ><iconify-icon
+                            icon="solar:trash-bin-minimalistic-2-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="form-check ms-1">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="customCheck2"
+                        />
+                        <label class="form-check-label" for="customCheck2"
+                          >&nbsp;</label
+                        >
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center gap-2">
+                        <div
+                          class="rounded bg-light avatar-md d-flex align-items-center justify-content-center"
+                        >
+                          <img
+                            src="assets/images/product/p-12.png"
+                            alt=""
+                            class="avatar-md"
+                          />
+                        </div>
+                        <div>
+                          <a href="#!" class="text-dark fw-medium fs-15"
+                            >Khoai Tây Đà Lạt</a
+                          >
+                          <p class="text-muted mb-0 mt-1 fs-13">
+                            <span>Xuất xứ: </span>Đà Lạt
+                            <br>
+                            <span>Đơn vị: </span>kg
+                            <br>
+                            <span>Ngày thu hoạch: </span>05/04/2024
+                          </p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>222.000đ</td>
+                    <td>
+                      <p class="mb-1 text-muted">
+                        <span class="text-dark fw-medium">176 kg</span> Còn lại
+                      </p>
+                      <p class="mb-0 text-muted">658 kg Đã bán</p>
+                    </td>
+                    <td>Rau Củ</td>
+                    <td>
+                      <span class="badge p-1 bg-light text-dark fs-12 me-1"
+                        ><i
+                          class="bx bxs-star align-text-top fs-14 text-warning me-1"
+                        ></i>
+                        4.1</span
+                      >
+                      370 Review
+                    </td>
+                    <td>
+                      <div class="d-flex gap-2">
+                        <a href="#!" class="btn btn-light btn-sm"
+                          ><iconify-icon
+                            icon="solar:eye-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                        <a href="#!" class="btn btn-soft-primary btn-sm"
+                          ><iconify-icon
+                            icon="solar:pen-2-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                        <a href="#!" class="btn btn-soft-danger btn-sm"
+                          ><iconify-icon
+                            icon="solar:trash-bin-minimalistic-2-broken"
+                            class="align-middle fs-18"
+                          ></iconify-icon
+                        ></a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- end table-responsive -->
+          </div>
+          <div class="card-footer border-top">
+            <nav aria-label="Page navigation example">
+              <ul class="pagination justify-content-end mb-0">
+                <li class="page-item">
+                  <a class="page-link" href="javascript:void(0);">Trước</a>
+                </li>
+                <li class="page-item active">
+                  <a class="page-link" href="javascript:void(0);">1</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="javascript:void(0);">2</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="javascript:void(0);">3</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="javascript:void(0);">Sau</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Container Fluid -->
+
+  <!-- ========== Footer Start ========== -->
+  <footer class="footer">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12 text-center">
+          &copy; Hệ Thống Quản Lý Nông Sản VNFarm. All rights reserved.
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- ========== Footer End ========== -->
+</div>
+
+<!-- Modal Lọc -->
+<div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="filterModalLabel">Lọc Sản Phẩm</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label class="form-label">Danh Mục</label>
+            <select class="form-select">
+              <option value="">Tất cả</option>
+              <option value="fruit">Trái Cây</option>
+              <option value="vegetable">Rau Củ</option>
+              <option value="nuts">Các Loại Hạt</option>
+              <option value="specialty">Đặc Sản Vùng Miền</option>
+              <option value="processed">Nông Sản Chế Biến</option>
+            </select>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Xuất Xứ</label>
+            <select class="form-select">
+              <option value="">Tất cả</option>
+              <option value="dalat">Đà Lạt</option>
+              <option value="mekong">Đồng Bằng Sông Cửu Long</option>
+              <option value="north">Miền Bắc</option>
+              <option value="central">Miền Trung</option>
+            </select>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Giá (VNĐ)</label>
+            <div class="row">
+              <div class="col-6">
+                <input type="number" class="form-control" placeholder="Từ">
+              </div>
+              <div class="col-6">
+                <input type="number" class="form-control" placeholder="Đến">
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Đánh Giá</label>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="rating5" value="5">
+                <label class="form-check-label" for="rating5">
+                  <i class="bx bxs-star text-warning"></i>
+                  <i class="bx bxs-star text-warning"></i>
+                  <i class="bx bxs-star text-warning"></i>
+                  <i class="bx bxs-star text-warning"></i>
+                  <i class="bx bxs-star text-warning"></i>
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="rating4" value="4">
+                <label class="form-check-label" for="rating4">
+                  <i class="bx bxs-star text-warning"></i>
+                  <i class="bx bxs-star text-warning"></i>
+                  <i class="bx bxs-star text-warning"></i>
+                  <i class="bx bxs-star text-warning"></i>
+                  <i class="bx bxs-star text-muted"></i>
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="rating3" value="3">
+                <label class="form-check-label" for="rating3">
+                  <i class="bx bxs-star text-warning"></i>
+                  <i class="bx bxs-star text-warning"></i>
+                  <i class="bx bxs-star text-warning"></i>
+                  <i class="bx bxs-star text-muted"></i>
+                  <i class="bx bxs-star text-muted"></i>
+                </label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Tình Trạng Kho</label>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="inStock" checked>
+              <label class="form-check-label" for="inStock">
+                Còn hàng
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="lowStock">
+              <label class="form-check-label" for="lowStock">
+                Sắp hết hàng (< 50 kg)
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="outOfStock">
+              <label class="form-check-label" for="outOfStock">
+                Hết hàng
+              </label>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Sắp Xếp Theo</label>
+            <select class="form-select">
+              <option value="">Mặc định</option>
+              <option value="name_asc">Tên sản phẩm (A-Z)</option>
+              <option value="name_desc">Tên sản phẩm (Z-A)</option>
+              <option value="price_asc">Giá (Thấp đến cao)</option>
+              <option value="price_desc">Giá (Cao đến thấp)</option>
+              <option value="bestselling">Bán chạy nhất</option>
+              <option value="rating">Đánh giá cao nhất</option>
+              <option value="newest">Mới nhất</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" class="btn btn-primary">Áp Dụng</button>
+      </div>
+    </div>
+  </div>
+</div>

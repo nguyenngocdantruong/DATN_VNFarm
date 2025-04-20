@@ -1,0 +1,410 @@
+@model ReviewHistoryProductViewModel
+
+@{
+    Layout = "_LayoutAdmin";
+}
+
+<!-- Start Page Content -->
+<div class="page-content">
+    <!-- Start Container Fluid -->
+    <div class="container-xxl">
+        <div class="row">
+            <div class="col-lg-4 d-flex flex-column">
+                <!-- Thông tin sản phẩm (Mới thêm) -->
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <img src="assets/images/product/p-1.png" alt="Product Image" class="img-fluid rounded"
+                                    style="width: 80px; height: 80px; object-fit: cover;">
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h5 class="card-title mb-1">Xoài Cát Hòa Lộc</h5>
+                                <p class="text-muted mb-2">Mã sản phẩm: #SP001</p>
+                                <div class="d-flex align-items-center">
+                                    <span class="badge bg-success me-2">Còn hàng</span>
+                                    <span class="text-primary fw-medium">120.000đ/kg</span>
+                                </div>
+                                <div class="mt-2">
+                                    <span class="badge bg-info-subtle text-info me-1">Trái cây</span>
+                                    <span class="badge bg-info-subtle text-info">Đặc sản</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row text-center">
+                            <div class="col-4">
+                                <h6 class="mb-0">1.2k</h6>
+                                <small class="text-muted">Lượt xem</small>
+                            </div>
+                            <div class="col-4">
+                                <h6 class="mb-0">356</h6>
+                                <small class="text-muted">Đã bán</small>
+                            </div>
+                            <div class="col-4">
+                                <h6 class="mb-0">92%</h6>
+                                <small class="text-muted">Đánh giá tốt</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phần đánh giá trung bình -->
+                <div class="card mb-3">
+                    <div class="card-body text-center">
+                        <div class="avatar-lg mx-auto">
+                            <div class="avatar-title bg-light text-primary display-4 rounded-circle">
+                                <i class="bx bxs-star"></i>
+                            </div>
+                        </div>
+                        <h4 class="mt-3">4.8/5</h4>
+                        <p class="text-muted mb-0">Điểm Đánh Giá Trung Bình</p>
+                        <hr class="my-3">
+                        <div class="text-start">
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="flex-shrink-0">
+                                    <i class="bx bxs-star text-warning"></i>
+                                    <i class="bx bxs-star text-warning"></i>
+                                    <i class="bx bxs-star text-warning"></i>
+                                    <i class="bx bxs-star text-warning"></i>
+                                    <i class="bx bxs-star text-warning"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <div class="progress" style="height: 6px;">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 80%">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex-shrink-0 ms-2">
+                                    <span class="text-muted">156</span>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="flex-shrink-0">
+                                    <i class="bx bxs-star text-warning"></i>
+                                    <i class="bx bxs-star text-warning"></i>
+                                    <i class="bx bxs-star text-warning"></i>
+                                    <i class="bx bxs-star text-warning"></i>
+                                    <i class="bx bxs-star text-muted"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <div class="progress" style="height: 6px;">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 50%">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex-shrink-0 ms-2">
+                                    <span class="text-muted">52</span>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="flex-shrink-0">
+                                    <i class="bx bxs-star text-warning"></i>
+                                    <i class="bx bxs-star text-warning"></i>
+                                    <i class="bx bxs-star text-warning"></i>
+                                    <i class="bx bxs-star text-muted"></i>
+                                    <i class="bx bxs-star text-muted"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <div class="progress" style="height: 6px;">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 35%">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex-shrink-0 ms-2">
+                                    <span class="text-muted">32</span>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="flex-shrink-0">
+                                    <i class="bx bxs-star text-warning"></i>
+                                    <i class="bx bxs-star text-warning"></i>
+                                    <i class="bx bxs-star text-muted"></i>
+                                    <i class="bx bxs-star text-muted"></i>
+                                    <i class="bx bxs-star text-muted"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <div class="progress" style="height: 6px;">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 10%">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex-shrink-0 ms-2">
+                                    <span class="text-muted">12</span>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <i class="bx bxs-star text-warning"></i>
+                                    <i class="bx bxs-star text-muted"></i>
+                                    <i class="bx bxs-star text-muted"></i>
+                                    <i class="bx bxs-star text-muted"></i>
+                                    <i class="bx bxs-star text-muted"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <div class="progress" style="height: 6px;">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 5%"></div>
+                                    </div>
+                                </div>
+                                <div class="flex-shrink-0 ms-2">
+                                    <span class="text-muted">4</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phần thống kê đánh giá -->
+                <div class="card flex-fill">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Thống Kê Đánh Giá</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="flex-grow-1">
+                                <p class="text-muted mb-0">Tổng Số Đánh Giá</p>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <h6 class="mb-0">256</h6>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="flex-grow-1">
+                                <p class="text-muted mb-0">Đánh Giá Trong Tháng</p>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <h6 class="mb-0">32</h6>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <p class="text-muted mb-0">Phản Hồi Đã Trả Lời</p>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <h6 class="mb-0">245</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8 d-flex flex-column">
+                <div class="card flex-fill">
+                    <div class="card-header d-flex align-items-center">
+                        <h5 class="card-title mb-0 flex-grow-1">Danh Sách Đánh Giá</h5>
+                        <div class="flex-shrink-0">
+                            <div class="dropdown">
+                                <a class="btn btn-link text-reset dropdown-toggle shadow-none" href="#" role="button"
+                                    data-bs-toggle="dropdown">
+                                    <i class="bx bx-filter-alt"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" href="#">Tất Cả Đánh Giá</a></li>
+                                    <li><a class="dropdown-item" href="#">5 Sao</a></li>
+                                    <li><a class="dropdown-item" href="#">4 Sao</a></li>
+                                    <li><a class="dropdown-item" href="#">3 Sao</a></li>
+                                    <li><a class="dropdown-item" href="#">2 Sao</a></li>
+                                    <li><a class="dropdown-item" href="#">1 Sao</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body overflow-auto" style="max-height: 750px;">
+                        <!-- Đánh giá 1 -->
+                        <div class="border-bottom pb-3 mb-3">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="flex-shrink-0">
+                                    <img src="assets/images/users/avatar-1.jpg" class="avatar rounded-circle" alt="">
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h6 class="mb-0">Nguyễn Thị B</h6>
+                                    <div class="d-flex align-items-center">
+                                        <div class="text-warning me-2">
+                                            <i class="bx bxs-star"></i>
+                                            <i class="bx bxs-star"></i>
+                                            <i class="bx bxs-star"></i>
+                                            <i class="bx bxs-star"></i>
+                                            <i class="bx bxs-star"></i>
+                                        </div>
+                                        <small class="text-muted">2 ngày trước</small>
+                                    </div>
+                                </div>
+                                <div class="flex-shrink-0">
+                                    <div class="dropdown">
+                                        <button class="btn btn-light btn-sm" type="button" data-bs-toggle="dropdown">
+                                            <i class="bx bx-dots-horizontal-rounded"></i>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            <li><a class="dropdown-item" href="#">Trả Lời</a></li>
+                                            <li><a class="dropdown-item" href="#">Báo Cáo</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <h6 class="mb-1">Xoài Cát Hòa Lộc</h6>
+                                <p class="text-muted mb-0">Xoài rất ngon, chín vừa tới, vị ngọt thanh. Đóng gói cẩn
+                                    thận, giao hàng nhanh.</p>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <img src="assets/images/product/p-1.png" class="avatar-md rounded" alt="">
+                                <img src="assets/images/product/p-2.png" class="avatar-md rounded" alt="">
+                            </div>
+                        </div>
+
+                        <!-- Đánh giá 2 -->
+                        <div class="border-bottom pb-3 mb-3">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="flex-shrink-0">
+                                    <img src="assets/images/users/avatar-2.jpg" class="avatar rounded-circle" alt="">
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h6 class="mb-0">Trần Văn C</h6>
+                                    <div class="d-flex align-items-center">
+                                        <div class="text-warning me-2">
+                                            <i class="bx bxs-star"></i>
+                                            <i class="bx bxs-star"></i>
+                                            <i class="bx bxs-star"></i>
+                                            <i class="bx bxs-star"></i>
+                                            <i class="bx bxs-star-half"></i>
+                                        </div>
+                                        <small class="text-muted">1 tuần trước</small>
+                                    </div>
+                                </div>
+                                <div class="flex-shrink-0">
+                                    <div class="dropdown">
+                                        <button class="btn btn-light btn-sm" type="button" data-bs-toggle="dropdown">
+                                            <i class="bx bx-dots-horizontal-rounded"></i>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            <li><a class="dropdown-item" href="#">Trả Lời</a></li>
+                                            <li><a class="dropdown-item" href="#">Báo Cáo</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <h6 class="mb-1">Bưởi Da Xanh</h6>
+                                <p class="text-muted mb-0">Bưởi ngọt, múi to, tuy nhiên có 1 quả hơi nhỏ so với mô tả.
+                                    Shop phản hồi nhanh và đã giải quyết thỏa đáng.</p>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <img src="assets/images/product/p-3.png" class="avatar-md rounded" alt="">
+                            </div>
+                            <div class="mt-3 border-start border-4 border-primary p-3 bg-light">
+                                <p class="text-muted mb-0"><i class="bx bx-store me-1"></i> Phản hồi từ shop: Cảm ơn anh
+                                    đã mua hàng. Shop đã ghi nhận phản hồi và sẽ cải thiện trong những lần tới.</p>
+                            </div>
+                        </div>
+
+                        <!-- Đánh giá 3 -->
+                        <div class="pb-3">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="flex-shrink-0">
+                                    <img src="assets/images/users/avatar-3.jpg" class="avatar rounded-circle" alt="">
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h6 class="mb-0">Lê Thị D</h6>
+                                    <div class="d-flex align-items-center">
+                                        <div class="text-warning me-2">
+                                            <i class="bx bxs-star"></i>
+                                            <i class="bx bxs-star"></i>
+                                            <i class="bx bxs-star"></i>
+                                            <i class="bx bxs-star"></i>
+                                            <i class="bx bxs-star"></i>
+                                        </div>
+                                        <small class="text-muted">2 tuần trước</small>
+                                    </div>
+                                </div>
+                                <div class="flex-shrink-0">
+                                    <div class="dropdown">
+                                        <button class="btn btn-light btn-sm" type="button" data-bs-toggle="dropdown">
+                                            <i class="bx bx-dots-horizontal-rounded"></i>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            <li><a class="dropdown-item" href="#">Trả Lời</a></li>
+                                            <li><a class="dropdown-item" href="#">Báo Cáo</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <h6 class="mb-1">Nấm Hương Tươi</h6>
+                                <p class="text-muted mb-0">Nấm tươi ngon, đóng gói cẩn thận. Sẽ ủng hộ shop dài dài.</p>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <img src="assets/images/product/p-4.png" class="avatar-md rounded" alt="">
+                                <img src="assets/images/product/p-5.png" class="avatar-md rounded" alt="">
+                                <img src="assets/images/product/p-6.png" class="avatar-md rounded" alt="">
+                            </div>
+                        </div>
+
+                        <!-- Thêm đánh giá 4 (để làm cho cột bên phải dài hơn) -->
+                        <div class="border-top pt-3">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="flex-shrink-0">
+                                    <img src="assets/images/users/avatar-4.jpg" class="avatar rounded-circle" alt="">
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h6 class="mb-0">Phạm Văn E</h6>
+                                    <div class="d-flex align-items-center">
+                                        <div class="text-warning me-2">
+                                            <i class="bx bxs-star"></i>
+                                            <i class="bx bxs-star"></i>
+                                            <i class="bx bxs-star"></i>
+                                            <i class="bx bxs-star-half"></i>
+                                            <i class="bx bxs-star text-muted"></i>
+                                        </div>
+                                        <small class="text-muted">3 tuần trước</small>
+                                    </div>
+                                </div>
+                                <div class="flex-shrink-0">
+                                    <div class="dropdown">
+                                        <button class="btn btn-light btn-sm" type="button" data-bs-toggle="dropdown">
+                                            <i class="bx bx-dots-horizontal-rounded"></i>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            <li><a class="dropdown-item" href="#">Trả Lời</a></li>
+                                            <li><a class="dropdown-item" href="#">Báo Cáo</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <h6 class="mb-1">Xoài Cát Hòa Lộc</h6>
+                                <p class="text-muted mb-0">Xoài ngon nhưng còn hơi xanh. Sau vài ngày để chín thì ăn rất
+                                    ngọt.</p>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <img src="assets/images/product/p-1.png" class="avatar-md rounded" alt="">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <ul class="pagination pagination-rounded justify-content-end mb-0">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#"><i class="bx bx-chevron-left"></i></a>
+                            </li>
+                            <li class="page-item active">
+                                <a class="page-link" href="#">1</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">2</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">3</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#"><i class="bx bx-chevron-right"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Container Fluid -->
+</div>
+<!-- End Page Content -->

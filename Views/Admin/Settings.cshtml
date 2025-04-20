@@ -1,0 +1,186 @@
+@model AdminSettingViewModel
+
+@{
+    Layout = "_LayoutAdmin";
+}
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Cài Đặt Hệ Thống</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <!-- Menu cài đặt -->
+                        <div class="col-md-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">Menu Cài Đặt</h5>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="list-group list-group-flush">
+                                        <a href="#profile" class="list-group-item list-group-item-action active" data-bs-toggle="list">
+                                            <i class="bi bi-person-circle me-2"></i>Thông Tin Cá Nhân
+                                        </a>
+                                        <a href="#security" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                                            <i class="bi bi-shield-lock me-2"></i>Bảo Mật
+                                        </a>
+                                        <a href="#notification" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                                            <i class="bi bi-bell me-2"></i>Thông Báo
+                                        </a>
+                                        <a href="#system" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                                            <i class="bi bi-gear me-2"></i>Cài Đặt Hệ Thống
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Nội dung cài đặt -->
+                        <div class="col-md-9">
+                            <div class="tab-content">
+                                <!-- Thông tin cá nhân -->
+                                <div class="tab-pane fade show active" id="profile">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="card-title">Thông Tin Cá Nhân</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <form>
+                                                <div class="row mb-3">
+                                                    <div class="col-md-4">
+                                                        <div class="text-center">
+                                                            <img src="assets/images/users/avatar-1.jpg" class="rounded-circle mb-3" width="150" height="150" alt="avatar">
+                                                            <button type="button" class="btn btn-primary btn-sm">Đổi Ảnh Đại Diện</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Họ và Tên</label>
+                                                            <input type="text" class="form-control" value="Nguyễn Văn A">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Email</label>
+                                                            <input type="email" class="form-control" value="admin@example.com">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Số Điện Thoại</label>
+                                                            <input type="tel" class="form-control" value="0123456789">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Lưu Thay Đổi</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Bảo mật -->
+                                <div class="tab-pane fade" id="security">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="card-title">Bảo Mật</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <form>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Mật Khẩu Hiện Tại</label>
+                                                    <input type="password" class="form-control">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Mật Khẩu Mới</label>
+                                                    <input type="password" class="form-control">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Xác Nhận Mật Khẩu Mới</label>
+                                                    <input type="password" class="form-control">
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Đổi Mật Khẩu</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Thông báo -->
+                                <div class="tab-pane fade" id="notification">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="card-title">Cài Đặt Thông Báo</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="mb-3">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" id="emailNotif" checked>
+                                                    <label class="form-check-label" for="emailNotif">Nhận thông báo qua Email</label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" id="smsNotif">
+                                                    <label class="form-check-label" for="smsNotif">Nhận thông báo qua SMS</label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <h6 class="mb-2">Tần suất thông báo</h6>
+                                                <select class="form-select">
+                                                    <option value="realtime">Ngay lập tức</option>
+                                                    <option value="daily">Hàng ngày</option>
+                                                    <option value="weekly">Hàng tuần</option>
+                                                </select>
+                                            </div>
+                                            <button type="button" class="btn btn-primary">Lưu Cài Đặt</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Cài đặt hệ thống -->
+                                <div class="tab-pane fade" id="system">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="card-title">Cài Đặt Hệ Thống</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <form>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Ngôn Ngữ Hệ Thống</label>
+                                                    <select class="form-select">
+                                                        <option value="vi">Tiếng Việt</option>
+                                                        <option value="en">English</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Múi Giờ</label>
+                                                    <select class="form-select">
+                                                        <option value="+7">GMT+7 (Việt Nam)</option>
+                                                        <option value="+0">GMT+0 (UTC)</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Định Dạng Ngày Tháng</label>
+                                                    <select class="form-select">
+                                                        <option value="dd/mm/yyyy">DD/MM/YYYY</option>
+                                                        <option value="mm/dd/yyyy">MM/DD/YYYY</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <div class="form-check form-switch">
+                                                        <input class="form-check-input" type="checkbox" id="darkMode">
+                                                        <label class="form-check-label" for="darkMode">Chế Độ Tối</label>
+                                                    </div>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Lưu Cài Đặt</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+    

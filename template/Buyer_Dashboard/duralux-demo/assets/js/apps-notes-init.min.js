@@ -1,0 +1,1 @@
+"use strict";$(document).ready(function(){$("#notesSearch").bind("keyup",function(){var t=$(this).val().toLowerCase();$(".single-note-item").filter(function(){$(this).toggle(-1<$(this).text().toLowerCase().indexOf(t))})})});

@@ -1,0 +1,177 @@
+<main class="nxl-container">
+    <div class="nxl-content">
+        <!-- [ page-header ] start -->
+        <div class="page-header">
+            <div class="page-header-left d-flex align-items-center">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Chỉnh Sửa Sản Phẩm</h5>
+                </div>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="00_seller_product_lists.html">Sản phẩm</a></li>
+                    <li class="breadcrumb-item">Chỉnh sửa</li>
+                </ul>
+            </div>
+            <div class="page-header-right ms-auto">
+                <div class="page-header-right-items">
+                    <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
+                        <a href="00_seller_product_lists.html" class="btn btn-light">
+                            <i class="feather-arrow-left me-2"></i>
+                            Quay Lại
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ page-header ] end -->
+        <!-- [ Main Content ] start -->
+        <div class="main-content">
+            <div class="row">
+                <div class="col-xxl-12">
+                    <div class="card stretch stretch-full">
+                        <div class="card-body">
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="mb-3">
+                                            <label class="form-label">Tên sản phẩm</label>
+                                            <input type="text" class="form-control" value="Rau Cải Xanh" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Mô tả sản phẩm</label>
+                                            <textarea class="form-control" rows="4" required>Rau cải xanh được trồng theo phương pháp hữu cơ, không sử dụng thuốc bảo vệ thực vật. Sản phẩm tươi ngon, giàu dinh dưỡng, phù hợp cho các bữa ăn gia đình.</textarea>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Danh mục</label>
+                                                    <select class="form-select" required>
+                                                        <option value="">Chọn danh mục</option>
+                                                        <option value="1" selected>Rau Xanh</option>
+                                                        <option value="2">Trái Cây</option>
+                                                        <option value="3">Củ Quả</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Nhà cung cấp</label>
+                                                    <input type="text" class="form-control" value="Nông Trại Xanh" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Trọng lượng</label>
+                                                    <input type="number" class="form-control" value="0.5" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Đơn vị</label>
+                                                    <select class="form-select" required>
+                                                        <option value="kg" selected>kg</option>
+                                                        <option value="quả">quả</option>
+                                                        <option value="bó">bó</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Xuất xứ</label>
+                                                    <input type="text" class="form-control" value="Việt Nam" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Phương pháp trồng</label>
+                                            <textarea class="form-control" rows="3" required>Trồng theo phương pháp hữu cơ, sử dụng phân bón tự nhiên, không sử dụng thuốc bảo vệ thực vật.</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Hình ảnh chính</label>
+                                            <div class="mb-2">
+                                                <img src="assets/images/product/product-1.jpg" alt="Product" class="img-thumbnail" style="width: 100%; height: 200px; object-fit: cover;">
+                                            </div>
+                                            <input type="file" class="form-control" accept="image/*">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Hình ảnh phụ</label>
+                                            <div class="row g-2 mb-2">
+                                                <div class="col-4">
+                                                    <img src="assets/images/product/product-1-1.jpg" alt="Gallery" class="img-thumbnail">
+                                                </div>
+                                                <div class="col-4">
+                                                    <img src="assets/images/product/product-1-2.jpg" alt="Gallery" class="img-thumbnail">
+                                                </div>
+                                                <div class="col-4">
+                                                    <img src="assets/images/product/product-1-3.jpg" alt="Gallery" class="img-thumbnail">
+                                                </div>
+                                            </div>
+                                            <input type="file" class="form-control" accept="image/*" multiple>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Giá gốc</label>
+                                            <input type="number" class="form-control" value="50000" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Giảm giá (%)</label>
+                                            <input type="number" class="form-control" value="10" min="0" max="100">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Thuế (%)</label>
+                                            <input type="number" class="form-control" value="10" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Số lượng tồn kho</label>
+                                            <input type="number" class="form-control" value="100" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Chứng nhận</label>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="cert1" checked>
+                                                <label class="form-check-label" for="cert1">VietGAP</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="cert2" checked>
+                                                <label class="form-check-label" for="cert2">GlobalGAP</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="cert3" checked>
+                                                <label class="form-check-label" for="cert3">Hữu cơ</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-end mt-4">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="feather-save me-2"></i>
+                                        Cập Nhật Sản Phẩm
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ Main Content ] end -->
+    </div>
+    <!-- [ Footer ] start -->
+    <footer class="footer">
+        <p class="fs-11 text-muted fw-medium text-uppercase mb-0 copyright">
+            <span>Copyright ©</span>
+            <script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+                document.write(new Date().getFullYear());
+            </script>
+        </p>
+        <div class="d-flex align-items-center gap-4">
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Help</a>
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Terms</a>
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Privacy</a>
+        </div>
+    </footer>
+    <!-- [ Footer ] end -->
+</main> 

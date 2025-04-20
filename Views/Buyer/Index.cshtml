@@ -1,0 +1,261 @@
+@model BuyerSummaryViewModel
+@{
+    Layout = "_LayoutBuyer";
+}
+
+<main class="nxl-container">
+    <div class="nxl-content">
+        <!-- [ page-header ] start -->
+        <div class="page-header">
+            <div class="page-header-left d-flex align-items-center">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Dashboard Người Mua</h5>
+                </div>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                    <li class="breadcrumb-item">Dashboard</li>
+                </ul>
+            </div>
+            <div class="page-header-right ms-auto">
+                <div class="page-header-right-items">
+                    <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
+                        <div id="reportrange" class="reportrange-picker d-flex align-items-center">
+                            <span class="reportrange-picker-field"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ page-header ] end -->
+        <!-- [ Main Content ] start -->
+        <div class="main-content">
+            <div class="row">
+                <!-- [Tổng Số Đơn Hàng] start -->
+                <div class="col-xxl-4 col-md-6">
+                    <div class="card stretch stretch-full">
+                        <div class="card-body">
+                            <div class="d-flex align-items-start justify-content-between mb-4">
+                                <div class="d-flex gap-4 align-items-center">
+                                    <div class="avatar-text avatar-lg bg-gray-200">
+                                        <i class="feather-shopping-bag"></i>
+                                    </div>
+                                    <div>
+                                        <div class="fs-4 fw-bold text-dark">24</div>
+                                        <h3 class="fs-13 fw-semibold text-truncate-1-line">Tổng Số Đơn Hàng</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pt-4">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <span class="fs-12 fw-medium text-muted">Đơn hàng thành công</span>
+                                    <div class="w-100 text-end ms-4">
+                                        <span class="fs-12 text-success">18 đơn</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- [Tổng Số Đơn Hàng] end -->
+                <!-- [Đơn Hàng Đang Xử Lý] start -->
+                <div class="col-xxl-4 col-md-6">
+                    <div class="card stretch stretch-full">
+                        <div class="card-body">
+                            <div class="d-flex align-items-start justify-content-between mb-4">
+                                <div class="d-flex gap-4 align-items-center">
+                                    <div class="avatar-text avatar-lg bg-gray-200">
+                                        <i class="feather-clock"></i>
+                                    </div>
+                                    <div>
+                                        <div class="fs-4 fw-bold text-dark">3</div>
+                                        <h3 class="fs-13 fw-semibold text-truncate-1-line">Đơn Hàng Đang Xử Lý</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pt-4">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <span class="fs-12 fw-medium text-muted">Đang chờ giao hàng</span>
+                                    <div class="w-100 text-end ms-4">
+                                        <span class="fs-12 text-warning">2 đơn</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- [Đơn Hàng Đang Xử Lý] end -->
+                <!-- [Đơn Hàng Mới Nhất] start -->
+                <div class="col-xxl-4 col-md-6">
+                    <div class="card stretch stretch-full">
+                        <div class="card-body">
+                            <div class="d-flex align-items-start justify-content-between mb-4">
+                                <div class="d-flex gap-4 align-items-center">
+                                    <div class="avatar-text avatar-lg bg-gray-200">
+                                        <i class="feather-shopping-cart"></i>
+                                    </div>
+                                    <div>
+                                        <div class="fs-4 fw-bold text-dark">#DH024</div>
+                                        <h3 class="fs-13 fw-semibold text-truncate-1-line">Đơn Hàng Mới Nhất</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pt-4">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <span class="fs-12 fw-medium text-muted">Trạng thái</span>
+                                    <div class="w-100 text-end ms-4">
+                                        <span class="fs-12 text-primary">Đang xử lý</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- [Đơn Hàng Mới Nhất] end -->
+                <!-- [Danh Sách Thông Báo] start -->
+                <div class="col-xxl-12">
+                    <div class="card stretch stretch-full">
+                        <div class="card-header">
+                            <h5 class="card-title">Thông Báo Hệ Thống</h5>
+                            <div class="card-header-action">
+                                <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#notificationFilter">
+                                    <i class="feather-filter me-2"></i>Bộ lọc
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Thêm form lọc -->
+                        <div class="collapse" id="notificationFilter">
+                            <div class="card-body border-bottom">
+                                <form class="row g-3">
+                                    <div class="col-md-4">
+                                        <label class="form-label">Tìm kiếm</label>
+                                        <div class="input-group input-group-sm">
+                                            <span class="input-group-text"><i class="feather-search"></i></span>
+                                            <input type="text" class="form-control" placeholder="Tìm kiếm nội dung...">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Từ ngày</label>
+                                        <div class="input-group input-group-sm">
+                                            <span class="input-group-text"><i class="feather-calendar"></i></span>
+                                            <input type="date" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Đến ngày</label>
+                                        <div class="input-group input-group-sm">
+                                            <span class="input-group-text"><i class="feather-calendar"></i></span>
+                                            <input type="date" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Sắp xếp theo</label>
+                                        <select class="form-select form-select-sm">
+                                            <option value="newest">Mới nhất trước</option>
+                                            <option value="oldest">Cũ nhất trước</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Trạng thái</label>
+                                        <select class="form-select form-select-sm">
+                                            <option value="">Tất cả</option>
+                                            <option value="unread">Chưa đọc</option>
+                                            <option value="read">Đã đọc</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="d-flex gap-2">
+                                            <button type="submit" class="btn btn-primary btn-sm">
+                                                <i class="feather-filter me-2"></i>Lọc
+                                            </button>
+                                            <button type="reset" class="btn btn-light btn-sm">
+                                                <i class="feather-refresh-cw me-2"></i>Đặt lại
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="card-body custom-card-action p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Thời Gian</th>
+                                            <th>Nội Dung</th>
+                                            <th>Trạng Thái</th>
+                                            <th>Thao Tác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>10:30 - 15/03/2024</td>
+                                            <td>Đơn hàng #DH024 của bạn đã được xác nhận</td>
+                                            <td><span class="badge bg-danger">Chưa đọc</span></td>
+                                            <td>
+                                                <a href="javascript:void(0);" class="btn btn-sm btn-primary">Xem chi tiết</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>09:15 - 15/03/2024</td>
+                                            <td>Đơn hàng #DH023 đang được giao đến bạn</td>
+                                            <td><span class="badge bg-success">Đã đọc</span></td>
+                                            <td>
+                                                <a href="javascript:void(0);" class="btn btn-sm btn-primary">Xem chi tiết</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>14:20 - 14/03/2024</td>
+                                            <td>Bạn có sản phẩm mới trong giỏ hàng</td>
+                                            <td><span class="badge bg-danger">Chưa đọc</span></td>
+                                            <td>
+                                                <a href="javascript:void(0);" class="btn btn-sm btn-primary">Xem chi tiết</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination justify-content-center mb-0">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="javascript:void(0);" tabindex="-1">
+                                            <i class="feather-chevron-left"></i>
+                                        </a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="javascript:void(0);">
+                                            <i class="feather-chevron-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <!-- [Danh Sách Thông Báo] end -->
+            </div>
+        </div>
+        <!-- [ Main Content ] end -->
+    </div>
+    <!-- [ Footer ] start -->
+    <footer class="footer">
+        <p class="fs-11 text-muted fw-medium text-uppercase mb-0 copyright">
+            <span>Copyright ©</span>
+            <script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+                document.write(new Date().getFullYear());
+            </script>
+        </p>
+        <div class="d-flex align-items-center gap-4">
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Help</a>
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Terms</a>
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Privacy</a>
+        </div>
+    </footer>
+    <!-- [ Footer ] end -->
+</main> 

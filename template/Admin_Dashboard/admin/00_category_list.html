@@ -1,0 +1,404 @@
+<div class="page-content">
+
+    <!-- Start Container Fluid -->
+    <div class="container-xxl">
+
+         <div class="row">
+              <div class="col-md-6 col-xl-3">
+                   <div class="card">
+                        <div class="card-body text-center">
+                             <div class="rounded bg-success-subtle d-flex align-items-center justify-content-center mx-auto">
+                                  <img src="assets/images/product/p-1.png" alt="" class="avatar-xl">
+                             </div>
+                             <h4 class="mt-3 mb-0">Trái Cây</h4>
+                        </div>
+                   </div>
+              </div>
+              <div class="col-md-6 col-xl-3">
+                   <div class="card">
+                        <div class="card-body text-center">
+                             <div class="rounded bg-primary-subtle d-flex align-items-center justify-content-center mx-auto">
+                                  <img src="assets/images/product/p-2.png" alt="" class="avatar-xl">
+                             </div>
+                             <h4 class="mt-3 mb-0">Rau Củ</h4>
+                        </div>
+                   </div>
+              </div>
+
+              <div class="col-md-6 col-xl-3">
+                   <div class="card">
+                        <div class="card-body text-center">
+                             <div class="rounded bg-warning-subtle d-flex align-items-center justify-content-center mx-auto">
+                                  <img src="assets/images/product/p-3.png" alt="" class="avatar-xl">
+                             </div>
+                             <h4 class="mt-3 mb-0">Gia Vị</h4>
+                        </div>
+                   </div>
+              </div>
+
+              <div class="col-md-6 col-xl-3">
+                   <div class="card">
+                        <div class="card-body text-center">
+                             <div class="rounded bg-info-subtle d-flex align-items-center justify-content-center mx-auto">
+                                  <img src="assets/images/product/p-4.png" alt="" class="avatar-xl">
+                             </div>
+                             <h4 class="mt-3 mb-0">Nông Sản Khác</h4>
+                        </div>
+                   </div>
+              </div>
+         </div>
+
+         <div class="row">
+              <div class="col-xl-12">
+                   <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center gap-1">
+                             <h4 class="card-title">Danh Sách Danh Mục</h4>
+
+                             <!-- Thanh tìm kiếm -->
+                             <div class="search-box flex-grow-1 mx-4">
+                                 <div class="input-group">
+                                     <input type="text" class="form-control" placeholder="Tìm kiếm danh mục...">
+                                     <button class="btn btn-primary" type="button">
+                                         <i class="bx bx-search"></i>
+                                     </button>
+                                 </div>
+                             </div>
+
+                             <a href="#!" class="btn btn-sm btn-primary">
+                                  Thêm Danh Mục
+                             </a>
+                        </div>
+                        
+                        <!-- Bộ lọc -->
+                        <div class="card-body border-bottom pb-2">
+                            <div class="row">
+                                <div class="col-12">
+                                    <button class="btn btn-light btn-sm mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse">
+                                        <i class="bx bx-filter-alt me-1"></i> Bộ lọc nâng cao
+                                    </button>
+                                    
+                                    <div class="collapse" id="filterCollapse">
+                                        <div class="card card-body bg-light mt-2">
+                                            <form id="filterForm">
+                                                <div class="row g-3">
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Trạng thái</label>
+                                                        <select class="form-select">
+                                                            <option value="">Tất cả</option>
+                                                            <option value="true">Đang hoạt động</option>
+                                                            <option value="false">Không hoạt động</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Danh mục cha</label>
+                                                        <select class="form-select">
+                                                            <option value="">Tất cả</option>
+                                                            <option value="null">Danh mục gốc</option>
+                                                            <!-- Các option danh mục cha từ database -->
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Số lượng sản phẩm</label>
+                                                        <select class="form-select">
+                                                            <option value="">Tất cả</option>
+                                                            <option value="0-50">Dưới 50</option>
+                                                            <option value="50-100">50 - 100</option>
+                                                            <option value="100-200">100 - 200</option>
+                                                            <option value="200-500">200 - 500</option>
+                                                            <option value="500+">Trên 500</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Khoảng giá</label>
+                                                        <select class="form-select">
+                                                            <option value="">Tất cả</option>
+                                                            <option value="0-50000">Dưới 50.000đ</option>
+                                                            <option value="50000-100000">50.000đ - 100.000đ</option>
+                                                            <option value="100000-200000">100.000đ - 200.000đ</option>
+                                                            <option value="200000+">Trên 200.000đ</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Sắp xếp theo</label>
+                                                        <select class="form-select">
+                                                            <option value="name_asc">Tên (A-Z)</option>
+                                                            <option value="name_desc">Tên (Z-A)</option>
+                                                            <option value="display_order">Thứ tự hiển thị</option>
+                                                            <option value="products_high">Số lượng SP (Cao-Thấp)</option>
+                                                            <option value="products_low">Số lượng SP (Thấp-Cao)</option>
+                                                            <option value="price_high">Giá (Cao-Thấp)</option>
+                                                            <option value="price_low">Giá (Thấp-Cao)</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-12 text-end mt-3">
+                                                        <button type="reset" class="btn btn-light me-2">
+                                                            <i class="bx bx-reset me-1"></i> Đặt lại
+                                                        </button>
+                                                        <button type="submit" class="btn btn-primary">
+                                                            <i class="bx bx-filter me-1"></i> Lọc kết quả
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                             <div class="table-responsive">
+                                  <table class="table align-middle mb-0 table-hover table-centered">
+                                       <thead class="bg-light-subtle">
+                                            <tr>
+                                                 <th style="width: 20px;">
+                                                      <div class="form-check">
+                                                           <input type="checkbox" class="form-check-input" id="customCheck1">
+                                                           <label class="form-check-label" for="customCheck1"></label>
+                                                      </div>
+                                                 </th>
+                                                 <th>
+                                                     <a href="#" class="text-dark d-inline-block">
+                                                         Danh Mục
+                                                         <i class="bx bx-sort-alt-2 text-muted"></i>
+                                                     </a>
+                                                 </th>
+                                                 <th>Giá Khởi Điểm</th>
+                                                 <th>Người Tạo</th>
+                                                 <th>
+                                                     <a href="#" class="text-dark d-inline-block">
+                                                         Mã Danh Mục
+                                                         <i class="bx bx-sort-alt-2 text-muted"></i>
+                                                     </a>
+                                                 </th>
+                                                 <th>
+                                                     <a href="#" class="text-dark d-inline-block">
+                                                         Số Lượng SP
+                                                         <i class="bx bx-sort-alt-2 text-muted"></i>
+                                                     </a>
+                                                 </th>
+                                                 <th>Thao Tác</th>
+                                            </tr>
+                                       </thead>
+                                       <tbody>
+                                            <tr>
+                                                 <td>
+                                                      <div class="form-check">
+                                                           <input type="checkbox" class="form-check-input" id="customCheck2">
+                                                           <label class="form-check-label" for="customCheck2"></label>
+                                                      </div>
+                                                 </td>
+                                                 <td>
+                                                      <div class="d-flex align-items-center gap-2">
+                                                           <div class="rounded bg-light avatar-md d-flex align-items-center justify-content-center">
+                                                                <img src="assets/images/product/p-1.png" alt="" class="avatar-md">
+                                                           </div>
+                                                           <p class="text-dark fw-medium fs-15 mb-0">Trái Cây Tươi</p>
+                                                      </div>
+
+                                                 </td>
+                                                 <td>20.000đ - 200.000đ</td>
+                                                 <td>Admin</td>
+                                                 <td>TC16276</td>
+                                                 <td>462</td>
+                                                 <td>
+                                                      <div class="d-flex gap-2">
+                                                           <a href="#!" class="btn btn-light btn-sm"><iconify-icon icon="solar:eye-broken" class="align-middle fs-18"></iconify-icon></a>
+                                                           <a href="#!" class="btn btn-soft-primary btn-sm"><iconify-icon icon="solar:pen-2-broken" class="align-middle fs-18"></iconify-icon></a>
+                                                           <a href="#!" class="btn btn-soft-danger btn-sm"><iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="align-middle fs-18"></iconify-icon></a>
+                                                      </div>
+                                                 </td>
+                                            </tr>
+
+                                            <tr>
+                                                 <td>
+                                                      <div class="form-check">
+                                                           <input type="checkbox" class="form-check-input" id="customCheck2">
+                                                           <label class="form-check-label" for="customCheck2">&nbsp;</label>
+                                                      </div>
+                                                 </td>
+                                                 <td>
+                                                      <div class="d-flex align-items-center gap-2">
+                                                           <div class="rounded bg-light avatar-md d-flex align-items-center justify-content-center">
+                                                                <img src="assets/images/product/p-2.png" alt="" class="avatar-md">
+                                                           </div>
+                                                           <div>
+                                                                <p class="text-dark fw-medium fs-15 mb-0">Rau Củ Tươi</p>
+                                                           </div>
+                                                      </div>
+
+                                                 </td>
+                                                 <td>10.000đ - 100.000đ</td>
+                                                 <td>Admin</td>
+                                                 <td>RC73029</td>
+                                                 <td>273</td>
+                                                 <td>
+                                                      <div class="d-flex gap-2">
+                                                           <a href="#!" class="btn btn-light btn-sm"><iconify-icon icon="solar:eye-broken" class="align-middle fs-18"></iconify-icon></a>
+                                                           <a href="#!" class="btn btn-soft-primary btn-sm"><iconify-icon icon="solar:pen-2-broken" class="align-middle fs-18"></iconify-icon></a>
+                                                           <a href="#!" class="btn btn-soft-danger btn-sm"><iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="align-middle fs-18"></iconify-icon></a>
+                                                      </div>
+                                                 </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                 <td>
+                                                      <div class="form-check">
+                                                           <input type="checkbox" class="form-check-input" id="customCheck2">
+                                                           <label class="form-check-label" for="customCheck2">&nbsp;</label>
+                                                      </div>
+                                                 </td>
+                                                 <td>
+                                                      <div class="d-flex align-items-center gap-2">
+                                                           <div class="rounded bg-light avatar-md d-flex align-items-center justify-content-center">
+                                                                <img src="assets/images/product/p-3.png" alt="" class="avatar-md">
+                                                           </div>
+                                                           <div>
+                                                                <p class="text-dark fw-medium fs-15 mb-0">Gia Vị & Phụ Liệu</p>
+                                                           </div>
+                                                      </div>
+
+                                                 </td>
+                                                 <td>5.000đ - 50.000đ</td>
+                                                 <td>Admin</td>
+                                                 <td>GV492-9</td>
+                                                 <td>182</td>
+                                                 <td>
+                                                      <div class="d-flex gap-2">
+                                                           <a href="#!" class="btn btn-light btn-sm"><iconify-icon icon="solar:eye-broken" class="align-middle fs-18"></iconify-icon></a>
+                                                           <a href="#!" class="btn btn-soft-primary btn-sm"><iconify-icon icon="solar:pen-2-broken" class="align-middle fs-18"></iconify-icon></a>
+                                                           <a href="#!" class="btn btn-soft-danger btn-sm"><iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="align-middle fs-18"></iconify-icon></a>
+                                                      </div>
+                                                 </td>
+                                            </tr>
+
+                                            <tr>
+                                                 <td>
+                                                      <div class="form-check">
+                                                           <input type="checkbox" class="form-check-input" id="customCheck2">
+                                                           <label class="form-check-label" for="customCheck2">&nbsp;</label>
+                                                      </div>
+                                                 </td>
+                                                 <td>
+                                                      <div class="d-flex align-items-center gap-2">
+                                                           <div class="rounded bg-light avatar-md d-flex align-items-center justify-content-center">
+                                                                <img src="assets/images/product/p-1.png" alt="" class="avatar-md">
+                                                           </div>
+                                                           <div>
+                                                                <p class="text-dark fw-medium fs-15 mb-0">Trái Cây Đặc Sản</p>
+                                                           </div>
+                                                      </div>
+
+                                                 </td>
+                                                 <td>50.000đ - 500.000đ</td>
+                                                 <td>Admin</td>
+                                                 <td>DS23818</td>
+                                                 <td>190</td>
+                                                 <td>
+                                                      <div class="d-flex gap-2">
+                                                           <a href="#!" class="btn btn-light btn-sm"><iconify-icon icon="solar:eye-broken" class="align-middle fs-18"></iconify-icon></a>
+                                                           <a href="#!" class="btn btn-soft-primary btn-sm"><iconify-icon icon="solar:pen-2-broken" class="align-middle fs-18"></iconify-icon></a>
+                                                           <a href="#!" class="btn btn-soft-danger btn-sm"><iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="align-middle fs-18"></iconify-icon></a>
+                                                      </div>
+                                                 </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                 <td>
+                                                      <div class="form-check">
+                                                           <input type="checkbox" class="form-check-input" id="customCheck2">
+                                                           <label class="form-check-label" for="customCheck2">&nbsp;</label>
+                                                      </div>
+                                                 </td>
+                                                 <td>
+                                                      <div class="d-flex align-items-center gap-2">
+                                                           <div class="rounded bg-light avatar-md d-flex align-items-center justify-content-center">
+                                                                <img src="assets/images/product/p-5.png" alt="" class="avatar-md">
+                                                           </div>
+                                                           <div>
+                                                                <p class="text-dark fw-medium fs-15 mb-0">Rau Sạch</p>
+                                                           </div>
+                                                      </div>
+
+                                                 </td>
+                                                 <td>15.000đ - 100.000đ</td>
+                                                 <td>Admin</td>
+                                                 <td>RS11009</td>
+                                                 <td>273</td>
+                                                 <td>
+                                                      <div class="d-flex gap-2">
+                                                           <a href="#!" class="btn btn-light btn-sm"><iconify-icon icon="solar:eye-broken" class="align-middle fs-18"></iconify-icon></a>
+                                                           <a href="#!" class="btn btn-soft-primary btn-sm"><iconify-icon icon="solar:pen-2-broken" class="align-middle fs-18"></iconify-icon></a>
+                                                           <a href="#!" class="btn btn-soft-danger btn-sm"><iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="align-middle fs-18"></iconify-icon></a>
+                                                      </div>
+                                                 </td>
+                                            </tr>
+
+                                            <tr>
+                                                 <td>
+                                                      <div class="form-check">
+                                                           <input type="checkbox" class="form-check-input" id="customCheck2">
+                                                           <label class="form-check-label" for="customCheck2">&nbsp;</label>
+                                                      </div>
+                                                 </td>
+                                                 <td>
+                                                      <div class="d-flex align-items-center gap-2">
+                                                           <div class="rounded bg-light avatar-md d-flex align-items-center justify-content-center">
+                                                                <img src="assets/images/product/p-6.png" alt="" class="avatar-md">
+                                                           </div>
+                                                           <div>
+                                                                <p class="text-dark fw-medium fs-15 mb-0">Nấm Các Loại</p>
+                                                           </div>
+                                                      </div>
+
+                                                 </td>
+                                                 <td>30.000đ - 200.000đ</td>
+                                                 <td>Admin</td>
+                                                 <td>NM38299</td>
+                                                 <td>89</td>
+                                                 <td>
+                                                      <div class="d-flex gap-2">
+                                                           <a href="#!" class="btn btn-light btn-sm"><iconify-icon icon="solar:eye-broken" class="align-middle fs-18"></iconify-icon></a>
+                                                           <a href="#!" class="btn btn-soft-primary btn-sm"><iconify-icon icon="solar:pen-2-broken" class="align-middle fs-18"></iconify-icon></a>
+                                                           <a href="#!" class="btn btn-soft-danger btn-sm"><iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="align-middle fs-18"></iconify-icon></a>
+                                                      </div>
+                                                 </td>
+                                            </tr>
+                                       </tbody>
+                                  </table>
+                             </div>
+                             <!-- end table-responsive -->
+                        </div>
+                        <div class="card-footer border-top">
+                             <nav aria-label="Page navigation example">
+                                  <ul class="pagination justify-content-end mb-0">
+                                       <li class="page-item"><a class="page-link" href="javascript:void(0);">Trước</a></li>
+                                       <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a></li>
+                                       <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+                                       <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+                                       <li class="page-item"><a class="page-link" href="javascript:void(0);">Sau</a></li>
+                                  </ul>
+                             </nav>
+                        </div>
+                   </div>
+              </div>
+         </div>
+
+    </div>
+    <!-- End Container Fluid -->
+
+    <!-- ========== Footer Start ========== -->
+    <footer class="footer">
+         <div class="container-fluid">
+              <div class="row">
+                   <div class="col-12 text-center">
+                         &copy; VNFarm. Crafted by <iconify-icon icon="iconamoon:heart-duotone" class="fs-18 align-middle text-danger"></iconify-icon> <a href="#" class="fw-bold footer-text" target="_blank">Hệ Thống Quản Lý Nông Sản VNFarm</a>
+                   </div>
+              </div>
+         </div>
+    </footer>
+    <!-- ========== Footer End ========== -->
+
+</div>

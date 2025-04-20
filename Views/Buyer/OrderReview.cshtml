@@ -1,0 +1,388 @@
+@model OrderDetailViewModel
+
+@{
+    Layout = "_LayoutBuyer";
+}
+
+<main class="nxl-container">
+    <div class="nxl-content">
+        <!-- [ page-header ] start -->
+        <div class="page-header">
+            <div class="page-header-left d-flex align-items-center">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Đánh Giá Đơn Hàng</h5>
+                </div>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="00_buyer_order_lists.html">Đơn hàng</a></li>
+                    <li class="breadcrumb-item">Đánh giá</li>
+                </ul>
+            </div>
+        </div>
+        <!-- [ page-header ] end -->
+        <!-- [ Main Content ] start -->
+        <div class="main-content">
+            <div class="row">
+                <div class="col-xxl-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Đơn Hàng #DH001</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="rateForm">
+                                <!-- Thông tin đơn hàng -->
+                                <div class="mb-4">
+                                    <h6 class="mb-3">Thông tin đơn hàng</h6>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Mã đơn hàng</label>
+                                                <input type="text" class="form-control" value="#DH001" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Ngày đặt hàng</label>
+                                                <input type="text" class="form-control" value="15/03/2024" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Tên cửa hàng</label>
+                                                <input type="text" class="form-control" value="Shop ABC" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Tổng tiền</label>
+                                                <input type="text" class="form-control" value="880.000đ" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Đánh giá sản phẩm -->
+                                <div class="mb-4">
+                                    <h6 class="mb-3">Đánh giá sản phẩm</h6>
+                                    <div class="product-list">
+                                        <!-- Sản phẩm 1 -->
+                                        <div class="product-item mb-4">
+                                            <div class="d-flex align-items-center mb-3">
+                                                <img src="assets/images/product/1.jpg" alt="Product" class="img-thumbnail me-3" style="width: 80px;">
+                                                <div>
+                                                    <h6 class="mb-1">Sản phẩm A</h6>
+                                                    <p class="text-muted mb-0">Màu: Đen</p>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Đánh giá sao</label>
+                                                <div class="rating">
+                                                    <input type="radio" name="rating1" id="star5_1" value="5">
+                                                    <label for="star5_1"><i class="feather-star"></i></label>
+                                                    <input type="radio" name="rating1" id="star4_1" value="4">
+                                                    <label for="star4_1"><i class="feather-star"></i></label>
+                                                    <input type="radio" name="rating1" id="star3_1" value="3">
+                                                    <label for="star3_1"><i class="feather-star"></i></label>
+                                                    <input type="radio" name="rating1" id="star2_1" value="2">
+                                                    <label for="star2_1"><i class="feather-star"></i></label>
+                                                    <input type="radio" name="rating1" id="star1_1" value="1">
+                                                    <label for="star1_1"><i class="feather-star"></i></label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Nhận xét</label>
+                                                <textarea class="form-control" rows="2" placeholder="Nhập nhận xét của bạn về sản phẩm..."></textarea>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Hình ảnh</label>
+                                                <div class="upload-area" id="uploadArea1">
+                                                    <input type="file" class="d-none" id="fileInput1" multiple accept="image/*">
+                                                    <div class="upload-content text-center p-3 border rounded">
+                                                        <i class="feather-upload-cloud mb-2" style="font-size: 1.5rem;"></i>
+                                                        <p class="mb-2">Kéo thả hình ảnh hoặc</p>
+                                                        <button type="button" class="btn btn-light btn-sm" onclick="document.getElementById('fileInput1').click()">
+                                                            Chọn hình ảnh
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="preview-area mt-2" id="previewArea1"></div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Sản phẩm 2 -->
+                                        <div class="product-item mb-4">
+                                            <div class="d-flex align-items-center mb-3">
+                                                <img src="assets/images/product/2.jpg" alt="Product" class="img-thumbnail me-3" style="width: 80px;">
+                                                <div>
+                                                    <h6 class="mb-1">Sản phẩm B</h6>
+                                                    <p class="text-muted mb-0">Màu: Trắng</p>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Đánh giá sao</label>
+                                                <div class="rating">
+                                                    <input type="radio" name="rating2" id="star5_2" value="5">
+                                                    <label for="star5_2"><i class="feather-star"></i></label>
+                                                    <input type="radio" name="rating2" id="star4_2" value="4">
+                                                    <label for="star4_2"><i class="feather-star"></i></label>
+                                                    <input type="radio" name="rating2" id="star3_2" value="3">
+                                                    <label for="star3_2"><i class="feather-star"></i></label>
+                                                    <input type="radio" name="rating2" id="star2_2" value="2">
+                                                    <label for="star2_2"><i class="feather-star"></i></label>
+                                                    <input type="radio" name="rating2" id="star1_2" value="1">
+                                                    <label for="star1_2"><i class="feather-star"></i></label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Nhận xét</label>
+                                                <textarea class="form-control" rows="2" placeholder="Nhập nhận xét của bạn về sản phẩm..."></textarea>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Hình ảnh</label>
+                                                <div class="upload-area" id="uploadArea2">
+                                                    <input type="file" class="d-none" id="fileInput2" multiple accept="image/*">
+                                                    <div class="upload-content text-center p-3 border rounded">
+                                                        <i class="feather-upload-cloud mb-2" style="font-size: 1.5rem;"></i>
+                                                        <p class="mb-2">Kéo thả hình ảnh hoặc</p>
+                                                        <button type="button" class="btn btn-light btn-sm" onclick="document.getElementById('fileInput2').click()">
+                                                            Chọn hình ảnh
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="preview-area mt-2" id="previewArea2"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Đánh giá dịch vụ -->
+                                <div class="mb-4">
+                                    <h6 class="mb-3">Đánh giá dịch vụ</h6>
+                                    <div class="mb-3">
+                                        <label class="form-label">Đánh giá sao</label>
+                                        <div class="rating">
+                                            <input type="radio" name="service_rating" id="star5_service" value="5">
+                                            <label for="star5_service"><i class="feather-star"></i></label>
+                                            <input type="radio" name="service_rating" id="star4_service" value="4">
+                                            <label for="star4_service"><i class="feather-star"></i></label>
+                                            <input type="radio" name="service_rating" id="star3_service" value="3">
+                                            <label for="star3_service"><i class="feather-star"></i></label>
+                                            <input type="radio" name="service_rating" id="star2_service" value="2">
+                                            <label for="star2_service"><i class="feather-star"></i></label>
+                                            <input type="radio" name="service_rating" id="star1_service" value="1">
+                                            <label for="star1_service"><i class="feather-star"></i></label>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Nhận xét về dịch vụ</label>
+                                        <textarea class="form-control" rows="3" placeholder="Nhập nhận xét của bạn về dịch vụ..."></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- Nút submit -->
+                                <div class="text-end">
+                                    <button type="button" class="btn btn-light me-2" onclick="history.back()">
+                                        <i class="feather-arrow-left me-2"></i>
+                                        Quay lại
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="feather-send me-2"></i>
+                                        Gửi đánh giá
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Hướng dẫn</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="alert alert-info">
+                                <h6 class="alert-heading">Lưu ý khi đánh giá:</h6>
+                                <ul class="mb-0 ps-3">
+                                    <li>Đánh giá chân thực về chất lượng sản phẩm</li>
+                                    <li>Mô tả chi tiết trải nghiệm của bạn</li>
+                                    <li>Đính kèm hình ảnh thực tế của sản phẩm</li>
+                                    <li>Đánh giá khách quan về dịch vụ</li>
+                                    <li>Không sử dụng ngôn ngữ không phù hợp</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ Main Content ] end -->
+    </div>
+    <!-- [ Footer ] start -->
+    <footer class="footer">
+        <p class="fs-11 text-muted fw-medium text-uppercase mb-0 copyright">
+            <span>Copyright ©</span>
+            <script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+                document.write(new Date().getFullYear());
+            </script>
+        </p>
+        <div class="d-flex align-items-center gap-4">
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Help</a>
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Terms</a>
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Privacy</a>
+        </div>
+    </footer>
+    <!-- [ Footer ] end -->
+</main>
+
+<style>
+    .rating {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+    }
+    .rating input {
+        display: none;
+    }
+    .rating label {
+        cursor: pointer;
+        font-size: 1.5rem;
+        color: #ddd;
+        padding: 0 2px;
+    }
+    .rating label:hover,
+    .rating label:hover ~ label,
+    .rating input:checked ~ label {
+        color: #ffd700;
+    }
+    .upload-area {
+        border: 2px dashed #dee2e6;
+        border-radius: 0.5rem;
+        transition: all 0.3s ease;
+    }
+    .upload-area:hover {
+        border-color: #0d6efd;
+        background-color: #f8f9fa;
+    }
+    .upload-area.dragover {
+        border-color: #0d6efd;
+        background-color: #f8f9fa;
+    }
+    .preview-area {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 10px;
+    }
+    .preview-item {
+        position: relative;
+        aspect-ratio: 1;
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
+    .preview-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .preview-item .remove-btn {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        width: 20px;
+        height: 20px;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .preview-item .remove-btn:hover {
+        background: rgba(0, 0, 0, 0.7);
+    }
+</style>
+
+<script>
+    // Xử lý kéo thả file cho từng sản phẩm
+    const uploadAreas = document.querySelectorAll('.upload-area');
+    const fileInputs = document.querySelectorAll('input[type="file"]');
+    const previewAreas = document.querySelectorAll('.preview-area');
+
+    uploadAreas.forEach((area, index) => {
+        const fileInput = fileInputs[index];
+        const previewArea = previewAreas[index];
+
+        // Ngăn chặn hành vi mặc định của trình duyệt
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            area.addEventListener(eventName, preventDefaults, false);
+        });
+
+        // Thêm hiệu ứng khi kéo file vào
+        ['dragenter', 'dragover'].forEach(eventName => {
+            area.addEventListener(eventName, () => highlight(area), false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            area.addEventListener(eventName, () => unhighlight(area), false);
+        });
+
+        // Xử lý thả file
+        area.addEventListener('drop', (e) => handleDrop(e, fileInput, previewArea), false);
+
+        // Xử lý chọn file
+        fileInput.addEventListener('change', function() {
+            handleFiles(this.files, previewArea);
+        });
+    });
+
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    function highlight(area) {
+        area.classList.add('dragover');
+    }
+
+    function unhighlight(area) {
+        area.classList.remove('dragover');
+    }
+
+    function handleDrop(e, fileInput, previewArea) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        handleFiles(files, previewArea);
+    }
+
+    function handleFiles(files, previewArea) {
+        [...files].forEach(file => {
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const previewItem = document.createElement('div');
+                    previewItem.className = 'preview-item';
+                    previewItem.innerHTML = `
+                        <img src="${e.target.result}" alt="Preview">
+                        <div class="remove-btn" onclick="this.parentElement.remove()">
+                            <i class="feather-x"></i>
+                        </div>
+                    `;
+                    previewArea.appendChild(previewItem);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    // Xử lý submit form
+    document.getElementById('rateForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        // Thêm logic xử lý form ở đây
+        alert('Gửi đánh giá thành công!');
+        window.location.href = '00_buyer_order_rate_detail.html';
+    });
+</script> 
+    

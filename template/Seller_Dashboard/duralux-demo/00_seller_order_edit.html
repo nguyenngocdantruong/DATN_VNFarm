@@ -1,0 +1,245 @@
+<main class="nxl-container">
+    <div class="nxl-content">
+        <!-- [ page-header ] start -->
+        <div class="page-header">
+            <div class="page-header-left d-flex align-items-center">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Cập Nhật Trạng Thái Đơn Hàng #DH001</h5>
+                </div>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="00_seller_order_lists.html">Đơn hàng</a></li>
+                    <li class="breadcrumb-item"><a href="00_seller_order_detail.html">Chi tiết</a></li>
+                    <li class="breadcrumb-item">Cập nhật</li>
+                </ul>
+            </div>
+            <div class="page-header-right ms-auto">
+                <div class="page-header-right-items">
+                    <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
+                        <a href="00_seller_order_detail.html" class="btn btn-light">
+                            <i class="feather-arrow-left me-2"></i>
+                            Quay Lại
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ page-header ] end -->
+        <!-- [ Main Content ] start -->
+        <div class="main-content">
+            <div class="row">
+                <div class="col-xxl-8">
+                    <div class="card stretch stretch-full">
+                        <div class="card-header">
+                            <h5 class="card-title">Cập Nhật Trạng Thái</h5>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="mb-4">
+                                    <label class="form-label">Trạng thái hiện tại</label>
+                                    <div class="order-progress mb-3">
+                                        <div class="progress-item active">
+                                            <div class="progress-icon">
+                                                <i class="feather-check-circle"></i>
+                                            </div>
+                                            <div class="progress-text">Đặt hàng</div>
+                                        </div>
+                                        <div class="progress-line active"></div>
+                                        <div class="progress-item active">
+                                            <div class="progress-icon">
+                                                <i class="feather-check-circle"></i>
+                                            </div>
+                                            <div class="progress-text">Xác nhận</div>
+                                        </div>
+                                        <div class="progress-line"></div>
+                                        <div class="progress-item">
+                                            <div class="progress-icon">
+                                                <i class="feather-circle"></i>
+                                            </div>
+                                            <div class="progress-text">Đang giao</div>
+                                        </div>
+                                        <div class="progress-line"></div>
+                                        <div class="progress-item">
+                                            <div class="progress-icon">
+                                                <i class="feather-circle"></i>
+                                            </div>
+                                            <div class="progress-text">Hoàn thành</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Cập nhật trạng thái mới</label>
+                                        <select class="form-select">
+                                            <option value="">Chọn trạng thái</option>
+                                            <option value="processing">Đang xử lý</option>
+                                            <option value="shipping">Đang giao</option>
+                                            <option value="completed">Hoàn thành</option>
+                                            <option value="cancelled">Đã hủy</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">Ghi chú</label>
+                                    <textarea class="form-control" rows="3" placeholder="Nhập ghi chú (nếu có)"></textarea>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">Thông tin vận chuyển</label>
+                                    <div class="form-group">
+                                        <label class="form-label">Mã vận đơn</label>
+                                        <input type="text" class="form-control" placeholder="Nhập mã vận đơn">
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <label class="form-label">Đơn vị vận chuyển</label>
+                                        <select class="form-select">
+                                            <option value="">Chọn đơn vị vận chuyển</option>
+                                            <option value="ghn">Giao Hàng Nhanh</option>
+                                            <option value="ghtk">Giao Hàng Tiết Kiệm</option>
+                                            <option value="vtp">Viettel Post</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="text-end">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="feather-save me-2"></i>
+                                        Cập Nhật
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-4">
+                    <div class="card stretch stretch-full">
+                        <div class="card-header">
+                            <h5 class="card-title">Thông Tin Đơn Hàng</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-4">
+                                <h6>Thông tin người mua:</h6>
+                                <table class="table table-sm">
+                                    <tr>
+                                        <td><strong>Họ tên:</strong></td>
+                                        <td>Nguyễn Văn A</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Số điện thoại:</strong></td>
+                                        <td>0123456789</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Email:</strong></td>
+                                        <td>nguyenvana@email.com</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Địa chỉ:</strong></td>
+                                        <td>123 Đường ABC, Quận 1, TP.HCM</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="mb-4">
+                                <h6>Chi tiết đơn hàng:</h6>
+                                <table class="table table-sm">
+                                    <tr>
+                                        <td><strong>Ngày đặt:</strong></td>
+                                        <td>15/03/2024 10:30</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Tổng tiền:</strong></td>
+                                        <td>205.000đ</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Phương thức thanh toán:</strong></td>
+                                        <td>Thanh toán khi nhận hàng</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="mb-4">
+                                <h6>Chi tiết thanh toán:</h6>
+                                <table class="table table-sm">
+                                    <tr>
+                                        <td><strong>Tạm tính:</strong></td>
+                                        <td>195.000đ</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Phí vận chuyển:</strong></td>
+                                        <td>30.000đ</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Giảm giá:</strong></td>
+                                        <td class="text-danger">-20.000đ</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Tổng cộng:</strong></td>
+                                        <td class="text-primary"><strong>205.000đ</strong></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ Main Content ] end -->
+    </div>
+    <!-- [ Footer ] start -->
+    <footer class="footer">
+        <p class="fs-11 text-muted fw-medium text-uppercase mb-0 copyright">
+            <span>Copyright ©</span>
+            <script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+                document.write(new Date().getFullYear());
+            </script>
+        </p>
+        <div class="d-flex align-items-center gap-4">
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Help</a>
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Terms</a>
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Privacy</a>
+        </div>
+    </footer>
+    <!-- [ Footer ] end -->
+</main>
+
+<style>
+    .order-progress {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 0;
+    }
+    .progress-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+    }
+    .progress-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #f8f9fa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 8px;
+        border: 2px solid #e9ecef;
+    }
+    .progress-item.active .progress-icon {
+        background: #0d6efd;
+        border-color: #0d6efd;
+        color: white;
+    }
+    .progress-text {
+        font-size: 14px;
+        color: #6c757d;
+    }
+    .progress-item.active .progress-text {
+        color: #0d6efd;
+        font-weight: 500;
+    }
+    .progress-line {
+        flex: 1;
+        height: 2px;
+        background: #e9ecef;
+        margin: 0 10px;
+    }
+    .progress-line.active {
+        background: #0d6efd;
+    }
+</style> 

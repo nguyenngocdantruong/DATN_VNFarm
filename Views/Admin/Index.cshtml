@@ -1,0 +1,754 @@
+@model AdminSummaryViewModel
+@{
+    Layout = "_LayoutAdmin";
+}
+
+<div class="page-content">
+  <!-- Start Container Fluid -->
+  <div class="container-fluid">
+    <!-- Row 1: Welcome Message -->
+    <div class="row">
+      <div class="col-12">
+        <div class="alert alert-primary text-truncate mb-3" role="alert">
+          Chào mừng đến với hệ thống quản lý nông sản! Hôm nay là ngày @DateTime.Now.ToString("dd/MM/yyyy")
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2: Statistics Cards -->
+    <div class="row">
+      <div class="col-md-3">
+        <div class="card overflow-hidden">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-6">
+                <div class="avatar-md bg-soft-primary rounded">
+                  <iconify-icon icon="solar:box-minimalistic-bold-duotone" class="avatar-title fs-32 text-primary"></iconify-icon>
+                </div>
+              </div>
+              <div class="col-6 text-end">
+                <p class="text-muted mb-0 text-truncate">Tổng Sản Phẩm</p>
+                <h3 class="text-dark mt-1 mb-0">@Model.TotalProducts</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card overflow-hidden">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-6">
+                <div class="avatar-md bg-soft-primary rounded">
+                  <iconify-icon icon="solar:cart-5-bold-duotone" class="avatar-title fs-32 text-primary"></iconify-icon>
+                </div>
+              </div>
+              <div class="col-6 text-end">
+                <p class="text-muted mb-0 text-truncate">Tổng Đơn Hàng</p>
+                <h3 class="text-dark mt-1 mb-0">@Model.TotalOrders</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card overflow-hidden">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-6">
+                <div class="avatar-md bg-soft-primary rounded">
+                  <iconify-icon icon="solar:users-group-rounded-bold-duotone" class="avatar-title fs-32 text-primary"></iconify-icon>
+                </div>
+              </div>
+              <div class="col-6 text-end">
+                <p class="text-muted mb-0 text-truncate">Tổng Người Dùng</p>
+                <h3 class="text-dark mt-1 mb-0">@Model.TotalUsers</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card overflow-hidden">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-6">
+                <div class="avatar-md bg-soft-primary rounded">
+                  <iconify-icon icon="solar:dollar-minimalistic-bold-duotone" class="avatar-title fs-32 text-primary"></iconify-icon>
+                </div>
+              </div>
+              <div class="col-6 text-end">
+                <p class="text-muted mb-0 text-truncate">Doanh Thu</p>
+                <h3 class="text-dark mt-1 mb-0">@Model.TotalRevenue.ToString("N0") đ</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 4: Top Products -->
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card card-height-100">
+          <div class="card-header d-flex align-items-center justify-content-between gap-2">
+            <h4 class="card-title flex-grow-1">Sản Phẩm Bán Chạy</h4>
+            <a href="@Url.Action("Index", "Product")" class="btn btn-sm btn-soft-primary">Xem tất cả</a>
+          </div>
+          
+          <!-- Tìm kiếm và bộ lọc cho Sản phẩm bán chạy -->
+          <div class="card-body pt-0">
+            <div class="row mt-3 mb-3">
+              <div class="col-md-4">
+                <div class="input-group">
+                  <input type="text" class="form-control" id="searchproduct" placeholder="Tìm kiếm sản phẩm...">
+                  <button class="btn btn-primary" id="searchbutton" type="button"><i class="bx bx-search"></i></button>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="d-flex justify-content-md-end gap-2">
+                  <select class="form-select" id="danhmucselection" style="width: auto;">
+                    <option value="-999" selected>Tất cả danh mục</option>
+                  </select>
+                  <select class="form-select" style="width: auto;">
+                    <option value="-999" selected>Tất cả tồn kho</option>
+                    <option>Còn hàng</option>
+                    <option>Hết hàng</option>
+                  </select>
+                  <select class="form-select" id="sortselection" style="width: auto;">
+                    <option selected>Sắp xếp theo</option>
+                    <option>Đã bán: Cao → Thấp</option>
+                    <option>Đã bán: Thấp → Cao</option>
+                    <option>Doanh thu: Cao → Thấp</option>
+                    <option>Doanh thu: Thấp → Cao</option>
+                  </select>
+                  <button class="btn btn-primary" id="filterbutton" type="button">Lọc</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="table-responsive">
+            <table class="table table-hover table-nowrap table-centered m-0">
+              <thead class="bg-light bg-opacity-50">
+                <tr>
+                  <th class="text-muted ps-3">Sản phẩm</th>
+                  <th class="text-muted">Danh mục</th>
+                  <th class="text-muted">Đã bán</th>
+                  <th class="text-muted">Giá</th>
+                  <th class="text-muted">Tồn kho</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach (var product in Model.ProductDTOs)
+                {
+                    if (product != null)
+                    {
+                        <tr>
+                            <td class="ps-3">
+                                <a href="@Url.Action("Details", "Product", new { id = product.Id })" class="text-muted">@product.Name</a>
+                            </td>
+                            <td>@product.Category?.Name</td>
+                            <td>@product.SoldQuantity</td>
+                            <td>@product.Price.ToString("N0") đ</td>
+                            <td>
+                                @if (product.StockQuantity > 10)
+                                {
+                                    <span class="badge badge-soft-success">Còn hàng</span>
+                                }
+                                else if (product.StockQuantity > 0)
+                                {
+                                    <span class="badge badge-soft-warning">Sắp hết</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-soft-danger">Hết hàng</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="card-footer border-top">
+            <div class="row g-3">
+              <div class="col-sm">
+                <div class="text-muted">
+                  <span class="fw-semibold" id="rangeproduct">@Model.ProductDTOs.Count</span>
+                   / 
+                  <span class="fw-semibold">@Model.TotalProducts</span>
+                </div>
+              </div>
+              <div class="col-sm-auto">
+                <ul class="pagination m-0">
+                  <li class="page-item">
+                    <a href="#" class="page-link"><i class="bx bx-left-arrow-alt"></i></a>
+                  </li>
+                  <li class="page-item active">
+                    <a href="#" class="page-link">1</a>
+                  </li>
+                  <li class="page-item">
+                    <a href="#" class="page-link">2</a>
+                  </li>
+                  <li class="page-item">
+                    <a href="#" class="page-link">3</a>
+                  </li>
+                  <li class="page-item">
+                    <a href="#" class="page-link"><i class="bx bx-right-arrow-alt"></i></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 5: Recent Orders -->
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header d-flex align-items-center justify-content-between">
+            <h4 class="card-title">Đơn Hàng Gần Đây</h4>
+            <a href="@Url.Action("Index", "Order")" class="btn btn-sm btn-soft-primary">Xem tất cả</a>
+          </div>
+          
+          <!-- Tìm kiếm và bộ lọc -->
+          <div class="row mt-3 mb-3">
+            <div class="col-md-4">
+              <div class="input-group">
+                <input type="text" class="form-control" id="searchorder" placeholder="Tìm kiếm đơn hàng...">
+                <button class="btn btn-primary" id="ordersearchbutton" type="button"><i class="bx bx-search"></i></button>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="d-flex justify-content-md-end gap-2">
+                <select class="form-select" id="orderstatusselection" style="width: auto;">
+                  <option value="-999">Tất cả Trạng thái</option>
+                </select>
+                <select class="form-select" id="paymentmethodselection" style="width: auto;">
+                  <option value="-999">Tất cả phương thức</option>
+                </select>
+                <select class="form-select" id="ordersortselection" style="width: auto;">
+                  <option value="">Sắp xếp theo</option>
+                </select>
+                <button class="btn btn-primary" id="orderfilterbutton" type="button">Lọc</button>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive table-centered">
+            <table class="table mb-0">
+              <thead class="bg-light bg-opacity-50">
+                <tr>
+                  <th class="ps-3">Mã Đơn</th>
+                  <th>Ngày</th>
+                  <th>Khách hàng</th>
+                  <th>Tổng tiền</th>
+                  <th>Phương thức</th>
+                  <th>Trạng thái</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach (var order in Model.OrderDTOs)
+                {
+                    if (order != null)
+                    {
+                        <tr>
+                            <td class="ps-3">
+                                <a href="@Url.Action("Details", "Order", new { id = order.Id })">#@order.OrderCode</a>
+                            </td>
+                            <td>@order.CreatedAt.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                <a href="@Url.Action("Details", "User", new { id = order.BuyerId })">@order.Buyer?.FullName</a>
+                            </td>
+                            <td>@order.FinalAmount.ToString("N0") đ</td>
+                            <td>@order.PaymentMethod</td>
+                            <td>
+                                @switch (order.Status)
+                                {
+                                    case VNFarm_FinalFinal.Enums.OrderStatus.Completed:
+                                        <i class="bx bxs-circle text-success me-1"></i>@order.Status;
+                                        break;
+                                    case VNFarm_FinalFinal.Enums.OrderStatus.Pending:
+                                        <i class="bx bxs-circle text-warning me-1"></i>@order.Status;
+                                        break;
+                                    case VNFarm_FinalFinal.Enums.OrderStatus.Cancelled:
+                                        <i class="bx bxs-circle text-danger me-1"></i>@order.Status;
+                                        break;
+                                    default:
+                                        <i class="bx bxs-circle text-primary me-1"></i>@order.Status;
+                                        break;
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+              </tbody>
+            </table>
+          </div>
+          <div class="card-footer border-top">
+            <div class="row g-3">
+              <div class="col-sm">
+                <div class="text-muted">
+                  Hiển thị
+                  <span class="fw-semibold">3</span>
+                  trong tổng số
+                  <span class="fw-semibold">156</span>
+                  đơn hàng
+                </div>
+              </div>
+              <div class="col-sm-auto">
+                <ul class="pagination m-0">
+                  <li class="page-item">
+                    <a href="#" class="page-link"><i class="bx bx-left-arrow-alt"></i></a>
+                  </li>
+                  <li class="page-item active">
+                    <a href="#" class="page-link">1</a>
+                  </li>
+                  <li class="page-item">
+                    <a href="#" class="page-link">2</a>
+                  </li>
+                  <li class="page-item">
+                    <a href="#" class="page-link">3</a>
+                  </li>
+                  <li class="page-item">
+                    <a href="#" class="page-link"><i class="bx bx-right-arrow-alt"></i></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Container Fluid -->
+
+  <!-- ========== Footer Start ========== -->
+  <footer class="footer">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12 text-center">
+          &copy; @DateTime.Now.Year - Hệ Thống Quản Lý Nông Sản VNFarm. All rights reserved.
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- ========== Footer End ========== -->
+</div>
+
+<script>
+  // Khai báo các biến toàn cục
+  let currentProductPage = 1;
+  let productPageSize = 10;
+  let productFilter = {
+    searchTerm: '',
+    categoryId: -999,
+    sortBy: null,
+    page: 1,
+    pageSize: 10
+  };
+
+  // Hàm load danh mục từ API
+  async function loadCategories() {
+    try {
+      const response = await fetch('/api/Category');
+      const categories = await response.json();
+      
+      const categorySelect = document.querySelector('select#danhmucselection');
+      categorySelect.innerHTML = '<option value="-999" selected>Tất cả danh mục</option>';
+      console.log("categories", categories);
+      categories.data.forEach(category => {
+        const option = document.createElement('option');
+        option.value = category.id;
+        option.textContent = category.name;
+        categorySelect.appendChild(option);
+      });
+    } catch (error) {
+      console.error('Lỗi khi load danh mục:', error);
+    }
+  }
+
+  // Hàm load loại sắp xếp
+  async function loadSortTypes() {
+    try {
+      const response = await fetch('/api/Enum/sort-by-entity?entityName=Product');
+      const sortTypes = await response.json();
+      
+      const sortSelect = document.querySelector('select#sortselection');
+      sortSelect.innerHTML = '';
+      
+      Object.entries(sortTypes).forEach(([key, value]) => {
+        const option = document.createElement('option');
+        option.value = key;
+        option.textContent = value;
+        sortSelect.appendChild(option);
+      });
+    } catch (error) {
+      console.error('Lỗi khi load loại sắp xếp:', error);
+    }
+  }
+
+  // Hàm tìm kiếm sản phẩm
+  async function searchProducts() {
+    try {
+      const searchInput = document.querySelector('input#searchproduct');
+      const categorySelect = document.querySelector('select#danhmucselection');
+      const sortSelect = document.querySelector('select#sortselection');
+      
+      productFilter.searchTerm = searchInput.value;
+      productFilter.categoryId = categorySelect.value || null;
+      productFilter.sortBy = parseInt(sortSelect.value) || 0;
+      productFilter.page = currentProductPage;
+      productFilter.pageSize = productPageSize;
+
+      const response = await fetch('/api/Product/filter', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(productFilter)
+      });
+
+      const result = await response.json();
+      updateProductTable(result.data);
+      updateProductPagination(result.totalCount);
+    } catch (error) {
+      console.error('Lỗi khi tìm kiếm sản phẩm:', error);
+    }
+  }
+
+  // Hàm cập nhật bảng sản phẩm
+  function updateProductTable(products) {
+    const tbody = document.querySelector('.table-responsive tbody');
+    tbody.innerHTML = '';
+
+    products.forEach(product => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="ps-3">
+          <a href="/Product/Details/${product.id}" class="text-muted">${product.name}</a>
+        </td>
+        <td>${product.category?.name || ''}</td>
+        <td>${product.soldQuantity}</td>
+        <td>${product.price.toLocaleString()} đ</td>
+        <td>
+          ${getStockStatusBadge(product.stockQuantity)}
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  // Hàm tạo badge trạng thái tồn kho
+  function getStockStatusBadge(quantity) {
+    if (quantity > 10) {
+      return '<span class="badge badge-soft-success">Còn hàng</span>';
+    } else if (quantity > 0) {
+      return '<span class="badge badge-soft-warning">Sắp hết</span>';
+    } else {
+      return '<span class="badge badge-soft-danger">Hết hàng</span>';
+    }
+  }
+
+  // Hàm cập nhật phân trang
+  function updateProductPagination(totalCount) {
+    const totalPages = Math.ceil(totalCount / productPageSize);
+    const pagination = document.querySelector('.pagination');
+    pagination.innerHTML = '';
+
+    // Nút Previous
+    const prevLi = document.createElement('li');
+    prevLi.className = `page-item ${currentProductPage === 1 ? 'disabled' : ''}`;
+    prevLi.innerHTML = `
+      <a href="#" class="page-link" onclick="changeProductPage(${currentProductPage - 1})">
+        <i class="bx bx-left-arrow-alt"></i>
+      </a>
+    `;
+    pagination.appendChild(prevLi);
+
+    // Các nút trang
+    for (let i = 1; i <= totalPages; i++) {
+      const li = document.createElement('li');
+      li.className = `page-item ${i === currentProductPage ? 'active' : ''}`;
+      li.innerHTML = `
+        <a href="#" class="page-link" onclick="changeProductPage(${i})">${i}</a>
+      `;
+      pagination.appendChild(li);
+    }
+
+    // Nút Next
+    const nextLi = document.createElement('li');
+    nextLi.className = `page-item ${currentProductPage === totalPages ? 'disabled' : ''}`;
+    nextLi.innerHTML = `
+      <a href="#" class="page-link" onclick="changeProductPage(${currentProductPage + 1})">
+        <i class="bx bx-right-arrow-alt"></i>
+      </a>
+    `;
+    pagination.appendChild(nextLi);
+
+    // Cập nhật thông tin hiển thị số lượng sản phẩm
+    const start = (currentProductPage - 1) * productPageSize + 1;
+    const end = Math.min(currentProductPage * productPageSize, totalCount);
+    const rangeText = `${start} - ${end}`;
+    
+    document.getElementById('rangeproduct').textContent = rangeText;
+  }
+
+  // Hàm thay đổi trang
+  function changeProductPage(page) {
+    if (page < 1) return;
+    currentProductPage = page;
+    searchProducts();
+  }
+
+  // Gắn sự kiện cho các nút tìm kiếm và lọc
+  document.addEventListener('DOMContentLoaded', () => {
+    // Load dữ liệu ban đầu
+    loadCategories();
+    loadSortTypes();
+    searchProducts();
+
+    // Gắn sự kiện cho nút tìm kiếm
+    const searchButton = document.querySelector('button#searchbutton');
+    searchButton.addEventListener('click', searchProducts);
+
+    // Gắn sự kiện cho nút lọc
+    const filterButton = document.querySelector('button#filterbutton');
+    filterButton.addEventListener('click', searchProducts);
+
+    // Gắn sự kiện cho input tìm kiếm
+    const searchInput = document.querySelector('input#searchproduct');
+    searchInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        searchProducts();
+      }
+    });
+  });
+  // #########################################################
+  // Khai báo thêm biến toàn cục cho đơn hàng
+  let currentOrderPage = 1;
+  let orderPageSize = 10;
+  let orderFilter = {
+    searchTerm: '',
+    status: null,
+    paymentMethod: null,
+    sortBy: null,
+    page: 1,
+    pageSize: 10
+  };
+  // Hàm load trạng thái đơn hàng từ API
+  async function loadOrderStatus() {
+    try {
+      const response = await fetch('/api/Enum/order-statuses');
+      const orderStatuses = await response.json();
+      
+      const orderStatusSelect = document.querySelector('select#orderstatusselection');
+      orderStatusSelect.innerHTML = '<option value="-999" selected>Tất cả trạng thái</option>';
+      console.log("orderStatuses", orderStatuses);
+      Object.entries(orderStatuses).forEach(([key, value]) => {
+        const option = document.createElement('option');
+        option.value = key;
+        option.textContent = value;
+        orderStatusSelect.appendChild(option);
+      });
+    } catch (error) {
+      console.error('Lỗi khi load danh mục:', error);
+    }
+  }
+  //Hàm load phương thức thanh toán từ API
+  async function loadPaymentMethods() {
+    try {
+      const response = await fetch('/api/Enum/payment-methods');
+      const paymentMethods = await response.json();
+      const paymentMethodSelect = document.querySelector('select#paymentmethodselection');
+      paymentMethodSelect.innerHTML = '<option value="-999" selected>Tất cả phương thức</option>';
+      console.log("paymentMethods", paymentMethods);
+      Object.entries(paymentMethods.data).forEach(([key, value]) => {
+        const option = document.createElement('option');
+        option.value = key;
+        option.textContent = value;
+        paymentMethodSelect.appendChild(option);
+      });
+    } catch (error) {
+      console.error('Lỗi khi load phương thức thanh toán:', error);
+    }
+  }
+  // Hàm load loại sắp xếp cho đơn hàng
+  async function loadOrderSortTypes() {
+    try {
+      const response = await fetch('/api/Enum/sort-by-entity?entityName=Order');
+      const sortTypes = await response.json();
+      
+      const sortSelect = document.querySelector('select#ordersortselection');
+      sortSelect.innerHTML = '';
+      
+      Object.entries(sortTypes).forEach(([key, value]) => {
+        const option = document.createElement('option');
+        option.value = key;
+        option.textContent = value;
+        sortSelect.appendChild(option);
+      });
+    } catch (error) {
+      console.error('Lỗi khi load loại sắp xếp đơn hàng:', error);
+    }
+  }
+
+  // Hàm tìm kiếm đơn hàng
+  async function searchOrders() {
+    try {
+      const searchInput = document.querySelector('input#searchorder');
+      const statusSelect = document.querySelector('select#orderstatusselection');
+      const paymentSelect = document.querySelector('select#paymentmethodselection');
+      const sortSelect = document.querySelector('select#ordersortselection');
+      
+      orderFilter.searchTerm = searchInput.value;
+      orderFilter.status = parseInt(statusSelect.value) || null;
+      orderFilter.paymentMethod = parseInt(paymentSelect.value) || null;
+      orderFilter.sortBy = parseInt(sortSelect.value) || 0;
+      orderFilter.page = currentOrderPage;
+      orderFilter.pageSize = orderPageSize;
+
+      console.log("orderFilter", orderFilter);
+
+      const response = await fetch('/api/Order/filter', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(orderFilter)
+      });
+
+      const result = await response.json();
+      updateOrderTable(result.data);
+      updateOrderPagination(result.totalCount);
+    } catch (error) {
+      console.error('Lỗi khi tìm kiếm đơn hàng:', error);
+    }
+  }
+
+  // Hàm cập nhật bảng đơn hàng
+  function updateOrderTable(orders) {
+    const tbody = document.querySelector('.table-centered tbody');
+    tbody.innerHTML = '';
+
+    orders.forEach(order => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="ps-3">
+          <a href="/Order/Details/${order.id}">#${order.orderCode}</a>
+        </td>
+        <td>${new Date(order.createdAt).toLocaleDateString('vi-VN')}</td>
+        <td>
+          <a href="/User/Details/${order.buyerId}">${order.buyer?.fullName || ''}</a>
+        </td>
+        <td>${order.finalAmount.toLocaleString()} đ</td>
+        <td>${order.paymentMethod}</td>
+        <td>
+          ${getOrderStatusBadge(order.status)}
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  // Hàm tạo badge trạng thái đơn hàng
+  function getOrderStatusBadge(status) {
+    switch (status) {
+      case 'Completed':
+        return '<i class="bx bxs-circle text-success me-1"></i>Hoàn thành';
+      case 'Pending':
+        return '<i class="bx bxs-circle text-warning me-1"></i>Đang xử lý';
+      case 'Cancelled':
+        return '<i class="bx bxs-circle text-danger me-1"></i>Đã hủy';
+      default:
+        return '<i class="bx bxs-circle text-primary me-1"></i>' + status;
+    }
+  }
+
+  // Hàm cập nhật phân trang đơn hàng
+  function updateOrderPagination(totalCount) {
+    const totalPages = Math.ceil(totalCount / orderPageSize);
+    const pagination = document.querySelector('.table-centered + .card-footer .pagination');
+    pagination.innerHTML = '';
+
+    // Nút Previous
+    const prevLi = document.createElement('li');
+    prevLi.className = `page-item ${currentOrderPage === 1 ? 'disabled' : ''}`;
+    prevLi.innerHTML = `
+      <a href="#" class="page-link" onclick="changeOrderPage(${currentOrderPage - 1})">
+        <i class="bx bx-left-arrow-alt"></i>
+      </a>
+    `;
+    pagination.appendChild(prevLi);
+
+    // Các nút trang
+    for (let i = 1; i <= totalPages; i++) {
+      const li = document.createElement('li');
+      li.className = `page-item ${i === currentOrderPage ? 'active' : ''}`;
+      li.innerHTML = `
+        <a href="#" class="page-link" onclick="changeOrderPage(${i})">${i}</a>
+      `;
+      pagination.appendChild(li);
+    }
+
+    // Nút Next
+    const nextLi = document.createElement('li');
+    nextLi.className = `page-item ${currentOrderPage === totalPages ? 'disabled' : ''}`;
+    nextLi.innerHTML = `
+      <a href="#" class="page-link" onclick="changeOrderPage(${currentOrderPage + 1})">
+        <i class="bx bx-right-arrow-alt"></i>
+      </a>
+    `;
+    pagination.appendChild(nextLi);
+
+    // Cập nhật thông tin hiển thị
+    const start = (currentOrderPage - 1) * orderPageSize + 1;
+    const end = Math.min(currentOrderPage * orderPageSize, totalCount);
+    const infoDiv = document.querySelector('.table-centered + .card-footer .text-muted');
+    infoDiv.innerHTML = `
+      Hiển thị
+      <span class="fw-semibold">${start} - ${end}</span>
+      trong tổng số
+      <span class="fw-semibold">${totalCount}</span>
+      đơn hàng
+    `;
+  }
+
+  // Hàm thay đổi trang đơn hàng
+  function changeOrderPage(page) {
+    if (page < 1) return;
+    currentOrderPage = page;
+    searchOrders();
+  }
+
+  // Thêm vào phần DOMContentLoaded
+  document.addEventListener('DOMContentLoaded', () => {
+    // Load dữ liệu đơn hàng ban đầu
+    loadOrderSortTypes();
+    loadOrderStatus();
+    loadPaymentMethods();
+    searchOrders();
+
+    // Gắn sự kiện cho nút tìm kiếm đơn hàng
+    const orderSearchButton = document.querySelector('button#ordersearchbutton');
+    orderSearchButton.addEventListener('click', searchOrders);
+
+    // Gắn sự kiện cho nút lọc đơn hàng
+    const orderFilterButton = document.querySelector('button#orderfilterbutton');
+    orderFilterButton.addEventListener('click', searchOrders);
+
+    // Gắn sự kiện cho input tìm kiếm đơn hàng
+    const orderSearchInput = document.querySelector('input#searchorder');
+    orderSearchInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        searchOrders();
+      }
+    });
+  });
+</script>

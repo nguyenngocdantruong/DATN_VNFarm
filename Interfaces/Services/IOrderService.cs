@@ -1,0 +1,60 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using VNFarm_FinalFinal.DTOs.Filters;
+using VNFarm_FinalFinal.DTOs.Request;
+using VNFarm_FinalFinal.DTOs.Response;
+using VNFarm_FinalFinal.Entities;
+using VNFarm_FinalFinal.Enums;
+
+namespace VNFarm_FinalFinal.Interfaces.Services
+{
+    public interface IOrderService : IService<Order, OrderRequestDTO, OrderResponseDTO>
+    {
+        #region Get Orders
+        Task<IEnumerable<OrderResponseDTO?>> GetOrdersByUserIdAsync(int userId);
+        Task<IEnumerable<OrderResponseDTO?>> GetOrdersByStoreIdAsync(int storeId);
+        Task<IEnumerable<OrderResponseDTO?>> GetOrdersByStatusAsync(OrderStatus status);
+        Task<IEnumerable<OrderResponseDTO?>> GetOrdersByDateRangeAsync(DateTime startDate, DateTime endDate);
+        #endregion
+
+        #region Order information
+        Task<bool> UpdateOrderAddressAsync(int orderId, AddressRequestDTO addressRequest);
+        Task<bool> UpdateOrderShippingAsync(int orderId, ShippingRequestDTO shippingRequest);
+        Task<bool> UpdateOrderStatusAsync(int orderId, OrderStatus status);
+        Task<bool> UpdateOrderPaymentStatusAsync(int orderId, PaymentStatus paymentStatus);
+        #endregion
+        #region Order Calculation
+        Task<decimal> CalculateOrderTotalAmountAsync(int orderId);
+        Task<decimal> CalculateOrderShippingFeeAsync(int orderId);
+        Task<decimal> CalculateOrderTaxAmountAsync(int orderId);
+        Task<decimal> CalculateOrderDiscountAmountAsync(int orderId);
+        Task<decimal> CalculateOrderFinalAmountAsync(int orderId);
+        #endregion
+
+        #region Order Review
+        Task<bool> AddOrderReviewAsync(int orderId, int productId, ReviewRequestDTO reviewRequest);
+        #endregion
+
+        #region Revenue
+        Task<decimal> GetTotalRevenueByStoreIdAsync(int storeId);
+        Task<decimal> GetTotalRevenueByDateRangeAsync(DateTime startDate, DateTime endDate);
+        #endregion
+
+        #region Discount
+        Task<bool> AddDiscountToOrderAsync(int orderId, string discountCode);
+        Task<bool> RemoveDiscountFromOrderAsync(int orderId);
+        #endregion
+
+        #region Order Timeline
+        Task<OrderTimelineResponseDTO?> AddOrderTimelineAsync(int orderId, OrderTimelineRequestDTO orderTimelineRequest);
+        Task<IEnumerable<OrderTimelineResponseDTO?>> GetOrderTimelineAsync(int orderId);
+        #endregion
+
+        #region Order Detail
+        Task<OrderDetailResponseDTO?> AddOrderDetailAsync(int orderId, OrderDetailRequestDTO orderDetailRequest);
+        Task<IEnumerable<OrderDetailResponseDTO>> GetOrderDetailAsync(int orderId);
+        Task<bool> UpdateOrderDetailStatusAsync(int orderId, int productId, OrderDetailStatus status);
+        #endregion
+    }
+} 

@@ -1,0 +1,391 @@
+<main class="nxl-container">
+    <div class="nxl-content">
+        <!-- [ page-header ] start -->
+        <div class="page-header">
+            <div class="page-header-left d-flex align-items-center">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Tài Chính Của Tôi</h5>
+                </div>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                    <li class="breadcrumb-item">Tài chính</li>
+                </ul>
+            </div>
+        </div>
+        <!-- [ page-header ] end -->
+        <!-- [ Main Content ] start -->
+        <div class="main-content">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Lịch Sử Giao Dịch</h5>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="transaction-list" id="transactionList">
+                                <div class="transaction-item active">
+                                    <div class="transaction-icon">
+                                        <i class="feather-shopping-cart"></i>
+                                    </div>
+                                    <div class="transaction-info">
+                                        <h6>Đơn hàng #DH001</h6>
+                                        <p class="mb-0">Thanh toán đơn hàng</p>
+                                        <small class="text-muted">20/03/2024 15:30</small>
+                                    </div>
+                                    <div class="transaction-amount">
+                                        <span class="text-danger">-1.500.000đ</span>
+                                    </div>
+                                </div>
+                                <div class="transaction-item">
+                                    <div class="transaction-icon">
+                                        <i class="feather-refresh-cw"></i>
+                                    </div>
+                                    <div class="transaction-info">
+                                        <h6>Hoàn tiền #HT001</h6>
+                                        <p class="mb-0">Hoàn tiền đơn hàng</p>
+                                        <small class="text-muted">19/03/2024 10:15</small>
+                                    </div>
+                                    <div class="transaction-amount">
+                                        <span class="text-success">+500.000đ</span>
+                                    </div>
+                                </div>
+                                <div class="transaction-item">
+                                    <div class="transaction-icon">
+                                        <i class="feather-gift"></i>
+                                    </div>
+                                    <div class="transaction-info">
+                                        <h6>Mã giảm giá</h6>
+                                        <p class="mb-0">Nhận mã giảm giá</p>
+                                        <small class="text-muted">18/03/2024 09:00</small>
+                                    </div>
+                                    <div class="transaction-amount">
+                                        <span class="text-success">+100.000đ</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-3">
+                                <button id="loadMoreBtn" class="btn btn-light w-100">
+                                    <i class="feather-refresh-cw me-2"></i>
+                                    Tải thêm
+                                </button>
+                                <div id="loadingMore" class="text-center py-2 d-none">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Chi Tiết Giao Dịch</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="transaction-detail">
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <h6>Mã giao dịch</h6>
+                                        <p>#GD001</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6>Thời gian</h6>
+                                        <p>20/03/2024 15:30</p>
+                                    </div>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <h6>Loại giao dịch</h6>
+                                        <p>Thanh toán đơn hàng</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6>Số tiền</h6>
+                                        <p class="text-danger">-1.500.000đ</p>
+                                    </div>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <h6>Phương thức thanh toán</h6>
+                                        <p>Ví điện tử Momo</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6>Trạng thái</h6>
+                                        <p><span class="badge bg-success">Thành công</span></p>
+                                    </div>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="col-12">
+                                        <h6>Chi tiết đơn hàng</h6>
+                                        <div class="table-responsive">
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Sản phẩm</th>
+                                                        <th>Số lượng</th>
+                                                        <th>Đơn giá</th>
+                                                        <th>Thành tiền</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Sản phẩm A</td>
+                                                        <td>2</td>
+                                                        <td>500.000đ</td>
+                                                        <td>1.000.000đ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sản phẩm B</td>
+                                                        <td>1</td>
+                                                        <td>500.000đ</td>
+                                                        <td>500.000đ</td>
+                                                    </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="3" class="text-end"><strong>Tổng tiền:</strong></td>
+                                                        <td><strong>1.500.000đ</strong></td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ Main Content ] end -->
+    </div>
+    <!-- [ Footer ] start -->
+    <footer class="footer">
+        <p class="fs-11 text-muted fw-medium text-uppercase mb-0 copyright">
+            <span>Copyright ©</span>
+            <script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+                document.write(new Date().getFullYear());
+            </script>
+        </p>
+        <div class="d-flex align-items-center gap-4">
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Help</a>
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Terms</a>
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Privacy</a>
+        </div>
+    </footer>
+    <!-- [ Footer ] end -->
+</main>
+
+<style>
+    .transaction-list {
+        height: calc(100vh - 200px);
+        overflow-y: auto;
+    }
+    .transaction-item {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        border-bottom: 1px solid #e9ecef;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .transaction-item:hover {
+        background: #f8f9fa;
+    }
+    .transaction-item.active {
+        background: #e9ecef;
+    }
+    .transaction-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #f8f9fa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+    }
+    .transaction-icon i {
+        font-size: 20px;
+        color: #0d6efd;
+    }
+    .transaction-info {
+        flex: 1;
+    }
+    .transaction-info h6 {
+        margin: 0;
+        font-size: 14px;
+    }
+    .transaction-info p {
+        font-size: 12px;
+        color: #6c757d;
+        margin: 0;
+    }
+    .transaction-info small {
+        font-size: 11px;
+    }
+    .transaction-amount {
+        margin-left: 15px;
+        font-weight: 600;
+    }
+    .payment-method-item {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+    .payment-icon {
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+        margin-right: 10px;
+    }
+    .payment-info {
+        flex: 1;
+    }
+    .payment-info h6 {
+        margin: 0;
+        font-size: 14px;
+    }
+    .payment-info small {
+        font-size: 12px;
+    }
+    .coupon-item {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border: 1px dashed #e9ecef;
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+    .coupon-info {
+        flex: 1;
+    }
+    .coupon-info h6 {
+        margin: 0;
+        font-size: 14px;
+        color: #0d6efd;
+    }
+    .coupon-info small {
+        font-size: 12px;
+    }
+    .coupon-status {
+        margin-left: 10px;
+    }
+</style>
+
+<script>
+    // Mock API để load thêm dữ liệu
+    const mockTransactions = [
+        {
+            id: 4,
+            type: 'Thanh toán đơn hàng',
+            order: '#DH004',
+            time: '17/03/2024 14:20',
+            amount: -800.000
+        },
+        {
+            id: 5,
+            type: 'Hoàn tiền',
+            order: '#HT002',
+            time: '16/03/2024 09:45',
+            amount: 300.000
+        }
+    ];
+
+    let currentPage = 1;
+    const itemsPerPage = 10;
+    let isLoading = false;
+
+    // Hàm tạo HTML cho một transaction item
+    function createTransactionItem(transaction) {
+        const icon = transaction.type.includes('Thanh toán') ? 'shopping-cart' : 
+                    transaction.type.includes('Hoàn tiền') ? 'refresh-cw' : 'gift';
+        const amountClass = transaction.amount < 0 ? 'text-danger' : 'text-success';
+        
+        return `
+            <div class="transaction-item">
+                <div class="transaction-icon">
+                    <i class="feather-${icon}"></i>
+                </div>
+                <div class="transaction-info">
+                    <h6>${transaction.order}</h6>
+                    <p class="mb-0">${transaction.type}</p>
+                    <small class="text-muted">${transaction.time}</small>
+                </div>
+                <div class="transaction-amount">
+                    <span class="${amountClass}">${transaction.amount < 0 ? '-' : '+'}${Math.abs(transaction.amount).toLocaleString('vi-VN')}đ</span>
+                </div>
+            </div>
+        `;
+    }
+
+    // Hàm load thêm dữ liệu
+    async function loadMoreTransactions() {
+        if (isLoading) return;
+        
+        isLoading = true;
+        document.getElementById('loadingMore').classList.remove('d-none');
+        document.getElementById('loadMoreBtn').classList.add('d-none');
+
+        // Giả lập API call
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
+        const start = (currentPage - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        const newTransactions = mockTransactions.slice(start, end);
+
+        if (newTransactions.length > 0) {
+            const transactionList = document.getElementById('transactionList');
+            newTransactions.forEach(transaction => {
+                transactionList.insertAdjacentHTML('beforeend', createTransactionItem(transaction));
+            });
+            currentPage++;
+        }
+
+        isLoading = false;
+        document.getElementById('loadingMore').classList.add('d-none');
+        document.getElementById('loadMoreBtn').classList.remove('d-none');
+        
+        // Ẩn nút "Tải thêm" nếu không còn dữ liệu
+        if (newTransactions.length === 0) {
+            document.getElementById('loadMoreBtn').style.display = 'none';
+        }
+    }
+
+    // Xử lý sự kiện click nút "Tải thêm"
+    document.getElementById('loadMoreBtn').onclick = function(){
+        loadMoreTransactions();
+    };
+
+    // Xử lý click vào transaction item
+    document.getElementById('transactionList').addEventListener('click', function(e) {
+        const transactionItem = e.target.closest('.transaction-item');
+        if (transactionItem) {
+            document.querySelectorAll('.transaction-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            transactionItem.classList.add('active');
+            // Cập nhật chi tiết giao dịch
+            updateTransactionDetail(transactionItem);
+        }
+    });
+
+    // Hàm cập nhật chi tiết giao dịch
+    function updateTransactionDetail(transactionItem) {
+        // Lấy thông tin từ transaction item
+        const order = transactionItem.querySelector('h6').textContent;
+        const type = transactionItem.querySelector('p').textContent;
+        const time = transactionItem.querySelector('small').textContent;
+        const amount = transactionItem.querySelector('.transaction-amount span').textContent;
+
+        // Cập nhật thông tin trong phần chi tiết
+        document.querySelector('.transaction-detail h5').textContent = `Chi Tiết Giao Dịch - ${order}`;
+        document.querySelector('.transaction-detail .col-md-6:nth-child(1) p').textContent = order;
+        document.querySelector('.transaction-detail .col-md-6:nth-child(2) p').textContent = time;
+        document.querySelector('.transaction-detail .col-md-6:nth-child(3) p').textContent = type;
+        document.querySelector('.transaction-detail .col-md-6:nth-child(4) p').textContent = amount;
+    }
+</script> 

@@ -1,0 +1,408 @@
+<main class="nxl-container">
+    <div class="nxl-content">
+        <!-- [ page-header ] start -->
+        <div class="page-header">
+            <div class="page-header-left d-flex align-items-center">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Đăng Ký Gian Hàng Nông Sản</h5>
+                </div>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                    <li class="breadcrumb-item">Đăng ký gian hàng</li>
+                </ul>
+            </div>
+        </div>
+        <!-- [ page-header ] end -->
+        <!-- [ Main Content ] start -->
+        <div class="main-content">
+            <div class="row">
+                <div class="col-xxl-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Thông Tin Gian Hàng</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="shopRegistrationForm">
+                                <!-- Logo gian hàng -->
+                                <div class="mb-4">
+                                    <label class="form-label">Logo gian hàng</label>
+                                    <div class="logo-preview" id="logoPreview">
+                                        <i class="feather-upload-cloud text-muted"></i>
+                                    </div>
+                                    <input type="file" class="form-control" id="shopLogo" accept="image/*" style="display: none;">
+                                </div>
+
+                                <!-- Thông tin cơ bản -->
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Tên gian hàng</label>
+                                        <input type="text" class="form-control" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Mã số thuế (nếu có)</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label">Mô tả gian hàng</label>
+                                    <textarea class="form-control" rows="3" required></textarea>
+                                </div>
+
+                                <!-- Thông tin người đại diện -->
+                                <h6 class="mb-4">Thông tin người đại diện</h6>
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Họ và tên</label>
+                                        <input type="text" class="form-control" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Số CCCD/CMND</label>
+                                        <input type="text" class="form-control" required>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Ngày sinh</label>
+                                        <input type="date" class="form-control" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Giới tính</label>
+                                        <select class="form-select" required>
+                                            <option value="">Chọn giới tính</option>
+                                            <option value="male">Nam</option>
+                                            <option value="female">Nữ</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Thông tin liên hệ -->
+                                <h6 class="mb-4">Thông tin liên hệ</h6>
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="form-control" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Số điện thoại</label>
+                                        <input type="tel" class="form-control" required>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label">Địa chỉ thường trú</label>
+                                    <textarea class="form-control" rows="2" required></textarea>
+                                </div>
+
+                                <!-- Thông tin kho hàng -->
+                                <h6 class="mb-4">Thông tin kho hàng</h6>
+                                <div class="mb-4">
+                                    <label class="form-label">Địa chỉ kho hàng</label>
+                                    <textarea class="form-control" rows="2" required></textarea>
+                                </div>
+
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Diện tích kho (m²)</label>
+                                        <input type="number" class="form-control" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Công suất bảo quản (tấn)</label>
+                                        <input type="number" class="form-control" required>
+                                    </div>
+                                </div>
+
+                                <!-- Thông tin sản phẩm -->
+                                <h6 class="mb-4">Thông tin sản phẩm</h6>
+                                <div class="mb-4">
+                                    <label class="form-label">Loại hình kinh doanh</label>
+                                    <select class="form-select" required>
+                                        <option value="">Chọn loại hình</option>
+                                        <option value="farmer">Hộ nông dân</option>
+                                        <option value="cooperative">Hợp tác xã</option>
+                                        <option value="company">Doanh nghiệp</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label">Danh mục sản phẩm</label>
+                                    <select class="form-select" required>
+                                        <option value="">Chọn danh mục</option>
+                                        <option value="vegetables">Rau củ quả</option>
+                                        <option value="fruits">Trái cây</option>
+                                        <option value="rice">Gạo</option>
+                                        <option value="coffee">Cà phê</option>
+                                        <option value="tea">Chè</option>
+                                        <option value="other">Khác</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label">Sản phẩm chính</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label">Mô tả chi tiết sản phẩm</label>
+                                    <textarea class="form-control" rows="3" required></textarea>
+                                </div>
+
+                                <!-- Chứng nhận -->
+                                <h6 class="mb-4">Chứng nhận</h6>
+                                <div class="mb-4">
+                                    <label class="form-label">Chứng nhận VietGAP</label>
+                                    <input type="file" class="form-control" accept=".pdf,.jpg,.jpeg,.png">
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label">Chứng nhận GlobalGAP</label>
+                                    <input type="file" class="form-control" accept=".pdf,.jpg,.jpeg,.png">
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label">Chứng nhận hữu cơ</label>
+                                    <input type="file" class="form-control" accept=".pdf,.jpg,.jpeg,.png">
+                                </div>
+
+                                <!-- Chính sách -->
+                                <h6 class="mb-4">Chính sách</h6>
+                                <div class="mb-4">
+                                    <label class="form-label">Chính sách đổi trả</label>
+                                    <textarea class="form-control" rows="3" required></textarea>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label">Chính sách hoàn tiền</label>
+                                    <textarea class="form-control" rows="3" required></textarea>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label">Chính sách bảo hành</label>
+                                    <textarea class="form-control" rows="3" required></textarea>
+                                </div>
+
+                                <div class="text-end">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="feather-send me-2"></i>
+                                        Gửi yêu cầu
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-6">
+                    <div class="card stretch stretch-full">
+                        <div class="card-header">
+                            <h5 class="card-title">Trạng Thái Đăng Ký</h5>
+                        </div>
+                        <div class="card-body p-0 h-100">
+                            <div class="status-list" id="statusList">
+                                <!-- Item đang chờ duyệt -->
+                                <div class="status-item">
+                                    <div class="status-icon status-info">
+                                        <i class="feather-clock"></i>
+                                    </div>
+                                    <div class="status-content">
+                                        <h6>Đang chờ duyệt</h6>
+                                        <p class="mb-1">Yêu cầu đăng ký gian hàng của bạn đang được xem xét</p>
+                                        <small class="text-muted">15:30 - 20/03/2024</small>
+                                        <div class="admin-note mt-2">
+                                            <small class="text-primary">Ghi chú: Đang kiểm tra thông tin nông trại</small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Item yêu cầu bổ sung -->
+                                <div class="status-item">
+                                    <div class="status-icon status-warning">
+                                        <i class="feather-alert-circle"></i>
+                                    </div>
+                                    <div class="status-content">
+                                        <h6>Yêu cầu bổ sung</h6>
+                                        <p class="mb-1">Vui lòng bổ sung thêm chứng nhận VietGAP</p>
+                                        <small class="text-muted">14:20 - 20/03/2024</small>
+                                        <div class="admin-note mt-2">
+                                            <small class="text-warning">Ghi chú: Cần bổ sung thêm tài liệu chứng nhận</small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Item đã duyệt -->
+                                <div class="status-item">
+                                    <div class="status-icon status-approved">
+                                        <i class="feather-check-circle"></i>
+                                    </div>
+                                    <div class="status-content">
+                                        <h6>Đã duyệt</h6>
+                                        <p class="mb-1">Yêu cầu đăng ký gian hàng của bạn đã được duyệt</p>
+                                        <small class="text-muted">10:15 - 19/03/2024</small>
+                                        <div class="admin-note mt-2">
+                                            <small class="text-success">Ghi chú: Đã xác thực thông tin thành công</small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Item từ chối -->
+                                <div class="status-item">
+                                    <div class="status-icon status-rejected">
+                                        <i class="feather-x-circle"></i>
+                                    </div>
+                                    <div class="status-content">
+                                        <h6>Từ chối</h6>
+                                        <p class="mb-1">Yêu cầu đăng ký gian hàng của bạn bị từ chối</p>
+                                        <small class="text-muted">09:30 - 18/03/2024</small>
+                                        <div class="admin-note mt-2">
+                                            <small class="text-danger">Ghi chú: Thông tin nông trại không hợp lệ</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ Main Content ] end -->
+    </div>
+    <!-- [ Footer ] start -->
+    <footer class="footer">
+        <p class="fs-11 text-muted fw-medium text-uppercase mb-0 copyright">
+            <span>Copyright ©</span>
+            <script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+                document.write(new Date().getFullYear());
+            </script>
+        </p>
+        <div class="d-flex align-items-center gap-4">
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Help</a>
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Terms</a>
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Privacy</a>
+        </div>
+    </footer>
+    <!-- [ Footer ] end -->
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+<script>
+    feather.replace();
+
+    // Xử lý upload logo
+    document.getElementById('logoPreview').addEventListener('click', function() {
+        document.getElementById('shopLogo').click();
+    });
+
+    document.getElementById('shopLogo').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const logoPreview = document.getElementById('logoPreview');
+                logoPreview.innerHTML = `<img src="${e.target.result}" alt="Shop Logo">`;
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Xử lý form submit
+    document.getElementById('shopRegistrationForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        // TODO: Xử lý gửi form
+        alert('Yêu cầu đăng ký gian hàng đã được gửi!');
+    });
+
+    // Xử lý click vào status item
+    document.getElementById('statusList').addEventListener('click', function(e) {
+        const statusItem = e.target.closest('.status-item');
+        if (statusItem) {
+            document.querySelectorAll('.status-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            statusItem.classList.add('active');
+        }
+    });
+</script>
+
+<style>
+    .status-list {
+        height: calc(100vh - 200px);
+        overflow-y: auto;
+    }
+    .status-item {
+        display: flex;
+        padding: 15px;
+        border-bottom: 1px solid #e9ecef;
+        position: relative;
+    }
+    .status-item:last-child {
+        border-bottom: none;
+    }
+    .status-item.active {
+        background: #f8f9fa;
+    }
+    .status-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        flex-shrink: 0;
+    }
+    .status-icon i {
+        font-size: 20px;
+        color: #fff;
+    }
+    .status-content {
+        flex: 1;
+    }
+    .status-content h6 {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 600;
+    }
+    .status-content p {
+        font-size: 12px;
+        color: #6c757d;
+        margin: 0;
+    }
+    .status-content small {
+        font-size: 11px;
+    }
+    .admin-note {
+        font-size: 11px;
+        padding: 4px 8px;
+        border-radius: 4px;
+        background: rgba(0,0,0,0.03);
+    }
+    .status-warning {
+        background: #ffc107;
+    }
+    .status-info {
+        background: #0dcaf0;
+    }
+    .status-approved {
+        background: #28a745;
+    }
+    .status-rejected {
+        background: #dc3545;
+    }
+    .logo-preview {
+        width: 150px;
+        height: 150px;
+        border: 2px dashed #ddd;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 15px;
+        cursor: pointer;
+    }
+    .logo-preview img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+</style> 

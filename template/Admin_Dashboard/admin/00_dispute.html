@@ -1,0 +1,236 @@
+<div class="page-content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Quản Lý Tranh Chấp</h4>
+                </div>
+                <div class="card-body">
+                    <!-- Thanh tìm kiếm và bộ lọc -->
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Tìm kiếm theo mã tranh chấp...">
+                                <button class="btn btn-primary"><i class="bx bx-search"></i></button>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select">
+                                <option value="">Tất cả trạng thái</option>
+                                <option value="pending">Đang xử lý</option>
+                                <option value="resolved">Đã giải quyết</option>
+                                <option value="closed">Đã đóng</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select">
+                                <option value="">Tất cả loại tranh chấp</option>
+                                <option value="delivery">Vấn đề giao hàng</option>
+                                <option value="quality">Chất lượng sản phẩm</option>
+                                <option value="payment">Thanh toán</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 d-flex gap-2">
+                            <button class="btn btn-primary flex-fill">
+                                <i class="bx bx-filter-alt me-1"></i> Lọc
+                            </button>
+                            <button class="btn btn-light flex-fill">
+                                <i class="bx bx-reset me-1"></i> Đặt lại
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Danh sách tranh chấp -->
+                        <div class="col-md-3">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h5 class="card-title">Danh Sách Tranh Chấp</h5>
+                                </div>
+                                <div class="card-body p-0" style="overflow-y: auto; max-height: 490px;">
+                                    <div class="list-group list-group-flush">
+                                        <a href="#" class="list-group-item list-group-item-action bg-light">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h6 class="mb-1">Tranh Chấp #TC001</h6>
+                                                <small>3 ngày trước</small>
+                                            </div>
+                                            <p class="mb-1">Người dùng: Nguyễn Văn A</p>
+                                            <small>Shop: Shop Nông Sản A</small>
+                                            <span class="badge bg-warning float-end">Đang xử lý</span>
+                                        </a>
+                                        <a href="#" class="list-group-item list-group-item-action">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h6 class="mb-1">Tranh Chấp #TC002</h6>
+                                                <small>5 ngày trước</small>
+                                            </div>
+                                            <p class="mb-1">Người dùng: Trần Thị B</p>
+                                            <small>Shop: Shop Nông Sản B</small>
+                                            <span class="badge bg-success float-end">Đã giải quyết</span>
+                                        </a>
+                                        <!-- Thêm các mục khác để có đủ chiều cao -->
+                                        <a href="#" class="list-group-item list-group-item-action">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h6 class="mb-1">Tranh Chấp #TC003</h6>
+                                                <small>6 ngày trước</small>
+                                            </div>
+                                            <p class="mb-1">Người dùng: Lê Văn C</p>
+                                            <small>Shop: Shop Rau Củ C</small>
+                                            <span class="badge bg-danger float-end">Đã đóng</span>
+                                        </a>
+                                        <a href="#" class="list-group-item list-group-item-action">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h6 class="mb-1">Tranh Chấp #TC004</h6>
+                                                <small>1 tuần trước</small>
+                                            </div>
+                                            <p class="mb-1">Người dùng: Phạm Thị D</p>
+                                            <small>Shop: Shop Trái Cây D</small>
+                                            <span class="badge bg-warning float-end">Đang xử lý</span>
+                                        </a>
+                                        <a href="#" class="list-group-item list-group-item-action">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h6 class="mb-1">Tranh Chấp #TC005</h6>
+                                                <small>1 tuần trước</small>
+                                            </div>
+                                            <p class="mb-1">Người dùng: Hoàng Văn E</p>
+                                            <small>Shop: Shop Đặc Sản E</small>
+                                            <span class="badge bg-success float-end">Đã giải quyết</span>
+                                        </a>
+                                        <a href="#" class="list-group-item list-group-item-action">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h6 class="mb-1">Tranh Chấp #TC006</h6>
+                                                <small>2 tuần trước</small>
+                                            </div>
+                                            <p class="mb-1">Người dùng: Vũ Thị F</p>
+                                            <small>Shop: Shop Thực Phẩm F</small>
+                                            <span class="badge bg-warning float-end">Đang xử lý</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <!-- Phân trang -->
+                                <div class="card-footer mt-auto">
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination pagination-sm mb-0 justify-content-center">
+                                            <li class="page-item disabled">
+                                                <a class="page-link" href="#" tabindex="-1">Trước</a>
+                                            </li>
+                                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="#">Sau</a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chat giải quyết -->
+                        <div class="col-md-6">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h5 class="card-title">Giải Quyết Tranh Chấp #TC001</h5>
+                                </div>
+                                <div class="card-body d-flex flex-column">
+                                    <div class="chat-messages p-3 flex-grow-1" style="height: 400px; overflow-y: auto;">
+                                        <div class="message mb-3">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <img src="assets/images/users/avatar-1.jpg" class="rounded-circle me-2" width="32" height="32" alt="user">
+                                                <div>
+                                                    <h6 class="mb-0">Nguyễn Văn A</h6>
+                                                    <small class="text-muted">Người dùng</small>
+                                                </div>
+                                            </div>
+                                            <div class="message-content bg-light p-3 rounded">
+                                                <p class="mb-0">Tôi đã đặt hàng được 1 tuần nhưng vẫn chưa nhận được hàng. Shop không phản hồi tin nhắn.</p>
+                                            </div>
+                                        </div>
+                                        <div class="message mb-3">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <img src="assets/images/users/avatar-2.jpg" class="rounded-circle me-2" width="32" height="32" alt="shop">
+                                                <div>
+                                                    <h6 class="mb-0">Shop Nông Sản A</h6>
+                                                    <small class="text-muted">Shop</small>
+                                                </div>
+                                            </div>
+                                            <div class="message-content bg-light p-3 rounded">
+                                                <p class="mb-0">Xin lỗi vì sự chậm trễ. Chúng tôi đang gặp vấn đề về vận chuyển. Đơn hàng sẽ được giao trong 2 ngày tới.</p>
+                                            </div>
+                                        </div>
+                                        <div class="message mb-3">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <img src="assets/images/users/avatar-1.jpg" class="rounded-circle me-2" width="32" height="32" alt="user">
+                                                <div>
+                                                    <h6 class="mb-0">Nguyễn Văn A</h6>
+                                                    <small class="text-muted">Người dùng</small>
+                                                </div>
+                                            </div>
+                                            <div class="message-content bg-light p-3 rounded">
+                                                <p class="mb-0">Tôi muốn hủy đơn hàng và được hoàn tiền.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="chat-input mt-3">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Nhập tin nhắn...">
+                                            <button class="btn btn-primary">Gửi</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Thông tin chi tiết tranh chấp -->
+                        <div class="col-md-3">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h5 class="card-title">Thông Tin Tranh Chấp</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <h6 class="text-muted">Mã Tranh Chấp</h6>
+                                        <p class="mb-0">#TC001</p>
+                                    </div>
+                                    <div class="mb-3">
+                                        <h6 class="text-muted">Loại Tranh Chấp</h6>
+                                        <p class="mb-0">Vấn đề giao hàng</p>
+                                    </div>
+                                    <div class="mb-3">
+                                        <h6 class="text-muted">Ngày Tạo</h6>
+                                        <p class="mb-0">15/03/2024</p>
+                                    </div>
+                                    <div class="mb-3">
+                                        <h6 class="text-muted">Trạng Thái</h6>
+                                        <span class="badge bg-warning">Đang xử lý</span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <h6 class="text-muted">Lý Do</h6>
+                                        <p class="mb-0">Đơn hàng #DH001 chưa được giao sau 7 ngày đặt hàng</p>
+                                    </div>
+                                    <div class="mb-3">
+                                        <h6 class="text-muted">Yêu Cầu</h6>
+                                        <p class="mb-0">Hủy đơn hàng và hoàn tiền</p>
+                                    </div>
+                                    <div class="mb-3">
+                                        <h6 class="text-muted">Mức Độ Ưu Tiên</h6>
+                                        <span class="badge bg-danger">Cao</span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <h6 class="text-muted">Phản Hồi Gần Nhất</h6>
+                                        <p class="mb-0">17/03/2024 09:15</p>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="d-grid gap-2">
+                                        <button class="btn btn-success">Giải Quyết Tranh Chấp</button>
+                                        <button class="btn btn-danger">Đóng Tranh Chấp</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

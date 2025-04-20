@@ -1,0 +1,675 @@
+<main class="nxl-container">
+    <div class="nxl-content">
+        <!-- [ page-header ] start -->
+        <div class="page-header">
+            <div class="page-header-left d-flex align-items-center">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Cài Đặt Tài Khoản</h5>
+                </div>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                    <li class="breadcrumb-item">Cài đặt</li>
+                </ul>
+            </div>
+        </div>
+        <!-- [ page-header ] end -->
+        <!-- [ Main Content ] start -->
+        <div class="main-content">
+            <div class="row">
+                <div class="col-md-4">
+                    <!-- Menu cài đặt -->
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="settings-menu">
+                                <div class="settings-menu-item active" data-target="profile">
+                                    <i class="feather-user"></i>
+                                    <span>Thông tin cá nhân</span>
+                                </div>
+                                <div class="settings-menu-item" data-target="security">
+                                    <i class="feather-shield"></i>
+                                    <span>Bảo mật</span>
+                                </div>
+                                <div class="settings-menu-item" data-target="notifications">
+                                    <i class="feather-bell"></i>
+                                    <span>Thông báo</span>
+                                </div>
+                                <div class="settings-menu-item" data-target="privacy">
+                                    <i class="feather-lock"></i>
+                                    <span>Quyền riêng tư</span>
+                                </div>
+                                <div class="settings-menu-item" data-target="language">
+                                    <i class="feather-globe"></i>
+                                    <span>Ngôn ngữ</span>
+                                </div>
+                                <div class="settings-menu-item" data-target="shop">
+                                    <i class="feather-shopping-bag"></i>
+                                    <span>Thông tin Shop</span>
+                                </div>
+                                <div class="settings-menu-item text-danger" data-target="logout">
+                                    <i class="feather-log-out"></i>
+                                    <span>Đăng xuất</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <!-- Thông tin cá nhân -->
+                    <div class="card settings-content" id="profile">
+                        <div class="card-header">
+                            <h5 class="card-title">Thông Tin Cá Nhân</h5>
+                        </div>
+                        <div class="card-body">
+                            <form class="profile-form">
+                                <div class="text-center mb-4">
+                                    <div class="avatar-upload">
+                                        <img src="assets/images/user/avatar-1.jpg" alt="Avatar" class="avatar">
+                                        <button type="button" class="btn btn-light btn-sm mt-2">
+                                            <i class="feather-camera me-2"></i>
+                                            Đổi ảnh đại diện
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Họ và tên</label>
+                                        <input type="text" class="form-control" value="Nguyễn Văn A">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="form-control" value="example@email.com">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Số điện thoại</label>
+                                        <input type="tel" class="form-control" value="0123456789">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Ngày sinh</label>
+                                        <input type="date" class="form-control" value="1990-01-01">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Địa chỉ</label>
+                                    <textarea class="form-control" rows="3">123 Đường ABC, Quận 1, TP.HCM</textarea>
+                                </div>
+                                <div class="text-end">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="feather-save me-2"></i>
+                                        Lưu thay đổi
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Bảo mật -->
+                    <div class="card settings-content d-none" id="security">
+                        <div class="card-header">
+                            <h5 class="card-title">Bảo Mật</h5>
+                        </div>
+                        <div class="card-body">
+                            <form class="security-form">
+                                <div class="mb-4">
+                                    <h6>Đổi mật khẩu</h6>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Mật khẩu hiện tại</label>
+                                            <input type="password" class="form-control">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Mật khẩu mới</label>
+                                            <input type="password" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Xác nhận mật khẩu mới</label>
+                                            <input type="password" class="form-control">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Gợi ý mật khẩu</label>
+                                            <div class="password-strength">
+                                                <div class="progress" style="height: 5px;">
+                                                    <div class="progress-bar bg-success" style="width: 75%"></div>
+                                                </div>
+                                                <small class="text-muted">Mật khẩu của bạn khá mạnh</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <h6>Xác thực hai yếu tố</h6>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="twoFactorAuth">
+                                        <label class="form-check-label" for="twoFactorAuth">Bật xác thực hai yếu tố</label>
+                                    </div>
+                                    <small class="text-muted">Khi bật, bạn sẽ cần nhập mã xác thực mỗi khi đăng nhập</small>
+                                </div>
+
+                                <div class="mb-4">
+                                    <h6>Phiên đăng nhập</h6>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Thiết bị</th>
+                                                    <th>Vị trí</th>
+                                                    <th>Lần cuối</th>
+                                                    <th>Thao tác</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Chrome trên Windows</td>
+                                                    <td>TP.HCM, Việt Nam</td>
+                                                    <td>2 phút trước</td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-danger">
+                                                            <i class="feather-trash-2"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Safari trên iPhone</td>
+                                                    <td>Hà Nội, Việt Nam</td>
+                                                    <td>1 giờ trước</td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-danger">
+                                                            <i class="feather-trash-2"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="text-end">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="feather-save me-2"></i>
+                                        Lưu thay đổi
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Thông báo -->
+                    <div class="card settings-content d-none" id="notifications">
+                        <div class="card-header">
+                            <h5 class="card-title">Cài Đặt Thông Báo</h5>
+                        </div>
+                        <div class="card-body">
+                            <form class="notifications-form">
+                                <div class="mb-4">
+                                    <h6>Thông báo đơn hàng</h6>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" id="orderStatus" checked>
+                                        <label class="form-check-label" for="orderStatus">
+                                            Trạng thái đơn hàng thay đổi
+                                        </label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" id="orderDelivery" checked>
+                                        <label class="form-check-label" for="orderDelivery">
+                                            Thông báo giao hàng
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="orderReview" checked>
+                                        <label class="form-check-label" for="orderReview">
+                                            Nhắc nhở đánh giá sản phẩm
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <h6>Thông báo khuyến mãi</h6>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" id="promoNew" checked>
+                                        <label class="form-check-label" for="promoNew">
+                                            Mã giảm giá mới
+                                        </label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" id="promoExpire" checked>
+                                        <label class="form-check-label" for="promoExpire">
+                                            Mã giảm giá sắp hết hạn
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="promoSpecial" checked>
+                                        <label class="form-check-label" for="promoSpecial">
+                                            Ưu đãi đặc biệt
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <h6>Thông báo hệ thống</h6>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" id="systemUpdate" checked>
+                                        <label class="form-check-label" for="systemUpdate">
+                                            Cập nhật hệ thống
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="systemMaintenance" checked>
+                                        <label class="form-check-label" for="systemMaintenance">
+                                            Bảo trì hệ thống
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="text-end">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="feather-save me-2"></i>
+                                        Lưu thay đổi
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Quyền riêng tư -->
+                    <div class="card settings-content d-none" id="privacy">
+                        <div class="card-header">
+                            <h5 class="card-title">Quyền Riêng Tư</h5>
+                        </div>
+                        <div class="card-body">
+                            <form class="privacy-form">
+                                <div class="mb-4">
+                                    <h6>Hiển thị thông tin</h6>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" id="showEmail" checked>
+                                        <label class="form-check-label" for="showEmail">
+                                            Hiển thị email trong hồ sơ
+                                        </label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" id="showPhone" checked>
+                                        <label class="form-check-label" for="showPhone">
+                                            Hiển thị số điện thoại trong hồ sơ
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="showAddress" checked>
+                                        <label class="form-check-label" for="showAddress">
+                                            Hiển thị địa chỉ trong hồ sơ
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <h6>Quyền truy cập</h6>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" id="allowSearch" checked>
+                                        <label class="form-check-label" for="allowSearch">
+                                            Cho phép tìm kiếm tài khoản
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="allowFriendRequest" checked>
+                                        <label class="form-check-label" for="allowFriendRequest">
+                                            Cho phép yêu cầu kết bạn
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <h6>Dữ liệu tài khoản</h6>
+                                    <div class="alert alert-info">
+                                        <i class="feather-info me-2"></i>
+                                        Bạn có thể tải xuống hoặc xóa dữ liệu tài khoản của mình
+                                    </div>
+                                    <div class="d-flex gap-2">
+                                        <button type="button" class="btn btn-primary">
+                                            <i class="feather-download me-2"></i>
+                                            Tải xuống dữ liệu
+                                        </button>
+                                        <button type="button" class="btn btn-danger">
+                                            <i class="feather-trash-2 me-2"></i>
+                                            Xóa tài khoản
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="text-end">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="feather-save me-2"></i>
+                                        Lưu thay đổi
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Ngôn ngữ -->
+                    <div class="card settings-content d-none" id="language">
+                        <div class="card-header">
+                            <h5 class="card-title">Cài Đặt Ngôn Ngữ</h5>
+                        </div>
+                        <div class="card-body">
+                            <form class="language-form">
+                                <div class="mb-4">
+                                    <h6>Ngôn ngữ hiển thị</h6>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="radio" name="language" id="langVi" checked>
+                                        <label class="form-check-label" for="langVi">
+                                            Tiếng Việt
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="language" id="langEn">
+                                        <label class="form-check-label" for="langEn">
+                                            English
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <h6>Định dạng ngày giờ</h6>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="radio" name="dateFormat" id="dateFormat1" checked>
+                                        <label class="form-check-label" for="dateFormat1">
+                                            DD/MM/YYYY
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="dateFormat" id="dateFormat2">
+                                        <label class="form-check-label" for="dateFormat2">
+                                            MM/DD/YYYY
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="text-end">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="feather-save me-2"></i>
+                                        Lưu thay đổi
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Thông tin Shop -->
+                    <div class="card settings-content d-none" id="shop">
+                        <div class="card-header">
+                            <h5 class="card-title">Thông Tin Shop</h5>
+                        </div>
+                        <div class="card-body">
+                            <form class="shop-form">
+                                <div class="text-center mb-4">
+                                    <div class="shop-logo-upload">
+                                        <img src="assets/images/shop/logo.jpg" alt="Shop Logo" class="shop-logo">
+                                        <button type="button" class="btn btn-light btn-sm mt-2">
+                                            <i class="feather-camera me-2"></i>
+                                            Đổi logo shop
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Tên shop</label>
+                                        <input type="text" class="form-control" value="Duralux Shop">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Mã số thuế</label>
+                                        <input type="text" class="form-control" value="0123456789">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Mô tả shop</label>
+                                    <textarea class="form-control" rows="3">Chuyên cung cấp các sản phẩm nội thất cao cấp, chất lượng tốt với giá cả hợp lý.</textarea>
+                                </div>
+
+                                <div class="mb-4">
+                                    <h6>Thông tin liên hệ</h6>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Email</label>
+                                            <input type="email" class="form-control" value="shop@duralux.com">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Số điện thoại</label>
+                                            <input type="tel" class="form-control" value="0123456789">
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Địa chỉ</label>
+                                        <textarea class="form-control" rows="2">123 Đường ABC, Quận 1, TP.HCM</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <h6>Thời gian làm việc</h6>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Giờ mở cửa</label>
+                                            <input type="time" class="form-control" value="08:00">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Giờ đóng cửa</label>
+                                            <input type="time" class="form-control" value="22:00">
+                                        </div>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" id="open24h" checked>
+                                        <label class="form-check-label" for="open24h">
+                                            Mở cửa 24/7
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <h6>Mạng xã hội</h6>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Facebook</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="feather-facebook"></i></span>
+                                                <input type="text" class="form-control" value="facebook.com/duralux">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Instagram</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="feather-instagram"></i></span>
+                                                <input type="text" class="form-control" value="instagram.com/duralux">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Zalo</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="feather-message-circle"></i></span>
+                                                <input type="text" class="form-control" value="zalo.me/duralux">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Website</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="feather-globe"></i></span>
+                                                <input type="text" class="form-control" value="duralux.com">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <h6>Chính sách shop</h6>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" id="policyReturn" checked>
+                                        <label class="form-check-label" for="policyReturn">
+                                            Chấp nhận đổi trả hàng
+                                        </label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" id="policyRefund" checked>
+                                        <label class="form-check-label" for="policyRefund">
+                                            Chấp nhận hoàn tiền
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="policyWarranty" checked>
+                                        <label class="form-check-label" for="policyWarranty">
+                                            Có chính sách bảo hành
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="text-end">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="feather-save me-2"></i>
+                                        Lưu thay đổi
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Đăng xuất -->
+                    <div class="card settings-content d-none" id="logout">
+                        <div class="card-header">
+                            <h5 class="card-title">Đăng Xuất</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="text-center">
+                                <div class="mb-4">
+                                    <i class="feather-log-out text-danger" style="font-size: 48px;"></i>
+                                </div>
+                                <h6>Bạn có chắc chắn muốn đăng xuất?</h6>
+                                <p class="text-muted">Bạn sẽ cần đăng nhập lại để tiếp tục sử dụng</p>
+                                <div class="d-flex justify-content-center gap-2">
+                                    <button type="button" class="btn btn-light">
+                                        Hủy
+                                    </button>
+                                    <button type="button" class="btn btn-danger">
+                                        <i class="feather-log-out me-2"></i>
+                                        Đăng xuất
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ Main Content ] end -->
+    </div>
+    <!-- [ Footer ] start -->
+    <footer class="footer">
+        <p class="fs-11 text-muted fw-medium text-uppercase mb-0 copyright">
+            <span>Copyright ©</span>
+            <script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+                document.write(new Date().getFullYear());
+            </script>
+        </p>
+        <div class="d-flex align-items-center gap-4">
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Help</a>
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Terms</a>
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Privacy</a>
+        </div>
+    </footer>
+    <!-- [ Footer ] end -->
+</main>
+
+<style>
+    .settings-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .settings-menu-item {
+        display: flex;
+        align-items: center;
+        padding: 12px 15px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    .settings-menu-item:hover {
+        background-color: #f8f9fa;
+    }
+    .settings-menu-item.active {
+        background-color: #e9ecef;
+        color: #0d6efd;
+    }
+    .settings-menu-item i {
+        margin-right: 10px;
+        font-size: 18px;
+    }
+    .avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #fff;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .password-strength {
+        margin-top: 5px;
+    }
+    .shop-logo {
+        width: 150px;
+        height: 150px;
+        border-radius: 8px;
+        object-fit: cover;
+        border: 3px solid #fff;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+</style>
+
+<script>
+    // Xử lý chuyển đổi tab cài đặt
+    document.querySelectorAll('.settings-menu-item').forEach(item => {
+        item.addEventListener('click', function() {
+            // Xóa active class từ tất cả các menu item
+            document.querySelectorAll('.settings-menu-item').forEach(i => i.classList.remove('active'));
+            // Thêm active class cho menu item được click
+            this.classList.add('active');
+            
+            // Ẩn tất cả các content
+            document.querySelectorAll('.settings-content').forEach(content => content.classList.add('d-none'));
+            // Hiển thị content tương ứng
+            const target = this.getAttribute('data-target');
+            document.getElementById(target).classList.remove('d-none');
+        });
+    });
+
+    // Xử lý đăng xuất
+    document.querySelector('#logout .btn-danger').addEventListener('click', function() {
+        if (confirm('Bạn có chắc chắn muốn đăng xuất?')) {
+            // Xử lý đăng xuất ở đây
+            window.location.href = 'login.html';
+        }
+    });
+
+    // Xử lý đổi mật khẩu
+    document.querySelector('.security-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        // Xử lý đổi mật khẩu ở đây
+        alert('Đổi mật khẩu thành công!');
+    });
+
+    // Xử lý cập nhật thông tin cá nhân
+    document.querySelector('.profile-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        // Xử lý cập nhật thông tin ở đây
+        alert('Cập nhật thông tin thành công!');
+    });
+
+    // Xử lý cập nhật thông tin shop
+    document.querySelector('.shop-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        // Xử lý cập nhật thông tin shop ở đây
+        alert('Cập nhật thông tin shop thành công!');
+    });
+</script> 

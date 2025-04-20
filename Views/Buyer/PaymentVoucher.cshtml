@@ -1,0 +1,410 @@
+@model PaymentVoucherViewModel
+
+@{
+    Layout = "_LayoutBuyer";
+}
+
+<main class="nxl-container">
+    <div class="nxl-content">
+        <!-- [ page-header ] start -->
+        <div class="page-header">
+            <div class="page-header-left d-flex align-items-center">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Quản Lý Phương Thức Thanh Toán</h5>
+                </div>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                    <li class="breadcrumb-item">Thanh toán</li>
+                </ul>
+            </div>
+        </div>
+        <!-- [ page-header ] end -->
+        <!-- [ Main Content ] start -->
+        <div class="main-content">
+            <!-- Thông tin tài khoản -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Thông Tin Tài Khoản</h5>
+                        </div>
+                        <div class="card-body">
+                            <!-- Số dư -->
+                            <div class="mb-4">
+                                <h6>Số dư hiện tại</h6>
+                                <div class="d-flex align-items-center">
+                                    <h3 class="mb-0 me-2">2.500.000đ</h3>
+                                    <button class="btn btn-sm btn-primary">
+                                        <i class="feather-refresh-cw"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Phương thức thanh toán -->
+                            <div class="mb-4">
+                                <h6>Phương thức thanh toán</h6>
+                                <div class="payment-methods">
+                                    <div class="payment-method-item">
+                                        <img src="assets/images/payment/momo.png" alt="Momo" class="payment-icon">
+                                        <div class="payment-info">
+                                            <div class="d-flex align-items-center">
+                                                <h6 class="mb-0 me-2">Ví Momo</h6>
+                                                <button class="btn btn-sm btn-link p-0 edit-payment"
+                                                    data-bs-toggle="collapse" data-bs-target="#editPayment1">
+                                                    <i class="feather-edit-2"></i>
+                                                </button>
+                                            </div>
+                                            <small class="text-muted">****1234</small>
+                                        </div>
+                                        <button class="btn btn-sm btn-outline-danger">
+                                            <i class="feather-trash-2"></i>
+                                        </button>
+                                    </div>
+                                    <div class="collapse" id="editPayment1">
+                                        <div class="card card-body mb-3">
+                                            <form class="edit-payment-form">
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Loại thanh toán</label>
+                                                        <select class="form-select">
+                                                            <option value="momo" selected>Ví Momo</option>
+                                                            <option value="bank">Ngân hàng</option>
+                                                            <option value="cash">Tiền mặt</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Số tài khoản</label>
+                                                        <input type="text" class="form-control" value="****1234">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Tên chủ tài khoản</label>
+                                                        <input type="text" class="form-control" value="Nguyễn Văn A">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Ngân hàng</label>
+                                                        <input type="text" class="form-control" value="Momo">
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-end gap-2">
+                                                    <button type="button" class="btn btn-light"
+                                                        data-bs-toggle="collapse" data-bs-target="#editPayment1">
+                                                        Hủy
+                                                    </button>
+                                                    <button type="submit" class="btn btn-primary">
+                                                        Lưu thay đổi
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="payment-method-item">
+                                        <img src="assets/images/payment/vietcombank.png" alt="Vietcombank"
+                                            class="payment-icon">
+                                        <div class="payment-info">
+                                            <div class="d-flex align-items-center">
+                                                <h6 class="mb-0 me-2">Vietcombank</h6>
+                                                <button class="btn btn-sm btn-link p-0 edit-payment"
+                                                    data-bs-toggle="collapse" data-bs-target="#editPayment2">
+                                                    <i class="feather-edit-2"></i>
+                                                </button>
+                                            </div>
+                                            <small class="text-muted">****5678</small>
+                                        </div>
+                                        <button class="btn btn-sm btn-outline-danger">
+                                            <i class="feather-trash-2"></i>
+                                        </button>
+                                    </div>
+                                    <div class="collapse" id="editPayment2">
+                                        <div class="card card-body mb-3">
+                                            <form class="edit-payment-form">
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Loại thanh toán</label>
+                                                        <select class="form-select">
+                                                            <option value="momo">Ví Momo</option>
+                                                            <option value="bank" selected>Ngân hàng</option>
+                                                            <option value="cash">Tiền mặt</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Số tài khoản</label>
+                                                        <input type="text" class="form-control" value="****5678">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Tên chủ tài khoản</label>
+                                                        <input type="text" class="form-control" value="Trần Thị B">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Ngân hàng</label>
+                                                        <input type="text" class="form-control" value="Vietcombank">
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-end gap-2">
+                                                    <button type="button" class="btn btn-light"
+                                                        data-bs-toggle="collapse" data-bs-target="#editPayment2">
+                                                        Hủy
+                                                    </button>
+                                                    <button type="submit" class="btn btn-primary">
+                                                        Lưu thay đổi
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-light w-100" data-bs-toggle="collapse"
+                                        data-bs-target="#addPaymentForm">
+                                        <i class="feather-plus me-2"></i>
+                                        Thêm phương thức
+                                    </button>
+                                    <div class="collapse" id="addPaymentForm">
+                                        <div class="card card-body mt-3">
+                                            <form class="add-payment-form">
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Loại thanh toán</label>
+                                                        <select class="form-select">
+                                                            <option value="">Chọn loại thanh toán</option>
+                                                            <option value="momo">Ví Momo</option>
+                                                            <option value="bank">Ngân hàng</option>
+                                                            <option value="cash">Tiền mặt</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Số tài khoản</label>
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Nhập số tài khoản">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Tên chủ tài khoản</label>
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Nhập tên chủ tài khoản">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Ngân hàng</label>
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Nhập tên ngân hàng">
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-end gap-2">
+                                                    <button type="button" class="btn btn-light"
+                                                        data-bs-toggle="collapse" data-bs-target="#addPaymentForm">
+                                                        Hủy
+                                                    </button>
+                                                    <button type="submit" class="btn btn-primary">
+                                                        Thêm phương thức
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quản lý mã giảm giá -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Mã Giảm Giá Của Tôi</h5>
+                            <div class="card-toolbar">
+                                <div class="input-group input-group-sm" style="width: 300px;">
+                                    <span class="input-group-text"><i class="feather-search"></i></span>
+                                    <input type="text" class="form-control" placeholder="Tìm kiếm mã giảm giá...">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="coupon-list">
+                                <div class="coupon-item">
+                                    <div class="coupon-info">
+                                        <h6>MUA10</h6>
+                                        <small class="text-muted">Giảm 10% tối đa 100.000đ</small>
+                                        <div class="mt-2">
+                                            <span class="badge bg-success">Còn hạn</span>
+                                            <small class="text-muted d-block">Hết hạn: 31/12/2024</small>
+                                        </div>
+                                    </div>
+                                    <div class="coupon-actions">
+                                        <button class="btn btn-sm btn-danger">
+                                            <i class="feather-trash-2"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="coupon-item">
+                                    <div class="coupon-info">
+                                        <h6>MUA20</h6>
+                                        <small class="text-muted">Giảm 20% tối đa 200.000đ</small>
+                                        <div class="mt-2">
+                                            <span class="badge bg-warning">Sắp hết hạn</span>
+                                            <small class="text-muted d-block">Hết hạn: 30/04/2024</small>
+                                        </div>
+                                    </div>
+                                    <div class="coupon-actions">
+                                        <button class="btn btn-sm btn-danger">
+                                            <i class="feather-trash-2"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <div class="text-muted">
+                                    Hiển thị 1-2 trên 2 kết quả
+                                </div>
+                                <nav>
+                                    <ul class="pagination pagination-sm mb-0">
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="#"><i class="feather-chevron-left"></i></a>
+                                        </li>
+                                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#"><i class="feather-chevron-right"></i></a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Nhập Mã Giảm Giá</h5>
+                        </div>
+                        <div class="card-body">
+                            <form class="add-coupon-form">
+                                <div class="mb-3">
+                                    <label class="form-label">Mã giảm giá</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Nhập mã giảm giá">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="feather-plus me-2"></i>
+                                            Thêm
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="alert alert-info">
+                                    <i class="feather-info me-2"></i>
+                                    Nhập mã giảm giá từ shop để nhận ưu đãi
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ Main Content ] end -->
+    </div>
+    <!-- [ Footer ] start -->
+    <footer class="footer">
+        <p class="fs-11 text-muted fw-medium text-uppercase mb-0 copyright">
+            <span>Copyright ©</span>
+            <script data-cfasync="false"
+                src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+            <script>
+                document.write(new Date().getFullYear());
+            </script>
+        </p>
+        <div class="d-flex align-items-center gap-4">
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Help</a>
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Terms</a>
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Privacy</a>
+        </div>
+    </footer>
+    <!-- [ Footer ] end -->
+</main>
+
+<style>
+    .payment-method-item {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        margin-bottom: 15px;
+    }
+
+    .payment-icon {
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+        margin-right: 15px;
+    }
+
+    .payment-info {
+        flex: 1;
+    }
+
+    .payment-info h6 {
+        margin: 0;
+        font-size: 14px;
+    }
+
+    .payment-info small {
+        font-size: 12px;
+    }
+
+    .coupon-item {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        border: 1px dashed #e9ecef;
+        border-radius: 8px;
+        margin-bottom: 15px;
+    }
+
+    .coupon-info {
+        flex: 1;
+    }
+
+    .coupon-info h6 {
+        margin: 0;
+        font-size: 14px;
+        color: #0d6efd;
+    }
+
+    .coupon-info small {
+        font-size: 12px;
+    }
+
+    .coupon-actions {
+        display: flex;
+        gap: 5px;
+    }
+</style>
+
+<script>
+    // Xử lý tìm kiếm mã giảm giá
+    const searchInput = document.querySelector('.card-toolbar input');
+    searchInput.addEventListener('input', function () {
+        const searchText = this.value.toLowerCase();
+        document.querySelectorAll('.coupon-item').forEach(item => {
+            const couponCode = item.querySelector('h6').textContent.toLowerCase();
+            const couponContent = item.querySelector('small').textContent.toLowerCase();
+            if (couponCode.includes(searchText) || couponContent.includes(searchText)) {
+                item.style.display = 'flex';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+
+    // Xử lý submit form thêm mã giảm giá
+    document.querySelector('.add-coupon-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const couponCode = this.querySelector('input[type="text"]').value;
+        if (couponCode) {
+            alert('Thêm mã giảm giá thành công!');
+            this.reset();
+        }
+    });
+</script>

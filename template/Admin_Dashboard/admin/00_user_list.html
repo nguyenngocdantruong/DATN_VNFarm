@@ -1,0 +1,332 @@
+<div class="page-content">
+
+     <!-- Start Container Fluid -->
+     <div class="container-xxl">
+
+         <div class="row">
+             <div class="col-md-6 col-xl-3">
+                 <div class="card">
+                     <div class="card-body">                                
+                         <div class="d-flex align-items-center gap-2 mb-3">
+                             <div class="avatar-md bg-primary bg-opacity-10 rounded">
+                                 <iconify-icon icon="solar:users-group-two-rounded-bold-duotone" class="fs-32 text-primary avatar-title"></iconify-icon>
+                             </div>
+                             <div>
+                                 <h4 class="mb-0">Tổng Khách Hàng</h4>
+                             </div>
+                         </div>
+                         <div class="d-flex align-items-center justify-content-between">
+                             <p class="text-muted fw-medium fs-22 mb-0">22.630</p>            
+                             <div>
+                                 <span class="badge text-success bg-success-subtle fs-12"><i class="bx bx-up-arrow-alt"></i>34.4%</span>
+                             </div>        
+                         </div>
+                     </div>
+                 </div>
+             </div>
+             <div class="col-md-6 col-xl-3">
+                 <div class="card">
+                     <div class="card-body">                                
+                         <div class="d-flex align-items-center gap-2 mb-3">
+                             <div class="avatar-md bg-primary bg-opacity-10 rounded">
+                                 <iconify-icon icon="solar:box-bold-duotone" class="fs-32 text-primary avatar-title"></iconify-icon>
+                             </div>
+                             <div>
+                                 <h4 class="mb-0">Đơn Hàng</h4>
+                             </div>
+                         </div>
+                         <div class="d-flex align-items-center justify-content-between">
+                             <p class="text-muted fw-medium fs-22 mb-0">4.500</p>            
+                             <div>
+                                 <span class="badge text-danger bg-danger-subtle fs-12"><i class="bx bx-down-arrow-alt"></i>8.1%</span>
+                             </div>        
+                         </div>
+                     </div>
+                 </div>
+             </div>
+
+             <div class="col-md-6 col-xl-3">
+                 <div class="card">
+                     <div class="card-body">                                
+                         <div class="d-flex align-items-center gap-2 mb-3">
+                             <div class="avatar-md bg-primary bg-opacity-10 rounded">
+                                 <iconify-icon icon="solar:headphones-round-sound-bold-duotone" class="fs-32 text-primary avatar-title"></iconify-icon>
+                             </div>
+                             <div>
+                                 <h4 class="mb-0">Yêu Cầu Hỗ Trợ</h4>
+                             </div>
+                         </div>
+                         <div class="d-flex align-items-center justify-content-between">
+                             <p class="text-muted fw-medium fs-22 mb-0">1.030</p>            
+                             <div>
+                                 <span class="badge text-success bg-success-subtle fs-12"><i class="bx bx-up-arrow-alt"></i>12.6%</span>
+                             </div>        
+                         </div>
+                     </div>
+                 </div>
+             </div>
+
+             <div class="col-md-6 col-xl-3">
+                 <div class="card">
+                     <div class="card-body">                                
+                         <div class="d-flex align-items-center gap-2 mb-3">
+                             <div class="avatar-md bg-primary bg-opacity-10 rounded">
+                                 <iconify-icon icon="solar:bill-list-bold-duotone" class="fs-32 text-primary avatar-title"></iconify-icon>
+                             </div>
+                             <div>
+                                 <h4 class="mb-0">Doanh Thu</h4>
+                             </div>
+                         </div>
+                         <div class="d-flex align-items-center justify-content-between">
+                             <p class="text-muted fw-medium fs-22 mb-0">38.908.000đ</p>            
+                             <div>
+                                 <span class="badge text-success bg-success-subtle fs-12"><i class="bx bx-up-arrow-alt"></i>45.9%</span>
+                             </div>        
+                         </div>
+                     </div>
+                 </div>
+             </div>
+
+         </div>
+
+         <div class="row">
+             <div class="col-12">
+                 <div class="card">
+                     <div class="card-header d-flex justify-content-between align-items-center">
+                         <h4 class="card-title">Danh Sách Người Dùng</h4>
+                         <div class="search-box">
+                             <div class="input-group">
+                                 <input type="text" class="form-control" placeholder="Tìm kiếm người dùng..." id="searchInput">
+                                 <button class="btn btn-primary" type="button">
+                                     <i class="bx bx-search"></i>
+                                 </button>
+                             </div>
+                         </div>
+                     </div>
+                     
+                     <!-- Filter Form -->
+                     <div class="card-body border-bottom">
+                         <div class="row">
+                             <div class="col-12">
+                                 <button class="btn btn-light mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse">
+                                     <i class="bx bx-filter-alt me-1"></i> Bộ lọc nâng cao
+                                 </button>
+                                 
+                                 <div class="collapse" id="filterCollapse">
+                                     <div class="card card-body bg-light">
+                                         <form id="filterForm">
+                                             <div class="row g-3">
+                                                 <div class="col-md-3">
+                                                     <label class="form-label">Trạng thái</label>
+                                                     <select class="form-select">
+                                                         <option value="">Tất cả</option>
+                                                         <option value="active">Đang hoạt động</option>
+                                                         <option value="suspended">Tạm khóa</option>
+                                                         <option value="inactive">Không hoạt động</option>
+                                                     </select>
+                                                 </div>
+                                                 <div class="col-md-3">
+                                                     <label class="form-label">Ngày đăng ký từ</label>
+                                                     <input type="date" class="form-control">
+                                                 </div>
+                                                 <div class="col-md-3">
+                                                     <label class="form-label">Ngày đăng ký đến</label>
+                                                     <input type="date" class="form-control">
+                                                 </div>
+                                                 <div class="col-md-3">
+                                                     <label class="form-label">Sắp xếp theo</label>
+                                                     <select class="form-select">
+                                                         <option value="newest">Mới nhất</option>
+                                                         <option value="oldest">Cũ nhất</option>
+                                                         <option value="name_asc">Tên (A-Z)</option>
+                                                         <option value="name_desc">Tên (Z-A)</option>
+                                                     </select>
+                                                 </div>
+                                                 <div class="col-12 text-end mt-3">
+                                                     <button type="reset" class="btn btn-light me-2">
+                                                         <i class="bx bx-reset me-1"></i> Đặt lại
+                                                     </button>
+                                                     <button type="submit" class="btn btn-primary">
+                                                         <i class="bx bx-filter me-1"></i> Lọc kết quả
+                                                     </button>
+                                                 </div>
+                                             </div>
+                                         </form>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                     
+                     <div class="card-body">
+                         <div class="table-responsive">
+                             <table class="table table-centered table-nowrap mb-0">
+                                 <thead>
+                                     <tr>
+                                         <th>
+                                             <a href="#" class="text-dark d-inline-block">
+                                                 Mã Người Dùng
+                                                 <i class="bx bx-sort-alt-2 text-muted"></i>
+                                             </a>
+                                         </th>
+                                         <th>
+                                             <a href="#" class="text-dark d-inline-block">
+                                                 Thông Tin
+                                                 <i class="bx bx-sort-alt-2 text-muted"></i>
+                                             </a>
+                                         </th>
+                                         <th>
+                                             <a href="#" class="text-dark d-inline-block">
+                                                 Số Điện Thoại
+                                                 <i class="bx bx-sort-alt-2 text-muted"></i>
+                                             </a>
+                                         </th>
+                                         <th>
+                                             <a href="#" class="text-dark d-inline-block">
+                                                 Email
+                                                 <i class="bx bx-sort-alt-2 text-muted"></i>
+                                             </a>
+                                         </th>
+                                         <th>Địa Chỉ</th>
+                                         <th>
+                                             <a href="#" class="text-dark d-inline-block">
+                                                 Trạng Thái
+                                                 <i class="bx bx-sort-alt-2 text-muted"></i>
+                                             </a>
+                                         </th>
+                                         <th>Thao Tác</th>
+                                     </tr>
+                                 </thead>
+                                 <tbody>
+                                     <tr>
+                                         <td>#KH001</td>
+                                         <td>
+                                             <div class="d-flex align-items-center">
+                                                 <img src="assets/images/users/avatar-1.jpg" class="rounded-circle me-2" width="40" height="40" alt="user">
+                                                 <div>
+                                                     <h6 class="mb-0">Nguyễn Văn A</h6>
+                                                     <small class="text-muted">@nguyenvana</small>
+                                                 </div>
+                                             </div>
+                                         </td>
+                                         <td>0123456789</td>
+                                         <td>nguyenvana@gmail.com</td>
+                                         <td>123 Đường ABC, Quận 1, TP.HCM</td>
+                                         <td><span class="badge bg-success">Đang Hoạt Động</span></td>
+                                         <td>
+                                             <a href="00_layout.html?file=00_user_detail.html" class="btn btn-sm btn-info">Chi Tiết</a>
+                                         </td>
+                                     </tr>
+                                     <tr>
+                                         <td>#KH002</td>
+                                         <td>
+                                             <div class="d-flex align-items-center">
+                                                 <img src="assets/images/users/avatar-2.jpg" class="rounded-circle me-2" width="40" height="40" alt="user">
+                                                 <div>
+                                                     <h6 class="mb-0">Trần Thị B</h6>
+                                                     <small class="text-muted">@tranthib</small>
+                                                 </div>
+                                             </div>
+                                         </td>
+                                         <td>0987654321</td>
+                                         <td>tranthib@gmail.com</td>
+                                         <td>456 Đường XYZ, Quận 2, TP.HCM</td>
+                                         <td><span class="badge bg-warning">Tạm Khóa</span></td>
+                                         <td>
+                                             <a href="00_layout.html?file=00_user_detail.html" class="btn btn-sm btn-info">Chi Tiết</a>
+                                         </td>
+                                     </tr>
+                                     <tr>
+                                         <td>#KH003</td>
+                                         <td>
+                                             <div class="d-flex align-items-center">
+                                                 <img src="assets/images/users/avatar-3.jpg" class="rounded-circle me-2" width="40" height="40" alt="user">
+                                                 <div>
+                                                     <h6 class="mb-0">Lê Văn C</h6>
+                                                     <small class="text-muted">@levanc</small>
+                                                 </div>
+                                             </div>
+                                         </td>
+                                         <td>0932145678</td>
+                                         <td>levanc@gmail.com</td>
+                                         <td>789 Đường DEF, Quận 3, TP.HCM</td>
+                                         <td><span class="badge bg-success">Đang Hoạt Động</span></td>
+                                         <td>
+                                             <a href="00_layout.html?file=00_user_detail.html" class="btn btn-sm btn-info">Chi Tiết</a>
+                                         </td>
+                                     </tr>
+                                     <tr>
+                                         <td>#KH004</td>
+                                         <td>
+                                             <div class="d-flex align-items-center">
+                                                 <img src="assets/images/users/avatar-4.jpg" class="rounded-circle me-2" width="40" height="40" alt="user">
+                                                 <div>
+                                                     <h6 class="mb-0">Phạm Thị D</h6>
+                                                     <small class="text-muted">@phamthid</small>
+                                                 </div>
+                                             </div>
+                                         </td>
+                                         <td>0965478932</td>
+                                         <td>phamthid@gmail.com</td>
+                                         <td>101 Đường GHI, Quận 4, TP.HCM</td>
+                                         <td><span class="badge bg-danger">Khóa Vĩnh Viễn</span></td>
+                                         <td>
+                                             <a href="00_layout.html?file=00_user_detail.html" class="btn btn-sm btn-info">Chi Tiết</a>
+                                         </td>
+                                     </tr>
+                                 </tbody>
+                             </table>
+                         </div>
+                         
+                         <!-- Pagination -->
+                         <div class="row mt-4">
+                             <div class="col-sm-12 col-md-5">
+                                 <div class="dataTables_info">
+                                     Hiển thị 1 đến 4 trong tổng số 22.630 bản ghi
+                                 </div>
+                             </div>
+                             <div class="col-sm-12 col-md-7">
+                                 <div class="d-flex justify-content-end">
+                                     <div class="pagination-wrap">
+                                         <nav aria-label="Page navigation">
+                                             <ul class="pagination">
+                                                 <li class="page-item disabled">
+                                                     <a class="page-link" href="#" aria-label="Previous">
+                                                         <span aria-hidden="true">&laquo;</span>
+                                                     </a>
+                                                 </li>
+                                                 <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                                 <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                                 <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                                 <li class="page-item">
+                                                     <a class="page-link" href="#" aria-label="Next">
+                                                         <span aria-hidden="true">&raquo;</span>
+                                                     </a>
+                                                 </li>
+                                             </ul>
+                                         </nav>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+
+     </div>
+     <!-- End Container Fluid -->
+
+     <!-- ========== Footer Start ========== -->
+     <footer class="footer">
+         <div class="container-fluid">
+             <div class="row">
+                 <div class="col-12 text-center">
+                      &copy; VNFarm. Được phát triển bởi <iconify-icon icon="iconamoon:heart-duotone" class="fs-18 align-middle text-danger"></iconify-icon> <a href="#" class="fw-bold footer-text" target="_blank">VNFarm</a>
+                 </div>
+             </div>
+         </div>
+     </footer>
+     <!-- ========== Footer End ========== -->
+
+ </div>

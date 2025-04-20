@@ -1,0 +1,272 @@
+<!-- Start Page Content -->
+<div class="page-content">
+    <!-- Start Container Fluid -->
+    <div class="container-xxl">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-grow-1">
+                                        <h4 class="mb-2 fw-semibold">Tổng Yêu Cầu</h4>
+                                        <h5 class="text-muted fs-14 mb-0">Số lượng yêu cầu đăng ký</h5>
+                                    </div>
+                                    <div class="flex-shrink-0">
+                                        <div class="avatar-sm">
+                                            <span class="avatar-title bg-primary-subtle text-primary rounded-circle fs-3">
+                                                <i class="bx bx-store"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pt-4">
+                                    <h2 class="counter-value" data-target="45">45</h2>
+                                    <p class="text-muted mb-0">Yêu cầu mới trong tháng</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-grow-1">
+                                        <h4 class="mb-2 fw-semibold">Chờ Duyệt</h4>
+                                        <h5 class="text-muted fs-14 mb-0">Đang xử lý</h5>
+                                    </div>
+                                    <div class="flex-shrink-0">
+                                        <div class="avatar-sm">
+                                            <span class="avatar-title bg-warning-subtle text-warning rounded-circle fs-3">
+                                                <i class="bx bx-time"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pt-4">
+                                    <h2 class="counter-value" data-target="12">12</h2>
+                                    <p class="text-muted mb-0">Yêu cầu cần xử lý</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-grow-1">
+                                        <h4 class="mb-2 fw-semibold">Đã Duyệt</h4>
+                                        <h5 class="text-muted fs-14 mb-0">Shop đã được phê duyệt</h5>
+                                    </div>
+                                    <div class="flex-shrink-0">
+                                        <div class="avatar-sm">
+                                            <span class="avatar-title bg-success-subtle text-success rounded-circle fs-3">
+                                                <i class="bx bx-check-circle"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pt-4">
+                                    <h2 class="counter-value" data-target="28">28</h2>
+                                    <p class="text-muted mb-0">Shop đã hoạt động</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-grow-1">
+                                        <h4 class="mb-2 fw-semibold">Từ Chối</h4>
+                                        <h5 class="text-muted fs-14 mb-0">Yêu cầu không đạt</h5>
+                                    </div>
+                                    <div class="flex-shrink-0">
+                                        <div class="avatar-sm">
+                                            <span class="avatar-title bg-danger-subtle text-danger rounded-circle fs-3">
+                                                <i class="bx bx-x-circle"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pt-4">
+                                    <h2 class="counter-value" data-target="5">5</h2>
+                                    <p class="text-muted mb-0">Yêu cầu bị từ chối</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header d-flex align-items-center">
+                        <h5 class="card-title flex-grow-1 mb-0">Danh Sách Yêu Cầu Đăng Ký Shop</h5>
+                        <div class="flex-shrink-0">
+                            <div class="d-flex gap-2">
+                                <button type="button" class="btn btn-soft-primary btn-sm">
+                                    <i class="bx bx-export me-1"></i> Xuất Excel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" placeholder="Tìm kiếm theo tên shop...">
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-select">
+                                    <option value="">Tất Cả Trạng Thái</option>
+                                    <option value="1">Chờ Duyệt</option>
+                                    <option value="2">Đã Duyệt</option>
+                                    <option value="3">Từ Chối</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-select">
+                                    <option value="">Tất Cả Loại Shop</option>
+                                    <option value="1">Nông Sản</option>
+                                    <option value="2">Thực Phẩm</option>
+                                    <option value="3">Hải Sản</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <button type="button" class="btn btn-primary w-100">
+                                    <i class="bx bx-search me-1"></i> Tìm Kiếm
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive mt-4">
+                            <table class="table table-hover align-middle table-nowrap mb-0">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Mã Yêu Cầu</th>
+                                        <th scope="col">Thông Tin Shop</th>
+                                        <th scope="col">Loại Shop</th>
+                                        <th scope="col">Ngày Yêu Cầu</th>
+                                        <th scope="col">Trạng Thái</th>
+                                        <th scope="col">Thao Tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>#YC001</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-shrink-0 me-3">
+                                                    <img src="assets/images/users/avatar-1.jpg" alt="" class="avatar-sm rounded">
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <h6 class="mb-1">Nông Sản Sạch ABC</h6>
+                                                    <p class="text-muted mb-0">Nguyễn Văn A</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Nông Sản</td>
+                                        <td>15/03/2024</td>
+                                        <td><span class="badge bg-warning">Chờ Duyệt</span></td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                                    <i class="bx bx-dots-horizontal-rounded"></i>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item" href="00_shop_request_detail.html?id=YC001"><i class="bx bx-detail me-1"></i>Chi Tiết</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="bx bx-check me-1"></i>Duyệt</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="bx bx-x me-1"></i>Từ Chối</a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>#YC002</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-shrink-0 me-3">
+                                                    <img src="assets/images/users/avatar-2.jpg" alt="" class="avatar-sm rounded">
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <h6 class="mb-1">Hải Sản Tươi Sống</h6>
+                                                    <p class="text-muted mb-0">Trần Thị B</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Hải Sản</td>
+                                        <td>14/03/2024</td>
+                                        <td><span class="badge bg-success">Đã Duyệt</span></td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                                    <i class="bx bx-dots-horizontal-rounded"></i>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item" href="00_shop_request_detail.html?id=YC002"><i class="bx bx-detail me-1"></i>Chi Tiết</a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>#YC003</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-shrink-0 me-3">
+                                                    <img src="assets/images/users/avatar-3.jpg" alt="" class="avatar-sm rounded">
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <h6 class="mb-1">Thực Phẩm An Toàn</h6>
+                                                    <p class="text-muted mb-0">Lê Văn C</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Thực Phẩm</td>
+                                        <td>13/03/2024</td>
+                                        <td><span class="badge bg-danger">Từ Chối</span></td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                                    <i class="bx bx-dots-horizontal-rounded"></i>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item" href="00_shop_request_detail.html?id=YC003"><i class="bx bx-detail me-1"></i>Chi Tiết</a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="row align-items-center mt-4">
+                            <div class="col-sm-6">
+                                <div>Hiển thị <b>1</b> đến <b>10</b> trong <b>45</b> yêu cầu</div>
+                            </div>
+                            <div class="col-sm-6">
+                                <ul class="pagination pagination-rounded justify-content-end mb-0">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#"><i class="bx bx-chevron-left"></i></a>
+                                    </li>
+                                    <li class="page-item active">
+                                        <a class="page-link" href="#">1</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">2</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">3</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#"><i class="bx bx-chevron-right"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Container Fluid -->
+</div>
+<!-- End Page Content --> 

@@ -1,0 +1,215 @@
+<main class="nxl-container">
+    <div class="nxl-content">
+        <!-- [ page-header ] start -->
+        <div class="page-header">
+            <div class="page-header-left d-flex align-items-center">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Quản Lý Đơn Hàng</h5>
+                </div>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                    <li class="breadcrumb-item">Đơn hàng</li>
+                </ul>
+            </div>
+            <div class="page-header-right ms-auto">
+                <div class="page-header-right-items">
+                    <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
+                        <div class="search-box">
+                            <input type="text" class="form-control" placeholder="Tìm kiếm đơn hàng...">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ page-header ] end -->
+        <!-- [ Main Content ] start -->
+        <div class="main-content">
+            <div class="row">
+                <div class="col-xxl-12">
+                    <div class="card mb-4">
+                        <div class="card-body p-3">
+                            <form>
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        <div class="mb-2">
+                                            <label class="form-label small">Trạng thái đơn hàng</label>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="status1" checked>
+                                                <label class="form-check-label small" for="status1">Chờ xử lý</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="status2" checked>
+                                                <label class="form-check-label small" for="status2">Đang giao</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="status3" checked>
+                                                <label class="form-check-label small" for="status3">Đã giao</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="status4" checked>
+                                                <label class="form-check-label small" for="status4">Đã hủy</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-2">
+                                            <label class="form-label small">Khoảng thời gian</label>
+                                            <div class="input-group input-group-sm">
+                                                <input type="date" class="form-control" style="padding: 12px 15px !important;">
+                                                <span class="input-group-text">đến</span>
+                                                <input type="date" class="form-control" style="padding: 12px 15px !important;">
+                                            </div>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label class="form-label small">Khoảng giá</label>
+                                            <div class="input-group input-group-sm">
+                                                <input type="number" class="form-control" style="padding: 12px 15px !important;" placeholder="Từ" >
+                                                <span class="input-group-text">đến</span>
+                                                <input type="number" class="form-control" style="padding: 12px 15px !important;" placeholder="Đến">
+                                                <span class="input-group-text">VNĐ</span>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-2">
+                                            <label class="form-label small">Sắp xếp theo</label>
+                                            <select class="form-select form-select-sm">
+                                                <option value="" disabled selected>Chọn tiêu chí sắp xếp</option>
+                                                <option value="order_id">Mã đơn hàng</option>
+                                                <option value="order_date">Ngày đặt</option>
+                                                <option value="total_amount">Tổng tiền</option>
+                                                <option value="customer_name">Tên khách hàng</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label class="form-label small">Thứ tự sắp xếp</label>
+                                            <select class="form-select form-select-sm">
+                                                <option value="asc">Tăng dần</option>
+                                                <option value="desc">Giảm dần</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="mb-2">
+                                            <label class="form-label small">Số kết quả hiển thị</label>
+                                            <select class="form-select form-select-sm">
+                                                <option value="10">10 kết quả</option>
+                                                <option value="25">25 kết quả</option>
+                                                <option value="50">50 kết quả</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label class="form-label small">&nbsp;</label>
+                                            <button type="submit" class="btn btn-primary btn-sm w-100">
+                                                <i class="feather-filter me-2"></i>
+                                                Áp dụng bộ lọc
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card p-2">
+                        <div class="card-body custom-card-action p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Mã Đơn</th>
+                                            <th>Khách Hàng</th>
+                                            <th>Ngày Đặt</th>
+                                            <th>Tổng Tiền</th>
+                                            <th>Trạng Thái</th>
+                                            <th>Thao Tác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>#DH001</td>
+                                            <td>Nguyễn Văn A</td>
+                                            <td>15/03/2024</td>
+                                            <td>1.2M</td>
+                                            <td><span class="badge bg-warning">Chờ xử lý</span></td>
+                                            <td>
+                                                <a href="00_seller_order_detail.html" class="btn btn-sm btn-primary">Chi tiết</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>#DH002</td>
+                                            <td>Trần Thị B</td>
+                                            <td>15/03/2024</td>
+                                            <td>850K</td>
+                                            <td><span class="badge bg-info">Đang giao</span></td>
+                                            <td>
+                                                <a href="00_seller_order_detail.html" class="btn btn-sm btn-primary">Chi tiết</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>#DH003</td>
+                                            <td>Lê Văn C</td>
+                                            <td>14/03/2024</td>
+                                            <td>2.1M</td>
+                                            <td><span class="badge bg-success">Đã giao</span></td>
+                                            <td>
+                                                <a href="00_seller_order_detail.html" class="btn btn-sm btn-primary">Chi tiết</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>#DH004</td>
+                                            <td>Phạm Thị D</td>
+                                            <td>14/03/2024</td>
+                                            <td>1.5M</td>
+                                            <td><span class="badge bg-danger">Đã hủy</span></td>
+                                            <td>
+                                                <a href="00_seller_order_detail.html" class="btn btn-sm btn-primary">Chi tiết</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination justify-content-center mb-0">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="javascript:void(0);" tabindex="-1">
+                                            <i class="feather-chevron-left"></i>
+                                        </a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="javascript:void(0);">
+                                            <i class="feather-chevron-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ Main Content ] end -->
+    </div>
+    <!-- [ Footer ] start -->
+    <footer class="footer">
+        <p class="fs-11 text-muted fw-medium text-uppercase mb-0 copyright">
+            <span>Copyright ©</span>
+            <script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+                document.write(new Date().getFullYear());
+            </script>
+        </p>
+        <div class="d-flex align-items-center gap-4">
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Help</a>
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Terms</a>
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Privacy</a>
+        </div>
+    </footer>
+    <!-- [ Footer ] end -->
+</main> 

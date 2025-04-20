@@ -1,0 +1,332 @@
+<main class="nxl-container">
+    <div class="nxl-content">
+        <!-- [ page-header ] start -->
+        <div class="page-header">
+            <div class="page-header-left d-flex align-items-center">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Gửi Khiếu Nại</h5>
+                </div>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="00_buyer_order_lists.html">Đơn hàng</a></li>
+                    <li class="breadcrumb-item">Khiếu nại</li>
+                </ul>
+            </div>
+        </div>
+        <!-- [ page-header ] end -->
+        <!-- [ Main Content ] start -->
+        <div class="main-content">
+            <div class="row">
+                <div class="col-xxl-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Form Khiếu Nại</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="disputeForm">
+                                <!-- Thông tin đơn hàng -->
+                                <div class="mb-4">
+                                    <h6 class="mb-3">Thông tin đơn hàng</h6>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Mã đơn hàng</label>
+                                                <input type="text" class="form-control" value="#DH001" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Ngày đặt hàng</label>
+                                                <input type="text" class="form-control" value="15/03/2024" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Tên cửa hàng</label>
+                                                <input type="text" class="form-control" value="Shop ABC" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Tổng tiền</label>
+                                                <input type="text" class="form-control" value="880.000đ" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Lý do khiếu nại -->
+                                <div class="mb-4">
+                                    <h6 class="mb-3">Lý do khiếu nại</h6>
+                                    <div class="mb-3">
+                                        <select class="form-select" required>
+                                            <option value="">Chọn lý do khiếu nại</option>
+                                            <option value="1">Sản phẩm không đúng như mô tả</option>
+                                            <option value="2">Sản phẩm bị hỏng/hư hại</option>
+                                            <option value="3">Sản phẩm không đúng kích thước</option>
+                                            <option value="4">Sản phẩm không đúng màu sắc</option>
+                                            <option value="5">Sản phẩm không đúng chất liệu</option>
+                                            <option value="6">Sản phẩm thiếu phụ kiện</option>
+                                            <option value="7">Sản phẩm là hàng giả</option>
+                                            <option value="8">Lý do khác</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Mô tả chi tiết</label>
+                                        <textarea class="form-control" rows="3" placeholder="Vui lòng mô tả chi tiết vấn đề bạn gặp phải..." required></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- Yêu cầu -->
+                                <div class="mb-4">
+                                    <h6 class="mb-3">Yêu cầu</h6>
+                                    <div class="mb-3">
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="requestType" id="request1" value="1" checked>
+                                            <label class="form-check-label" for="request1">
+                                                Đổi trả sản phẩm
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="requestType" id="request2" value="2">
+                                            <label class="form-check-label" for="request2">
+                                                Hoàn tiền
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="requestType" id="request3" value="3">
+                                            <label class="form-check-label" for="request3">
+                                                Bồi thường
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Số tiền yêu cầu (nếu có)</label>
+                                        <div class="input-group">
+                                            <input type="number" class="form-control" placeholder="Nhập số tiền">
+                                            <span class="input-group-text">đ</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Ghi chú -->
+                                <div class="mb-4">
+                                    <h6 class="mb-3">Ghi chú</h6>
+                                    <div class="mb-3">
+                                        <textarea class="form-control" rows="3" placeholder="Nhập thông tin bổ sung (nếu có)"></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- Hình ảnh minh chứng -->
+                                <div class="mb-4">
+                                    <h6 class="mb-3">Hình ảnh minh chứng</h6>
+                                    <div class="mb-3">
+                                        <div class="upload-area" id="uploadArea">
+                                            <input type="file" class="d-none" id="fileInput" multiple accept="image/*">
+                                            <div class="upload-content text-center p-4 border rounded">
+                                                <i class="feather-upload-cloud mb-2" style="font-size: 2rem;"></i>
+                                                <p class="mb-2">Kéo thả hình ảnh vào đây hoặc</p>
+                                                <p class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
+                                                    Chọn hình ảnh
+                                                </p>
+                                                <p class="text-muted small mt-2">Hỗ trợ: JPG, PNG, GIF (Tối đa 5MB)</p>
+                                            </div>
+                                        </div>
+                                        <div class="preview-area mt-3" id="previewArea">
+                                            <!-- Preview images will be added here -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Nút submit -->
+                                <div class="text-end">
+                                    <div class="d-flex gap-2">
+                                        <button type="submit" class="btn btn-primary mr-3">
+                                            <i class="feather-send me-2"></i>
+                                            Gửi khiếu nại
+                                        </button>
+                                        <button type="button" class="btn btn-light" onclick="history.back()">
+                                            <i class="feather-arrow-left me-2"></i>
+                                            Quay lại
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Hướng dẫn</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="alert alert-info">
+                                <h6 class="alert-heading">Lưu ý khi gửi khiếu nại:</h6>
+                                <ul class="mb-0 ps-3">
+                                    <li>Vui lòng điền đầy đủ thông tin theo yêu cầu</li>
+                                    <li>Mô tả chi tiết vấn đề bạn gặp phải</li>
+                                    <li>Chọn yêu cầu phù hợp với tình huống</li>
+                                    <li>Đính kèm hình ảnh minh chứng rõ ràng</li>
+                                    <li>Chúng tôi sẽ phản hồi trong vòng 24h làm việc</li>
+                                </ul>
+                            </div>
+                            <div class="alert alert-warning">
+                                <h6 class="alert-heading">Thời gian xử lý:</h6>
+                                <ul class="mb-0 ps-3">
+                                    <li>Đơn giản: 1-2 ngày làm việc</li>
+                                    <li>Phức tạp: 3-5 ngày làm việc</li>
+                                    <li>Đặc biệt: 5-7 ngày làm việc</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ Main Content ] end -->
+    </div>
+    <!-- [ Footer ] start -->
+    <footer class="footer">
+        <p class="fs-11 text-muted fw-medium text-uppercase mb-0 copyright">
+            <span>Copyright ©</span>
+            <script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+                document.write(new Date().getFullYear());
+            </script>
+        </p>
+        <div class="d-flex align-items-center gap-4">
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Help</a>
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Terms</a>
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Privacy</a>
+        </div>
+    </footer>
+    <!-- [ Footer ] end -->
+</main>
+
+<style>
+    .upload-area {
+        border: 2px dashed #dee2e6;
+        border-radius: 0.5rem;
+        transition: all 0.3s ease;
+    }
+    .upload-area:hover {
+        border-color: #0d6efd;
+        background-color: #f8f9fa;
+    }
+    .upload-area.dragover {
+        border-color: #0d6efd;
+        background-color: #f8f9fa;
+    }
+    .preview-area {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 10px;
+    }
+    .preview-item {
+        position: relative;
+        aspect-ratio: 1;
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
+    .preview-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .preview-item .remove-btn {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        width: 24px;
+        height: 24px;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .preview-item .remove-btn:hover {
+        background: rgba(0, 0, 0, 0.7);
+    }
+</style>
+
+<script>
+    // Xử lý kéo thả file
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
+    const previewArea = document.getElementById('previewArea');
+
+    // Ngăn chặn hành vi mặc định của trình duyệt
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        uploadArea.addEventListener(eventName, preventDefaults, false);
+    });
+
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    // Thêm hiệu ứng khi kéo file vào
+    ['dragenter', 'dragover'].forEach(eventName => {
+        uploadArea.addEventListener(eventName, highlight, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        uploadArea.addEventListener(eventName, unhighlight, false);
+    });
+
+    function highlight(e) {
+        uploadArea.classList.add('dragover');
+    }
+
+    function unhighlight(e) {
+        uploadArea.classList.remove('dragover');
+    }
+
+    // Xử lý thả file
+    uploadArea.addEventListener('drop', handleDrop, false);
+
+    function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        handleFiles(files);
+    }
+
+    // Xử lý chọn file
+    fileInput.addEventListener('change', function() {
+        handleFiles(this.files);
+    });
+
+    function handleFiles(files) {
+        [...files].forEach(file => {
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const previewItem = document.createElement('div');
+                    previewItem.className = 'preview-item';
+                    previewItem.innerHTML = `
+                        <img src="${e.target.result}" alt="Preview">
+                        <div class="remove-btn" onclick="this.parentElement.remove()">
+                            <i class="feather-x"></i>
+                        </div>
+                    `;
+                    previewArea.appendChild(previewItem);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    // Xử lý submit form
+    document.getElementById('disputeForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        // Thêm logic xử lý form ở đây
+        alert('Gửi khiếu nại thành công!');
+        window.location.href = '00_buyer_dispute.html';
+    });
+</script> 
