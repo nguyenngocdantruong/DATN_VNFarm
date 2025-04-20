@@ -4,3 +4,4 @@ obj
 wwwroot/*
 appsettings.Development.json
 appsettings.json
+/template
