@@ -1,6 +1,6 @@
 @model AdminSummaryViewModel
 @{
-    Layout = "_LayoutAdmin";
+  Layout = "_LayoutAdmin";
 }
 
 <div class="page-content">
@@ -10,7 +10,8 @@
     <div class="row">
       <div class="col-12">
         <div class="alert alert-primary text-truncate mb-3" role="alert">
-          Chào mừng đến với hệ thống quản lý nông sản! Hôm nay là ngày @DateTime.Now.ToString("dd/MM/yyyy")
+          Chào mừng đến với hệ thống quản lý nông sản! Hôm nay là ngày tốt để
+          quản lý và phát triển nông sản của bạn.
         </div>
       </div>
     </div>
@@ -23,7 +24,10 @@
             <div class="row">
               <div class="col-6">
                 <div class="avatar-md bg-soft-primary rounded">
-                  <iconify-icon icon="solar:box-minimalistic-bold-duotone" class="avatar-title fs-32 text-primary"></iconify-icon>
+                  <iconify-icon
+                    icon="solar:box-minimalistic-bold-duotone"
+                    class="avatar-title fs-32 text-primary"
+                  ></iconify-icon>
                 </div>
               </div>
               <div class="col-6 text-end">
@@ -41,7 +45,10 @@
             <div class="row">
               <div class="col-6">
                 <div class="avatar-md bg-soft-primary rounded">
-                  <iconify-icon icon="solar:cart-5-bold-duotone" class="avatar-title fs-32 text-primary"></iconify-icon>
+                  <iconify-icon
+                    icon="solar:cart-5-bold-duotone"
+                    class="avatar-title fs-32 text-primary"
+                  ></iconify-icon>
                 </div>
               </div>
               <div class="col-6 text-end">
@@ -59,7 +66,10 @@
             <div class="row">
               <div class="col-6">
                 <div class="avatar-md bg-soft-primary rounded">
-                  <iconify-icon icon="solar:users-group-rounded-bold-duotone" class="avatar-title fs-32 text-primary"></iconify-icon>
+                  <iconify-icon
+                    icon="solar:users-group-rounded-bold-duotone"
+                    class="avatar-title fs-32 text-primary"
+                  ></iconify-icon>
                 </div>
               </div>
               <div class="col-6 text-end">
@@ -77,12 +87,15 @@
             <div class="row">
               <div class="col-6">
                 <div class="avatar-md bg-soft-primary rounded">
-                  <iconify-icon icon="solar:dollar-minimalistic-bold-duotone" class="avatar-title fs-32 text-primary"></iconify-icon>
+                  <iconify-icon
+                    icon="solar:dollar-minimalistic-bold-duotone"
+                    class="avatar-title fs-32 text-primary"
+                  ></iconify-icon>
                 </div>
               </div>
               <div class="col-6 text-end">
                 <p class="text-muted mb-0 text-truncate">Doanh Thu</p>
-                <h3 class="text-dark mt-1 mb-0">@Model.TotalRevenue.ToString("N0") đ</h3>
+                <h3 class="text-dark mt-1 mb-0">@Model.TotalRevenue.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</h3>
               </div>
             </div>
           </div>
@@ -94,112 +107,107 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="card card-height-100">
-          <div class="card-header d-flex align-items-center justify-content-between gap-2">
+          <div
+            class="card-header d-flex align-items-center justify-content-between gap-2"
+          >
             <h4 class="card-title flex-grow-1">Sản Phẩm Bán Chạy</h4>
-            <a href="@Url.Action("Index", "Product")" class="btn btn-sm btn-soft-primary">Xem tất cả</a>
+            <a href="#" class="btn btn-sm btn-soft-primary">Xem tất cả</a>
           </div>
-          
+
           <!-- Tìm kiếm và bộ lọc cho Sản phẩm bán chạy -->
           <div class="card-body pt-0">
             <div class="row mt-3 mb-3">
               <div class="col-md-4">
-                <div class="input-group">
-                  <input type="text" class="form-control" id="searchproduct" placeholder="Tìm kiếm sản phẩm...">
-                  <button class="btn btn-primary" id="searchbutton" type="button"><i class="bx bx-search"></i></button>
+                <div class="input-group" id="product-search-form">
+                  <input
+                    type="text"
+                    id="product-search-input"
+                    class="form-control"
+                    placeholder="Tìm kiếm sản phẩm..."
+                  />
                 </div>
               </div>
               <div class="col-md-8">
-                <div class="d-flex justify-content-md-end gap-2">
-                  <select class="form-select" id="danhmucselection" style="width: auto;">
-                    <option value="-999" selected>Tất cả danh mục</option>
+                <div class="d-flex justify-content-md-end gap-2 flex-wrap">
+                  <select
+                    id="category-filter"
+                    class="form-select"
+                    style="width: auto"
+                  >
+                    <option selected>Danh mục</option>
+                    <!-- Sẽ được điền bởi JavaScript -->
                   </select>
-                  <select class="form-select" style="width: auto;">
-                    <option value="-999" selected>Tất cả tồn kho</option>
-                    <option>Còn hàng</option>
-                    <option>Hết hàng</option>
+                  <select
+                    id="stock-filter"
+                    class="form-select"
+                    style="width: auto"
+                  >
+                    <option selected>Tồn kho</option>
+                    <!-- Sẽ được điền bởi JavaScript -->
                   </select>
-                  <select class="form-select" id="sortselection" style="width: auto;">
+                  <select
+                    id="sort-by-filter"
+                    class="form-select"
+                    style="width: auto"
+                  >
                     <option selected>Sắp xếp theo</option>
-                    <option>Đã bán: Cao → Thấp</option>
-                    <option>Đã bán: Thấp → Cao</option>
-                    <option>Doanh thu: Cao → Thấp</option>
-                    <option>Doanh thu: Thấp → Cao</option>
+                    <!-- Sẽ được điền bởi JavaScript -->
                   </select>
-                  <button class="btn btn-primary" id="filterbutton" type="button">Lọc</button>
+                  <button
+                    id="filter-button"
+                    class="btn btn-primary"
+                    type="button"
+                  >
+                    Lọc
+                  </button>
                 </div>
               </div>
             </div>
           </div>
-          
+
           <div class="table-responsive">
-            <table class="table table-hover table-nowrap table-centered m-0">
+            <table
+              id="product-table"
+              class="table table-hover table-nowrap table-centered m-0"
+            >
               <thead class="bg-light bg-opacity-50">
                 <tr>
-                  <th class="text-muted ps-3">Sản phẩm</th>
-                  <th class="text-muted">Danh mục</th>
-                  <th class="text-muted">Đã bán</th>
-                  <th class="text-muted">Giá</th>
-                  <th class="text-muted">Tồn kho</th>
+                  <th class="text-muted ps-3" data-column="name">
+                    Tên sản phẩm
+                  </th>
+                  <th class="text-muted" data-column="category">Đơn giá</th>
+                  <th class="text-muted" data-column="sold">Tồn kho</th>
+                  <th class="text-muted" data-column="revenue">Đã bán</th>
+                  <th class="text-muted">Xuất xứ</th>
+                  <th class="text-muted">Trạng thái</th>
+                  <th class="text-muted">Đánh giá</th>
+                  <th class="text-muted">Hành động</th>
                 </tr>
               </thead>
-              <tbody>
-                @foreach (var product in Model.ProductDTOs)
-                {
-                    if (product != null)
-                    {
-                        <tr>
-                            <td class="ps-3">
-                                <a href="@Url.Action("Details", "Product", new { id = product.Id })" class="text-muted">@product.Name</a>
-                            </td>
-                            <td>@product.Category?.Name</td>
-                            <td>@product.SoldQuantity</td>
-                            <td>@product.Price.ToString("N0") đ</td>
-                            <td>
-                                @if (product.StockQuantity > 10)
-                                {
-                                    <span class="badge badge-soft-success">Còn hàng</span>
-                                }
-                                else if (product.StockQuantity > 0)
-                                {
-                                    <span class="badge badge-soft-warning">Sắp hết</span>
-                                }
-                                else
-                                {
-                                    <span class="badge badge-soft-danger">Hết hàng</span>
-                                }
-                            </td>
-                        </tr>
-                    }
-                }
-              </tbody>
+              <tbody></tbody>
             </table>
           </div>
-          
+
           <div class="card-footer border-top">
             <div class="row g-3">
               <div class="col-sm">
                 <div class="text-muted">
-                  <span class="fw-semibold" id="rangeproduct">@Model.ProductDTOs.Count</span>
-                   / 
-                  <span class="fw-semibold">@Model.TotalProducts</span>
+                  <span class="fw-semibold" id="paging-count"
+                    >0 - 0/0 sản phẩm</span
+                  >
                 </div>
               </div>
               <div class="col-sm-auto">
-                <ul class="pagination m-0">
-                  <li class="page-item">
-                    <a href="#" class="page-link"><i class="bx bx-left-arrow-alt"></i></a>
+                <ul class="pagination m-0" id="paging-list">
+                  <li class="page-item" id="btn-prev">
+                    <a href="#" class="page-link"
+                      ><i class="bx bx-left-arrow-alt"></i
+                    ></a>
                   </li>
-                  <li class="page-item active">
-                    <a href="#" class="page-link">1</a>
-                  </li>
-                  <li class="page-item">
-                    <a href="#" class="page-link">2</a>
-                  </li>
-                  <li class="page-item">
-                    <a href="#" class="page-link">3</a>
-                  </li>
-                  <li class="page-item">
-                    <a href="#" class="page-link"><i class="bx bx-right-arrow-alt"></i></a>
+                  <li class="page-item" id="btn-next">
+                    <a href="#" class="page-link"
+                      ><i class="bx bx-right-arrow-alt"></i
+                    ></a>
                   </li>
                 </ul>
               </div>
@@ -213,111 +221,89 @@
     <div class="row">
       <div class="col">
         <div class="card">
-          <div class="card-header d-flex align-items-center justify-content-between">
-            <h4 class="card-title">Đơn Hàng Gần Đây</h4>
-            <a href="@Url.Action("Index", "Order")" class="btn btn-sm btn-soft-primary">Xem tất cả</a>
-          </div>
-          
-          <!-- Tìm kiếm và bộ lọc -->
-          <div class="row mt-3 mb-3">
-            <div class="col-md-4">
-              <div class="input-group">
-                <input type="text" class="form-control" id="searchorder" placeholder="Tìm kiếm đơn hàng...">
-                <button class="btn btn-primary" id="ordersearchbutton" type="button"><i class="bx bx-search"></i></button>
-              </div>
+          <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between">
+              <h4 class="card-title">Đơn Hàng Gần Đây</h4>
+              <a href="#!" class="btn btn-sm btn-soft-primary">
+                <i class="bx bx-plus me-1"></i>Tạo đơn hàng
+              </a>
             </div>
-            <div class="col-md-8">
-              <div class="d-flex justify-content-md-end gap-2">
-                <select class="form-select" id="orderstatusselection" style="width: auto;">
-                  <option value="-999">Tất cả Trạng thái</option>
-                </select>
-                <select class="form-select" id="paymentmethodselection" style="width: auto;">
-                  <option value="-999">Tất cả phương thức</option>
-                </select>
-                <select class="form-select" id="ordersortselection" style="width: auto;">
-                  <option value="">Sắp xếp theo</option>
-                </select>
-                <button class="btn btn-primary" id="orderfilterbutton" type="button">Lọc</button>
+
+            <!-- Tìm kiếm và bộ lọc -->
+            <div class="row mt-3 mb-3">
+              <div class="col-md-4">
+                <div class="input-group" id="order-search-form">
+                  <input
+                    type="text"
+                    id="order-search-input"
+                    class="form-control"
+                    placeholder="Tìm kiếm đơn hàng..."
+                  />
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="d-flex justify-content-md-end gap-2">
+                  <select class="form-select" style="width: auto" id="order-status-filter">
+                    <option selected value="-999">Trạng thái</option>
+                    <!-- Sẽ được điền bởi JavaScript -->
+                  </select>
+                  <select class="form-select" style="width: auto" id="payment-method-filter">
+                    <option selected value="-999">Phương thức thanh toán</option>
+                    <!-- Sẽ được điền bởi JavaScript -->
+                  </select>
+                  <select class="form-select" style="width: auto" id="order-sort-filter">
+                    <option selected>Sắp xếp theo</option>
+                    <!-- Sẽ được điền bởi JavaScript -->
+                  </select>
+                  <button class="btn btn-primary" type="button" id="order-filter-button">Lọc</button>
+                </div>
               </div>
             </div>
           </div>
           <div class="table-responsive table-centered">
-            <table class="table mb-0">
+            <table class="table mb-0" id="order-table">
               <thead class="bg-light bg-opacity-50">
                 <tr>
                   <th class="ps-3">Mã Đơn</th>
                   <th>Ngày</th>
                   <th>Khách hàng</th>
-                  <th>Tổng tiền</th>
+                  <th>Số điện thoại</th>
+                  <th>Địa chỉ</th>
                   <th>Phương thức</th>
                   <th>Trạng thái</th>
+                  <th>Hành động</th>
                 </tr>
               </thead>
-              <tbody>
-                @foreach (var order in Model.OrderDTOs)
-                {
-                    if (order != null)
-                    {
-                        <tr>
-                            <td class="ps-3">
-                                <a href="@Url.Action("Details", "Order", new { id = order.Id })">#@order.OrderCode</a>
-                            </td>
-                            <td>@order.CreatedAt.ToString("dd/MM/yyyy")</td>
-                            <td>
-                                <a href="@Url.Action("Details", "User", new { id = order.BuyerId })">@order.Buyer?.FullName</a>
-                            </td>
-                            <td>@order.FinalAmount.ToString("N0") đ</td>
-                            <td>@order.PaymentMethod</td>
-                            <td>
-                                @switch (order.Status)
-                                {
-                                    case VNFarm_FinalFinal.Enums.OrderStatus.Completed:
-                                        <i class="bx bxs-circle text-success me-1"></i>@order.Status;
-                                        break;
-                                    case VNFarm_FinalFinal.Enums.OrderStatus.Pending:
-                                        <i class="bx bxs-circle text-warning me-1"></i>@order.Status;
-                                        break;
-                                    case VNFarm_FinalFinal.Enums.OrderStatus.Cancelled:
-                                        <i class="bx bxs-circle text-danger me-1"></i>@order.Status;
-                                        break;
-                                    default:
-                                        <i class="bx bxs-circle text-primary me-1"></i>@order.Status;
-                                        break;
-                                }
-                            </td>
-                        </tr>
-                    }
-                }
+              <tbody id="order-table-body">
+                <!-- Dữ liệu sẽ được điền bởi JavaScript -->
+                <tr>
+                  <td colspan="10" class="text-center">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="visually-hidden">Đang tải...</span>
+                    </div>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
           <div class="card-footer border-top">
             <div class="row g-3">
               <div class="col-sm">
-                <div class="text-muted">
-                  Hiển thị
-                  <span class="fw-semibold">3</span>
-                  trong tổng số
-                  <span class="fw-semibold">156</span>
-                  đơn hàng
+                <div class="text-muted" id="order-paging-count">
+                  Đang tải dữ liệu...
                 </div>
               </div>
               <div class="col-sm-auto">
-                <ul class="pagination m-0">
-                  <li class="page-item">
-                    <a href="#" class="page-link"><i class="bx bx-left-arrow-alt"></i></a>
+                <ul class="pagination m-0" id="order-paging-list">
+                  <li class="page-item" id="order-btn-prev">
+                    <a href="#" class="page-link"
+                      ><i class="bx bx-left-arrow-alt"></i
+                    ></a>
                   </li>
-                  <li class="page-item active">
-                    <a href="#" class="page-link">1</a>
-                  </li>
-                  <li class="page-item">
-                    <a href="#" class="page-link">2</a>
-                  </li>
-                  <li class="page-item">
-                    <a href="#" class="page-link">3</a>
-                  </li>
-                  <li class="page-item">
-                    <a href="#" class="page-link"><i class="bx bx-right-arrow-alt"></i></a>
+                  <li class="page-item" id="order-btn-next">
+                    <a href="#" class="page-link"
+                      ><i class="bx bx-right-arrow-alt"></i
+                    ></a>
                   </li>
                 </ul>
               </div>
@@ -334,421 +320,614 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-12 text-center">
-          &copy; @DateTime.Now.Year - Hệ Thống Quản Lý Nông Sản VNFarm. All rights reserved.
+          &copy; Hệ Thống Quản Lý Nông Sản VNFarm. All rights reserved.
         </div>
       </div>
     </div>
   </footer>
   <!-- ========== Footer End ========== -->
 </div>
+<script type="module">
+  import { BaseService } from "/custom/BaseService.js";
+  import createFilterProduct from "/custom/filterProduct.js";
+  import createFilterOrder from "/custom/filterOrder.js";
+  import { SortType } from "/custom/Enum.js";
+  import { EnumService } from "/custom/EnumService.js";
 
-<script>
-  // Khai báo các biến toàn cục
-  let currentProductPage = 1;
-  let productPageSize = 10;
-  let productFilter = {
-    searchTerm: '',
-    categoryId: -999,
-    sortBy: null,
-    page: 1,
-    pageSize: 10
+  const jwt = null;
+  const enumService = new EnumService("http://localhost:5172", jwt);
+  const productService = new BaseService(
+    "http://localhost:5172/api/Product",
+    jwt
+  );
+  const categoryService = new BaseService(
+    "http://localhost:5172/api/Category",
+    jwt
+  );
+
+  const appProduct = {
+    filter: new createFilterProduct({
+      searchTerm: "",
+      sortBy: SortType.Latest,
+      page: 1,
+      pageSize: 10,
+    }),
+    init: function () {
+      new Promise((resolve, reject) => {
+        this.loadCategory();
+        this.loadStockFilter();
+        this.loadSortType();
+        this.handleFilterFunction();
+        this.handleSearchFunction();
+        this.handlePagingFunction();
+        resolve();
+      })
+        .then(() => {
+          document.getElementById("filter-button").click();
+        })
+        .catch((error) => {
+          console.error("Error initializing appProduct:", error);
+        });
+    },
+    loadCategory: function () {
+      //Load danh mục vào dropdown
+      const categoryDropdown = document.getElementById("category-filter");
+      categoryDropdown.innerHTML =
+        "<option value ='-999' selected>Tất cả</option>";
+      categoryService
+        .getAll()
+        .then((data) => {
+          let items = data.data;
+          items.forEach((item) => {
+            const option = document.createElement("option");
+            option.value = item.id;
+            option.textContent = item.name;
+            categoryDropdown.appendChild(option);
+          });
+        })
+        .catch((error) => {
+          console.error("Error retrieving category:", error);
+        });
+    },
+    loadStockFilter: function () {
+      const stockDropdown = document.getElementById("stock-filter");
+      stockDropdown.innerHTML = "<option value ='1' selected>Còn hàng</option>";
+      stockDropdown.innerHTML += "<option value ='0'>Hết hàng</option>";
+    },
+    loadSortType: function () {
+      const sortByDropdown = document.getElementById("sort-by-filter");
+      sortByDropdown.innerHTML = "";
+      enumService.getSortTypesByEntity("Product").then((data) => {
+        let items = data;
+        Object.keys(items).forEach((key) => {
+          const option = document.createElement("option");
+          option.value = key;
+          option.textContent = items[key];
+          sortByDropdown.appendChild(option);
+        });
+      });
+    },
+    handleFilterFunction() {
+      const filterButton = document.getElementById("filter-button");
+      let _this = this;
+      filterButton.addEventListener("click", () => {
+        let categoryId = document.getElementById("category-filter").value;
+        let stock = document.getElementById("stock-filter").value;
+        let sortBy = document.getElementById("sort-by-filter").value;
+        if (categoryId) {
+          _this.filter.categoryId = parseInt(categoryId);
+        }
+        if (stock) {
+          _this.filter.isInStock = parseInt(stock) == 1 ? true : false;
+        }
+        if (sortBy) {
+          _this.filter.sortBy = parseInt(sortBy);
+        }
+        console.log(_this.filter);
+        productService
+          .find(_this.filter)
+          .then((data) => {
+            console.log(data);
+            let items = data.data;
+            _this.reloadTable(items);
+            //Cập nhật paging-count
+            let start = (_this.filter.page - 1) * _this.filter.pageSize + 1;
+            let end = start + items.length - 1;
+            let totalCount = data.totalCount;
+            document.getElementById(
+              "paging-count"
+            ).textContent = `Hiển thị ${start} - ${end}/${totalCount} sản phẩm`;
+            //Cập nhật paging-list
+            let pagingList = document.getElementById("paging-list");
+            pagingList.innerHTML = `<li class="page-item">
+                    <a href="#" class="page-link" id="btn-prev"><i class="bx bx-left-arrow-alt"></i></a>
+                  </li>`;
+            for (
+              let i = 1;
+              i <= Math.ceil(totalCount / _this.filter.pageSize);
+              i++
+            ) {
+              let li = document.createElement("li");
+              li.classList.add("page-item");
+              li.addEventListener("click", () => {
+                _this.filter.page = i;
+                document.getElementById("filter-button").click();
+              });
+
+              let a = document.createElement("a");
+              a.classList.add("page-link");
+              a.textContent = i;
+              a.href = "#";
+
+              li.appendChild(a);
+
+              if (i == _this.filter.page) {
+                li.classList.add("active");
+              }
+
+              pagingList.appendChild(li);
+            }
+            pagingList.innerHTML += `<li class="page-item">
+                    <a href="#" class="page-link" id="btn-next"><i class="bx bx-right-arrow-alt"></i></a>
+                  </li>`;
+          })
+          .catch((error) => {
+            console.log("Error retrieving product:", error);
+          });
+      });
+    },
+    reloadTable(items) {
+      const tableProduct = document.getElementById("product-table");
+      tableProduct.querySelector("tbody").innerHTML = "";
+
+      items.forEach((item) => {
+        // Tạo một hàng mới cho bảng
+        const row = document.createElement("tr");
+
+        // Tạo các ô dữ liệu
+        const nameCell = document.createElement("td");
+        nameCell.classList.add("p-3");
+        nameCell.textContent = item.name;
+
+        const priceCell = document.createElement("td");
+        priceCell.textContent = new Intl.NumberFormat("vi-VN", {
+          style: "currency",
+          currency: "VND",
+        }).format(item.price);
+
+        const stockCell = document.createElement("td");
+        stockCell.textContent = item.stockQuantity;
+
+        const soldCell = document.createElement("td");
+        soldCell.textContent = item.soldQuantity;
+
+        const originCell = document.createElement("td");
+        originCell.textContent = item.origin;
+
+        const statusCell = document.createElement("td");
+        const statusBadge = document.createElement("span");
+        statusBadge.className = item.isActive
+          ? "badge bg-success"
+          : "badge bg-danger";
+        statusBadge.textContent = item.isActive ? "Đang bán" : "Ngừng bán";
+        statusCell.appendChild(statusBadge);
+
+        const ratingCell = document.createElement("td");
+        ratingCell.textContent = item.averageRating
+          ? item.averageRating.toFixed(1)
+          : "Chưa có";
+
+        const actionCell = document.createElement("td");
+        actionCell.innerHTML = `
+              <button class="btn btn-sm btn-primary edit-product" data-id="${item.id}">
+                Sửa SP
+              </button>
+              <button class="btn btn-sm btn-danger delete-product" data-id="${item.id}">
+                Xóa SP
+              </button>
+            `;
+
+        // Thêm các ô vào hàng
+        row.appendChild(nameCell);
+        row.appendChild(priceCell);
+        row.appendChild(stockCell);
+        row.appendChild(soldCell);
+        row.appendChild(originCell);
+        row.appendChild(statusCell);
+        row.appendChild(ratingCell);
+        row.appendChild(actionCell);
+
+        // Thêm hàng vào bảng
+        tableProduct.querySelector("tbody").appendChild(row);
+      });
+    },
+    handleSearchFunction() {
+      const searchInput = document.getElementById("product-search-input");
+      const searchButton = document.getElementById("product-search-button");
+      let _this = this;
+      searchInput.addEventListener("input", () => {
+        _this.filter.searchTerm = searchInput.value;
+      });
+    },
+    handlePagingFunction() {
+      document.getElementById("paging-list").addEventListener("click", (e) => {
+        const _this = this;
+        const btn = e.target.closest("a");
+        console.log(btn);
+
+        if (!btn) return;
+
+        if (btn.id === "btn-prev") {
+          _this.filter.page--;
+          document.getElementById("filter-button").click();
+          e.preventDefault();
+        }
+
+        if (btn.id === "btn-next") {
+          _this.filter.page++;
+          document.getElementById("filter-button").click();
+          e.preventDefault();
+        }
+      });
+    },
   };
 
-  // Hàm load danh mục từ API
-  async function loadCategories() {
-    try {
-      const response = await fetch('/api/Category');
-      const categories = await response.json();
+  const appOrder = {
+    filter: new createFilterOrder({
+      searchTerm: "",
+      sortBy: SortType.Latest,
+      page: 1,
+      pageSize: 10,
+    }),
+    statuses : {},
+    paymentMethods : {},
+    init: function () {
+      new Promise((resolve, reject) => {
+        this.loadOrderStatuses();
+        this.loadPaymentMethods();
+        this.loadSortType();
+        this.handleFilterFunction();
+        this.handleSearchFunction();
+        this.handlePagingFunction();
+        resolve();
+      })
+        .then(() => {
+          document.getElementById("order-filter-button").click();
+        })
+        .catch((error) => {
+          console.error("Error initializing appOrder:", error);
+        });
+    },
+    loadOrderStatuses: function () {
+      // Load trạng thái đơn hàng vào dropdown
+      const statusDropdown = document.getElementById("order-status-filter");
+      statusDropdown.innerHTML = "<option value='-999' selected>Tất cả trạng thái</option>";
       
-      const categorySelect = document.querySelector('select#danhmucselection');
-      categorySelect.innerHTML = '<option value="-999" selected>Tất cả danh mục</option>';
-      console.log("categories", categories);
-      categories.data.forEach(category => {
-        const option = document.createElement('option');
-        option.value = category.id;
-        option.textContent = category.name;
-        categorySelect.appendChild(option);
+      enumService.getOrderStatuses()
+        .then((data) => {
+          if (data) {
+            Object.keys(data).forEach((key) => {
+              const option = document.createElement("option");
+              option.value = key;
+              option.textContent = data[key];
+              statusDropdown.appendChild(option);
+              this.statuses[key] = data[key];
+            });
+            console.log(this.statuses);
+          }
+        })
+        .catch((error) => {
+          console.error("Error retrieving order statuses:", error);
+        });
+    },
+    loadPaymentMethods: function () {
+      // Load phương thức thanh toán vào dropdown
+      const paymentDropdown = document.getElementById("payment-method-filter");
+      paymentDropdown.innerHTML = "<option value='-999' selected>Tất cả phương thức</option>";
+      
+      enumService.getPaymentMethods()
+        .then((data) => {
+          if (data && data.success && data.data) {
+            Object.keys(data.data).forEach((key) => {
+              const option = document.createElement("option");
+              option.value = key;
+              option.textContent = data.data[key];
+              paymentDropdown.appendChild(option);
+              this.paymentMethods[key] = data.data[key];
+            });
+            console.log(this.paymentMethods);
+          }
+        })
+        .catch((error) => {
+          console.error("Error retrieving payment methods:", error);
+        });
+    },
+    loadSortType: function () {
+      const sortByDropdown = document.getElementById("order-sort-filter");
+      sortByDropdown.innerHTML = "";
+      
+      enumService.getSortTypesByEntity("Order")
+        .then((data) => {
+          if (data) {
+            Object.keys(data).forEach((key) => {
+              const option = document.createElement("option");
+              option.value = key;
+              option.textContent = data[key];
+              sortByDropdown.appendChild(option);
+            });
+          }
+        })
+        .catch((error) => {
+          console.error("Error retrieving sort types:", error);
+          // Thêm các lựa chọn mặc định nếu API thất bại
+          const defaultSortOptions = [
+            { value: SortType.Latest.toString(), text: "Mới nhất" },
+            { value: SortType.Oldest.toString(), text: "Cũ nhất" },
+          ];
+          
+          defaultSortOptions.forEach(option => {
+            const optionElement = document.createElement("option");
+            optionElement.value = option.value;
+            optionElement.textContent = option.text;
+            sortByDropdown.appendChild(optionElement);
+          });
+        });
+    },
+    handleFilterFunction() {
+      const filterButton = document.getElementById("order-filter-button");
+      let _this = this;
+      
+      filterButton.addEventListener("click", () => {
+        const statusId = document.getElementById("order-status-filter").value;
+        const paymentMethodId = document.getElementById("payment-method-filter").value;
+        const sortBy = document.getElementById("order-sort-filter").value;
+        
+        if (statusId && statusId !== "-999") {
+          _this.filter.status = parseInt(statusId);
+        } else {
+          _this.filter.status = -999;
+        }
+        
+        if (paymentMethodId && paymentMethodId !== "-999") {
+          _this.filter.paymentMethod = parseInt(paymentMethodId);
+        } else {
+          _this.filter.paymentMethod = -999;
+        }
+        
+        if (sortBy && sortBy !== "-999") {
+          _this.filter.sortBy = parseInt(sortBy);
+        }
+        
+        console.log("Order filter:", _this.filter);
+        
+        // API call sử dụng BaseService
+        const orderService = new BaseService("http://localhost:5172/api/Order", jwt);
+        
+        orderService.find(_this.filter)
+          .then((data) => {
+            console.log("Order data:", data);
+            if (data && data.success) {
+              const items = data.data || [];
+              _this.reloadTable(items);
+              
+              // Cập nhật phân trang
+              const start = (_this.filter.page - 1) * _this.filter.pageSize + 1;
+              const end = start + items.length - 1;
+              const totalCount = data.totalCount || 0;
+              
+              document.getElementById("order-paging-count").textContent = 
+                `Hiển thị ${start} - ${end}/${totalCount} đơn hàng`;
+              
+              // Cập nhật danh sách phân trang
+              const pagingList = document.getElementById("order-paging-list");
+              pagingList.innerHTML = `
+                <li class="page-item">
+                  <a href="#" class="page-link" id="order-btn-prev">
+                    <i class="bx bx-left-arrow-alt"></i>
+                  </a>
+                </li>`;
+              
+              const totalPages = Math.ceil(totalCount / _this.filter.pageSize);
+              
+              for (let i = 1; i <= totalPages; i++) {
+                const li = document.createElement("li");
+                li.classList.add("page-item");
+                
+                if (i === _this.filter.page) {
+                  li.classList.add("active");
+                }
+                
+                li.addEventListener("click", () => {
+                  _this.filter.page = i;
+                  document.getElementById("order-filter-button").click();
+                });
+                
+                const a = document.createElement("a");
+                a.classList.add("page-link");
+                a.textContent = i;
+                a.href = "#";
+                
+                li.appendChild(a);
+                pagingList.appendChild(li);
+              }
+              
+              pagingList.innerHTML += `
+                <li class="page-item">
+                  <a href="#" class="page-link" id="order-btn-next">
+                    <i class="bx bx-right-arrow-alt"></i>
+                  </a>
+                </li>`;
+              
+              // Vô hiệu hóa nút Prev nếu đang ở trang đầu tiên
+              if (_this.filter.page === 1) {
+                document.getElementById("order-btn-prev").parentElement.classList.add("disabled");
+              }
+              
+              // Vô hiệu hóa nút Next nếu đang ở trang cuối cùng
+              if (_this.filter.page === totalPages) {
+                document.getElementById("order-btn-next").parentElement.classList.add("disabled");
+              }
+            } else {
+              // Hiển thị thông báo lỗi
+              document.getElementById("order-table-body").innerHTML = `
+                <tr>
+                  <td colspan="10" class="text-center text-danger">
+                    Không thể tải dữ liệu đơn hàng. Vui lòng thử lại sau.
+                  </td>
+                </tr>`;
+              
+              document.getElementById("order-paging-count").textContent = "Không có dữ liệu";
+            }
+          })
+          .catch((error) => {
+            console.error("Error retrieving orders:", error);
+            document.getElementById("order-table-body").innerHTML = `
+              <tr>
+                <td colspan="10" class="text-center text-danger">
+                  Đã xảy ra lỗi khi tải dữ liệu. Vui lòng thử lại sau.
+                </td>
+              </tr>`;
+            
+            document.getElementById("order-paging-count").textContent = "Đã xảy ra lỗi";
+          });
       });
-    } catch (error) {
-      console.error('Lỗi khi load danh mục:', error);
-    }
-  }
-
-  // Hàm load loại sắp xếp
-  async function loadSortTypes() {
-    try {
-      const response = await fetch('/api/Enum/sort-by-entity?entityName=Product');
-      const sortTypes = await response.json();
+    },
+    reloadTable(items) {
+      const tableBody = document.getElementById("order-table-body");
+      tableBody.innerHTML = "";
       
-      const sortSelect = document.querySelector('select#sortselection');
-      sortSelect.innerHTML = '';
-      
-      Object.entries(sortTypes).forEach(([key, value]) => {
-        const option = document.createElement('option');
-        option.value = key;
-        option.textContent = value;
-        sortSelect.appendChild(option);
-      });
-    } catch (error) {
-      console.error('Lỗi khi load loại sắp xếp:', error);
-    }
-  }
-
-  // Hàm tìm kiếm sản phẩm
-  async function searchProducts() {
-    try {
-      const searchInput = document.querySelector('input#searchproduct');
-      const categorySelect = document.querySelector('select#danhmucselection');
-      const sortSelect = document.querySelector('select#sortselection');
-      
-      productFilter.searchTerm = searchInput.value;
-      productFilter.categoryId = categorySelect.value || null;
-      productFilter.sortBy = parseInt(sortSelect.value) || 0;
-      productFilter.page = currentProductPage;
-      productFilter.pageSize = productPageSize;
-
-      const response = await fetch('/api/Product/filter', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(productFilter)
-      });
-
-      const result = await response.json();
-      updateProductTable(result.data);
-      updateProductPagination(result.totalCount);
-    } catch (error) {
-      console.error('Lỗi khi tìm kiếm sản phẩm:', error);
-    }
-  }
-
-  // Hàm cập nhật bảng sản phẩm
-  function updateProductTable(products) {
-    const tbody = document.querySelector('.table-responsive tbody');
-    tbody.innerHTML = '';
-
-    products.forEach(product => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td class="ps-3">
-          <a href="/Product/Details/${product.id}" class="text-muted">${product.name}</a>
-        </td>
-        <td>${product.category?.name || ''}</td>
-        <td>${product.soldQuantity}</td>
-        <td>${product.price.toLocaleString()} đ</td>
-        <td>
-          ${getStockStatusBadge(product.stockQuantity)}
-        </td>
-      `;
-      tbody.appendChild(tr);
-    });
-  }
-
-  // Hàm tạo badge trạng thái tồn kho
-  function getStockStatusBadge(quantity) {
-    if (quantity > 10) {
-      return '<span class="badge badge-soft-success">Còn hàng</span>';
-    } else if (quantity > 0) {
-      return '<span class="badge badge-soft-warning">Sắp hết</span>';
-    } else {
-      return '<span class="badge badge-soft-danger">Hết hàng</span>';
-    }
-  }
-
-  // Hàm cập nhật phân trang
-  function updateProductPagination(totalCount) {
-    const totalPages = Math.ceil(totalCount / productPageSize);
-    const pagination = document.querySelector('.pagination');
-    pagination.innerHTML = '';
-
-    // Nút Previous
-    const prevLi = document.createElement('li');
-    prevLi.className = `page-item ${currentProductPage === 1 ? 'disabled' : ''}`;
-    prevLi.innerHTML = `
-      <a href="#" class="page-link" onclick="changeProductPage(${currentProductPage - 1})">
-        <i class="bx bx-left-arrow-alt"></i>
-      </a>
-    `;
-    pagination.appendChild(prevLi);
-
-    // Các nút trang
-    for (let i = 1; i <= totalPages; i++) {
-      const li = document.createElement('li');
-      li.className = `page-item ${i === currentProductPage ? 'active' : ''}`;
-      li.innerHTML = `
-        <a href="#" class="page-link" onclick="changeProductPage(${i})">${i}</a>
-      `;
-      pagination.appendChild(li);
-    }
-
-    // Nút Next
-    const nextLi = document.createElement('li');
-    nextLi.className = `page-item ${currentProductPage === totalPages ? 'disabled' : ''}`;
-    nextLi.innerHTML = `
-      <a href="#" class="page-link" onclick="changeProductPage(${currentProductPage + 1})">
-        <i class="bx bx-right-arrow-alt"></i>
-      </a>
-    `;
-    pagination.appendChild(nextLi);
-
-    // Cập nhật thông tin hiển thị số lượng sản phẩm
-    const start = (currentProductPage - 1) * productPageSize + 1;
-    const end = Math.min(currentProductPage * productPageSize, totalCount);
-    const rangeText = `${start} - ${end}`;
-    
-    document.getElementById('rangeproduct').textContent = rangeText;
-  }
-
-  // Hàm thay đổi trang
-  function changeProductPage(page) {
-    if (page < 1) return;
-    currentProductPage = page;
-    searchProducts();
-  }
-
-  // Gắn sự kiện cho các nút tìm kiếm và lọc
-  document.addEventListener('DOMContentLoaded', () => {
-    // Load dữ liệu ban đầu
-    loadCategories();
-    loadSortTypes();
-    searchProducts();
-
-    // Gắn sự kiện cho nút tìm kiếm
-    const searchButton = document.querySelector('button#searchbutton');
-    searchButton.addEventListener('click', searchProducts);
-
-    // Gắn sự kiện cho nút lọc
-    const filterButton = document.querySelector('button#filterbutton');
-    filterButton.addEventListener('click', searchProducts);
-
-    // Gắn sự kiện cho input tìm kiếm
-    const searchInput = document.querySelector('input#searchproduct');
-    searchInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        searchProducts();
+      if (!items || items.length === 0) {
+        tableBody.innerHTML = `
+          <tr>
+            <td colspan="10" class="text-center">
+              Không tìm thấy đơn hàng nào phù hợp với điều kiện tìm kiếm.
+            </td>
+          </tr>`;
+        return;
       }
-    });
-  });
-  // #########################################################
-  // Khai báo thêm biến toàn cục cho đơn hàng
-  let currentOrderPage = 1;
-  let orderPageSize = 10;
-  let orderFilter = {
-    searchTerm: '',
-    status: null,
-    paymentMethod: null,
-    sortBy: null,
-    page: 1,
-    pageSize: 10
+      
+      items.forEach((order) => {
+        // Tạo một hàng mới cho mỗi đơn hàng
+        const row = document.createElement("tr");
+        
+        // Định dạng trạng thái đơn hàng / trạng thái thanh toán / phương thức thanh toán
+        let statusClass = this.statuses[order.status];
+        let paymentMethodClass = this.paymentMethods[order.paymentMethod];
+        
+        // Định dạng ngày đặt hàng
+        const orderDate = new Date(order.createdAt);
+        const formattedDate = orderDate.toLocaleDateString("vi-VN");
+
+        //Thông tin về Khách hàng
+        let customerName = order.buyer.fullName || 'Khách vãng lai';
+        let customerPhone = order.buyer.phoneNumber || '---';
+        let customerAddress = order.buyer.address || '---';
+        
+        // Tạo nội dung hàng
+        row.innerHTML = `
+          <td class="ps-3">
+            <a href="00_layout.html?file=00_order_detail.html?id=${order.id}">#${order.orderCode || order.id}</a>
+          </td>
+          <td>${formattedDate}</td>
+          <td>
+            <a href="#!">${customerName}</a>
+          </td>
+          <td>${customerPhone}</td>
+          <td>${customerAddress}</td>
+          <td>${paymentMethodClass}</td>
+          <td>
+            ${statusClass}
+          </td>
+          <td>
+            <div class="dropdown">
+              <button class="btn btn-sm btn-light" type="button" data-bs-toggle="dropdown">
+                <i class="bx bx-dots-horizontal-rounded"></i>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="00_layout.html?file=00_order_detail.html?id=${order.orderCode}">Xem chi tiết</a></li>
+                <li><a class="dropdown-item update-status" data-id="${order.orderCode}" href="#">Cập nhật trạng thái</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger cancel-order" data-id="${order.orderCode}" href="#">Hủy đơn hàng</a></li>
+              </ul>
+            </div>
+          </td>
+        `;
+        
+        // Thêm hàng vào bảng
+        tableBody.appendChild(row);
+      });
+      
+      // Thêm event listeners cho các nút trong bảng
+      this.addTableEventListeners();
+    },
+    addTableEventListeners() {
+      // Event listener cho nút cập nhật trạng thái
+      document.querySelectorAll('.update-status').forEach(button => {
+        button.addEventListener('click', (e) => {
+          e.preventDefault();
+          const orderId = button.getAttribute('data-id');
+          console.log(`Cập nhật trạng thái cho đơn hàng ${orderId}`);
+          // TODO: Hiển thị modal cập nhật trạng thái
+        });
+      });
+      
+      // Event listener cho nút hủy đơn hàng
+      document.querySelectorAll('.cancel-order').forEach(button => {
+        button.addEventListener('click', (e) => {
+          e.preventDefault();
+          const orderId = button.getAttribute('data-id');
+          
+          if (confirm('Bạn có chắc chắn muốn hủy đơn hàng này?')) {
+            console.log(`Hủy đơn hàng ${orderId}`);
+            // TODO: Gọi API để hủy đơn hàng
+          }
+        });
+      });
+    },
+    handleSearchFunction() {
+      const searchInput = document.getElementById("order-search-input");
+      let _this = this;
+      
+      // Sự kiện khi nhập vào ô tìm kiếm
+      searchInput.addEventListener("input", () => {
+        _this.filter.searchTerm = searchInput.value;
+      });
+      
+      // Sự kiện khi nhấn Enter trong ô tìm kiếm
+      searchInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+          _this.filter.page = 1; // Reset về trang 1
+          document.getElementById("order-filter-button").click();
+          e.preventDefault();
+        }
+      });
+    },
+    handlePagingFunction() {
+      const _this = this;
+      
+      // Sự kiện cho nút Previous
+      document.addEventListener('click', function(e) {
+        if (e.target.closest('#order-btn-prev')) {
+          e.preventDefault();
+          if (_this.filter.page > 1) {
+            _this.filter.page--;
+            document.getElementById("order-filter-button").click();
+          }
+        }
+      });
+      
+      // Sự kiện cho nút Next
+      document.addEventListener('click', function(e) {
+        if (e.target.closest('#order-btn-next')) {
+          e.preventDefault();
+          _this.filter.page++;
+          document.getElementById("order-filter-button").click();
+        }
+      });
+    }
   };
-  // Hàm load trạng thái đơn hàng từ API
-  async function loadOrderStatus() {
-    try {
-      const response = await fetch('/api/Enum/order-statuses');
-      const orderStatuses = await response.json();
-      
-      const orderStatusSelect = document.querySelector('select#orderstatusselection');
-      orderStatusSelect.innerHTML = '<option value="-999" selected>Tất cả trạng thái</option>';
-      console.log("orderStatuses", orderStatuses);
-      Object.entries(orderStatuses).forEach(([key, value]) => {
-        const option = document.createElement('option');
-        option.value = key;
-        option.textContent = value;
-        orderStatusSelect.appendChild(option);
-      });
-    } catch (error) {
-      console.error('Lỗi khi load danh mục:', error);
-    }
-  }
-  //Hàm load phương thức thanh toán từ API
-  async function loadPaymentMethods() {
-    try {
-      const response = await fetch('/api/Enum/payment-methods');
-      const paymentMethods = await response.json();
-      const paymentMethodSelect = document.querySelector('select#paymentmethodselection');
-      paymentMethodSelect.innerHTML = '<option value="-999" selected>Tất cả phương thức</option>';
-      console.log("paymentMethods", paymentMethods);
-      Object.entries(paymentMethods.data).forEach(([key, value]) => {
-        const option = document.createElement('option');
-        option.value = key;
-        option.textContent = value;
-        paymentMethodSelect.appendChild(option);
-      });
-    } catch (error) {
-      console.error('Lỗi khi load phương thức thanh toán:', error);
-    }
-  }
-  // Hàm load loại sắp xếp cho đơn hàng
-  async function loadOrderSortTypes() {
-    try {
-      const response = await fetch('/api/Enum/sort-by-entity?entityName=Order');
-      const sortTypes = await response.json();
-      
-      const sortSelect = document.querySelector('select#ordersortselection');
-      sortSelect.innerHTML = '';
-      
-      Object.entries(sortTypes).forEach(([key, value]) => {
-        const option = document.createElement('option');
-        option.value = key;
-        option.textContent = value;
-        sortSelect.appendChild(option);
-      });
-    } catch (error) {
-      console.error('Lỗi khi load loại sắp xếp đơn hàng:', error);
-    }
-  }
 
-  // Hàm tìm kiếm đơn hàng
-  async function searchOrders() {
-    try {
-      const searchInput = document.querySelector('input#searchorder');
-      const statusSelect = document.querySelector('select#orderstatusselection');
-      const paymentSelect = document.querySelector('select#paymentmethodselection');
-      const sortSelect = document.querySelector('select#ordersortselection');
-      
-      orderFilter.searchTerm = searchInput.value;
-      orderFilter.status = parseInt(statusSelect.value) || null;
-      orderFilter.paymentMethod = parseInt(paymentSelect.value) || null;
-      orderFilter.sortBy = parseInt(sortSelect.value) || 0;
-      orderFilter.page = currentOrderPage;
-      orderFilter.pageSize = orderPageSize;
-
-      console.log("orderFilter", orderFilter);
-
-      const response = await fetch('/api/Order/filter', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(orderFilter)
-      });
-
-      const result = await response.json();
-      updateOrderTable(result.data);
-      updateOrderPagination(result.totalCount);
-    } catch (error) {
-      console.error('Lỗi khi tìm kiếm đơn hàng:', error);
-    }
-  }
-
-  // Hàm cập nhật bảng đơn hàng
-  function updateOrderTable(orders) {
-    const tbody = document.querySelector('.table-centered tbody');
-    tbody.innerHTML = '';
-
-    orders.forEach(order => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td class="ps-3">
-          <a href="/Order/Details/${order.id}">#${order.orderCode}</a>
-        </td>
-        <td>${new Date(order.createdAt).toLocaleDateString('vi-VN')}</td>
-        <td>
-          <a href="/User/Details/${order.buyerId}">${order.buyer?.fullName || ''}</a>
-        </td>
-        <td>${order.finalAmount.toLocaleString()} đ</td>
-        <td>${order.paymentMethod}</td>
-        <td>
-          ${getOrderStatusBadge(order.status)}
-        </td>
-      `;
-      tbody.appendChild(tr);
-    });
-  }
-
-  // Hàm tạo badge trạng thái đơn hàng
-  function getOrderStatusBadge(status) {
-    switch (status) {
-      case 'Completed':
-        return '<i class="bx bxs-circle text-success me-1"></i>Hoàn thành';
-      case 'Pending':
-        return '<i class="bx bxs-circle text-warning me-1"></i>Đang xử lý';
-      case 'Cancelled':
-        return '<i class="bx bxs-circle text-danger me-1"></i>Đã hủy';
-      default:
-        return '<i class="bx bxs-circle text-primary me-1"></i>' + status;
-    }
-  }
-
-  // Hàm cập nhật phân trang đơn hàng
-  function updateOrderPagination(totalCount) {
-    const totalPages = Math.ceil(totalCount / orderPageSize);
-    const pagination = document.querySelector('.table-centered + .card-footer .pagination');
-    pagination.innerHTML = '';
-
-    // Nút Previous
-    const prevLi = document.createElement('li');
-    prevLi.className = `page-item ${currentOrderPage === 1 ? 'disabled' : ''}`;
-    prevLi.innerHTML = `
-      <a href="#" class="page-link" onclick="changeOrderPage(${currentOrderPage - 1})">
-        <i class="bx bx-left-arrow-alt"></i>
-      </a>
-    `;
-    pagination.appendChild(prevLi);
-
-    // Các nút trang
-    for (let i = 1; i <= totalPages; i++) {
-      const li = document.createElement('li');
-      li.className = `page-item ${i === currentOrderPage ? 'active' : ''}`;
-      li.innerHTML = `
-        <a href="#" class="page-link" onclick="changeOrderPage(${i})">${i}</a>
-      `;
-      pagination.appendChild(li);
-    }
-
-    // Nút Next
-    const nextLi = document.createElement('li');
-    nextLi.className = `page-item ${currentOrderPage === totalPages ? 'disabled' : ''}`;
-    nextLi.innerHTML = `
-      <a href="#" class="page-link" onclick="changeOrderPage(${currentOrderPage + 1})">
-        <i class="bx bx-right-arrow-alt"></i>
-      </a>
-    `;
-    pagination.appendChild(nextLi);
-
-    // Cập nhật thông tin hiển thị
-    const start = (currentOrderPage - 1) * orderPageSize + 1;
-    const end = Math.min(currentOrderPage * orderPageSize, totalCount);
-    const infoDiv = document.querySelector('.table-centered + .card-footer .text-muted');
-    infoDiv.innerHTML = `
-      Hiển thị
-      <span class="fw-semibold">${start} - ${end}</span>
-      trong tổng số
-      <span class="fw-semibold">${totalCount}</span>
-      đơn hàng
-    `;
-  }
-
-  // Hàm thay đổi trang đơn hàng
-  function changeOrderPage(page) {
-    if (page < 1) return;
-    currentOrderPage = page;
-    searchOrders();
-  }
-
-  // Thêm vào phần DOMContentLoaded
-  document.addEventListener('DOMContentLoaded', () => {
-    // Load dữ liệu đơn hàng ban đầu
-    loadOrderSortTypes();
-    loadOrderStatus();
-    loadPaymentMethods();
-    searchOrders();
-
-    // Gắn sự kiện cho nút tìm kiếm đơn hàng
-    const orderSearchButton = document.querySelector('button#ordersearchbutton');
-    orderSearchButton.addEventListener('click', searchOrders);
-
-    // Gắn sự kiện cho nút lọc đơn hàng
-    const orderFilterButton = document.querySelector('button#orderfilterbutton');
-    orderFilterButton.addEventListener('click', searchOrders);
-
-    // Gắn sự kiện cho input tìm kiếm đơn hàng
-    const orderSearchInput = document.querySelector('input#searchorder');
-    orderSearchInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        searchOrders();
-      }
-    });
-  });
+  // Khởi động cả hai ứng dụng
+  appProduct.init();
+  appOrder.init();
 </script>

@@ -35,6 +35,9 @@ namespace VNFarm_FinalFinal.Mappers
                 Notes = businessRegistration.Notes,
                 RegistrationStatus = businessRegistration.RegistrationStatus,
                 BusinessType = businessRegistration.BusinessType,
+                //Navigation Properties
+                User = businessRegistration.User?.ToResponseDTO(),
+                ApprovalResults = businessRegistration.ApprovalResults?.Select(ar => ar.ToResponseDTO()).ToList(),
             };
         }
         public static CategoryResponseDTO ToResponseDTO(this Category category)
@@ -139,7 +142,7 @@ namespace VNFarm_FinalFinal.Mappers
         }
         public static OrderResponseDTO ToResponseDTO(this Order order)
         {
-            return new OrderResponseDTO
+            var orderResponseDto =  new OrderResponseDTO
             {
                 Id = order.Id,
                 CreatedAt = order.CreatedAt,
@@ -164,7 +167,10 @@ namespace VNFarm_FinalFinal.Mappers
                 Discount = order.Discount?.ToResponseDTO(),
                 OrderDetails = order.OrderDetails?.Select(od => od.ToResponseDTO()).ToList(),
                 OrderTimelines = order.OrderTimelines?.Select(ot => ot.ToResponseDTO()).ToList(),
+                Shipping = order.ToShippingResponseDTO(),
+                Address = order.ToAddressResponseDTO(),
             };
+            return orderResponseDto;
         }
         public static OrderTimelineResponseDTO ToResponseDTO(this OrderTimeline orderTimeline)
         {
@@ -216,6 +222,11 @@ namespace VNFarm_FinalFinal.Mappers
                 Category = product.Category?.ToResponseDTO(),
                 Store = product.Store?.ToResponseDTO(),
                 Reviews = product.Reviews?.Select(r => r.ToResponseDTO()).ToList(),
+                ReviewStar1Count = product.ReviewStar1Count,
+                ReviewStar2Count = product.ReviewStar2Count,
+                ReviewStar3Count = product.ReviewStar3Count,
+                ReviewStar4Count = product.ReviewStar4Count,
+                ReviewStar5Count = product.ReviewStar5Count,
             };
         }
         public static RegistrationApprovalResultResponseDTO ToResponseDTO(this RegistrationApprovalResult registrationApprovalResult)
@@ -281,6 +292,9 @@ namespace VNFarm_FinalFinal.Mappers
                 AverageRating = store.AverageRating,
                 ReviewCount = store.ReviewCount,
                 OwnerId = store.UserId,
+                //Navigation properties
+                Owner = store.User?.ToResponseDTO(),
+                Products = store.Products?.Select(p => p.ToResponseDTO()).ToList()
             };
         }
         public static TransactionResponseDTO ToResponseDTO(this Transaction transaction)

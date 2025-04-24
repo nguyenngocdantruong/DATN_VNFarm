@@ -37,6 +37,13 @@ namespace VNFarm_FinalFinal.Controllers.ApiControllers
             var orderEventType = OrderUtils.GetOrderEventTypeForForm();
             return Ok(orderEventType);
         }
+        [HttpGet("order-timeline-statuses")]
+        public IActionResult GetOrderTimelineStatuses()
+        {
+            var orderTimelineStatus = OrderUtils.GetOrderTimeLineStatus();
+            return Ok(orderTimelineStatus);
+        }
+        
         [HttpGet("sort-entities")]
         public IActionResult GetSortEntities()
         {
@@ -134,6 +141,27 @@ namespace VNFarm_FinalFinal.Controllers.ApiControllers
                 success = true,
                 data = paymentMethods
             });
+        }
+        [HttpGet("payment-statuses")]
+        public IActionResult GetPaymentStatuses()
+        {
+            var paymentStatuses = PaymentUtils.GetPaymentStatusesForForm();
+            return Ok(new {
+                success = true,
+                data = paymentStatuses
+            });
+        }
+        [HttpGet("store-statuses")]
+        public IActionResult GetStoreStatuses()
+        {
+            var storeStatuses = StoreUtils.GetStoreStatuses();
+            return Ok(storeStatuses);
+        }
+        [HttpGet("store-types")]
+        public IActionResult GetStoreTypes()
+        {
+            var storeTypes = StoreUtils.GetStoreTypes();
+            return Ok(storeTypes);
         }
     }
 }

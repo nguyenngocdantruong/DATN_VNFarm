@@ -44,6 +44,11 @@ namespace VNFarm_FinalFinal.Entities
         public decimal AverageRating { get; set; }
         public int TotalSoldQuantity { get; set; }
         public int ReviewCount { get; set; }
+        public int ReviewStar1Count {get;set;} = 0;
+        public int ReviewStar2Count {get;set;} = 0;
+        public int ReviewStar3Count {get;set;} = 0;
+        public int ReviewStar4Count {get;set;} = 0;
+        public int ReviewStar5Count {get;set;} = 0;
 
         // Navigation properties - Các thuộc tính liên kết
         public Store? Store { get; set; }                                    // Cửa hàng sở hữu

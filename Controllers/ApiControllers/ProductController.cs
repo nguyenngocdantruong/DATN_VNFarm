@@ -9,6 +9,7 @@ using VNFarm_FinalFinal.DTOs.Filters;
 using VNFarm_FinalFinal.DTOs.Request;
 using VNFarm_FinalFinal.DTOs.Response;
 using VNFarm_FinalFinal.Entities;
+using VNFarm_FinalFinal.Helpers;
 using VNFarm_FinalFinal.Interfaces.Services;
 
 namespace VNFarm_FinalFinal.Controllers.ApiControllers
@@ -18,10 +19,18 @@ namespace VNFarm_FinalFinal.Controllers.ApiControllers
     public class ProductController : ApiBaseController<Product, ProductRequestDTO, ProductResponseDTO>
     {
         private readonly IProductService _productService;
+        private readonly ICategoryService _categoryService;
+        private readonly IStoreService _storeService;
+        private readonly IUserService _userService;
+        private readonly ILogger<ProductController> _logger;
 
-        public ProductController(IProductService productService, ILogger<ProductController> logger) : base(productService, logger)
+        public ProductController(IProductService productService,ICategoryService categoryService, IStoreService storeService, IUserService userService, ILogger<ProductController> logger) : base(productService, logger)
         {
             _productService = productService;
+            _categoryService = categoryService;
+            _storeService = storeService;
+            _userService = userService;
+            _logger = logger;
         }
 
         /// <summary>
@@ -89,8 +98,50 @@ namespace VNFarm_FinalFinal.Controllers.ApiControllers
         [HttpGet("{productId}/reviews")]
         public async Task<ActionResult<IEnumerable<ReviewResponseDTO>>> GetReviews(int productId)
         {
+            var product = await _productService.GetByIdAsync(productId);
+            if (product == null)
+                return NotFound(new { success = false, message = "Không tìm thấy sản phẩm." });
             var reviews = await _productService.GetReviewsAsync(productId);
-            return Ok(reviews);
+            // Include user
+            foreach (var review in reviews)
+            {
+                if(review != null)
+                {
+                    var user = await _userService.GetByIdAsync(review.UserId);
+                    if (user != null)
+                    {
+                        review.User = user;
+                    }
+                }
+            }
+            return Ok(new { success = true, data = new {
+                product = product,
+                reviews = reviews,
+            } });
+        }
+
+        protected override async Task<ProductResponseDTO> IncludeNavigation(ProductResponseDTO item)
+        {
+            // _logger.LogWarning("IncludeNavigation: {Item}", item.ToString());
+            item.Reviews = (await _productService.GetReviewsAsync(item.Id)).Take(1).ToList();
+            if(item.CategoryId != null)
+                item.Category = await _categoryService.GetByIdAsync(item.CategoryId.Value);
+            return await base.IncludeNavigation(item);
+        }
+
+        protected override async Task<ProductRequestDTO> UploadFile(ProductRequestDTO req)
+        {
+            if (req.ImageFile == null || req.ImageFile.Length == 0){
+                _logger.LogWarning("ProductController: No file uploaded.");
+                return req;
+            }
+            if (req.ImageFile.Length > 1048576 * 10){
+                _logger.LogWarning("ProductController: File size exceeds 10MB limit.");
+                return req;
+            }
+            var url = await FileUpload.UploadFile(req.ImageFile, FileUpload.ProductFolder);
+            req.ImageUrl = url;
+            return req;
         }
     }
 }

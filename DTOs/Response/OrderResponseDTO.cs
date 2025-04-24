@@ -11,6 +11,8 @@ namespace VNFarm_FinalFinal.DTOs.Response
         public required string OrderCode { get; set; }
         public required OrderStatus Status { get; set; }
         public required string Notes { get; set; }
+        public required AddressResponseDTO Address { get; set; }        
+        public required ShippingResponseDTO Shipping { get; set; }
         #endregion
         
         #region Thông tin giá cả
@@ -38,7 +40,7 @@ namespace VNFarm_FinalFinal.DTOs.Response
         public StoreResponseDTO? Store { get; set; }
         public DiscountResponseDTO? Discount { get; set; }
         public List<OrderDetailResponseDTO> OrderDetails { get; set; } = [];
-        public List<OrderTimelineResponseDTO> OrderTimelines { get; set; } = [];
+        public List<OrderTimelineResponseDTO?> OrderTimelines { get; set; } = [];
         #endregion
     }
 }

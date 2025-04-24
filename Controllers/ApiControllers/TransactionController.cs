@@ -78,8 +78,8 @@ namespace VNFarm_FinalFinal.Controllers.ApiControllers
         /// <summary>
         /// Lấy giao dịch theo bộ lọc
         /// </summary>
-        [HttpGet("filter")]
-        public async Task<ActionResult<IEnumerable<TransactionResponseDTO>>> GetTransactionsByFilter([FromQuery] TransactionCriteriaFilter filter)
+        [HttpPost("filter")]
+        public async Task<ActionResult<IEnumerable<TransactionResponseDTO>>> GetTransactionsByFilter([FromBody] TransactionCriteriaFilter filter)
         {
             var transactions = await _transactionService.Query(filter);
             var results = await _transactionService.ApplyPagingAndSortingAsync(transactions, filter);

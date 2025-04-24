@@ -256,6 +256,25 @@ namespace VNFarm.Infrastructure.Services
             return paymentMethod.ToResponseDTO();
         }
 
+        public async Task<IEnumerable<PaymentMethodResponseDTO?>> GetPaymentMethodsByUserIdAsync(int userId)
+        {
+            var paymentMethods = await _paymentMethodRepository.FindAsync(e => e.UserId == userId);
+            return paymentMethods.Select(e => e.ToResponseDTO());
+        }
 
+        public async Task<decimal> CalculateTotalRevenueByStoreIdAsync(int storeId)
+        {
+            try
+            {
+                var transactions = await _transactionRepository.GetTransactionsByStoreIdAsync(storeId);
+                var totalRevenue = transactions.Sum(t => t.Amount);
+                return totalRevenue;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Lỗi khi tính tổng doanh thu của cửa hàng ID: {storeId}");
+                return 0; // Changed from Task.FromResult(0) to return 0
+            }
+        }
     }
 }

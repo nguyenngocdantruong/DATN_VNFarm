@@ -106,8 +106,8 @@ namespace VNFarm_FinalFinal.Controllers.ApiControllers
         /// <summary>
         /// Lấy danh sách mã giảm giá theo bộ lọc
         /// </summary>
-        [HttpGet("filter")]
-        public async Task<ActionResult<IEnumerable<DiscountResponseDTO>>> GetDiscountsByFilter([FromQuery] DiscountCriteriaFilter filter)
+        [HttpPost("filter")]
+        public async Task<ActionResult<IEnumerable<DiscountResponseDTO>>> GetDiscountsByFilter([FromBody] DiscountCriteriaFilter filter)
         {
             var discounts = await _discountService.Query(filter);
             var results = await _discountService.ApplyPagingAndSortingAsync(discounts, filter);

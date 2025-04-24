@@ -169,11 +169,11 @@ namespace VNFarm.Infrastructure.Services
             // Apply sorting
             query = filter.SortBy switch
             {
-                SortType.Latest => query.OrderByDescending(s => s.CreatedAt),
-                SortType.Oldest => query.OrderBy(s => s.CreatedAt),
+                SortType.Latest => query.OrderByDescending(s => s.UpdatedAt),
+                SortType.Oldest => query.OrderBy(s => s.UpdatedAt),
                 SortType.Ascending => query.OrderBy(s => s.Name),
                 SortType.Descending => query.OrderByDescending(s => s.Name),
-                _ => query.OrderByDescending(s => s.CreatedAt)
+                _ => query.OrderByDescending(s => s.UpdatedAt)
             };
 
             // Apply paging

@@ -28,7 +28,7 @@ namespace VNFarm_FinalFinal.Helpers
             { "OrderTimeline", new HashSet<SortType> { SortType.Latest, SortType.Oldest } },
             { "Transaction", new HashSet<SortType> { SortType.Latest, SortType.Oldest } },
             { "User", new HashSet<SortType> { SortType.Latest, SortType.Oldest } },
-            { "Store", new HashSet<SortType> { SortType.Latest, SortType.Oldest } },
+            { "Store", new HashSet<SortType> { SortType.Latest, SortType.Oldest, SortType.Ascending, SortType.Descending } },
             { "Review", new HashSet<SortType> { SortType.Latest, SortType.Oldest } },
             { "Category", new HashSet<SortType> { SortType.Ascending, SortType.Descending} },
             { "PaymentMethod", new HashSet<SortType> { SortType.Latest, SortType.Oldest } },

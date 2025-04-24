@@ -18,9 +18,11 @@ namespace VNFarm_FinalFinal.Interfaces.Services
         Task UpdateTransactionStatusAsync(int transactionId, TransactionStatus status);
         #region Payment Method
         Task<PaymentMethodResponseDTO?> AddPaymentMethodAsync(int userId, PaymentMethodRequestDTO paymentMethodRequestDTO);
+        Task<IEnumerable<PaymentMethodResponseDTO?>> GetPaymentMethodsByUserIdAsync(int userId);
         Task<IEnumerable<PaymentMethodResponseDTO?>> GetPaymentMethodsAsync();
         Task<PaymentMethodResponseDTO?> GetPaymentMethodByIdAsync(int id);
         Task<PaymentMethodResponseDTO?> GetPaymentMethodByOrderIdAsync(int orderId);
+        Task<decimal> CalculateTotalRevenueByStoreIdAsync(int storeId);
         #endregion
     }
 } 

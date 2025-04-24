@@ -14,12 +14,21 @@ namespace VNFarm_FinalFinal.Controllers.ApiControllers
     public class UsersController : ApiBaseController<User, UserRequestDTO, UserResponseDTO>
     {
         private readonly IUserService _userService;
+        private readonly IStoreService _storeService;
+        private readonly ITransactionService _transactionService;
+        private readonly IOrderService _orderService;
 
         public UsersController(
             IUserService userService,
+            IStoreService storeService,
+            ITransactionService transactionService,
+            IOrderService orderService,
             ILogger<UsersController> logger) : base(userService, logger)
         {
             _userService = userService;
+            _storeService = storeService;
+            _orderService = orderService;
+            _transactionService = transactionService;
         }
 
         [HttpGet("by-email/{email}")]
@@ -113,6 +122,73 @@ namespace VNFarm_FinalFinal.Controllers.ApiControllers
                 _logger.LogError(ex, $"Lỗi khi cập nhật trạng thái hoạt động của người dùng với ID: {id}");
                 return StatusCode(500, new { success = false, message = "Đã xảy ra lỗi khi xử lý yêu cầu." });
             }
+        }
+        [HttpPost("filter")]
+        public async Task<IActionResult> Filter([FromBody] UserCriteriaFilter filter)
+        {
+            try
+            {
+                var users = await _userService.Query(filter);
+                var totalCount = users.Count();
+                var results = await _userService.ApplyPagingAndSortingAsync(users, filter);
+                return Ok(new {
+                    success = true,
+                    data = results,
+                    totalCount = totalCount
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Lỗi khi tìm kiếm người dùng");
+                return StatusCode(500, new { success = false, message = "Đã xảy ra lỗi khi xử lý yêu cầu." });
+            }
+        }
+        protected override async Task<UserResponseDTO> IncludeNavigation(UserResponseDTO item)
+        {
+            var transactions = await _transactionService.GetTransactionsByUserIdAsync(item.Id);
+            item.Transactions = transactions;
+            if(item.Role == Enums.UserRole.Seller){
+                var store = await _storeService.GetStoreByUserIdAsync(item.Id);
+                item.Store = store;
+                if(item.Store != null){
+                    var transactionsStore = await _transactionService.GetTransactionsByStoreIdAsync(item.Store.Id);
+                    // Add store transactions to existing transactions instead of replacing them
+                    if(item.Transactions == null) {
+                        item.Transactions = transactionsStore;
+                    } else {
+                        item.Transactions = item.Transactions.Concat(transactionsStore).ToList();
+                    }
+                }
+            }
+            var paymentMethods = await _transactionService.GetPaymentMethodsByUserIdAsync(item.Id);
+            item.PaymentMethods = paymentMethods;
+            return await base.IncludeNavigation(item);
+        }
+        [HttpGet("stats")]
+        public async Task<IActionResult> GetUserStats([FromQuery] int id){
+            var user = await _userService.GetByIdAsync(id);
+            if(user == null) return NotFound(new { success = false, data = "Không tìm thấy người dùng." });
+            var transactionCount = await _transactionService.CountAsync(t => t.BuyerId == id);
+            var orderCount = await _orderService.CountAsync(o => o.BuyerId == id);
+            decimal totalRevenue = 0;
+            try{
+                var store = await _storeService.GetStoreByUserIdAsync(id);
+                if(store != null){
+                    orderCount += await _orderService.CountAsync(o => o.StoreId == store.Id);
+                    totalRevenue = await _transactionService.CalculateTotalRevenueByStoreIdAsync(store.Id);
+                }
+            } catch (Exception ex){
+                _logger.LogError(ex, $"Lỗi khi lấy thông tin cửa hàng của người dùng với ID: {id}");
+            }
+            return Ok(new {
+                success = true,
+                data = new {
+                    userId = id,
+                    transactionCount = transactionCount,
+                    orderCount = orderCount,
+                    totalRevenue = totalRevenue
+                }
+            });
         }
     }
 } 

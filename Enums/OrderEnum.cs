@@ -37,7 +37,6 @@ namespace VNFarm_FinalFinal.Enums
         OrderPackaging = 5, // Đang đóng gói
         OrderReadyToShip = 6, // Đã sẵn sàng giao hàng
         OrderShipped = 7, // Đã giao hàng
-        OrderDelivered = 8, // Đã giao hàng thành công
         OrderCompleted = 9, // Đơn hàng hoàn tất
         OrderCancelled = 10, // Đơn hàng đã bị hủy
         OrderRefunded = 11, // Đơn hàng đã được hoàn tiền

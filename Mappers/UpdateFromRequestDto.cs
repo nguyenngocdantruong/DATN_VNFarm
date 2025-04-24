@@ -141,7 +141,7 @@ namespace VNFarm_FinalFinal.Helpers
             }
             if(productRequestDTO.ImageFile != null)
             {
-                product.ImageUrl = productRequestDTO.ImageFile.FileName;
+                product.ImageUrl = productRequestDTO.ImageUrl;
             }
         }
         public static void UpdateFromRequestDto(this RegistrationApprovalResult registrationApprovalResult, RegistrationApprovalResultRequestDTO registrationApprovalResultRequestDTO)

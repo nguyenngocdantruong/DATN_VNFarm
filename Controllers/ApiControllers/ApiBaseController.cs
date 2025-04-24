@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using VNFarm_FinalFinal.DTOs.Request;
 using VNFarm_FinalFinal.DTOs.Response;
 using VNFarm_FinalFinal.Entities;
+using VNFarm_FinalFinal.Helpers;
 using VNFarm_FinalFinal.Interfaces.Services;
 
 namespace VNFarm_FinalFinal.Controllers.ApiControllers
@@ -11,23 +12,20 @@ namespace VNFarm_FinalFinal.Controllers.ApiControllers
     [Route("api/[controller]")]
     [Produces("application/json")]
     [Authorize]
-    public abstract class ApiBaseController<TEntity, TReq, TRes> : ControllerBase where TEntity : BaseEntity where TReq : BaseRequestDTO where TRes : BaseResponseDTO
+    public abstract class ApiBaseController<TEntity, TReq, TRes>(IService<TEntity, TReq, TRes> service, ILogger<ApiBaseController<TEntity, TReq, TRes>> logger) : ControllerBase where TEntity : BaseEntity where TReq : BaseRequestDTO where TRes : BaseResponseDTO
     {
-        protected readonly IService<TEntity, TReq, TRes> _service;
-        protected readonly ILogger<ApiBaseController<TEntity, TReq, TRes>> _logger;
-
-        public ApiBaseController(IService<TEntity, TReq, TRes> service, ILogger<ApiBaseController<TEntity, TReq, TRes>> logger)
-        {
-            _service = service;
-            _logger = logger;
-        }
+        protected readonly IService<TEntity, TReq, TRes> _service = service;
+        protected readonly ILogger<ApiBaseController<TEntity, TReq, TRes>> _logger = logger;
 
         [HttpPost]
-        public async Task<IActionResult> AddAsync([FromBody] TReq dto)
+        public async Task<IActionResult> AddAsync([FromForm] TReq dto)
         {
             try
             {
-                var result = await _service.AddAsync(dto);
+                var uploadedDto = await UploadFile(dto);
+                if (uploadedDto == null)
+                    return BadRequest(new { success = false, message = "Không thể tải lên tệp." });
+                var result = await _service.AddAsync(uploadedDto);
                 if (result == null)
                     return BadRequest(new { success = false, message = "Không thể thêm mới dữ liệu." });
 
@@ -38,6 +36,16 @@ namespace VNFarm_FinalFinal.Controllers.ApiControllers
                 _logger.LogError(ex, "Lỗi khi thêm mới dữ liệu");
                 return StatusCode(500, new { success = false, message = "Đã xảy ra lỗi khi xử lý yêu cầu." });
             }
+        }
+
+        /// <summary>
+        /// Hàm thực hiện tải lên file và cập nhật thông tin về file url trong DTO.
+        /// </summary>
+        /// <param name="req">Request DTO gửi từ client có thể kèm theo file</param>
+        /// <returns>Kết quả sau khi đã upload file và update info</returns>
+        protected virtual async Task<TReq> UploadFile(TReq req)
+        {
+            return await Task.Run(() => req);
         }
 
         [HttpGet("count")]
@@ -124,7 +132,7 @@ namespace VNFarm_FinalFinal.Controllers.ApiControllers
                 var item = await _service.GetByIdAsync(id);
                 if (item == null)
                     return NotFound(new { success = false, message = "Không tìm thấy dữ liệu." });
-
+                item = await IncludeNavigation(item);
                 return Ok(new { success = true, data = item });
             }
             catch (Exception ex)
@@ -134,8 +142,13 @@ namespace VNFarm_FinalFinal.Controllers.ApiControllers
             }
         }
 
+        protected virtual async Task<TRes> IncludeNavigation(TRes item)
+        {
+            return await Task.Run(() => item);
+        }
+
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(int id, [FromBody] TReq dto)
+        public async Task<IActionResult> UpdateAsync(int id, [FromForm] TReq dto)
         {
             try
             {
@@ -148,7 +161,7 @@ namespace VNFarm_FinalFinal.Controllers.ApiControllers
                 var exists = await _service.ExistsAsync(id);
                 if (!exists)
                     return NotFound(new { success = false, message = "Không tìm thấy dữ liệu." });
-
+                    
                 var result = await _service.UpdateAsync(dto);
                 if (!result)
                     return BadRequest(new { success = false, message = "Không thể cập nhật dữ liệu." });

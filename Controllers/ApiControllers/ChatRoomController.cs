@@ -54,8 +54,8 @@ namespace VNFarm_FinalFinal.Controllers.ApiControllers
         /// <summary>
         /// Lấy danh sách phòng chat theo bộ lọc
         /// </summary>
-        [HttpGet("filter")]
-        public async Task<ActionResult<IEnumerable<ChatRoomResponseDTO>>> GetChatRoomsByFilter([FromQuery] ChatRoomCriteriaFilter filter)
+        [HttpPost("filter")]
+        public async Task<ActionResult<IEnumerable<ChatRoomResponseDTO>>> GetChatRoomsByFilter([FromBody] ChatRoomCriteriaFilter filter)
         {
             var chatRooms = await _chatRoomService.Query(filter);
             var results = await _chatRoomService.ApplyPagingAndSortingAsync(chatRooms, filter);

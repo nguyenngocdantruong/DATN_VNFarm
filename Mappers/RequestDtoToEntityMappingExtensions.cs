@@ -176,7 +176,7 @@ namespace VNFarm_FinalFinal.Mappers
             };
             if (requestDto.ImageFile != null)
             {
-                product.ImageUrl = requestDto.ImageFile.FileName;
+                product.ImageUrl = requestDto.ImageUrl;
             }
             return product;
         }
@@ -222,22 +222,6 @@ namespace VNFarm_FinalFinal.Mappers
         }
         public static Transaction ToEntity(this TransactionRequestDTO requestDto, OrderResponseDTO? orderResponseDTO)
         {
-            if (orderResponseDTO == null){
-                orderResponseDTO = new OrderResponseDTO(){
-                    OrderCode = "",
-                    Status = OrderStatus.Pending,
-                    Notes = "",
-                    TotalAmount = 0,
-                    ShippingFee = 0,
-                    TaxAmount = 0,
-                    DiscountAmount = 0,
-                    FinalAmount = 0,
-                    PaymentStatus = PaymentStatus.Unpaid,
-                    PaymentMethod = PaymentMethodEnum.All,
-                    BuyerId = 0,
-                    StoreId = 0,
-                };
-            }
             return new Transaction
             {
                 TransactionCode = Generator.GenerateTransactionCode(),

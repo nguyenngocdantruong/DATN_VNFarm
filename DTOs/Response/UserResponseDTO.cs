@@ -1,3 +1,4 @@
+using System.Transactions;
 using VNFarm_FinalFinal.Enums;
 
 namespace VNFarm_FinalFinal.DTOs.Response
@@ -30,7 +31,8 @@ namespace VNFarm_FinalFinal.DTOs.Response
         #endregion
         #region Navigation Properties
         public StoreResponseDTO? Store { get; set; }   
-        public ICollection<PaymentMethodResponseDTO>? PaymentMethods { get; set; }  
+        public IEnumerable<PaymentMethodResponseDTO>? PaymentMethods { get; set; }  
+        public IEnumerable<TransactionResponseDTO>? Transactions { get; set; }
         #endregion
     }
 }

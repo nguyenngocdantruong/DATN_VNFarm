@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using VNFarm_FinalFinal.Services;
+using VNFarm_FinalFinal.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -134,6 +135,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.MapStaticAssets();
 app.UseStaticFiles();
 
 app.Use(async (context, next) =>

@@ -78,9 +78,15 @@ namespace VNFarm.Infrastructure.Services
                 if (!string.IsNullOrEmpty(productCriteriaFilter.SearchTerm))
                 {
                     query = query.Where(p =>
-                        p.Name.Contains(productCriteriaFilter.SearchTerm) ||
-                        p.Description.Contains(productCriteriaFilter.SearchTerm)
+                        p.Name.Contains(productCriteriaFilter.SearchTerm, StringComparison.OrdinalIgnoreCase) ||
+                        p.Description.Contains(productCriteriaFilter.SearchTerm, StringComparison.OrdinalIgnoreCase)
                     );
+                }
+
+                //Apply storeid filter
+                if (productCriteriaFilter.StoreId.HasValue)
+                {
+                    query = query.Where(p => p.StoreId == productCriteriaFilter.StoreId.Value);
                 }
 
                 // Apply category filter
@@ -106,7 +112,14 @@ namespace VNFarm.Infrastructure.Services
                 }
                 if (productCriteriaFilter.IsInStock.HasValue)
                 {
-                    query = query.Where(p => p.StockQuantity > 0);
+                    if (productCriteriaFilter.IsInStock.Value)
+                    {
+                        query = query.Where(p => p.StockQuantity > 0);
+                    }
+                    else
+                    {
+                        query = query.Where(p => p.StockQuantity <= 0);
+                    }
                 }
 
                 // Apply unit filter

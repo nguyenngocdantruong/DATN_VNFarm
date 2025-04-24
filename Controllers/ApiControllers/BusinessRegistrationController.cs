@@ -5,6 +5,7 @@ using VNFarm_FinalFinal.Enums;
 using VNFarm_FinalFinal.DTOs.Request;
 using VNFarm_FinalFinal.DTOs.Response;
 using VNFarm_FinalFinal.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace VNFarm_FinalFinal.Controllers.ApiControllers
 {
@@ -13,11 +14,14 @@ namespace VNFarm_FinalFinal.Controllers.ApiControllers
     public class BusinessRegistrationController : ApiBaseController<BusinessRegistration, BusinessRegistrationRequestDTO, BusinessRegistrationResponseDTO>
     {
         private readonly IBusinessRegistrationService _businessRegistrationService;
+        private readonly IUserService _userService;
 
         public BusinessRegistrationController(IBusinessRegistrationService businessRegistrationService, 
+                                IUserService userService,
                                 ILogger<BusinessRegistrationController> logger) : base(businessRegistrationService, logger)
         {
             _businessRegistrationService = businessRegistrationService;
+            _userService = userService;
         }
 
         /// <summary>
@@ -36,12 +40,18 @@ namespace VNFarm_FinalFinal.Controllers.ApiControllers
         /// <summary>
         /// Lấy danh sách đăng ký kinh doanh theo bộ lọc
         /// </summary>
-        [HttpGet("filter")]
-        public async Task<ActionResult<IEnumerable<BusinessRegistrationResponseDTO>>> GetBusinessRegistrationsByFilter([FromQuery] BusinessRegistrationCriteriaFilter filter)
+        [HttpPost("filter")]
+        public async Task<ActionResult<IEnumerable<BusinessRegistrationResponseDTO>>> GetBusinessRegistrationsByFilter([FromBody] BusinessRegistrationCriteriaFilter filter)
         {
             var registrations = await _businessRegistrationService.Query(filter);
+            registrations = registrations.Include(r => r.User);
+            var totalCount = registrations.Count();
             var results = await _businessRegistrationService.ApplyPagingAndSortingAsync(registrations, filter);
-            return Ok(results);
+            return Ok(new {
+                success = true,
+                totalCount = totalCount,
+                data = results
+            });
         }
 
         /// <summary>
@@ -81,6 +91,14 @@ namespace VNFarm_FinalFinal.Controllers.ApiControllers
                 return NotFound();
 
             return NoContent();
+        }
+
+        protected override async Task<BusinessRegistrationResponseDTO> IncludeNavigation(BusinessRegistrationResponseDTO item)
+        {
+            // Include navigation properties if needed
+            item.User = await _userService.GetByIdAsync(item.UserId);
+            item.ApprovalResults = await _businessRegistrationService.GetRegistrationApprovalResultsAsync(item.Id);
+            return await base.IncludeNavigation(item);
         }
     }
 }

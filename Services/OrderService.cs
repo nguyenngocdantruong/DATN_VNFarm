@@ -103,6 +103,9 @@ namespace VNFarm.Infrastructure.Services
             var query = await _repository.GetQueryableAsync();
             if (filter is OrderCriteriaFilter orderCriteriaFilter)
             {
+                if (orderCriteriaFilter.StoreId.HasValue)
+                    query = query.Where(o => o.StoreId == orderCriteriaFilter.StoreId.Value);
+
                 if (!string.IsNullOrEmpty(orderCriteriaFilter.SearchTerm))
                     query = query.Where(o => o.Notes.Contains(orderCriteriaFilter.SearchTerm) || o.OrderCode.Contains(orderCriteriaFilter.SearchTerm));
 

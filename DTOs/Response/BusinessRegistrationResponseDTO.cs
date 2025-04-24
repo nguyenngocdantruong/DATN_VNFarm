@@ -15,6 +15,6 @@ namespace VNFarm_FinalFinal.DTOs.Response
         public required string Address { get; set; }
         public required RegistrationStatus RegistrationStatus { get; set; }
         public required string Notes { get; set; }
-        public IEnumerable<BusinessRegistrationResponseDTO>? BusinessRegistration { get; set; }
+        public IEnumerable<RegistrationApprovalResultResponseDTO>? ApprovalResults { get; set; }
     }
 }

@@ -30,7 +30,7 @@ namespace VNFarm_FinalFinal.Helpers
             }
             // Generate unique file name
             var fileName = Guid.NewGuid().ToString() + fileExtension;
-            var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", folderName);
+            var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "Images", folderName);
             if (!Directory.Exists(folderPath))
             {
                 Directory.CreateDirectory(folderPath);
@@ -40,8 +40,12 @@ namespace VNFarm_FinalFinal.Helpers
             {
                 await file.CopyToAsync(stream);
             }
-            var fileUrl = $"/{folderName}/{fileName}";
-            return fileUrl;
+            return fileName;
+        }
+        public static bool IsAllowedExtension(string fileName)
+        {
+            var fileExtension = Path.GetExtension(fileName);
+            return !string.IsNullOrEmpty(fileName) || AllowedExtensions.Contains(fileExtension.ToLower());
         }
     }
 }

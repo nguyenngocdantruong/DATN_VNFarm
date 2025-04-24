@@ -12,15 +12,25 @@ using VNFarm_FinalFinal.Enums;
 
 namespace VNFarm_FinalFinal.Controllers.ApiControllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class OrderController : ApiBaseController<Order, OrderRequestDTO, OrderResponseDTO>
     {
         private readonly IOrderService _orderService;
+        private readonly IUserService _userService;
+        private readonly IStoreService _storeService;
+        private readonly IDiscountService _discountService;
 
-        public OrderController(IOrderService orderService, ILogger<OrderController> logger) : base(orderService, logger)
+        public OrderController(IOrderService orderService,
+            IUserService userService,
+            IStoreService storeService,
+            IDiscountService discountService,
+            ILogger<OrderController> logger) : base(orderService, logger)
         {
             _orderService = orderService;
+            _userService = userService;
+            _storeService = storeService;
+            _discountService = discountService;
         }
 
         /// <summary>
@@ -182,6 +192,32 @@ namespace VNFarm_FinalFinal.Controllers.ApiControllers
 
         #region Order Calculation
         /// <summary>
+        /// Tính thông số đơn hàng
+        /// </summary>
+        [HttpGet("stats")]
+        public async Task<ActionResult> GetOrderStats()
+        {
+            var totalOrders = await _orderService.CountAsync();
+            var totalCanceled = await _orderService.CountAsync(m => m.Status == OrderStatus.Cancelled);
+            var totalShipping = await _orderService.CountAsync(m => m.Status == OrderStatus.Shipping);
+            var totalRefunded = await _orderService.CountAsync(m => m.Status == OrderStatus.Refunded);
+            var totalPending = await _orderService.CountAsync(m => m.Status == OrderStatus.Pending);
+            var totalCompleted = await _orderService.CountAsync(m => m.Status == OrderStatus.Completed);            
+            var stats = new
+            {
+                TotalOrders = totalOrders,
+                TotalCanceled = totalCanceled,
+                TotalShipping = totalShipping,
+                TotalRefunded = totalRefunded,
+                TotalPending = totalPending,
+                TotalCompleted = totalCompleted
+            };
+            return Ok(new {
+                success = true,
+                data = stats
+            });
+        }
+        /// <summary>
         /// Tính tổng tiền đơn hàng
         /// </summary>
         [HttpGet("{id}/total-amount")]
@@ -312,5 +348,16 @@ namespace VNFarm_FinalFinal.Controllers.ApiControllers
             return NoContent();
         }
         #endregion
+        protected async override Task<OrderResponseDTO> IncludeNavigation(OrderResponseDTO item)
+        {
+            item.Buyer = await _userService.GetByIdAsync(item.BuyerId);
+            if(item.StoreId != null)
+                item.Store = await _storeService.GetByIdAsync(item.StoreId.Value);
+            if(item.DiscountId != null)
+                item.Discount = await _discountService.GetByIdAsync(item.DiscountId.Value);
+            item.OrderDetails = (await _orderService.GetOrderDetailAsync(item.Id)).ToList();
+            item.OrderTimelines = (await _orderService.GetOrderTimelineAsync(item.Id)).ToList();
+            return await base.IncludeNavigation(item);
+        }
     }
 }

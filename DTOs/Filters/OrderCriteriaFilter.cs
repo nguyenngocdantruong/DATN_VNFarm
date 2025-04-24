@@ -12,5 +12,6 @@ namespace VNFarm_FinalFinal.DTOs.Filters
         public DateTime? EndDate { get; set; }
         public decimal? MinTotal { get; set; } = 0;
         public decimal? MaxTotal { get; set; } = decimal.MaxValue;
+        public int? StoreId {get;set;}
     }
 } 

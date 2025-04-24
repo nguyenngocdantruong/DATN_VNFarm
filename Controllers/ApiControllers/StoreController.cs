@@ -7,6 +7,7 @@ using VNFarm_FinalFinal.Entities;
 using VNFarm_FinalFinal.Interfaces.Services;
 using System.Collections.Generic;
 using VNFarm_FinalFinal.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace VNFarm_FinalFinal.Controllers.ApiControllers
 {
@@ -15,10 +16,14 @@ namespace VNFarm_FinalFinal.Controllers.ApiControllers
     public class StoreController : ApiBaseController<Store, StoreRequestDTO, StoreResponseDTO>
     {
         private readonly IStoreService _storeService;
+        private readonly IProductService _productService;
+        private readonly IOrderService _orderService;
 
-        public StoreController(IStoreService storeService, ILogger<StoreController> logger) : base(storeService, logger)
+        public StoreController(IStoreService storeService, IProductService productService, IOrderService orderService, ILogger<StoreController> logger) : base(storeService, logger)
         {
             _storeService = storeService;
+            _productService = productService;
+            _orderService = orderService;
         }
 
         /// <summary>
@@ -57,12 +62,18 @@ namespace VNFarm_FinalFinal.Controllers.ApiControllers
         /// <summary>
         /// Lấy danh sách cửa hàng theo bộ lọc
         /// </summary>
-        [HttpGet("filter")]
-        public async Task<ActionResult<IEnumerable<StoreResponseDTO>>> GetStoresByFilter([FromQuery] StoreCriteriaFilter filter)
+        [HttpPost("filter")]
+        public async Task<ActionResult<IEnumerable<StoreResponseDTO>>> GetStoresByFilter([FromBody] StoreCriteriaFilter filter)
         {
             var stores = await _storeService.Query(filter);
+            stores = stores.Include(m => m.User);
+            var totalCount = stores.Count();
             var results = await _storeService.ApplyPagingAndSortingAsync(stores, filter);
-            return Ok(results);
+            return Ok(new {
+                success = true,
+                data = results,
+                totalCount = totalCount
+            });
         }
 
         /// <summary>
@@ -115,6 +126,27 @@ namespace VNFarm_FinalFinal.Controllers.ApiControllers
                 return NotFound();
 
             return NoContent();
+        }
+        [HttpGet("get-statistics-store/{storeId}")]
+        public async Task<IActionResult> GetStatisticsStore(int storeId)
+        {
+            var totalProduct = await _productService.CountAsync(m => m.IsDeleted == false && m.StoreId == storeId);
+            var totalProductEmptyStock = await _productService.CountAsync(m => m.IsDeleted == false && m.StoreId == storeId && m.StockQuantity == 0);
+            var totalOrders = await _orderService.CountAsync(m => m.IsDeleted == false && m.StoreId == storeId);
+            var totalRenenvue = (await _orderService.FindAsync(m => m.IsDeleted == false && m.StoreId == storeId)).Sum(m => m != null ? m.TotalAmount : 0);
+            return Ok(new 
+            {
+                success = true,
+                data = new
+                {
+                    totalProduct,
+                    totalProductEmptyStock,
+                    totalOrders,
+                    totalRenenvue
+                },
+                totalCount  = 4,
+                storeId = storeId
+            });
         }
     }
 }
