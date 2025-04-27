@@ -1,7 +1,7 @@
-using VNFarm_FinalFinal.Enums;
 using System.ComponentModel.DataAnnotations;
+using VNFarm.Enums;
 
-namespace VNFarm_FinalFinal.DTOs.Request
+namespace VNFarm.DTOs.Request
 {
     public class TransactionRequestDTO: BaseRequestDTO
     {

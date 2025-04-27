@@ -1,11 +1,11 @@
-using VNFarm_FinalFinal.DTOs.Payment;
-using VNFarm_FinalFinal.DTOs.Request;
-using VNFarm_FinalFinal.DTOs.Response;
-using VNFarm_FinalFinal.Entities;
-using VNFarm_FinalFinal.Enums;
-using VNFarm_FinalFinal.Helpers;
+using VNFarm.DTOs.Payment;
+using VNFarm.DTOs.Request;
+using VNFarm.DTOs.Response;
+using VNFarm.Entities;
+using VNFarm.Enums;
+using VNFarm.Helpers;
 
-namespace VNFarm_FinalFinal.Mappers
+namespace VNFarm.Mappers
 {
     public static class RequestDtoToEntityMappingExtensions
     {

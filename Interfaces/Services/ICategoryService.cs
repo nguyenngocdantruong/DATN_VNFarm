@@ -1,8 +1,9 @@
-using VNFarm_FinalFinal.DTOs.Filters;
-using VNFarm_FinalFinal.DTOs.Request;
-using VNFarm_FinalFinal.DTOs.Response;
-using VNFarm_FinalFinal.Entities;
-namespace VNFarm_FinalFinal.Interfaces.Services
+using VNFarm.DTOs.Filters;
+using VNFarm.DTOs.Request;
+using VNFarm.DTOs.Response;
+using VNFarm.Entities;
+
+namespace VNFarm.Interfaces.Services
 {
     public interface ICategoryService : IService<Category, CategoryRequestDTO, CategoryResponseDTO>
     {

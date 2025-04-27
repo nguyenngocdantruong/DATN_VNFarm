@@ -1,9 +1,10 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using VNFarm_FinalFinal.Enums;
 using Swashbuckle.AspNetCore.Annotations;
 using System.ComponentModel;
-namespace VNFarm_FinalFinal.DTOs.Request
+using VNFarm.Enums;
+
+namespace VNFarm.DTOs.Request
 {
     public class DiscountRequestDTO : BaseRequestDTO
     {

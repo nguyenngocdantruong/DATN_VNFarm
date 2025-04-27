@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using VNFarm_FinalFinal.Helpers;
+using VNFarm.Helpers;
 
-namespace VNFarm_FinalFinal.Controllers.ApiControllers
+namespace VNFarm.Controllers.ApiControllers
 {
     [ApiController]
     [Route("api/[controller]")]

@@ -1,4 +1,4 @@
-namespace VNFarm_FinalFinal.Helpers
+namespace VNFarm.Helpers
 {
     public static class FileUpload
     {

@@ -4,17 +4,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using VNFarm_FinalFinal.DTOs.Request;
-using VNFarm_FinalFinal.DTOs.Response;
-using VNFarm_FinalFinal.DTOs.Filters;
-using VNFarm_FinalFinal.Entities;
-using VNFarm_FinalFinal.Interfaces.Repositories;
-using VNFarm_FinalFinal.Interfaces.Services;
-using VNFarm_FinalFinal.Enums;
-using VNFarm_FinalFinal.Helpers;
-using VNFarm_FinalFinal.Mappers;
+using VNFarm.DTOs.Request;
+using VNFarm.DTOs.Response;
+using VNFarm.DTOs.Filters;
+using VNFarm.Entities;
+using VNFarm.Interfaces.Repositories;
+using VNFarm.Interfaces.Services;
+using VNFarm.Enums;
+using VNFarm.Helpers;
+using VNFarm.Mappers;
 
-namespace VNFarm.Infrastructure.Services
+namespace VNFarm.Services
 {
     public class StoreService : BaseService<Store, StoreRequestDTO, StoreResponseDTO>, IStoreService
     {

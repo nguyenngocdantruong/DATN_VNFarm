@@ -3,10 +3,10 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using VNFarm_FinalFinal.DTOs.Response;
-using VNFarm_FinalFinal.Interfaces.Services;
+using VNFarm.DTOs.Response;
+using VNFarm.Interfaces.Services;
 
-namespace VNFarm_FinalFinal.Services
+namespace VNFarm.Services
 {
     public class JwtTokenService : IJwtTokenService
     {

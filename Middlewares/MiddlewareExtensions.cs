@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 
-namespace VNFarm_FinalFinal.Middlewares
+namespace VNFarm.Middlewares
 {
     public static class MiddlewareExtensions
     {

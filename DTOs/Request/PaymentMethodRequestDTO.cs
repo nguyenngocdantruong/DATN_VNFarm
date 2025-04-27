@@ -1,8 +1,9 @@
 using System;
-using VNFarm_FinalFinal.Enums;
 using Swashbuckle.AspNetCore.Annotations;
 using System.ComponentModel.DataAnnotations;
-namespace VNFarm_FinalFinal.DTOs.Request
+using VNFarm.Enums;
+
+namespace VNFarm.DTOs.Request
 {
     public class PaymentMethodRequestDTO : BaseRequestDTO
     {

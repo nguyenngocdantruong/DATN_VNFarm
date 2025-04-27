@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using VNFarm_FinalFinal.DTOs.Filters;
-using VNFarm_FinalFinal.DTOs.Request;
-using VNFarm_FinalFinal.DTOs.Response;
-using VNFarm_FinalFinal.Entities;
-using VNFarm_FinalFinal.Enums;
+using VNFarm.DTOs.Filters;
+using VNFarm.DTOs.Request;
+using VNFarm.DTOs.Response;
+using VNFarm.Entities;
+using VNFarm.Enums;
 
-namespace VNFarm_FinalFinal.Interfaces.Services
+namespace VNFarm.Interfaces.Services
 {
     public interface IOrderService : IService<Order, OrderRequestDTO, OrderResponseDTO>
     {

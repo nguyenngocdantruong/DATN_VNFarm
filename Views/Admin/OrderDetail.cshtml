@@ -4,553 +4,1550 @@
     Layout = "_LayoutAdmin";
 }
 
+<!-- Thêm style để hiển thị loading state -->
+<style>
+  .loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .card {
+    position: relative;
+  }
+
+  .fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  @@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+</style>
+
 <div class="page-content">
-
-    <!-- Start Container -->
-    <div class="container-xxl">
-
+  <!-- Start Container -->
+  <div class="container-xxl">
+    <div class="row">
+      <div class="col-xl-9 col-lg-8">
         <div class="row">
-            <div class="col-xl-9 col-lg-8">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
-                                    <div>
-                                        <h4 class="fw-medium text-dark d-flex align-items-center gap-2">#0758267/90
-                                            <span class="badge bg-success-subtle text-success px-2 py-1 fs-13">Đã Thanh
-                                                Toán</span><span
-                                                class="border border-warning text-warning fs-13 px-2 py-1 rounded">Đang
-                                                Xử Lý</span></h4>
-                                        <p class="mb-0">Đơn Hàng / Chi Tiết Đơn / #0758267/90 - 23/04/2024 lúc 18:23</p>
-                                    </div>
-                                    <div>
-                                        <a href="#!" class="btn btn-outline-secondary">Hoàn Tiền</a>
-                                        <a href="#!" class="btn btn-outline-secondary">Trả Hàng</a>
-                                        <a href="#!" class="btn btn-primary">Chỉnh Sửa Đơn</a>
-                                    </div>
-
-                                </div>
-
-                                <div class="mt-4">
-                                    <h4 class="fw-medium text-dark">Tiến Độ</h4>
-                                </div>
-                                <div class="row row-cols-xxl-5 row-cols-md-2 row-cols-1">
-                                    <div class="col">
-                                        <div class="progress mt-3" style="height: 10px;">
-                                            <div class="progress-bar progress-bar progress-bar-striped progress-bar-animated bg-success"
-                                                role="progressbar" style="width: 100%" aria-valuenow="70"
-                                                aria-valuemin="0" aria-valuemax="70">
-                                            </div>
-                                        </div>
-                                        <p class="mb-0 mt-2">Xác Nhận Đơn</p>
-                                    </div>
-                                    <div class="col">
-                                        <div class="progress mt-3" style="height: 10px;">
-                                            <div class="progress-bar progress-bar progress-bar-striped progress-bar-animated bg-success"
-                                                role="progressbar" style="width: 100%" aria-valuenow="70"
-                                                aria-valuemin="0" aria-valuemax="70">
-                                            </div>
-                                        </div>
-                                        <p class="mb-0 mt-2">Chờ Thanh Toán</p>
-                                    </div>
-                                    <div class="col">
-                                        <div class="progress mt-3" style="height: 10px;">
-                                            <div class="progress-bar progress-bar progress-bar-striped progress-bar-animated bg-warning"
-                                                role="progressbar" style="width: 60%" aria-valuenow="70"
-                                                aria-valuemin="0" aria-valuemax="70">
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-center gap-2 mt-2">
-                                            <p class="mb-0">Đang Xử Lý</p>
-                                            <div class="spinner-border spinner-border-sm text-warning" role="status">
-                                                <span class="visually-hidden">Đang tải...</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="progress mt-3" style="height: 10px;">
-                                            <div class="progress-bar progress-bar progress-bar-striped progress-bar-animated bg-primary"
-                                                role="progressbar" style="width: 0%" aria-valuenow="70"
-                                                aria-valuemin="0" aria-valuemax="70">
-                                            </div>
-                                        </div>
-                                        <p class="mb-0 mt-2">Đang Giao</p>
-                                    </div>
-                                    <div class="col">
-                                        <div class="progress mt-3" style="height: 10px;">
-                                            <div class="progress-bar progress-bar progress-bar-striped progress-bar-animated bg-primary"
-                                                role="progressbar" style="width: 0%" aria-valuenow="70"
-                                                aria-valuemin="0" aria-valuemax="70">
-                                            </div>
-                                        </div>
-                                        <p class="mb-0 mt-2">Đã Giao</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div
-                                class="card-footer d-flex flex-wrap align-items-center justify-content-between bg-light-subtle gap-2">
-                                <p class="border rounded mb-0 px-2 py-1 bg-body"><i
-                                        class='bx bx-arrow-from-left align-middle fs-16'></i> Ngày giao hàng dự kiến:
-                                    <span class="text-dark fw-medium">25/04/2024</span></p>
-                                <div>
-                                    <a href="#!" class="btn btn-primary">Đánh Dấu Sẵn Sàng Giao</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Sản Phẩm</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table align-middle mb-0 table-hover table-centered">
-                                        <thead class="bg-light-subtle border-bottom">
-                                            <tr>
-                                                <th>Tên Sản Phẩm & Kích Thước</th>
-                                                <th>Trạng Thái</th>
-                                                <th>Số Lượng</th>
-                                                <th>Giá</th>
-                                                <th>Phí Vận Chuyển</th>
-                                                <th>Tổng</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex align-items-center gap-2">
-                                                        <div
-                                                            class="rounded bg-light avatar-md d-flex align-items-center justify-content-center">
-                                                            <img src="assets/images/product/p-1.png" alt=""
-                                                                class="avatar-md">
-                                                        </div>
-                                                        <div>
-                                                            <a href="#!" class="text-dark fw-medium fs-15">Xoài Cát Hòa
-                                                                Lộc</a>
-                                                            <p class="text-muted mb-0 mt-1 fs-13"><span>Kích thước:
-                                                                </span>1kg</p>
-                                                        </div>
-                                                    </div>
-
-                                                </td>
-
-                                                <td>
-                                                    <span
-                                                        class="badge bg-success-subtle text-success px-2 py-1 fs-13">Sẵn
-                                                        Sàng</span>
-                                                </td>
-                                                <td> 1</td>
-                                                <td>80.000đ</td>
-                                                <td> 30.000đ</td>
-                                                <td>
-                                                    $110.000đ
-                                                </td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex align-items-center gap-2">
-                                                        <div
-                                                            class="rounded bg-light avatar-md d-flex align-items-center justify-content-center">
-                                                            <img src="assets/images/product/p-5.png" alt=""
-                                                                class="avatar-md">
-                                                        </div>
-                                                        <div>
-                                                            <a href="#!" class="text-dark fw-medium fs-15">Bưởi Da
-                                                                Xanh</a>
-                                                            <p class="text-muted mb-0 mt-1 fs-13"><span>Kích thước:
-                                                                </span>2kg</p>
-                                                        </div>
-                                                    </div>
-
-                                                </td>
-
-                                                <td>
-                                                    <span class="badge bg-light text-dark px-2 py-1 fs-13">Đang Đóng
-                                                        Gói</span>
-                                                </td>
-                                                <td> 3</td>
-                                                <td>$330.000đ</td>
-                                                <td> $40.000đ</td>
-                                                <td>
-                                                    $334.000đ
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex align-items-center gap-2">
-                                                        <div
-                                                            class="rounded bg-light avatar-md d-flex align-items-center justify-content-center">
-                                                            <img src="assets/images/product/p-8.png" alt=""
-                                                                class="avatar-md">
-                                                        </div>
-                                                        <div>
-                                                            <a href="#!" class="text-dark fw-medium fs-15">Sầu Riêng Ri
-                                                                6</a>
-                                                            <p class="text-muted mb-0 mt-1 fs-13"><span>Kích thước:
-                                                                </span>3kg</p>
-                                                        </div>
-                                                    </div>
-
-                                                </td>
-
-                                                <td>
-                                                    <span
-                                                        class="badge bg-success-subtle text-success px-2 py-1 fs-13">Sẵn
-                                                        Sàng</span>
-                                                </td>
-                                                <td> 1</td>
-                                                <td>$132.000đ</td>
-                                                <td> $50.000đ</td>
-                                                <td>
-                                                    $137.000đ
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex align-items-center gap-2">
-                                                        <div
-                                                            class="rounded bg-light avatar-md d-flex align-items-center justify-content-center">
-                                                            <img src="assets/images/product/p-10.png" alt=""
-                                                                class="avatar-md">
-                                                        </div>
-                                                        <div>
-                                                            <a href="#!" class="text-dark fw-medium fs-15">Măng Cụt</a>
-                                                            <p class="text-muted mb-0 mt-1 fs-13"><span>Kích thước:
-                                                                </span>1kg</p>
-                                                        </div>
-                                                    </div>
-
-                                                </td>
-
-                                                <td>
-                                                    <span class="badge bg-light text-dark px-2 py-1 fs-13">Đang Đóng
-                                                        Gói</span>
-                                                </td>
-                                                <td> 2</td>
-                                                <td>$220.000đ</td>
-                                                <td> $30.000đ</td>
-                                                <td>
-                                                    $223.000đ
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Order Timeline</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="position-relative ms-2">
-                                    <span class="position-absolute start-0  top-0 border border-dashed h-100"></span>
-                                    <div class="position-relative ps-4">
-                                        <div class="mb-4">
-                                            <span
-                                                class="position-absolute start-0 avatar-sm translate-middle-x bg-light d-inline-flex align-items-center justify-content-center rounded-circle">
-                                                <div class="spinner-border spinner-border-sm text-warning"
-                                                    role="status">
-                                                    <span class="visually-hidden">Loading...</span>
-                                                </div>
-                                            </span>
-                                            <div
-                                                class="ms-2 d-flex flex-wrap gap-2 align-items-center justify-content-between">
-                                                <div>
-                                                    <h5 class="mb-1 text-dark fw-medium fs-15">Bắt đầu đóng gói</h5>
-                                                    <p class="mb-0">Xác nhận bởi Nguyễn Văn A</p>
-                                                </div>
-                                                <p class="mb-0">23/04/2024, 09:40 sáng</p>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="position-relative ps-4">
-                                        <div class="mb-4">
-                                            <span
-                                                class="position-absolute start-0 avatar-sm translate-middle-x bg-light d-inline-flex align-items-center justify-content-center rounded-circle text-success fs-20">
-                                                <i class='bx bx-check-circle'></i>
-                                            </span>
-                                            <div
-                                                class="ms-2 d-flex flex-wrap gap-2  align-items-center justify-content-between">
-                                                <div>
-                                                    <h5 class="mb-1 text-dark fw-medium fs-15">Đã gửi hóa đơn cho khách
-                                                        hàng</h5>
-                                                    <p class="mb-2">Email hóa đơn đã gửi đến <a href="#!"
-                                                            class="link-primary">nguyenvana@gmail.com</a></p>
-                                                    <a href="#!" class="btn btn-light">Gửi Lại Hóa Đơn</a>
-                                                </div>
-                                                <p class="mb-0">23/04/2024, 09:40 sáng</p>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="position-relative ps-4">
-                                        <div class="mb-4">
-                                            <span
-                                                class="position-absolute start-0 avatar-sm translate-middle-x bg-light d-inline-flex align-items-center justify-content-center rounded-circle text-success fs-20">
-                                                <i class='bx bx-check-circle'></i>
-                                            </span>
-                                            <div
-                                                class="ms-2 d-flex flex-wrap gap-2 align-items-center justify-content-between">
-                                                <div>
-                                                    <h5 class="mb-1 text-dark fw-medium fs-15">Đã tạo hóa đơn</h5>
-                                                    <p class="mb-2">Hóa đơn được tạo bởi Nguyễn Văn A</p>
-                                                    <a href="#!" class="btn btn-primary">Tải Hóa Đơn</a>
-                                                </div>
-                                                <p class="mb-0">23/04/2024, 09:40 sáng</p>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="position-relative ps-4">
-                                        <div class="mb-4">
-                                            <span
-                                                class="position-absolute start-0 avatar-sm translate-middle-x bg-light d-inline-flex align-items-center justify-content-center rounded-circle text-success fs-20">
-                                                <i class='bx bx-check-circle'></i>
-                                            </span>
-                                            <div
-                                                class="ms-2 d-flex flex-wrap gap-2 align-items-center justify-content-between">
-                                                <div>
-                                                    <h5 class="mb-1 text-dark fw-medium fs-15">Thanh Toán Đơn Hàng</h5>
-                                                    <p class="mb-2">Sử dụng Thẻ Master Card</p>
-                                                    <div class="d-flex align-items-center gap-2">
-                                                        <p class="mb-1 text-dark fw-medium">Trạng thái:</p>
-                                                        <span
-                                                            class="badge bg-success-subtle text-success px-2 py-1 fs-13">Đã
-                                                            Thanh Toán</span>
-                                                    </div>
-                                                </div>
-                                                <p class="mb-0">23/04/2024, 09:40 sáng</p>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="position-relative ps-4">
-                                        <div class="mb-2">
-                                            <span
-                                                class="position-absolute start-0 avatar-sm translate-middle-x bg-light d-inline-flex align-items-center justify-content-center rounded-circle text-success fs-20">
-                                                <i class='bx bx-check-circle'></i>
-                                            </span>
-                                            <div
-                                                class="ms-2 d-flex flex-wrap gap-2  align-items-center justify-content-between">
-                                                <div>
-                                                    <h5 class="mb-2 text-dark fw-medium fs-15">4 sản phẩm được xác nhận
-                                                        bởi Nguyễn Văn A</h5>
-                                                    <a href="#!"
-                                                        class="badge bg-light text-dark fw-normal px-2 py-1 fs-13">Sản
-                                                        phẩm 1</a>
-                                                    <a href="#!"
-                                                        class="badge bg-light text-dark fw-normal px-2 py-1 fs-13">Sản
-                                                        phẩm 2</a>
-                                                    <a href="#!"
-                                                        class="badge bg-light text-dark fw-normal px-2 py-1 fs-13">Sản
-                                                        phẩm 3</a>
-                                                    <a href="#!"
-                                                        class="badge bg-light text-dark fw-normal px-2 py-1 fs-13">Sản
-                                                        phẩm 4</a>
-                                                </div>
-                                                <p class="mb-0">23/04/2024, 09:40 sáng</p>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card bg-light-subtle">
-                            <div class="card-body">
-                                <div class="row g-3 g-lg-0">
-                                    <div class="col-lg-3 border-end">
-                                        <div class="d-flex align-items-center gap-3 justify-content-between px-3">
-                                            <div>
-                                                <p class="text-dark fw-medium fs-16 mb-1">Nhà Cung Cấp</p>
-                                                <p class="mb-0">VNFarm</p>
-                                            </div>
-                                            <div
-                                                class="avatar bg-light d-flex align-items-center justify-content-center rounded">
-                                                <iconify-icon icon="solar:shop-2-bold-duotone"
-                                                    class="fs-35 text-primary"></iconify-icon>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 border-end">
-                                        <div class="d-flex align-items-center gap-3 justify-content-between px-3">
-                                            <div>
-                                                <p class="text-dark fw-medium fs-16 mb-1">Ngày</p>
-                                                <p class="mb-0">23/04/2024</p>
-                                            </div>
-                                            <div
-                                                class="avatar bg-light d-flex align-items-center justify-content-center rounded">
-                                                <iconify-icon icon="solar:calendar-date-bold-duotone"
-                                                    class="fs-35 text-primary"></iconify-icon>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 border-end">
-                                        <div class="d-flex align-items-center gap-3 justify-content-between px-3">
-                                            <div>
-                                                <p class="text-dark fw-medium fs-16 mb-1">Thanh Toán Bởi</p>
-                                                <p class="mb-0">Nguyễn Văn A</p>
-                                            </div>
-                                            <div
-                                                class="avatar bg-light d-flex align-items-center justify-content-center rounded">
-                                                <iconify-icon icon="solar:user-circle-bold-duotone"
-                                                    class="fs-35 text-primary"></iconify-icon>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="d-flex align-items-center gap-3 justify-content-between px-3">
-                                            <div>
-                                                <p class="text-dark fw-medium fs-16 mb-1">Mã Tham Chiếu</p>
-                                                <p class="mb-0">#0758267/90</p>
-                                            </div>
-                                            <div
-                                                class="avatar bg-light d-flex align-items-center justify-content-center rounded">
-                                                <iconify-icon icon="solar:clipboard-text-bold-duotone"
-                                                    class="fs-35 text-primary"></iconify-icon>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <div
+                  class="d-flex flex-wrap align-items-center justify-content-between gap-2"
+                >
+                  <div>
+                    <h4
+                      class="fw-medium text-dark d-flex align-items-center gap-2"
+                    >
+                      <span id="order-code">Đang tải...</span>
+                      <span
+                        id="payment-status-badge"
+                        class="badge bg-success-subtle text-success px-2 py-1 fs-13"
+                        >Đang tải...</span
+                      >
+                      <span
+                        id="order-status-badge"
+                        class="border border-warning text-warning fs-13 px-2 py-1 rounded"
+                        >Đang tải...</span
+                      >
+                    </h4>
+                    <p class="mb-0">
+                      Đơn Hàng / Chi Tiết Đơn /
+                      <span id="order-date-time">Đang tải...</span>
+                    </p>
+                  </div>
+                  <div>
+                    <button id="refund-btn" class="btn btn-outline-secondary">
+                      Hoàn Tiền
+                    </button>
+                    <button id="return-btn" class="btn btn-outline-secondary">
+                      Trả Hàng
+                    </button>
+                    <a id="edit-order-btn" href="#" class="btn btn-primary"
+                      >Chỉnh Sửa Đơn</a
+                    >
+                  </div>
                 </div>
+
+                <div class="mt-4">
+                  <h4 class="fw-medium text-dark">Tiến Độ</h4>
+                </div>
+                <div
+                  class="row row-cols-xxl-5 row-cols-md-2 row-cols-1"
+                  id="order-progress"
+                >
+                  <!-- Progress steps sẽ được tạo bởi JavaScript -->
+                </div>
+              </div>
+              <div
+                class="card-footer d-flex flex-wrap align-items-center justify-content-between bg-light-subtle gap-2"
+              >
+                <p class="border rounded mb-0 px-2 py-1 bg-body">
+                  <i class="bx bx-arrow-from-left align-middle fs-16"></i>
+                  Ngày giao hàng dự kiến:
+                  <span id="expected-delivery-date" class="text-dark fw-medium"
+                    >Đang tải...</span
+                  >
+                </p>
+                <div>
+                  <button id="mark-ready-btn" class="btn btn-primary">
+                    Đánh Dấu Sẵn Sàng Giao
+                  </button>
+                </div>
+              </div>
             </div>
-            <div class="col-xl-3 col-lg-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Tổng Kết Đơn Hàng</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table mb-0">
-                                <tbody>
-                                    <tr>
-                                        <td class="px-0">
-                                            <p class="d-flex mb-0 align-items-center gap-1"><iconify-icon
-                                                    icon="solar:clipboard-text-broken"></iconify-icon> Tạm Tính: </p>
-                                        </td>
-                                        <td class="text-end text-dark fw-medium px-0">777.000đ</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-0">
-                                            <p class="d-flex mb-0 align-items-center gap-1"><iconify-icon
-                                                    icon="solar:ticket-broken" class="align-middle"></iconify-icon> Giảm
-                                                Giá: </p>
-                                        </td>
-                                        <td class="text-end text-dark fw-medium px-0">-60.000đ</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-0">
-                                            <p class="d-flex mb-0 align-items-center gap-1"><iconify-icon
-                                                    icon="solar:kick-scooter-broken"
-                                                    class="align-middle"></iconify-icon> Phí Vận Chuyển: </p>
-                                        </td>
-                                        <td class="text-end text-dark fw-medium px-0">0đ</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-0">
-                                            <p class="d-flex mb-0 align-items-center gap-1"><iconify-icon
-                                                    icon="solar:calculator-minimalistic-broken"
-                                                    class="align-middle"></iconify-icon> Thuế (15.5%): </p>
-                                        </td>
-                                        <td class="text-end text-dark fw-medium px-0">20.000đ</td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex align-items-center justify-content-between bg-light-subtle">
-                        <div>
-                            <p class="fw-medium text-dark mb-0">Tổng Cộng</p>
-                        </div>
-                        <div>
-                            <p class="fw-medium text-dark mb-0">737.000đ</p>
-                        </div>
-
-                    </div>
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Sản Phẩm</h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table
+                    class="table align-middle mb-0 table-hover table-centered"
+                  >
+                    <thead class="bg-light-subtle border-bottom">
+                      <tr>
+                        <th>Tên Sản Phẩm & Kích Thước</th>
+                        <th>Trạng Thái</th>
+                        <th>Số Lượng</th>
+                        <th>Giá</th>
+                        <th>Phí Vận Chuyển</th>
+                        <th>Tổng</th>
+                      </tr>
+                    </thead>
+                    <tbody id="order-items">
+                      <!-- Sản phẩm sẽ được tạo bởi JavaScript -->
+                    </tbody>
+                  </table>
                 </div>
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Thông Tin Thanh Toán</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex align-items-center gap-3 mb-3">
-                            <div class="rounded-3 bg-light avatar d-flex align-items-center justify-content-center">
-                                <img src="assets/images/card/mastercard.svg" alt="" class="avatar-sm">
-                            </div>
-                            <div>
-                                <p class="mb-1 text-dark fw-medium">Thẻ Master Card</p>
-                                <p class="mb-0 text-dark">xxxx xxxx xxxx 7812</p>
-                            </div>
-                            <div class="ms-auto">
-                                <iconify-icon icon="solar:check-circle-broken"
-                                    class="fs-22 text-success"></iconify-icon>
-                            </div>
-                        </div>
-                        <p class="text-dark mb-1 fw-medium">Mã Giao Dịch: <span
-                                class="text-muted fw-normal fs-13">#IDN768139059</span></p>
-                        <p class="text-dark mb-0 fw-medium">Tên Chủ Thẻ: <span class="text-muted fw-normal fs-13">Nguyễn
-                                Văn A</span></p>
-
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Thông Tin Khách Hàng</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex align-items-center gap-2">
-                            <img src="assets/images/users/avatar-1.jpg" alt=""
-                                class="avatar rounded-3 border border-light border-3">
-                            <div>
-                                <p class="mb-1">Nguyễn Văn A</p>
-                                <a href="#!" class="link-primary fw-medium">nguyenvana@gmail.com</a>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-between mt-3">
-                            <h5 class="">Số Điện Thoại</h5>
-                            <div>
-                                <a href="#!"><i class='bx bx-edit-alt fs-18'></i></a>
-                            </div>
-                        </div>
-                        <p class="mb-1">(723) 732-760-5760</p>
-
-                        <div class="d-flex justify-content-between mt-3">
-                            <h5 class="">Địa Chỉ Giao Hàng</h5>
-                            <div>
-                                <a href="#!"><i class='bx bx-edit-alt fs-18'></i></a>
-                            </div>
-                        </div>
-
-                        <div>
-                            <p class="mb-1">Nguyễn Văn A</p>
-                            <p class="mb-1">123 Đường ABC,</p>
-                            <p class="mb-1">Quận 1, TP.HCM,</p>
-                            <p class="mb-1">Việt Nam</p>
-                            <p class="">(723) 732-760-5760</p>
-                        </div>
-
-                        <div class="d-flex justify-content-between mt-3">
-                            <h5 class="">Địa Chỉ Thanh Toán</h5>
-                            <div>
-                                <a href="#!"><i class='bx bx-edit-alt fs-18'></i></a>
-                            </div>
-                        </div>
-
-                        <p class="mb-1">Giống địa chỉ giao hàng</p>
-                    </div>
-                </div>
+              </div>
             </div>
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Lịch sử đơn hàng</h4>
+              </div>
+              <div class="card-body">
+                <div class="position-relative ms-2" id="order-timeline">
+                  <span
+                    class="position-absolute start-0 top-0 border border-dashed h-100"
+                  ></span>
+                  <!-- Timeline sẽ được tạo bởi JavaScript -->
+                </div>
+              </div>
+            </div>
+            <div class="card bg-light-subtle">
+              <div class="card-body">
+                <div class="row g-3 g-lg-0">
+                  <div class="col-lg-3 border-end">
+                    <div
+                      class="d-flex align-items-center gap-3 justify-content-between px-3"
+                    >
+                      <div>
+                        <p class="text-dark fw-medium fs-16 mb-1">
+                          Nhà Cung Cấp
+                        </p>
+                        <p class="mb-0" id="store-name">Đang tải...</p>
+                      </div>
+                      <div
+                        class="avatar bg-light d-flex align-items-center justify-content-center rounded"
+                      >
+                        <iconify-icon
+                          icon="solar:shop-2-bold-duotone"
+                          class="fs-35 text-primary"
+                        ></iconify-icon>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 border-end">
+                    <div
+                      class="d-flex align-items-center gap-3 justify-content-between px-3"
+                    >
+                      <div>
+                        <p class="text-dark fw-medium fs-16 mb-1">Ngày</p>
+                        <p class="mb-0" id="order-date">Đang tải...</p>
+                      </div>
+                      <div
+                        class="avatar bg-light d-flex align-items-center justify-content-center rounded"
+                      >
+                        <iconify-icon
+                          icon="solar:calendar-date-bold-duotone"
+                          class="fs-35 text-primary"
+                        ></iconify-icon>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 border-end">
+                    <div
+                      class="d-flex align-items-center gap-3 justify-content-between px-3"
+                    >
+                      <div>
+                        <p class="text-dark fw-medium fs-16 mb-1">
+                          Thanh Toán Bởi
+                        </p>
+                        <p class="mb-0" id="buyer-name">Đang tải...</p>
+                      </div>
+                      <div
+                        class="avatar bg-light d-flex align-items-center justify-content-center rounded"
+                      >
+                        <iconify-icon
+                          icon="solar:user-circle-bold-duotone"
+                          class="fs-35 text-primary"
+                        ></iconify-icon>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3">
+                    <div
+                      class="d-flex align-items-center gap-3 justify-content-between px-3"
+                    >
+                      <div>
+                        <p class="text-dark fw-medium fs-16 mb-1">
+                          Mã Tham Chiếu
+                        </p>
+                        <p class="mb-0" id="reference-code">Đang tải...</p>
+                      </div>
+                      <div
+                        class="avatar bg-light d-flex align-items-center justify-content-center rounded"
+                      >
+                        <iconify-icon
+                          icon="solar:clipboard-text-bold-duotone"
+                          class="fs-35 text-primary"
+                        ></iconify-icon>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-    </div>
+      </div>
+      <div class="col-xl-3 col-lg-4">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Tổng Kết Đơn Hàng</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table mb-0">
+                <tbody>
+                  <tr>
+                    <td class="px-0">
+                      <p class="d-flex mb-0 align-items-center gap-1">
+                        <iconify-icon
+                          icon="solar:clipboard-text-broken"
+                        ></iconify-icon>
+                        Tạm Tính:
+                      </p>
+                    </td>
+                    <td class="text-end text-dark fw-medium px-0" id="subtotal">
+                      Đang tải...
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="px-0">
+                      <p class="d-flex mb-0 align-items-center gap-1">
+                        <iconify-icon
+                          icon="solar:ticket-broken"
+                          class="align-middle"
+                        ></iconify-icon>
+                        Giảm Giá:
+                      </p>
+                    </td>
+                    <td class="text-end text-dark fw-medium px-0" id="discount">
+                      Đang tải...
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="px-0">
+                      <p class="d-flex mb-0 align-items-center gap-1">
+                        <iconify-icon
+                          icon="solar:kick-scooter-broken"
+                          class="align-middle"
+                        ></iconify-icon>
+                        Phí Vận Chuyển:
+                      </p>
+                    </td>
+                    <td
+                      class="text-end text-dark fw-medium px-0"
+                      id="shipping-fee"
+                    >
+                      Đang tải...
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="px-0">
+                      <p class="d-flex mb-0 align-items-center gap-1">
+                        <iconify-icon
+                          icon="solar:calculator-minimalistic-broken"
+                          class="align-middle"
+                        ></iconify-icon>
+                        Thuế:
+                      </p>
+                    </td>
+                    <td class="text-end text-dark fw-medium px-0" id="tax">
+                      Đang tải...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div
+            class="card-footer d-flex align-items-center justify-content-between bg-light-subtle"
+          >
+            <div>
+              <p class="fw-medium text-dark mb-0">Tổng Cộng</p>
+            </div>
+            <div>
+              <p class="fw-medium text-dark mb-0" id="final-total">
+                Đang tải...
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Thông Tin Thanh Toán</h4>
+          </div>
+          <div class="card-body">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <div
+                class="rounded-3 bg-light avatar d-flex align-items-center justify-content-center"
+              >
+                <img
+                  src="assets/images/card/mastercard.svg"
+                  alt=""
+                  class="avatar-sm"
+                  id="payment-method-icon"
+                />
+              </div>
+              <div>
+                <p class="mb-1 text-dark fw-medium" id="payment-method-name">
+                  Đang tải...
+                </p>
+                <p class="mb-0 text-dark" id="payment-method-details">
+                  xxxx xxxx xxxx xxxx
+                </p>
+              </div>
+              <div class="ms-auto" id="payment-status-icon">
+                <iconify-icon
+                  icon="solar:check-circle-broken"
+                  class="fs-22 text-success"
+                ></iconify-icon>
+              </div>
+            </div>
+            <p class="text-dark mb-1 fw-medium">
+              Mã Giao Dịch:
+              <span class="text-muted fw-normal fs-13" id="transaction-id"
+                >#IDN123456789</span
+              >
+            </p>
+            <p class="text-dark mb-0 fw-medium">
+              Tên Chủ Thẻ:
+              <span class="text-muted fw-normal fs-13" id="card-holder-name"
+                >Đang tải...</span
+              >
+            </p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Thông Tin Khách Hàng</h4>
+          </div>
+          <div class="card-body">
+            <div class="d-flex align-items-center gap-2">
+              <img
+                src="assets/images/users/avatar-1.jpg"
+                alt=""
+                id="customer-avatar"
+                class="avatar rounded-3 border border-light border-3"
+              />
+              <div>
+                <p class="mb-1" id="customer-name">Đang tải...</p>
+                <a href="#!" class="link-primary fw-medium" id="customer-email"
+                  >Đang tải...</a
+                >
+              </div>
+            </div>
+            <div class="d-flex justify-content-between mt-3">
+              <h5 class="">Số Điện Thoại</h5>
+              <div>
+                <a href="#!"><i class="bx bx-edit-alt fs-18"></i></a>
+              </div>
+            </div>
+            <p class="mb-1" id="customer-phone">Đang tải...</p>
 
+            <div class="d-flex justify-content-between mt-3">
+              <h5 class="">Địa Chỉ Giao Hàng</h5>
+              <div>
+                <a href="#!"><i class="bx bx-edit-alt fs-18"></i></a>
+              </div>
+            </div>
+
+            <div id="shipping-address">
+              <p class="mb-1" id="shipping-name">Đang tải...</p>
+              <p class="mb-1" id="shipping-address-line">Đang tải...</p>
+              <p class="mb-1" id="shipping-city">Đang tải...</p>
+              <p class="" id="shipping-phone">Đang tải...</p>
+            </div>
+
+            <div class="d-flex justify-content-between mt-3">
+              <h5 class="">Địa Chỉ Thanh Toán</h5>
+              <div>
+                <a href="#!"><i class="bx bx-edit-alt fs-18"></i></a>
+              </div>
+            </div>
+
+            <p class="mb-1" id="billing-address-info">
+              Giống địa chỉ giao hàng
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+<script type="module">
+  import { BaseService } from "/custom/BaseService.js";
+  import { EnumService } from "/custom/EnumService.js";
+
+  // Khởi tạo services
+  const jwt = null;
+  const orderService = new BaseService("http://localhost:5172/api/Order", jwt);
+  const productService = new BaseService("http://localhost:5172/api/Product", jwt);
+  const enumService = new EnumService("http://localhost:5172", jwt);
+
+  // App quản lý chi tiết đơn hàng
+  const orderDetailApp = {
+    orderId: null,
+    orderData: null,
+    productsData: {}, // Lưu trữ thông tin sản phẩm theo productId
+    
+    // Enums
+    statuses: {},
+    paymentStatuses: {},
+    paymentMethods: {},
+    orderEventTypes: {},
+    orderTimelineStatuses: {},
+    
+    // Khởi tạo ứng dụng
+    init: async function() {
+      try {
+        // Lấy orderId từ URL
+        const urlParams = new URLSearchParams(window.location.search);
+        this.orderId = urlParams.get('orderCode');
+        
+        if (!this.orderId) {
+          this.showError("Không tìm thấy mã đơn hàng trong URL");
+          return;
+        }
+        
+        // Hiển thị loading
+        this.showLoading(true);
+        
+        // Tải các dữ liệu enum
+        await Promise.all([
+          this.loadOrderStatuses(),
+          this.loadPaymentStatuses(),
+          this.loadPaymentMethods(),
+          this.loadOrderEventTypes(),
+          this.loadOrderTimelineStatuses()
+        ]);
+        
+        // Tải chi tiết đơn hàng
+        await this.loadOrderDetail();
+
+        // Tải thông tin sản phẩm sau khi đã có dữ liệu đơn hàng
+        if (this.orderData && this.orderData.orderDetails && this.orderData.orderDetails.length > 0) {
+          await this.loadProductsInfo();
+        }
+        
+        // Thiết lập các event listeners
+        this.setupEventListeners();
+        
+        this.showLoading(false);
+      } catch (error) {
+        console.error("Lỗi khởi tạo ứng dụng:", error);
+        this.showError("Đã xảy ra lỗi khi tải dữ liệu. Vui lòng thử lại sau.");
+        this.showLoading(false);
+      }
+    },
+
+    // Tải loại sự kiện đơn hàng
+    loadOrderEventTypes: async function() {
+      try {
+        const response = await enumService.getOrderEventTypes();
+        if (response) {
+          console.log("Order Event Types:", response);
+          this.orderEventTypes = response;
+        }
+      } catch (error) {
+        console.error("Lỗi tải loại sự kiện đơn hàng:", error);
+        throw error;
+      }
+    },
+
+    // Tải trạng thái timeline đơn hàng
+    loadOrderTimelineStatuses: async function() {
+      try {
+        const response = await enumService.getOrderTimelineStatuses();
+        if (response) {
+          console.log("Order Timeline Statuses:", response);
+          this.orderTimelineStatuses = response;
+        }
+      } catch (error) {
+        console.error("Lỗi tải trạng thái timeline đơn hàng:", error);
+        throw error;
+      }
+    },
+    
+    // Tải trạng thái đơn hàng
+    loadOrderStatuses: async function () {
+      try {
+        const data = await enumService.getOrderStatuses();
+        if (data) {
+          console.log("Order Statuses:", data);
+          this.statuses = data;
+        }
+      } catch (error) {
+        console.error("Lỗi tải trạng thái đơn hàng:", error);
+        throw error;
+      }
+    },
+
+    // Tải trạng thái thanh toán
+    loadPaymentStatuses: async function () {
+      try {
+        const data = await enumService.getPaymentStatuses();
+        if (data && data.data) {
+          console.log("Payment Statuses:", data.data);
+          this.paymentStatuses = data.data;
+        }
+      } catch (error) {
+        console.error("Lỗi tải trạng thái thanh toán:", error);
+        throw error;
+      }
+    },
+
+    // Tải phương thức thanh toán
+    loadPaymentMethods: async function () {
+      try {
+        const data = await enumService.getPaymentMethods();
+        if (data && data.success && data.data) {
+          console.log("Payment Methods:", data.data);
+          this.paymentMethods = data.data;
+        }
+      } catch (error) {
+        console.error("Lỗi tải phương thức thanh toán:", error);
+        throw error;
+      }
+    },
+
+    // Tải chi tiết đơn hàng
+    loadOrderDetail: async function () {
+      try {
+        const response = await orderService.getById(this.orderId);
+
+        if (response && response.success && response.data) {
+          console.log("Order Detail:", response.data);
+          this.orderData = response.data;
+          this.renderOrderDetail();
+        } else {
+          this.showError("Không thể tải thông tin đơn hàng");
+        }
+      } catch (error) {
+        console.error("Lỗi tải chi tiết đơn hàng:", error);
+        this.showError("Đã xảy ra lỗi khi tải chi tiết đơn hàng");
+        throw error;
+      }
+    },
+
+    // Hiển thị chi tiết đơn hàng
+    renderOrderDetail: function () {
+      const order = this.orderData;
+      
+      // Thông tin đơn hàng
+      document.getElementById('order-code').textContent = order.orderCode;
+      document.getElementById('reference-code').textContent = order.orderCode;
+      
+      // Thời gian đơn hàng
+      const orderDate = this.formatDate(order.createdAt);
+      const orderTime = this.formatTime(order.createdAt);
+      document.getElementById('order-date-time').textContent = `${order.orderCode} - ${orderDate} lúc ${orderTime}`;
+      document.getElementById('order-date').textContent = orderDate;
+      
+      // Trạng thái đơn hàng và thanh toán
+      this.renderOrderStatus(order.status);
+      this.renderPaymentStatus(order.paymentStatus);
+      
+      // Thông tin khách hàng
+      this.renderCustomerInfo(order.buyer);
+      
+      // Thông tin vận chuyển
+      this.renderShippingInfo();
+      
+      // Thông tin cửa hàng
+      document.getElementById('store-name').textContent = order.store.name;
+      
+      // Người thanh toán
+      document.getElementById('buyer-name').textContent = order.buyer.fullName;
+      
+      // Hiển thị tiến độ đơn hàng
+      this.renderOrderProgress(order.status);
+      
+      // Hiển thị sản phẩm trong đơn hàng
+      this.renderOrderItems();
+      
+      // Hiển thị lịch sử đơn hàng
+      this.renderOrderTimeline();
+      
+      // Thông tin thanh toán
+      this.renderPaymentInfo();
+      
+      // Tổng kết đơn hàng
+      this.renderOrderSummary();
+      
+      // Cập nhật URL cho nút chỉnh sửa
+      document.getElementById('edit-order-btn').href = `00_order_edit.html?id=${order.id}`;
+      
+      // Hiển thị thông tin ghi chú nếu có
+      const notesSection = document.getElementById('notes-section');
+      if (notesSection) {
+        if (order.notes && order.notes.trim() !== "") {
+          document.getElementById('order-notes').textContent = order.notes;
+          notesSection.style.display = 'block';
+        } else {
+          notesSection.style.display = 'none';
+        }
+      }
+    },
+
+    // Hiển thị trạng thái đơn hàng
+    renderOrderStatus: function (status) {
+      const statusBadge = document.getElementById("order-status-badge");
+      const statusText = this.statuses[status] || "Không xác định";
+
+      // Xác định class cho badge dựa vào trạng thái
+      let badgeClass = "";
+      switch (status) {
+        case 0: // Chờ xác nhận
+          badgeClass = "border border-secondary text-secondary";
+          break;
+        case 1: // Đang xử lý
+          badgeClass = "border border-info text-info";
+          break;
+        case 2: // Đang đóng gói
+          badgeClass = "border border-warning text-warning";
+          break;
+        case 3: // Đang vận chuyển
+          badgeClass = "border border-primary text-primary";
+          break;
+        case 4: // Đã giao hàng
+          badgeClass = "border border-success text-success";
+          break;
+        case 5: // Đã hoàn thành
+          badgeClass = "border border-success text-success";
+          break;
+        case 6: // Đã hủy
+          badgeClass = "border border-danger text-danger";
+          break;
+        case 7: // Đã hoàn tiền
+          badgeClass = "border border-success text-success";
+          break;
+        default:
+          badgeClass = "border border-secondary text-secondary";
+      }
+
+      statusBadge.className = `${badgeClass} px-2 py-1 rounded fs-13`;
+      statusBadge.textContent = statusText;
+    },
+
+    // Hiển thị trạng thái thanh toán
+    renderPaymentStatus: function (paymentStatus) {
+      const paymentStatusBadge = document.getElementById(
+        "payment-status-badge"
+      );
+      const statusText =
+        this.paymentStatuses[paymentStatus] || "Không xác định";
+
+      // Xác định class cho badge dựa vào trạng thái thanh toán
+      let badgeClass = "";
+      switch (paymentStatus) {
+        case 1: // Chưa thanh toán
+          badgeClass = "bg-light-subtle text-dark";
+          break;
+        case 2: // Thanh toán một phần
+          badgeClass = "bg-warning-subtle text-warning";
+          break;
+        case 3: // Đã thanh toán
+          badgeClass = "bg-success-subtle text-success";
+          break;
+        case 4: // Đã hoàn tiền
+          badgeClass = "bg-success-subtle text-success";
+          break;
+        case 5: // Lỗi thanh toán
+          badgeClass = "bg-danger-subtle text-danger";
+          break;
+        default:
+          badgeClass = "bg-light-subtle text-dark";
+      }
+
+      paymentStatusBadge.className = `badge ${badgeClass} px-2 py-1 fs-13`;
+      paymentStatusBadge.textContent = statusText;
+    },
+
+    // Hiển thị tiến độ đơn hàng
+    renderOrderProgress: function (currentStatus) {
+      const progressContainer = document.getElementById("order-progress");
+      progressContainer.innerHTML = "";
+
+      // Định nghĩa các trạng thái trong tiến trình
+      const progressSteps = [
+        { status: 0, label: "Xác Nhận Đơn" },
+        { status: 8, label: "Chờ Thanh Toán" },
+        { status: 1, label: "Đang Xử Lý" },
+        { status: 3, label: "Đang Giao" },
+        { status: 4, label: "Đã Giao" },
+      ];
+
+      // Trường hợp đơn hàng bị hủy hoặc hoàn tiền
+      if (currentStatus === 6 || currentStatus === 7) {
+        // Hiển thị trạng thái đặc biệt cho đơn hủy hoặc hoàn tiền
+        const cancelledStep = document.createElement("div");
+        cancelledStep.className = "col";
+        cancelledStep.innerHTML = `
+             <div class="progress mt-3" style="height: 10px;">
+               <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+             </div>
+             <p class="mb-0 mt-2">${this.statuses[currentStatus]}</p>
+           `;
+        progressContainer.appendChild(cancelledStep);
+        return;
+      }
+
+      // Render các bước tiến trình
+      progressSteps.forEach((step) => {
+        const stepElement = document.createElement("div");
+        stepElement.className = "col";
+
+        // Xác định trạng thái của bước này (hoàn thành, đang thực hiện, chưa bắt đầu)
+        let progressClass = "";
+        let progressWidth = "0%";
+        let loading = "";
+
+        // FIX: Sửa logic để đánh dấu đúng các bước đã hoàn thành
+        if (currentStatus === 5) {
+          // Nếu đơn hàng đã hoàn thành, tất cả các bước đều là hoàn thành
+          progressClass = "bg-success";
+          progressWidth = "100%";
+        } else if (step.status === 8 && this.orderData.paymentStatus === 3) {
+          // Trường hợp "Chờ thanh toán" và đã thanh toán
+          progressClass = "bg-success";
+          progressWidth = "100%";
+        } else if (step.status < currentStatus) {
+          // Các bước trước bước hiện tại đều hoàn thành
+          progressClass = "bg-success";
+          progressWidth = "100%";
+        } else if (step.status === currentStatus) {
+          // Bước đang thực hiện
+          progressClass = "bg-warning";
+          progressWidth = "60%";
+          loading = `
+               <div class="spinner-border spinner-border-sm text-warning" role="status">
+                 <span class="visually-hidden">Đang tải...</span>
+               </div>
+             `;
+        } else if (step.status === 4 && currentStatus === 5) {
+          // Trường hợp bước "Đã giao" và đơn hàng đã hoàn thành
+          progressClass = "bg-success";
+          progressWidth = "100%";
+        } else {
+          // Bước chưa thực hiện
+          progressClass = "bg-primary";
+          progressWidth = "0%";
+        }
+
+        stepElement.innerHTML = `
+             <div class="progress mt-3" style="height: 10px;">
+               <div class="progress-bar progress-bar-striped progress-bar-animated ${progressClass}" 
+                    role="progressbar" style="width: ${progressWidth}" 
+                    aria-valuenow="70" aria-valuemin="0" aria-valuemax="70">
+               </div>
+             </div>
+             <div class="d-flex align-items-center gap-2 mt-2">
+               <p class="mb-0">${step.label}</p>
+               ${loading}
+             </div>
+           `;
+
+        progressContainer.appendChild(stepElement);
+      });
+
+      // Cập nhật nút hành động tùy theo trạng thái
+      const actionButton = document.getElementById("mark-ready-btn");
+
+      if (currentStatus === 1) {
+        actionButton.textContent = "Đánh Dấu Sẵn Sàng Giao";
+        actionButton.disabled = false;
+      } else if (currentStatus === 2) {
+        actionButton.textContent = "Đánh Dấu Đang Giao Hàng";
+        actionButton.disabled = false;
+      } else if (currentStatus === 3) {
+        actionButton.textContent = "Đánh Dấu Đã Giao Hàng";
+        actionButton.disabled = false;
+      } else if (currentStatus === 4) {
+        actionButton.textContent = "Đánh Dấu Hoàn Thành";
+        actionButton.disabled = false;
+      } else {
+        actionButton.textContent = "Cập Nhật Trạng Thái";
+        actionButton.disabled =
+          currentStatus === 5 || currentStatus === 6 || currentStatus === 7;
+      }
+
+      // Ngày giao hàng dự kiến (giả định là 3 ngày sau ngày tạo đơn)
+      const createdDate = new Date(this.orderData.createdAt);
+      const expectedDate = new Date(createdDate);
+      expectedDate.setDate(expectedDate.getDate() + 3);
+      document.getElementById("expected-delivery-date").textContent =
+        this.formatDate(expectedDate);
+    },
+
+    // Hiển thị sản phẩm trong đơn hàng
+    renderOrderItems: function() {
+      const itemsContainer = document.getElementById('order-items');
+      itemsContainer.innerHTML = '';
+      
+      // Nếu không có chi tiết đơn hàng
+      if (!this.orderData.orderDetails || this.orderData.orderDetails.length === 0) {
+        itemsContainer.innerHTML = `
+          <tr>
+            <td colspan="6" class="text-center">Không có sản phẩm nào trong đơn hàng</td>
+          </tr>
+        `;
+        return;
+      }
+      
+      // Hiển thị từng sản phẩm
+      this.orderData.orderDetails.forEach((item) => {
+        const packagingStatus = this.getPackagingStatusBadge(item.packagingStatus);
+        const productInfo = this.productsData[item.productId];
+        
+        const row = document.createElement('tr');
+        
+        // Nếu có thông tin sản phẩm, hiển thị thông tin chi tiết
+        // Nếu không, hiển thị thông tin cơ bản với ID sản phẩm
+        if (productInfo) {
+          row.innerHTML = `
+            <td>
+              <div class="d-flex align-items-center gap-2">
+                <div class="rounded bg-light avatar-md d-flex align-items-center justify-content-center">
+                  <img src="/custom/no-image.webp" alt="${productInfo.name}" class="avatar-md">
+                </div>
+                <div>
+                  <a href="#!" class="text-dark fw-medium fs-15">${productInfo.name}</a>
+                  <p class="text-muted mb-0 mt-1 fs-13">
+                    <span>Kích thước: </span>${this.getUnitName(item.unit)}
+                  </p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="${packagingStatus.class}">${packagingStatus.text}</span>
+            </td>
+            <td>${item.quantity}</td>
+            <td>${this.formatCurrency(item.unitPrice)}đ</td>
+            <td>${this.formatCurrency(item.shippingFee)}đ</td>
+            <td>${this.formatCurrency(item.subtotal)}đ</td>
+          `;
+        } else {
+          // Hiển thị với thông tin tối thiểu nếu không lấy được thông tin sản phẩm
+          row.innerHTML = `
+            <td>
+              <div class="d-flex align-items-center gap-2">
+                <div class="rounded bg-light avatar-md d-flex align-items-center justify-content-center">
+                  <iconify-icon icon="solar:box-broken" class="fs-32 text-secondary"></iconify-icon>
+                </div>
+                <div>
+                  <a href="#!" class="text-dark fw-medium fs-15">Sản phẩm #${item.productId}</a>
+                  <p class="text-muted mb-0 mt-1 fs-13">
+                    <span>Kích thước: </span>${this.getUnitName(item.unit)}
+                  </p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="${packagingStatus.class}">${packagingStatus.text}</span>
+            </td>
+            <td>${item.quantity}</td>
+            <td>${this.formatCurrency(item.unitPrice)}đ</td>
+            <td>${this.formatCurrency(item.shippingFee)}đ</td>
+            <td>${this.formatCurrency(item.subtotal)}đ</td>
+          `;
+        }
+        itemsContainer.appendChild(row);
+        //Render image product
+        @* orderService.fetchImage(productInfo.imageUrl, "Products").then(image => {
+          document.getElementById("product-image").src = image;
+        }); *@
+
+      });
+
+    },
+
+    // Lấy trạng thái đóng gói sản phẩm
+    getPackagingStatusBadge: function (status) {
+      switch (status) {
+        case 0:
+          return {
+            class: "badge bg-light text-dark px-2 py-1 fs-13",
+            text: "Đang Đóng Gói",
+          };
+        case 1:
+          return {
+            class: "badge bg-success-subtle text-success px-2 py-1 fs-13",
+            text: "Sẵn Sàng",
+          };
+        case 2:
+          return {
+            class: "badge bg-warning-subtle text-warning px-2 py-1 fs-13",
+            text: "Chờ Kiểm Tra",
+          };
+        default:
+          return {
+            class: "badge bg-light text-dark px-2 py-1 fs-13",
+            text: "Không Xác Định",
+          };
+      }
+    },
+
+    // Lấy tên đơn vị
+    getUnitName: function (unitCode) {
+      const units = {
+        1: "kg",
+        2: "hộp",
+        3: "cái",
+        4: "gói",
+        5: "túi",
+        6: "thùng",
+        7: "cuộn",
+        8: "lít",
+        9: "ml",
+      };
+      return units[unitCode] || "Không xác định";
+    },
+
+    // Hiển thị lịch sử đơn hàng
+    renderOrderTimeline: function () {
+      const timelineContainer = document.getElementById("order-timeline");
+      timelineContainer.innerHTML =
+        '<span class="position-absolute start-0 top-0 border border-dashed h-100"></span>';
+
+      // Nếu không có dữ liệu timeline
+      if (
+        !this.orderData.orderTimelines ||
+        this.orderData.orderTimelines.length === 0
+      ) {
+        // Tạo timeline mặc định dựa trên trạng thái hiện tại
+        const currentStatus = this.orderData.status;
+        const events = this.generateDefaultTimeline(currentStatus);
+
+        events.forEach((event, index) => {
+          const timelineItem = this.createTimelineItem(event, index === 0);
+          timelineContainer.appendChild(timelineItem);
+        });
+      } else {
+        // Hiển thị timeline từ dữ liệu API
+        this.orderData.orderTimelines.forEach((event, index) => {
+          const orderEvent = this.orderEventTypes[event.eventType];
+          const timelineItem = this.createTimelineItem(
+            {
+              title: orderEvent.value,
+              description: event.description,
+              date: event.createdAt,
+              isActive: index === 0,
+              isCompleted: orderEvent.complete,
+            },
+            index === 0
+          );
+
+          timelineContainer.appendChild(timelineItem);
+        });
+      }
+    },
+
+    // Tạo timeline mặc định dựa trên trạng thái đơn hàng
+    generateDefaultTimeline: function (currentStatus) {
+      const events = [];
+      const createdDate = new Date(this.orderData.createdAt);
+      
+      // Thêm sự kiện "đang xử lý" nếu đơn hàng đang trong quá trình xử lý
+      if (currentStatus >= 1) {
+        events.push({
+          title: "Bắt đầu đóng gói",
+          description: "Xác nhận bởi Nhân viên hệ thống",
+          date: createdDate,
+          isActive: currentStatus === 1,
+          isCompleted: currentStatus > 1
+        });
+      }
+      
+      // Thêm sự kiện hóa đơn
+      const invoiceDate = new Date(createdDate);
+      invoiceDate.setMinutes(invoiceDate.getMinutes() + 5);
+      
+      events.push({
+        title: "Đã gửi hóa đơn cho khách hàng",
+        description: `Email hóa đơn đã gửi đến <a href="#!" class="link-primary">${this.orderData.buyer.email}</a>`,
+        date: invoiceDate,
+        isActive: false,
+        isCompleted: true,
+        showInvoiceButton: true
+      });
+      
+      // Thêm sự kiện tạo hóa đơn
+      const invoiceCreatedDate = new Date(invoiceDate);
+      invoiceCreatedDate.setMinutes(invoiceCreatedDate.getMinutes() - 3);
+      
+      events.push({
+        title: "Đã tạo hóa đơn",
+        description: "Hóa đơn được tạo tự động bởi hệ thống",
+        date: invoiceCreatedDate,
+        isActive: false,
+        isCompleted: true,
+        showDownloadButton: true
+      });
+      
+      // Thêm sự kiện thanh toán
+      const paymentDate = new Date(invoiceCreatedDate);
+      paymentDate.setMinutes(paymentDate.getMinutes() - 2);
+      
+      events.push({
+        title: "Thanh Toán Đơn Hàng",
+        description: `Sử dụng ${this.getPaymentMethodName(this.orderData.paymentMethod)}`,
+        date: paymentDate,
+        isActive: false,
+        isCompleted: this.orderData.paymentStatus === 3,
+        paymentStatus: this.orderData.paymentStatus
+      });
+      
+      // Thêm sự kiện xác nhận đơn hàng
+      const confirmDate = new Date(paymentDate);
+      confirmDate.setMinutes(confirmDate.getMinutes() - 5);
+      
+      const itemCount = this.orderData.orderDetails ? this.orderData.orderDetails.length : 0;
+      events.push({
+        title: `${itemCount} sản phẩm được xác nhận bởi Hệ thống`,
+        description: "",
+        date: confirmDate,
+        isActive: false,
+        isCompleted: true,
+        products: this.orderData.orderDetails
+      });
+      
+      return events;
+    },
+
+    // Tạo mục timeline
+    createTimelineItem: function(event, isFirst) {
+      const div = document.createElement('div');
+      div.className = 'position-relative ps-4';
+      
+      let icon = '';
+      if (event.isCompleted) {
+        icon = `
+          <span class="position-absolute start-0 avatar-sm translate-middle-x bg-light d-inline-flex align-items-center justify-content-center rounded-circle text-success fs-20">
+            <i class='bx bx-check-circle'></i>
+          </span>
+        `;
+      } else if (event.isActive) {
+        icon = `
+          <span class="position-absolute start-0 avatar-sm translate-middle-x bg-light d-inline-flex align-items-center justify-content-center rounded-circle">
+            <div class="spinner-border spinner-border-sm text-warning" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </span>
+        `;
+      }
+      
+      let buttons = '';
+      if (event.showInvoiceButton) {
+        buttons = `<a href="#!" class="btn btn-light">Gửi Lại Hóa Đơn</a>`;
+      } else if (event.showDownloadButton) {
+        buttons = `<a href="#!" class="btn btn-primary">Tải Hóa Đơn</a>`;
+      }
+      
+      let paymentStatus = '';
+      if (event.paymentStatus !== undefined) {
+        const status = this.paymentStatuses[event.paymentStatus] || 'Không xác định';
+        let statusClass = 'bg-light text-dark';
+        
+        if (event.paymentStatus === 3) {
+          statusClass = 'bg-success-subtle text-success';
+        } else if (event.paymentStatus === 2) {
+          statusClass = 'bg-warning-subtle text-warning';
+        } else if (event.paymentStatus === 5) {
+          statusClass = 'bg-danger-subtle text-danger';
+        }
+        
+        paymentStatus = `
+          <div class="d-flex align-items-center gap-2">
+            <p class="mb-1 text-dark fw-medium">Trạng thái:</p>
+            <span class="badge ${statusClass} px-2 py-1 fs-13">${status}</span>
+          </div>
+        `;
+      }
+      
+      let productBadges = '';
+      if (event.products && event.products.length > 0) {
+        event.products.forEach((product, index) => {
+          // Sử dụng tên sản phẩm thật nếu có
+          const productInfo = this.productsData[product.productId];
+          const productName = productInfo ? productInfo.name : `Sản phẩm ${index + 1}`;
+          productBadges += `<a href="#!" class="badge bg-light text-dark fw-normal px-2 py-1 fs-13">${productName}</a> `;
+        });
+      }
+      
+      const formattedDate = event.date ? `${this.formatDate(event.date)}, ${this.formatTime(event.date)}` : '';
+      div.innerHTML = `
+        <div class="mb-4">
+          ${icon}
+          <div class="ms-2 d-flex flex-wrap gap-2 align-items-center justify-content-between">
+            <div>
+              <h5 class="mb-1 text-dark fw-medium fs-15">${event.title}</h5>
+              <p class="mb-2">${event.description}</p>
+              ${buttons}
+              ${paymentStatus}
+              ${productBadges}
+            </div>
+            <p class="mb-0">${formattedDate}</p>
+          </div>
+        </div>
+      `;
+      
+      return div;
+    },
+
+    // Hiển thị thông tin khách hàng và địa chỉ giao hàng
+    renderCustomerInfo: function(customer) {
+      if (!customer) return;
+      
+      // Thông tin khách hàng cơ bản
+      document.getElementById("customer-name").textContent = customer.fullName;
+      document.getElementById("customer-email").textContent = customer.email;
+      document.getElementById("customer-email").href = `mailto:${customer.email}`;
+      document.getElementById("customer-phone").textContent = customer.phoneNumber;
+      
+      // Avatar khách hàng (sử dụng mặc định nếu không có)
+      if (customer.imageUrl) {
+        orderService.fetchImage(customer.imageUrl, "Users").then(image => {
+          document.getElementById("customer-avatar").src = image;
+        });
+      }
+      else{
+        document.getElementById("customer-avatar").src = "~/custom/no-image.webp";
+      }
+      
+      // Địa chỉ giao hàng - Sử dụng thông tin từ address object trong response
+      if (this.orderData.address) {
+        const address = this.orderData.address;
+        
+        document.getElementById("shipping-name").textContent = address.shippingName;
+        
+        // Tạo địa chỉ đầy đủ
+        const addressLine = address.shippingAddress;
+        const wardDistrictProvince = `${address.shippingWard}, ${address.shippingDistrict}, ${address.shippingProvince}`;
+        
+        document.getElementById("shipping-address-line").textContent = addressLine;
+        document.getElementById("shipping-city").textContent = wardDistrictProvince;
+        document.getElementById("shipping-phone").textContent = address.shippingPhone;
+      } else {
+        // Fallback nếu không có thông tin địa chỉ cụ thể
+        document.getElementById("shipping-name").textContent = customer.fullName;
+        document.getElementById("shipping-address-line").textContent = customer.address || 'Không có thông tin';
+        document.getElementById("shipping-city").textContent = '';
+        document.getElementById("shipping-phone").textContent = customer.phoneNumber;
+      }
+      
+      // Địa chỉ thanh toán (giống địa chỉ giao hàng)
+      document.getElementById("billing-address-info").textContent = "Giống địa chỉ giao hàng";
+      
+      // Thông tin thanh toán khách hàng
+      document.getElementById("card-holder-name").textContent = customer.fullName;
+    },
+
+    // Hiển thị thông tin thanh toán
+    renderPaymentInfo: function () {
+      const paymentMethod = this.orderData.paymentMethod;
+      const paymentStatus = this.orderData.paymentStatus;
+
+      // Hiển thị phương thức thanh toán
+      document.getElementById("payment-method-name").textContent =
+        this.getPaymentMethodName(paymentMethod);
+
+      // Hiển thị icon phương thức thanh toán
+      const paymentIcon = document.getElementById("payment-method-icon");
+      if (paymentMethod === 1) {
+        paymentIcon.src = "assets/images/card/visa.svg";
+      } else if (paymentMethod === 2) {
+        paymentIcon.src = "assets/images/card/mastercard.svg";
+      } else if (paymentMethod === 3) {
+        paymentIcon.src = "assets/images/others/momo.png";
+      } else {
+        paymentIcon.src = "assets/images/card/cod.png";
+      }
+
+      // Hiển thị trạng thái thanh toán
+      const paymentStatusIcon = document.getElementById("payment-status-icon");
+      if (paymentStatus === 3) {
+        paymentStatusIcon.innerHTML =
+          '<iconify-icon icon="solar:check-circle-broken" class="fs-22 text-success"></iconify-icon>';
+      } else if (paymentStatus === 5) {
+        paymentStatusIcon.innerHTML =
+          '<iconify-icon icon="solar:close-circle-broken" class="fs-22 text-danger"></iconify-icon>';
+      } else {
+        paymentStatusIcon.innerHTML =
+          '<iconify-icon icon="solar:hourglass-broken" class="fs-22 text-warning"></iconify-icon>';
+      }
+
+      // Hiển thị chi tiết thanh toán
+      if (paymentMethod === 1 || paymentMethod === 2) {
+        document.getElementById("payment-method-details").textContent =
+          "xxxx xxxx xxxx 1234";
+      } else {
+        document.getElementById("payment-method-details").textContent = "";
+      }
+
+      // Mã giao dịch
+      document.getElementById(
+        "transaction-id"
+      ).textContent = `#VNF-${this.orderData.id}`;
+    },
+
+    // Lấy tên phương thức thanh toán
+    getPaymentMethodName: function (method) {
+      return this.paymentMethods[method] || "Không xác định";
+    },
+
+    // Hiển thị tổng kết đơn hàng
+    renderOrderSummary: function () {
+      const order = this.orderData;
+
+      // Hiển thị giá tiền
+      document.getElementById("subtotal").textContent = `${this.formatCurrency(
+        order.totalAmount
+      )}đ`;
+      document.getElementById("discount").textContent = `-${this.formatCurrency(
+        order.discountAmount
+      )}đ`;
+      document.getElementById(
+        "shipping-fee"
+      ).textContent = `${this.formatCurrency(order.shippingFee)}đ`;
+      document.getElementById("tax").textContent = `${this.formatCurrency(
+        order.taxAmount
+      )}đ`;
+      document.getElementById(
+        "final-total"
+      ).textContent = `${this.formatCurrency(order.finalAmount)}đ`;
+    },
+
+    // Thiết lập các event listeners
+    setupEventListeners: function () {
+      const _this = this;
+
+      // Nút "Hoàn Tiền"
+      document
+        .getElementById("refund-btn")
+        .addEventListener("click", function () {
+          _this.handleRefund();
+        });
+
+      // Nút "Trả Hàng"
+      document
+        .getElementById("return-btn")
+        .addEventListener("click", function () {
+          _this.handleReturn();
+        });
+
+      // Nút cập nhật trạng thái
+      document
+        .getElementById("mark-ready-btn")
+        .addEventListener("click", function () {
+          _this.updateOrderStatus();
+        });
+    },
+
+    // Xử lý hoàn tiền
+    handleRefund: function () {
+      alert("Chức năng hoàn tiền đang được phát triển");
+    },
+
+    // Xử lý trả hàng
+    handleReturn: function () {
+      alert("Chức năng trả hàng đang được phát triển");
+    },
+
+    // Cập nhật trạng thái đơn hàng
+    updateOrderStatus: function () {
+      const currentStatus = this.orderData.status;
+      let nextStatus = currentStatus;
+
+      // Xác định trạng thái tiếp theo
+      if (currentStatus === 1) nextStatus = 2; // Đang xử lý -> Đang đóng gói
+      else if (currentStatus === 2)
+        nextStatus = 3; // Đang đóng gói -> Đang vận chuyển
+      else if (currentStatus === 3)
+        nextStatus = 4; // Đang vận chuyển -> Đã giao hàng
+      else if (currentStatus === 4) nextStatus = 5; // Đã giao hàng -> Đã hoàn thành
+
+      if (nextStatus === currentStatus) {
+        alert("Không thể cập nhật trạng thái đơn hàng");
+        return;
+      }
+
+      // Xác nhận từ người dùng
+      if (
+        !confirm(
+          `Bạn có chắc chắn muốn cập nhật trạng thái đơn hàng từ "${this.statuses[currentStatus]}" thành "${this.statuses[nextStatus]}"?`
+        )
+      ) {
+        return;
+      }
+
+      this.showLoading(true);
+
+      // Gọi API cập nhật trạng thái
+      orderService
+        .update(this.orderId, { status: nextStatus })
+        .then((response) => {
+          if (response && response.success) {
+            alert("Cập nhật trạng thái đơn hàng thành công");
+            // Tải lại dữ liệu
+            this.loadOrderDetail();
+          } else {
+            alert("Không thể cập nhật trạng thái đơn hàng");
+          }
+        })
+        .catch((error) => {
+          console.error("Lỗi cập nhật trạng thái đơn hàng:", error);
+          alert("Đã xảy ra lỗi khi cập nhật trạng thái đơn hàng");
+        })
+        .finally(() => {
+          this.showLoading(false);
+        });
+    },
+
+    // Hiển thị loading
+    showLoading: function (isLoading) {
+      const cards = document.querySelectorAll(".card");
+
+      if (isLoading) {
+        cards.forEach((card) => {
+          // Kiểm tra xem đã có overlay chưa
+          if (!card.querySelector(".loading-overlay")) {
+            const overlay = document.createElement("div");
+            overlay.className = "loading-overlay";
+            overlay.innerHTML = `
+          <div class="text-center">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Đang tải...</span>
+            </div>
+            <p class="mt-2">Đang tải dữ liệu...</p>
+          </div>
+        `;
+            card.appendChild(overlay);
+          }
+        });
+      } else {
+        // Xóa tất cả các overlay
+        document.querySelectorAll(".loading-overlay").forEach((overlay) => {
+          overlay.remove();
+        });
+      }
+    },
+
+    // Hiển thị thông báo lỗi
+    showError: function (message) {
+      const cards = document.querySelectorAll(".card");
+
+      cards.forEach((card) => {
+        if (card.querySelector(".card-body")) {
+          card.querySelector(".card-body").innerHTML = `
+        <div class="alert alert-danger" role="alert">
+          <i class="bx bx-error-circle me-2"></i> ${message}
+        </div>
+      `;
+        }
+      });
+    },
+
+    // Định dạng tiền tệ
+    formatCurrency: function (amount) {
+      if (amount === null || amount === undefined) return "0";
+      return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
+
+    // Định dạng ngày
+    formatDate: function (dateString) {
+      if (!dateString) return "";
+
+      const date = new Date(dateString);
+      const day = date.getDate().toString().padStart(2, "0");
+      const month = (date.getMonth() + 1).toString().padStart(2, "0");
+      const year = date.getFullYear();
+
+      return `${day}/${month}/${year}`;
+    },
+
+    // Định dạng giờ
+    formatTime: function (dateString) {
+      if (!dateString) return "";
+
+      const date = new Date(dateString);
+      const hours = date.getHours().toString().padStart(2, "0");
+      const minutes = date.getMinutes().toString().padStart(2, "0");
+
+      return `${hours}:${minutes}`;
+    },
+
+    // Tải thông tin chi tiết của các sản phẩm
+    loadProductsInfo: async function() {
+      try {
+        const productIds = this.orderData.orderDetails.map(item => item.productId);
+        
+        // Hiển thị loading cho bảng sản phẩm
+        document.getElementById('order-items').innerHTML = `
+          <tr>
+            <td colspan="6" class="text-center">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Đang tải thông tin sản phẩm...</span>
+              </div>
+              <p class="mt-2">Đang tải thông tin sản phẩm...</p>
+            </td>
+          </tr>
+        `;
+        
+        // Tải thông tin cho từng sản phẩm và lưu vào đối tượng productsData
+        const productPromises = productIds.map(async (productId) => {
+          try {
+            const response = await productService.getById(productId);
+            if (response && response.success && response.data) {
+              this.productsData[productId] = response.data;
+            }
+          } catch (error) {
+            console.error(`Lỗi khi lấy thông tin sản phẩm ID ${productId}:`, error);
+          }
+        });
+        
+        // Đợi tất cả các yêu cầu API được hoàn thành
+        await Promise.all(productPromises);
+        
+        // Render lại bảng sản phẩm với thông tin đã lấy được
+        this.renderOrderItems();
+      } catch (error) {
+        console.error("Lỗi khi tải thông tin sản phẩm:", error);
+        // Hiển thị thông báo lỗi trong bảng sản phẩm
+        document.getElementById('order-items').innerHTML = `
+          <tr>
+            <td colspan="6" class="text-center text-danger">
+              <i class="bx bx-error-circle me-2"></i> Không thể tải thông tin chi tiết sản phẩm
+            </td>
+          </tr>
+        `;
+      }
+    },
+
+    // Hiển thị thông tin vận chuyển
+    renderShippingInfo: function() {
+      if (!this.orderData.shipping) return;
+      
+      const shipping = this.orderData.shipping;
+      const shippingInfoContainer = document.getElementById('shipping-info');
+      
+      // Kiểm tra xem container có tồn tại không
+      if (!shippingInfoContainer) return;
+      
+      // Xóa nội dung cũ
+      shippingInfoContainer.innerHTML = `<div class="d-flex justify-content-between mt-3 mb-2">
+        <h5 class="">Thông Tin Vận Chuyển</h5>
+      </div>`;
+      
+      // Hiển thị mã theo dõi vận chuyển nếu có
+      if (shipping.trackingNumber) {
+        let trackingHTML = `
+          <div class="mb-3">
+            <h6 class="fw-medium">Mã Vận Đơn</h6>
+            <div class="d-flex align-items-center">
+              <p class="mb-0 me-2">${shipping.trackingNumber}</p>
+              <button class="btn btn-sm btn-outline-primary" onclick="navigator.clipboard.writeText('${shipping.trackingNumber}')">
+                <i class='bx bx-copy'></i> Sao chép
+              </button>
+            </div>
+          </div>
+        `;
+        shippingInfoContainer.innerHTML += trackingHTML;
+      }
+      
+      // Hiển thị đơn vị vận chuyển nếu có
+      if (shipping.shippingPartner) {
+        let partnerHTML = `
+          <div class="mb-3">
+            <h6 class="fw-medium">Đơn Vị Vận Chuyển</h6>
+            <p class="mb-0">${shipping.shippingPartner}</p>
+          </div>
+        `;
+        shippingInfoContainer.innerHTML += partnerHTML;
+      }
+      
+      // Hiển thị phương thức vận chuyển nếu có
+      if (shipping.shippingMethod) {
+        let methodHTML = `
+          <div class="mb-3">
+            <h6 class="fw-medium">Phương Thức Vận Chuyển</h6>
+            <p class="mb-0">${shipping.shippingMethod}</p>
+          </div>
+        `;
+        shippingInfoContainer.innerHTML += methodHTML;
+      }
+      
+      // Hiển thị thời gian vận chuyển nếu có
+      if (shipping.shippedAt) {
+        let shippedHTML = `
+          <div class="mb-3">
+            <h6 class="fw-medium">Thời Gian Gửi Hàng</h6>
+            <p class="mb-0">${this.formatDate(shipping.shippedAt)} - ${this.formatTime(shipping.shippedAt)}</p>
+          </div>
+        `;
+        shippingInfoContainer.innerHTML += shippedHTML;
+      }
+      
+      // Hiển thị thời gian giao hàng nếu có
+      if (shipping.deliveredAt) {
+        let deliveredHTML = `
+          <div class="mb-3">
+            <h6 class="fw-medium">Thời Gian Giao Hàng</h6>
+            <p class="mb-0">${this.formatDate(shipping.deliveredAt)} - ${this.formatTime(shipping.deliveredAt)}</p>
+          </div>
+        `;
+        shippingInfoContainer.innerHTML += deliveredHTML;
+      }
+    },
+  };
+
+  orderDetailApp.init();
+</script>

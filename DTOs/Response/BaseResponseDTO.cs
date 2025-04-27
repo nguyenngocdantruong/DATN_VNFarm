@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace VNFarm_FinalFinal.DTOs.Response
+namespace VNFarm.DTOs.Response
 {
     public abstract class BaseResponseDTO
     {

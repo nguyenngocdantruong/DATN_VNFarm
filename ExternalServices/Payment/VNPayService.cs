@@ -8,10 +8,10 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using VNFarm_FinalFinal.DTOs.Payment;
-using VNFarm_FinalFinal.Interfaces.External;
+using VNFarm.DTOs.Payment;
+using VNFarm.Interfaces.External;
 
-namespace VNFarm.Infrastructure.External.Payment
+namespace VNFarm.ExternalServices.Payment
 {
     public class VNPayService : IPaymentService
     {

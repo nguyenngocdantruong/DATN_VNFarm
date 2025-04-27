@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace VNFarm_FinalFinal.DTOs.Payment
+namespace VNFarm.DTOs.Payment
 {
     public class PaymentRequest
     {

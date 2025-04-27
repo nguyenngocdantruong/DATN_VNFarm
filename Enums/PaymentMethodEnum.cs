@@ -1,4 +1,4 @@
-namespace VNFarm_FinalFinal.Enums
+namespace VNFarm.Enums
 {
     public enum PaymentMethodEnum
     {

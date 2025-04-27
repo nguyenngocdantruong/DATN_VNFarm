@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using VNFarm_FinalFinal.DTOs.Request;
-using VNFarm_FinalFinal.DTOs.Response;
-using VNFarm_FinalFinal.Entities;
-using VNFarm_FinalFinal.Enums;
+using VNFarm.DTOs.Request;
+using VNFarm.DTOs.Response;
+using VNFarm.Entities;
+using VNFarm.Enums;
 
-namespace VNFarm_FinalFinal.Interfaces.Services
+namespace VNFarm.Interfaces.Services
 {
     public interface INotificationService : IService<Notification, NotificationRequestDTO, NotificationResponseDTO>
     {

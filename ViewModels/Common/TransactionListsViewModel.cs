@@ -1,6 +1,6 @@
-using VNFarm_FinalFinal.DTOs.Response;
+using VNFarm.DTOs.Response;
 
-namespace VNFarm_FinalFinal.ViewModels.Common
+namespace VNFarm.ViewModels.Common
 {
     public class TransactionListsViewModel
     {

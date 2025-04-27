@@ -1,6 +1,7 @@
-using VNFarm_FinalFinal.DTOs.Filters;
-using VNFarm_FinalFinal.DTOs.Response;
-namespace VNFarm_FinalFinal.ViewModels.Common
+using VNFarm.DTOs.Filters;
+using VNFarm.DTOs.Response;
+
+namespace VNFarm.ViewModels.Common
 {
     public class ShopDetailViewModel
     {

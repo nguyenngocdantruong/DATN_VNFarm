@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace VNFarm_FinalFinal.Controllers
+namespace VNFarm.Controllers
 {
     public class UserController : BaseController
     {

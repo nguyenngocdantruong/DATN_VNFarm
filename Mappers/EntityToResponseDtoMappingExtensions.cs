@@ -1,7 +1,7 @@
-using VNFarm_FinalFinal.DTOs.Response;
-using VNFarm_FinalFinal.Entities;
+using VNFarm.DTOs.Response;
+using VNFarm.Entities;
 
-namespace VNFarm_FinalFinal.Mappers
+namespace VNFarm.Mappers
 {
     public static class EntityToResponseDtoMappingExtensions
     {
@@ -138,6 +138,7 @@ namespace VNFarm_FinalFinal.Mappers
                 Subtotal = orderDetail.Subtotal,
                 PackagingStatus = orderDetail.PackagingStatus,
                 Unit = orderDetail.Unit,
+                ImageUrl = orderDetail.Product?.ImageUrl,
             };
         }
         public static OrderResponseDTO ToResponseDTO(this Order order)

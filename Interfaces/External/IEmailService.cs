@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace VNFarm_FinalFinal.Interfaces.External
+namespace VNFarm.Interfaces.External
 {
     public interface IEmailService
     {

@@ -1,5 +1,6 @@
-using VNFarm_FinalFinal.DTOs.Response;
-namespace VNFarm_FinalFinal.ViewModels.Common
+using VNFarm.DTOs.Response;
+
+namespace VNFarm.ViewModels.Common
 {
     public class ReviewHistoryProductViewModel
     {

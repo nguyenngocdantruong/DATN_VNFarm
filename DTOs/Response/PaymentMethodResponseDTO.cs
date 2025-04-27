@@ -1,5 +1,6 @@
-using VNFarm_FinalFinal.Enums;
-namespace VNFarm_FinalFinal.DTOs.Response
+using VNFarm.Enums;
+
+namespace VNFarm.DTOs.Response
 {
     public class PaymentMethodResponseDTO : BaseResponseDTO
     {

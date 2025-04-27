@@ -1,8 +1,9 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using VNFarm_FinalFinal.Enums;
 using Swashbuckle.AspNetCore.Annotations;
-namespace VNFarm_FinalFinal.DTOs.Response
+using VNFarm.Enums;
+
+namespace VNFarm.DTOs.Response
 { 
     public class ChatResponseDTO : BaseResponseDTO
     {

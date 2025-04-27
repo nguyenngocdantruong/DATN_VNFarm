@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using VNFarm_FinalFinal.DTOs.Response;
-using VNFarm_FinalFinal.Enums;
-using VNFarm_FinalFinal.Helpers;
+using VNFarm.DTOs.Response;
+using VNFarm.Enums;
+using VNFarm.Helpers;
 
-namespace VNFarm_FinalFinal.DTOs.Response
+namespace VNFarm.DTOs.Response
 {
     public class OrderTimelineResponseDTO: BaseResponseDTO
     {

@@ -1,5 +1,5 @@
 
-namespace VNFarm_FinalFinal.DTOs.Response
+namespace VNFarm.DTOs.Response
 {
     public class AddressResponseDTO : BaseResponseDTO
     {

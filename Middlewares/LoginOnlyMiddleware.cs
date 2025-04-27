@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
-namespace VNFarm_FinalFinal.Middlewares
+namespace VNFarm.Middlewares
 {
     public class LoginOnlyMiddleware
     {

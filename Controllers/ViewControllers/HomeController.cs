@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
-using VNFarm_FinalFinal.DTOs.Request;
-using VNFarm_FinalFinal.DTOs.Response;
-using VNFarm_FinalFinal.Enums;
-using VNFarm_FinalFinal.Interfaces.Services;
-using VNFarm_FinalFinal.Interfaces.Repositories;
+using VNFarm.DTOs.Response;
 using System.Security.Claims;
+using VNFarm.DTOs.Request;
+using VNFarm.Enums;
+using VNFarm.Interfaces.Repositories;
+using VNFarm.Interfaces.Services;
 
-namespace VNFarm_FinalFinal.Controllers
+namespace VNFarm.Controllers
 {
     public class HomeController : BaseController
     {

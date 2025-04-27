@@ -1,6 +1,6 @@
 using System;
 
-namespace VNFarm.Infrastructure.External.Email
+namespace VNFarm.ExternalServices.Email
 {
     public class EmailTemplates
     {

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using VNFarm_FinalFinal.Entities;
+using VNFarm.Entities;
 
-namespace VNFarm.Infrastructure.Persistence.Context
+namespace VNFarm.Data
 {
     public class VNFarmContext : DbContext
     {

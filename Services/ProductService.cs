@@ -1,15 +1,15 @@
 using Microsoft.EntityFrameworkCore;
-using VNFarm_FinalFinal.DTOs.Filters;
-using VNFarm_FinalFinal.Entities;
-using VNFarm_FinalFinal.Enums;
-using VNFarm_FinalFinal.Interfaces.Repositories;
-using VNFarm_FinalFinal.Interfaces.Services;
-using VNFarm_FinalFinal.Helpers;
-using VNFarm_FinalFinal.DTOs.Request;
-using VNFarm_FinalFinal.DTOs.Response;
-using VNFarm_FinalFinal.Mappers;
+using VNFarm.DTOs.Filters;
+using VNFarm.Entities;
+using VNFarm.Enums;
+using VNFarm.Interfaces.Repositories;
+using VNFarm.Interfaces.Services;
+using VNFarm.Helpers;
+using VNFarm.DTOs.Request;
+using VNFarm.DTOs.Response;
+using VNFarm.Mappers;
 
-namespace VNFarm.Infrastructure.Services
+namespace VNFarm.Services
 {
     public class ProductService : BaseService<Product, ProductRequestDTO, ProductResponseDTO>, IProductService
     {

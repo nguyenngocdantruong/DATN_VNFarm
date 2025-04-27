@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using VNFarm_FinalFinal.Enums;
-using VNFarm_FinalFinal.Entities;
+using VNFarm.Entities;
 using Swashbuckle.AspNetCore.Annotations;
+using VNFarm.Enums;
 
-namespace VNFarm_FinalFinal.DTOs.Response
+namespace VNFarm.DTOs.Response
 {
     public class ChatRoomResponseDTO : BaseResponseDTO
     {

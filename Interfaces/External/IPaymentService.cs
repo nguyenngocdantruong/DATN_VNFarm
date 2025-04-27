@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using VNFarm_FinalFinal.DTOs.Payment;
+using VNFarm.DTOs.Payment;
 
-namespace VNFarm_FinalFinal.Interfaces.External
+namespace VNFarm.Interfaces.External
 {
     public interface IPaymentService
     {

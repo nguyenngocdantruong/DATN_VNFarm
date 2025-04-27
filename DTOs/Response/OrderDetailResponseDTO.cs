@@ -1,8 +1,9 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using VNFarm_FinalFinal.Enums;
 using Swashbuckle.AspNetCore.Annotations;
-namespace VNFarm_FinalFinal.DTOs.Response
+using VNFarm.Enums;
+
+namespace VNFarm.DTOs.Response
 {
     public class OrderDetailResponseDTO : BaseResponseDTO
     {
@@ -22,5 +23,6 @@ namespace VNFarm_FinalFinal.DTOs.Response
         public required decimal Subtotal { get; set; }
 
         public required OrderDetailStatus PackagingStatus { get; set; }
+        public required string ImageUrl { get; set; }
     }
 }

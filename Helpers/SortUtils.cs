@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using VNFarm_FinalFinal.Enums;
+using VNFarm.Enums;
 
-namespace VNFarm_FinalFinal.Helpers
+namespace VNFarm.Helpers
 {
     public static class SortUtils
     {

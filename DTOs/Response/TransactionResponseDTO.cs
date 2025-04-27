@@ -1,9 +1,9 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using VNFarm_FinalFinal.Enums;
 using Swashbuckle.AspNetCore.Annotations;
+using VNFarm.Enums;
 
-namespace VNFarm_FinalFinal.DTOs.Response
+namespace VNFarm.DTOs.Response
 {
     public class TransactionResponseDTO: BaseResponseDTO
     {

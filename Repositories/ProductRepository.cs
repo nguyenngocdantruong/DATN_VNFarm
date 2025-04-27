@@ -3,12 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using VNFarm_FinalFinal.DTOs.Filters;
-using VNFarm_FinalFinal.Entities;
-using VNFarm_FinalFinal.Interfaces.Repositories;
-using VNFarm.Infrastructure.Persistence.Context;
+using VNFarm.Data;
+using VNFarm.DTOs.Filters;
+using VNFarm.Entities;
+using VNFarm.Interfaces.Repositories;
 
-namespace VNFarm.Infrastructure.Repositories
+namespace VNFarm.Repositories
 {
     public class ProductRepository : BaseRepository<Product>, IProductRepository
     {

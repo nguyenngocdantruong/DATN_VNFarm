@@ -3,12 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using VNFarm_FinalFinal.Entities;
-using VNFarm_FinalFinal.Enums;
-using VNFarm_FinalFinal.Interfaces.Repositories;
-using VNFarm.Infrastructure.Persistence.Context;
+using VNFarm.Data;
+using VNFarm.Entities;
+using VNFarm.Enums;
+using VNFarm.Interfaces.Repositories;
 
-namespace VNFarm.Infrastructure.Repositories
+namespace VNFarm.Repositories
 {
     public class DiscountRepository : BaseRepository<Discount>, IDiscountRepository
     {

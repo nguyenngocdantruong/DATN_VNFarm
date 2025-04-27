@@ -1,13 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
-using VNFarm_FinalFinal.DTOs.Filters;
-using VNFarm_FinalFinal.Interfaces.Services;
-using VNFarm_FinalFinal.Enums;
-using VNFarm_FinalFinal.DTOs.Request;
-using VNFarm_FinalFinal.DTOs.Response;
-using VNFarm_FinalFinal.Entities;
 using Microsoft.EntityFrameworkCore;
+using VNFarm.DTOs.Filters;
+using VNFarm.DTOs.Request;
+using VNFarm.DTOs.Response;
+using VNFarm.Entities;
+using VNFarm.Enums;
+using VNFarm.Interfaces.Services;
 
-namespace VNFarm_FinalFinal.Controllers.ApiControllers
+namespace VNFarm.Controllers.ApiControllers
 {
     [Route("api/[controller]")]
     [ApiController]

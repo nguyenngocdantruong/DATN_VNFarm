@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace VNFarm.Infrastructure.Persistence.Context
+namespace VNFarm.Data
 {
     public class ContextFactory : IDesignTimeDbContextFactory<VNFarmContext>
     {

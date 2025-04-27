@@ -1,6 +1,6 @@
-using VNFarm_FinalFinal.DTOs.Response;
+using VNFarm.DTOs.Response;
 
-namespace VNFarm_FinalFinal.ViewModels.Seller
+namespace VNFarm.ViewModels.Seller
 {
     public class RegisterShopViewModel
     {

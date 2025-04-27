@@ -3,18 +3,17 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
-using VNFarm.Infrastructure.Data;
-using VNFarm.Infrastructure.Persistence.Context;
-using VNFarm.Infrastructure.Repositories;
-using VNFarm.Infrastructure.Services;
-using VNFarm_FinalFinal.Interfaces.Repositories;
-using VNFarm_FinalFinal.Interfaces.Services;
-using VNFarm_FinalFinal.Middlewares;
+using VNFarm.Data.Data;
+using VNFarm.Data;
+using VNFarm.Repositories;
+using VNFarm.Interfaces.Repositories;
+using VNFarm.Interfaces.Services;
+using VNFarm.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using VNFarm_FinalFinal.Services;
-using VNFarm_FinalFinal.Entities;
+using VNFarm.Services;
+using VNFarm.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -156,6 +155,9 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
 
+app.UseStatusCodePagesWithReExecute("/Error/{0}"); // xử lý 404, 401
+app.UseExceptionHandler("/Error/500"); // xử lý lỗi 500
+
 // Cấu hình routes
 app.MapControllerRoute(
     name: "default",
@@ -163,17 +165,19 @@ app.MapControllerRoute(
 
 app.MapControllers();
 
-// Cấu hình middleware cho các route
-app.Map("/admin", adminApp => {
-    adminApp.UseRouting();
-    adminApp.UseAuthorization();
-    adminApp.UseAdminOnly();
-    adminApp.UseEndpoints(endpoints => {
-        endpoints.MapControllerRoute(
-            name: "admin",
-            pattern: "{controller=Admin}/{action=Index}/{id?}");
-    });
-});
+//// Cấu hình middleware cho các route
+//app.Map("/admin", adminApp =>
+//{
+//    adminApp.UseRouting();
+//    adminApp.UseAuthorization();
+//    adminApp.UseAdminOnly();
+//    adminApp.UseEndpoints(endpoints =>
+//    {
+//        endpoints.MapControllerRoute(
+//            name: "admin",
+//            pattern: "{controller=Admin}/{action=Index}/{id?}");
+//    });
+//});
 
 app.Map("/user", userApp => {
     userApp.UseRouting();

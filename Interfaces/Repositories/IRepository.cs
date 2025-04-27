@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using VNFarm_FinalFinal.Entities;
+using VNFarm.Entities;
 
-namespace VNFarm_FinalFinal.Interfaces.Repositories
+namespace VNFarm.Interfaces.Repositories
 {
     public interface IRepository<T> where T : BaseEntity
     {

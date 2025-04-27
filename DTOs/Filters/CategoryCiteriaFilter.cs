@@ -1,4 +1,4 @@
-namespace VNFarm_FinalFinal.DTOs.Filters
+namespace VNFarm.DTOs.Filters
 {
     public class CategoryCriteriaFilter : BaseFilterCriteria
     {

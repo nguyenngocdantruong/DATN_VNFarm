@@ -1,7 +1,7 @@
-using VNFarm_FinalFinal.DTOs.Response;
-using VNFarm_FinalFinal.DTOs.Filters;
+using VNFarm.DTOs.Filters;
+using VNFarm.DTOs.Response;
 
-namespace VNFarm_FinalFinal.ViewModels.Buyer
+namespace VNFarm.ViewModels.Buyer
 {
     public class UserDetailViewModel
     {

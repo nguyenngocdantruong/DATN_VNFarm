@@ -28,7 +28,7 @@
                                     </div>
                                 </div>
                                 <div class="pt-4">
-                                    <h2 class="counter-value" data-target="45">45</h2>
+                                    <h2 class="counter-value" id="total-requests">0</h2>
                                     <p class="text-muted mb-0">Yêu cầu mới trong tháng</p>
                                 </div>
                             </div>
@@ -51,7 +51,7 @@
                                     </div>
                                 </div>
                                 <div class="pt-4">
-                                    <h2 class="counter-value" data-target="12">12</h2>
+                                    <h2 class="counter-value" id="pending-requests">0</h2>
                                     <p class="text-muted mb-0">Yêu cầu cần xử lý</p>
                                 </div>
                             </div>
@@ -74,7 +74,7 @@
                                     </div>
                                 </div>
                                 <div class="pt-4">
-                                    <h2 class="counter-value" data-target="28">28</h2>
+                                    <h2 class="counter-value" id="approved-requests">0</h2>
                                     <p class="text-muted mb-0">Shop đã hoạt động</p>
                                 </div>
                             </div>
@@ -97,7 +97,7 @@
                                     </div>
                                 </div>
                                 <div class="pt-4">
-                                    <h2 class="counter-value" data-target="5">5</h2>
+                                    <h2 class="counter-value" id="rejected-requests">0</h2>
                                     <p class="text-muted mb-0">Yêu cầu bị từ chối</p>
                                 </div>
                             </div>
@@ -118,34 +118,30 @@
                     </div>
                     <div class="card-body">
                         <div class="row g-3">
-                            <div class="col-md-3">
-                                <input type="text" class="form-control" placeholder="Tìm kiếm theo tên shop...">
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" id="request-search-input" placeholder="Tìm kiếm theo tên shop...">
                             </div>
-                            <div class="col-md-3">
-                                <select class="form-select">
-                                    <option value="">Tất Cả Trạng Thái</option>
-                                    <option value="1">Chờ Duyệt</option>
-                                    <option value="2">Đã Duyệt</option>
-                                    <option value="3">Từ Chối</option>
+                            <div class="col-md-4">
+                                <select class="form-select" id="request-status-filter">
+                                    <option value="-999" selected>Tất Cả Trạng Thái</option>
+                                    <!-- Sẽ được điền bởi JavaScript -->
                                 </select>
                             </div>
-                            <div class="col-md-3">
-                                <select class="form-select">
-                                    <option value="">Tất Cả Loại Shop</option>
-                                    <option value="1">Nông Sản</option>
-                                    <option value="2">Thực Phẩm</option>
-                                    <option value="3">Hải Sản</option>
+                            <div class="col-md-4">
+                                <select class="form-select" id="request-type-filter">
+                                    <option value="-999" selected>Tất Cả Loại Shop</option>
+                                    <!-- Sẽ được điền bởi JavaScript -->
                                 </select>
                             </div>
-                            <div class="col-md-3">
-                                <button type="button" class="btn btn-primary w-100">
+                            <div class="col-md-2" style="display: none;">
+                                <button type="button" class="btn btn-primary w-100" id="request-filter-button">
                                     <i class="bx bx-search me-1"></i> Tìm Kiếm
                                 </button>
                             </div>
                         </div>
 
                         <div class="table-responsive mt-4">
-                            <table class="table table-hover align-middle table-nowrap mb-0">
+                            <table class="table table-hover align-middle table-nowrap mb-0" id="request-table">
                                 <thead>
                                     <tr>
                                         <th scope="col">Mã Yêu Cầu</th>
@@ -156,87 +152,12 @@
                                         <th scope="col">Thao Tác</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="request-table-body">
+                                    <!-- Dữ liệu sẽ được điền bởi JavaScript -->
                                     <tr>
-                                        <td>#YC001</td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="flex-shrink-0 me-3">
-                                                    <img src="assets/images/users/avatar-1.jpg" alt="" class="avatar-sm rounded">
-                                                </div>
-                                                <div class="flex-grow-1">
-                                                    <h6 class="mb-1">Nông Sản Sạch ABC</h6>
-                                                    <p class="text-muted mb-0">Nguyễn Văn A</p>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>Nông Sản</td>
-                                        <td>15/03/2024</td>
-                                        <td><span class="badge bg-warning">Chờ Duyệt</span></td>
-                                        <td>
-                                            <div class="dropdown">
-                                                <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                                    <i class="bx bx-dots-horizontal-rounded"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item" href="00_shop_request_detail.html?id=YC001"><i class="bx bx-detail me-1"></i>Chi Tiết</a></li>
-                                                    <li><a class="dropdown-item" href="#"><i class="bx bx-check me-1"></i>Duyệt</a></li>
-                                                    <li><a class="dropdown-item" href="#"><i class="bx bx-x me-1"></i>Từ Chối</a></li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>#YC002</td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="flex-shrink-0 me-3">
-                                                    <img src="assets/images/users/avatar-2.jpg" alt="" class="avatar-sm rounded">
-                                                </div>
-                                                <div class="flex-grow-1">
-                                                    <h6 class="mb-1">Hải Sản Tươi Sống</h6>
-                                                    <p class="text-muted mb-0">Trần Thị B</p>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>Hải Sản</td>
-                                        <td>14/03/2024</td>
-                                        <td><span class="badge bg-success">Đã Duyệt</span></td>
-                                        <td>
-                                            <div class="dropdown">
-                                                <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                                    <i class="bx bx-dots-horizontal-rounded"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item" href="00_shop_request_detail.html?id=YC002"><i class="bx bx-detail me-1"></i>Chi Tiết</a></li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>#YC003</td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="flex-shrink-0 me-3">
-                                                    <img src="assets/images/users/avatar-3.jpg" alt="" class="avatar-sm rounded">
-                                                </div>
-                                                <div class="flex-grow-1">
-                                                    <h6 class="mb-1">Thực Phẩm An Toàn</h6>
-                                                    <p class="text-muted mb-0">Lê Văn C</p>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>Thực Phẩm</td>
-                                        <td>13/03/2024</td>
-                                        <td><span class="badge bg-danger">Từ Chối</span></td>
-                                        <td>
-                                            <div class="dropdown">
-                                                <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                                    <i class="bx bx-dots-horizontal-rounded"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item" href="00_shop_request_detail.html?id=YC003"><i class="bx bx-detail me-1"></i>Chi Tiết</a></li>
-                                                </ul>
+                                        <td colspan="6" class="text-center">
+                                            <div class="spinner-border text-primary" role="status">
+                                                <span class="visually-hidden">Đang tải...</span>
                                             </div>
                                         </td>
                                     </tr>
@@ -246,23 +167,14 @@
 
                         <div class="row align-items-center mt-4">
                             <div class="col-sm-6">
-                                <div>Hiển thị <b>1</b> đến <b>10</b> trong <b>45</b> yêu cầu</div>
+                                <div id="request-paging-count">Đang tải dữ liệu...</div>
                             </div>
                             <div class="col-sm-6">
-                                <ul class="pagination pagination-rounded justify-content-end mb-0">
-                                    <li class="page-item disabled">
+                                <ul class="pagination pagination-rounded justify-content-end mb-0" id="request-paging-list">
+                                    <li class="page-item" id="request-btn-prev">
                                         <a class="page-link" href="#"><i class="bx bx-chevron-left"></i></a>
                                     </li>
-                                    <li class="page-item active">
-                                        <a class="page-link" href="#">1</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">2</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">3</a>
-                                    </li>
-                                    <li class="page-item">
+                                    <li class="page-item" id="request-btn-next">
                                         <a class="page-link" href="#"><i class="bx bx-chevron-right"></i></a>
                                     </li>
                                 </ul>
@@ -276,3 +188,449 @@
     <!-- End Container Fluid -->
 </div>
 <!-- End Page Content --> 
+
+<script type="module">
+    import { BaseService } from "/custom/BaseService.js";
+    import createBusinessRegistrationFilter from "/custom/filterBusinessRegistration.js";
+    import { SortType } from "/custom/Enum.js";
+    import { EnumService } from "/custom/EnumService.js";
+
+    const jwt = null;
+    const enumService = new EnumService("http://localhost:5172", jwt);
+    const businessRegistrationService = new BaseService(
+        "http://localhost:5172/api/BusinessRegistration",
+        jwt
+    );
+
+    const appShopRequest = {
+        filter: new createBusinessRegistrationFilter({
+            searchTerm: "",
+            sortBy: SortType.Latest,
+            page: 1,
+            pageSize: 10,
+            businessType: -999,
+            registrationStatus: -999
+        }),
+        requestStatuses: {},
+        businessTypes: {},
+        statisticsData: {
+            total: 0,
+            pending: 0,
+            approved: 0,
+            rejected: 0
+        },
+        
+        init: function() {
+            new Promise((resolve, reject) => {
+                this.loadRequestStatuses();
+                this.loadBusinessTypes();
+                this.loadSortType();
+                this.handleFilterFunction();
+                this.handleSearchFunction();
+                this.handlePagingFunction();
+                resolve();
+            })
+            .then(() => {
+                document.getElementById("request-filter-button").click();
+                this.loadStatistics();
+            })
+            .catch((error) => {
+                console.error("Error initializing appShopRequest:", error);
+            });
+        },
+        
+        loadRequestStatuses: function() {
+            // Load trạng thái yêu cầu vào dropdown
+            const statusDropdown = document.getElementById("request-status-filter");
+            statusDropdown.innerHTML = "<option value='-999' selected>Tất cả trạng thái</option>";
+            
+            enumService.getRegistrationStatuses()
+                .then((data) => {
+                    if (data) {
+                        Object.keys(data).forEach((key) => {
+                            const option = document.createElement("option");
+                            option.value = key;
+                            option.textContent = data[key];
+                            statusDropdown.appendChild(option);
+                            this.requestStatuses[key] = data[key];
+                        });
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error retrieving registration statuses:", error);
+                    // Thêm các giá trị mặc định nếu API thất bại
+                    const defaultStatuses = [
+                        { value: "1", text: "Chờ Duyệt" },
+                        { value: "2", text: "Đã Duyệt" },
+                        { value: "3", text: "Từ Chối" }
+                    ];
+                    
+                    defaultStatuses.forEach(status => {
+                        const option = document.createElement("option");
+                        option.value = status.value;
+                        option.textContent = status.text;
+                        statusDropdown.appendChild(option);
+                        this.requestStatuses[status.value] = status.text;
+                    });
+                });
+        },
+        
+        loadBusinessTypes: function() {
+            // Load loại shop vào dropdown
+            const typeDropdown = document.getElementById("request-type-filter");
+            typeDropdown.innerHTML = "<option value='-999' selected>Tất cả loại shop</option>";
+            
+            enumService.getShopTypes()
+                .then((data) => {
+                    if (data) {
+                        Object.keys(data).forEach((key) => {
+                            const option = document.createElement("option");
+                            option.value = key;
+                            option.textContent = data[key];
+                            typeDropdown.appendChild(option);
+                            this.businessTypes[key] = data[key];
+                        });
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error retrieving business types:", error);
+                    // Thêm các giá trị mặc định nếu API thất bại
+                    const defaultTypes = [
+                        { value: "-999", text: "Không thể tải dữ liệu" },
+                    ];
+                    
+                    defaultTypes.forEach(type => {
+                        const option = document.createElement("option");
+                        option.value = type.value;
+                        option.textContent = type.text;
+                        typeDropdown.appendChild(option);
+                        this.businessTypes[type.value] = type.text;
+                    });
+                });
+        },
+        
+        loadSortType: function() {
+            // Không cần load sort type vì đã xóa modal
+        },
+        
+        loadStatistics: function() {
+            
+        },
+        
+        handleFilterFunction() {
+            const filterButton = document.getElementById("request-filter-button");
+            let _this = this;
+            
+            filterButton.addEventListener("click", function() {
+                _this.applyFilter();
+            });
+        },
+        
+        applyFilter: function() {
+            let _this = this;
+            const statusValue = document.getElementById("request-status-filter").value;
+            const typeValue = document.getElementById("request-type-filter").value;
+            const searchValue = document.getElementById("request-search-input").value;
+            
+            // Cập nhật filter từ form chính
+            if (statusValue && statusValue !== "-999") {
+                _this.filter.registrationStatus = parseInt(statusValue);
+            } else {
+                _this.filter.registrationStatus = -999;
+            }
+            
+            if (typeValue && typeValue !== "-999") {
+                _this.filter.businessType = parseInt(typeValue);
+            } else {
+                _this.filter.businessType = -999;
+            }
+            
+            _this.filter.searchTerm = searchValue;
+            
+            // Gọi API để lấy danh sách yêu cầu theo bộ lọc
+            businessRegistrationService.find(_this.filter)
+                .then((data) => {
+                    console.log("Request data:", data);
+                    if (data && data.success) {
+                        const items = data.data || [];
+                        _this.reloadTable(items);
+                        
+                        // Cập nhật phân trang
+                        const start = (_this.filter.page - 1) * _this.filter.pageSize + 1;
+                        const end = start + items.length - 1;
+                        const totalCount = data.totalCount || 0;
+                        
+                        document.getElementById("request-paging-count").textContent = 
+                            `Hiển thị ${start} - ${end}/${totalCount} yêu cầu`;
+                        
+                        // Cập nhật danh sách phân trang
+                        const pagingList = document.getElementById("request-paging-list");
+                        pagingList.innerHTML = `
+                            <li class="page-item" id="request-btn-prev">
+                                <a href="#" class="page-link"><i class="bx bx-chevron-left"></i></a>
+                            </li>`;
+                        
+                        const totalPages = Math.ceil(totalCount / _this.filter.pageSize);
+                        
+                        for (let i = 1; i <= totalPages; i++) {
+                            const li = document.createElement("li");
+                            li.classList.add("page-item");
+                            
+                            if (i === _this.filter.page) {
+                                li.classList.add("active");
+                            }
+                            
+                            li.addEventListener("click", () => {
+                                _this.filter.page = i;
+                                _this.applyFilter();
+                            });
+                            
+                            const a = document.createElement("a");
+                            a.classList.add("page-link");
+                            a.textContent = i;
+                            a.href = "#";
+                            
+                            li.appendChild(a);
+                            pagingList.appendChild(li);
+                        }
+                        
+                        pagingList.innerHTML += `
+                            <li class="page-item" id="request-btn-next">
+                                <a href="#" class="page-link"><i class="bx bx-chevron-right"></i></a>
+                            </li>`;
+                        
+                        // Vô hiệu hóa nút Prev nếu đang ở trang đầu tiên
+                        if (_this.filter.page === 1) {
+                            document.getElementById("request-btn-prev").classList.add("disabled");
+                        }
+                        
+                        // Vô hiệu hóa nút Next nếu đang ở trang cuối cùng
+                        if (_this.filter.page === totalPages) {
+                            document.getElementById("request-btn-next").classList.add("disabled");
+                        }
+                    } else {
+                        // Hiển thị thông báo lỗi
+                        document.getElementById("request-table-body").innerHTML = `
+                            <tr>
+                                <td colspan="6" class="text-center text-danger">
+                                    Không thể tải dữ liệu yêu cầu. Vui lòng thử lại sau.
+                                </td>
+                            </tr>`;
+                        
+                        document.getElementById("request-paging-count").textContent = "Không có dữ liệu";
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error retrieving business registrations:", error);
+                    document.getElementById("request-table-body").innerHTML = `
+                        <tr>
+                            <td colspan="6" class="text-center text-danger">
+                                Đã xảy ra lỗi khi tải dữ liệu. Vui lòng thử lại sau.
+                            </td>
+                        </tr>`;
+                    
+                    document.getElementById("request-paging-count").textContent = "Đã xảy ra lỗi";
+                });
+        },
+        
+        reloadTable(items) {
+            const tableBody = document.getElementById("request-table-body");
+            tableBody.innerHTML = "";
+            
+            if (!items || items.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="text-center">
+                            Không tìm thấy yêu cầu nào phù hợp với điều kiện tìm kiếm.
+                        </td>
+                    </tr>`;
+                return;
+            }
+            console.log(this.requestStatuses);
+            console.log(this.businessTypes);
+            items.forEach((request) => {
+                // Tạo một hàng mới cho mỗi yêu cầu
+                const row = document.createElement("tr");
+                
+                // Định dạng trạng thái yêu cầu
+                let statusClass = "";
+                let statusText = this.requestStatuses[request.registrationStatus] || "Không xác định";
+                
+                switch(parseInt(request.registrationStatus)) {
+                    case 4: // Chờ Duyệt
+                        statusClass = "bg-warning";
+                        break;
+                    case 1: // Đã Duyệt
+                        statusClass = "bg-success";
+                        break;
+                    case 2: // Từ Chối
+                        statusClass = "bg-danger";
+                        break;
+                    case 3: // Yêu cầu bổ sung / cập nhật
+                        statusClass = "bg-info";
+                        break;
+                    default:
+                        statusClass = "bg-secondary";
+                }
+                
+                // Lấy thông tin về yêu cầu
+                let requestCode = request.code || `#${request.id}`;
+                let shopName = request.businessName || 'Không có thông tin tên shop';
+                let ownerName = request.user?.fullName || 'Không có thông tin chủ sở hữu';
+                let requestDate = new Date(request.createdAt).toLocaleDateString('vi-VN');
+                let businessType = this.businessTypes[request.businessType] || 'Không xác định';
+                let ownerAvatar = request.user?.ImageUrl || '/custom/default.jpg';
+                
+                // Tạo nội dung hàng
+                row.innerHTML = `
+                    <td>${requestCode}</td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0 me-3">
+                                <img src="${ownerAvatar}" alt="" class="avatar-sm rounded" onerror="this.src='/custom/default.jpg'">
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="mb-1">${shopName}</h6>
+                                <p class="text-muted mb-0">${ownerName}</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td>${businessType}</td>
+                    <td>${requestDate}</td>
+                    <td><span class="badge ${statusClass}">${statusText}</span></td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <i class="bx bx-dots-horizontal-rounded"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="/Admin/ShopRequestDetail?id=${request.id}"><i class="bx bx-detail me-1"></i>Chi Tiết</a></li>
+                                ${request.status === 1 ? `
+                                ` : ''}
+                            </ul>
+                        </div>
+                    </td>
+                `;
+                
+                // Thêm hàng vào bảng
+                tableBody.appendChild(row);
+            });
+            
+            // Thêm event listeners cho các nút trong bảng
+            this.addTableEventListeners();
+        },
+        
+        addTableEventListeners() {
+            let _this = this;
+            
+            // Event listener cho nút duyệt yêu cầu
+            document.querySelectorAll('.approve-request').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const requestId = button.getAttribute('data-id');
+                    
+                    if (confirm('Bạn có chắc chắn muốn duyệt yêu cầu này?')) {
+                        businessRegistrationService.update(requestId, { status: 2 })
+                            .then(response => {
+                                if (response.success) {
+                                    alert('Duyệt yêu cầu thành công!');
+                                    _this.applyFilter();
+                                    _this.loadStatistics();
+                                } else {
+                                    alert('Duyệt yêu cầu thất bại: ' + response.message);
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Lỗi khi duyệt yêu cầu:', error);
+                                alert('Đã xảy ra lỗi khi duyệt yêu cầu. Vui lòng thử lại.');
+                            });
+                    }
+                });
+            });
+            
+            // Event listener cho nút từ chối yêu cầu
+            document.querySelectorAll('.reject-request').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const requestId = button.getAttribute('data-id');
+                    
+                    if (confirm('Bạn có chắc chắn muốn từ chối yêu cầu này?')) {
+                        businessRegistrationService.update(requestId, { status: 3 })
+                            .then(response => {
+                                if (response.success) {
+                                    alert('Từ chối yêu cầu thành công!');
+                                    _this.applyFilter();
+                                    _this.loadStatistics();
+                                } else {
+                                    alert('Từ chối yêu cầu thất bại: ' + response.message);
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Lỗi khi từ chối yêu cầu:', error);
+                                alert('Đã xảy ra lỗi khi từ chối yêu cầu. Vui lòng thử lại.');
+                            });
+                    }
+                });
+            });
+        },
+        
+        handleSearchFunction() {
+            const _this = this;
+            
+            // Sự kiện khi nhập vào ô tìm kiếm
+            document.getElementById("request-search-input").addEventListener("input", function() {
+                _this.filter.searchTerm = this.value;
+            });
+            
+            // Sự kiện khi nhấn Enter trong ô tìm kiếm
+            document.getElementById("request-search-input").addEventListener("keypress", (e) => {
+                if (e.key === "Enter") {
+                    _this.filter.page = 1; // Reset về trang 1
+                    _this.applyFilter();
+                    e.preventDefault();
+                }
+            });
+            
+            // Sự kiện khi thay đổi dropdown trạng thái
+            document.getElementById("request-status-filter").addEventListener("change", function() {
+                _this.filter.registrationStatus = this.value !== "-999" ? parseInt(this.value) : -999;
+                _this.filter.page = 1; // Reset về trang 1
+                _this.applyFilter();
+            });
+            
+            // Sự kiện khi thay đổi dropdown loại shop
+            document.getElementById("request-type-filter").addEventListener("change", function() {
+                _this.filter.businessType = this.value !== "-999" ? parseInt(this.value) : -999;
+                _this.filter.page = 1; // Reset về trang 1
+                _this.applyFilter();
+            });
+        },
+        
+        handlePagingFunction() {
+            const _this = this;
+            
+            // Sự kiện cho nút Previous
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('#request-btn-prev') && !e.target.closest('#request-btn-prev').classList.contains('disabled')) {
+                    e.preventDefault();
+                    if (_this.filter.page > 1) {
+                        _this.filter.page--;
+                        _this.applyFilter();
+                    }
+                }
+            });
+            
+            // Sự kiện cho nút Next
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('#request-btn-next') && !e.target.closest('#request-btn-next').classList.contains('disabled')) {
+                    e.preventDefault();
+                    _this.filter.page++;
+                    _this.applyFilter();
+                }
+            });
+        }
+    };
+
+    // Khởi động ứng dụng
+    appShopRequest.init();
+ </script>

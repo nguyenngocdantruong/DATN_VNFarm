@@ -1,7 +1,7 @@
-using VNFarm_FinalFinal.DTOs.Response;
-using VNFarm_FinalFinal.DTOs.Filters;
+using VNFarm.DTOs.Filters;
+using VNFarm.DTOs.Response;
 
-namespace VNFarm_FinalFinal.ViewModels.Common
+namespace VNFarm.ViewModels.Common
 {
     public class ChatRoomViewModel
     {

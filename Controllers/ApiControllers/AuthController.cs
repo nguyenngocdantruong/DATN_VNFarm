@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using VNFarm_FinalFinal.DTOs.Request;
-using VNFarm_FinalFinal.Interfaces.Services;
+using VNFarm.DTOs.Request;
+using VNFarm.Interfaces.Services;
 
-namespace VNFarm_FinalFinal.Controllers.ApiControllers
+namespace VNFarm.Controllers.ApiControllers
 {
     [ApiController]
     [Route("api/[controller]")]

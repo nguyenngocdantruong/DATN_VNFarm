@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace VNFarm_FinalFinal.DTOs.Request
+namespace VNFarm.DTOs.Request
 {
     public class UserRequestDTO : BaseRequestDTO
     {   

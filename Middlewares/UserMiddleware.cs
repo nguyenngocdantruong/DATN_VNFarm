@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using System.Security.Claims;
 
-namespace VNFarm_FinalFinal.Middlewares
+namespace VNFarm.Middlewares
 {
     public class UserMiddleware
     {

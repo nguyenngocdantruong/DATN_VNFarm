@@ -1,7 +1,7 @@
-using VNFarm_FinalFinal.Entities;
-using VNFarm_FinalFinal.Enums;
+using VNFarm.Entities;
+using VNFarm.Enums;
 
-namespace VNFarm_FinalFinal.Interfaces.Repositories
+namespace VNFarm.Interfaces.Repositories
 {
     public interface IDiscountRepository : IRepository<Discount>
     {

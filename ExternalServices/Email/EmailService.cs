@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
-using VNFarm_FinalFinal.Interfaces.External;
+using VNFarm.Interfaces.External;
 
-namespace VNFarm.Infrastructure.External.Email
+namespace VNFarm.ExternalServices.Email
 {
     public class EmailService : IEmailService
     {

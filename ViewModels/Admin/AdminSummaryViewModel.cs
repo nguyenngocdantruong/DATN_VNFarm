@@ -1,7 +1,7 @@
-using VNFarm_FinalFinal.DTOs.Response;
-using VNFarm_FinalFinal.DTOs.Filters;
+using VNFarm.DTOs.Filters;
+using VNFarm.DTOs.Response;
 
-namespace VNFarm_FinalFinal.ViewModels.Admin
+namespace VNFarm.ViewModels.Admin
 {
     public class AdminSummaryViewModel
     {

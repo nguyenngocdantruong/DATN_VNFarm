@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
-using VNFarm_FinalFinal.Enums;
 using System.Text.Json.Serialization;
+using VNFarm.Enums;
 
-namespace VNFarm_FinalFinal.DTOs.Response
+namespace VNFarm.DTOs.Response
 {
     public class BusinessRegistrationResponseDTO : BaseResponseDTO
     {

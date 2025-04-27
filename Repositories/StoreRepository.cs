@@ -3,13 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using VNFarm_FinalFinal.Entities;
-using VNFarm_FinalFinal.Interfaces.Repositories;
-using VNFarm.Infrastructure.Persistence.Context;
-using VNFarm_FinalFinal.Enums;
-using VNFarm_FinalFinal.Helpers;
+using VNFarm.Data;
+using VNFarm.Entities;
+using VNFarm.Interfaces.Repositories;
+using VNFarm.Enums;
+using VNFarm.Helpers;
 
-namespace VNFarm.Infrastructure.Repositories
+namespace VNFarm.Repositories
 {
     public class StoreRepository : BaseRepository<Store>, IStoreRepository
     {

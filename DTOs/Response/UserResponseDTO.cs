@@ -1,7 +1,7 @@
 using System.Transactions;
-using VNFarm_FinalFinal.Enums;
+using VNFarm.Enums;
 
-namespace VNFarm_FinalFinal.DTOs.Response
+namespace VNFarm.DTOs.Response
 {
     public class UserResponseDTO : BaseResponseDTO
     {   

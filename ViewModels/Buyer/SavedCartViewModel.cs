@@ -1,7 +1,7 @@
-using VNFarm_FinalFinal.DTOs.Response;
-using VNFarm_FinalFinal.Enums;
+using VNFarm.DTOs.Response;
+using VNFarm.Enums;
 
-namespace VNFarm_FinalFinal.ViewModels.Buyer
+namespace VNFarm.ViewModels.Buyer
 {
     public class SavedCartViewModel
     {

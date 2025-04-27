@@ -1,7 +1,7 @@
 using System;
-using VNFarm_FinalFinal.Enums;
+using VNFarm.Enums;
 
-namespace VNFarm_FinalFinal.DTOs.Filters
+namespace VNFarm.DTOs.Filters
 {
     public class OrderCriteriaFilter : BaseFilterCriteria
     {

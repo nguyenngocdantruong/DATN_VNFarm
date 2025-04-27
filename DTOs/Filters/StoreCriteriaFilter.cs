@@ -1,7 +1,7 @@
-using VNFarm_FinalFinal.DTOs.Filters;
-using VNFarm_FinalFinal.Enums;
+using VNFarm.DTOs.Filters;
+using VNFarm.Enums;
 
-namespace VNFarm_FinalFinal.DTOs.Filters
+namespace VNFarm.DTOs.Filters
 {
     public class StoreCriteriaFilter : BaseFilterCriteria
     {

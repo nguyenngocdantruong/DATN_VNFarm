@@ -5,649 +5,838 @@
 }
 
 <div class="page-content">
-    <!-- Start Container Fluid -->
-    <div class="container-xxl">
-        <div class="row">
-            <div class="col-md-6 col-xl-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div>
-                                <h4 class="card-title mb-2">Hoàn Tiền</h4>
-                                <p class="text-muted fw-medium fs-22 mb-0">490</p>
-                            </div>
-                            <div>
-                                <div class="avatar-md bg-primary bg-opacity-10 rounded">
-                                    <iconify-icon icon="solar:chat-round-money-broken"
-                                        class="fs-32 text-primary avatar-title"></iconify-icon>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-xl-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div>
-                                <h4 class="card-title mb-2">Đơn Hủy</h4>
-                                <p class="text-muted fw-medium fs-22 mb-0">241</p>
-                            </div>
-                            <div>
-                                <div class="avatar-md bg-primary bg-opacity-10 rounded">
-                                    <iconify-icon icon="solar:cart-cross-broken"
-                                        class="fs-32 text-primary avatar-title"></iconify-icon>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <!-- Start Container Fluid -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="card">
+          <div
+            class="card-header d-flex justify-content-between align-items-center gap-1"
+          >
+            <h4 class="card-title flex-grow-1">Danh Sách Sản Phẩm Nông Sản</h4>
 
-            <div class="col-md-6 col-xl-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div>
-                                <h4 class="card-title mb-2">Đã Đóng Gói</h4>
-                                <p class="text-muted fw-medium fs-22 mb-0">630</p>
-                            </div>
-                            <div>
-                                <div class="avatar-md bg-primary bg-opacity-10 rounded">
-                                    <iconify-icon icon="solar:box-broken"
-                                        class="fs-32 text-primary avatar-title"></iconify-icon>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <a href="product-add.html" class="btn btn-sm btn-primary">
+              <i class="bx bx-plus me-1"></i>Thêm Sản Phẩm
+            </a>
+          </div>
+          <div class="card-body">
+            <!-- Thêm bộ tìm kiếm và lọc -->
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Tìm kiếm sản phẩm..."
+                    id="product-search-input"
+                  />
+                  <button class="btn btn-primary" type="button" id="product-search-button">
+                    <i class="bx bx-search"></i>
+                  </button>
                 </div>
+              </div>
+              <div class="col-md-6 text-end">
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary me-1"
+                  data-bs-toggle="modal"
+                  data-bs-target="#filterModal"
+                >
+                  <i class="bx bx-filter-alt me-1"></i> Lọc
+                </button>
+                <button type="button" class="btn btn-outline-danger me-1" id="reset-filter-button">
+                  <i class="bx bx-reset me-1"></i> Reset
+                </button>
+              </div>
             </div>
-
-            <div class="col-md-6 col-xl-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div>
-                                <h4 class="card-title mb-2">Đang Giao</h4>
-                                <p class="text-muted fw-medium fs-22 mb-0">170</p>
-                            </div>
-                            <div>
-                                <div class="avatar-md bg-primary bg-opacity-10 rounded">
-                                    <iconify-icon icon="solar:tram-broken"
-                                        class="fs-32 text-primary avatar-title"></iconify-icon>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="table-responsive">
+              <table class="table align-middle mb-0 table-hover table-centered">
+                <thead class="bg-light-subtle">
+                  <tr>
+                    <th style="width: 20px">
+                      <div class="form-check ms-1">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="select-all-checkbox"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="customCheck1"
+                        ></label>
+                      </div>
+                    </th>
+                    <th>Tên Sản Phẩm & Thông Tin</th>
+                    <th>Giá</th>
+                    <th>Tồn Kho</th>
+                    <th>Danh Mục</th>
+                    <th>Đánh Giá</th>
+                    <th>Thao Tác</th>
+                  </tr>
+                </thead>
+                <tbody id="product-table-body">
+                  <!-- JavaScript sẽ tạo ra các dòng dữ liệu tại đây -->
+                </tbody>
+              </table>
             </div>
-
-            <div class="col-md-6 col-xl-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div>
-                                <h4 class="card-title mb-2">Chờ Đánh Giá</h4>
-                                <p class="text-muted fw-medium fs-22 mb-0">210</p>
-                            </div>
-                            <div>
-                                <div class="avatar-md bg-primary bg-opacity-10 rounded">
-                                    <iconify-icon icon="solar:clipboard-remove-broken"
-                                        class="fs-32 text-primary avatar-title"></iconify-icon>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-xl-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div>
-                                <h4 class="card-title mb-2">Chờ Thanh Toán</h4>
-                                <p class="text-muted fw-medium fs-22 mb-0">608</p>
-                            </div>
-                            <div>
-                                <div class="avatar-md bg-primary bg-opacity-10 rounded">
-                                    <iconify-icon icon="solar:clock-circle-broken"
-                                        class="fs-32 text-primary avatar-title"></iconify-icon>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-xl-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div>
-                                <h4 class="card-title mb-2">Đã Giao</h4>
-                                <p class="text-muted fw-medium fs-22 mb-0">200</p>
-                            </div>
-                            <div>
-                                <div class="avatar-md bg-primary bg-opacity-10 rounded">
-                                    <iconify-icon icon="solar:clipboard-check-broken"
-                                        class="fs-32 text-primary avatar-title"></iconify-icon>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-xl-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div>
-                                <h4 class="card-title mb-2">Đang Xử Lý</h4>
-                                <p class="text-muted fw-medium fs-22 mb-0">656</p>
-                            </div>
-                            <div>
-                                <div class="avatar-md bg-primary bg-opacity-10 rounded">
-                                    <iconify-icon icon="solar:inbox-line-broken"
-                                        class="fs-32 text-primary avatar-title"></iconify-icon>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- end table-responsive -->
+          </div>
+          <div class="card-footer border-top">
+            <div id="paging-count"></div>
+            <nav aria-label="Page navigation example">
+              <ul class="pagination justify-content-end mb-0" id="paging-list">
+                <li class="page-item">
+                  <a class="page-link" href="javascript:void(0);" id="btn-prev">Trước</a>
+                </li>
+                <li class="page-item active">
+                  <a class="page-link" href="javascript:void(0);">1</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="javascript:void(0);">2</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="javascript:void(0);">3</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="javascript:void(0);" id="btn-next">Sau</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
         </div>
-
-        <div class="row">
-            <div class="col-xl-12">
-                <div class="card">
-                    <div class="d-flex card-header justify-content-between align-items-center">
-                        <div>
-                            <h4 class="card-title">Danh Sách Đơn Hàng</h4>
-                        </div>
-                        <div>
-                            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#filterModal">
-                                <i class="bx bx-filter-alt me-1"></i> Lọc
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-body pb-0">
-                        <!-- Thanh tìm kiếm -->
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <div class="input-group">
-                                    <input type="text" class="form-control"
-                                        placeholder="Tìm kiếm theo mã đơn, tên khách hàng...">
-                                    <button class="btn btn-primary" type="button">
-                                        <i class="bx bx-search"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="col-md-6 text-end">
-                                <button type="button" class="btn btn-outline-danger">
-                                    <i class="bx bx-reset me-1"></i> Reset Bộ Lọc
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Hiển thị bộ lọc đang áp dụng -->
-                        <div class="mb-3 applied-filters" id="appliedFilters">
-                            <div class="d-inline-block me-2 mb-1">
-                                <span class="badge bg-light text-dark p-2">
-                                    Trạng thái: Hoàn Thành
-                                    <a href="#" class="text-danger ms-1"><i class="bx bx-x"></i></a>
-                                </span>
-                            </div>
-                            <div class="d-inline-block me-2 mb-1">
-                                <span class="badge bg-light text-dark p-2">
-                                    Thanh toán: Đã Thanh Toán
-                                    <a href="#" class="text-danger ms-1"><i class="bx bx-x"></i></a>
-                                </span>
-                            </div>
-                            <div class="d-inline-block me-2 mb-1">
-                                <span class="badge bg-light text-dark p-2">
-                                    Ngày: 01/03/2024 - 25/04/2024
-                                    <a href="#" class="text-danger ms-1"><i class="bx bx-x"></i></a>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <table class="table align-middle mb-0 table-hover table-centered">
-                                <thead class="bg-light-subtle">
-                                    <tr>
-                                        <th>Mã Đơn</th>
-                                        <th>Ngày Tạo</th>
-                                        <th>Khách Hàng</th>
-                                        <th>Độ Ưu Tiên</th>
-                                        <th>Tổng Tiền</th>
-                                        <th>Trạng Thái Thanh Toán</th>
-                                        <th>Số Sản Phẩm</th>
-                                        <th>Mã Vận Chuyển</th>
-                                        <th>Trạng Thái Đơn</th>
-                                        <th>Thao Tác</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            #583488/80
-                                        </td>
-                                        <td>23/04/2024</td>
-                                        <td>
-                                            <a href="#!" class="link-primary fw-medium">Nguyễn Văn A</a>
-                                        </td>
-                                        <td>Bình Thường</td>
-                                        <td>1.230.000đ</td>
-                                        <td><span class="badge bg-light text-dark px-2 py-1 fs-13">Chưa Thanh
-                                                Toán</span></td>
-                                        <td>4</td>
-                                        <td>-</td>
-                                        <td><span
-                                                class="badge border border-secondary text-secondary px-2 py-1 fs-13">Nháp</span>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex gap-2">
-                                                <a href="#!" class="btn btn-light btn-sm"><iconify-icon
-                                                        icon="solar:eye-broken"
-                                                        class="align-middle fs-18"></iconify-icon></a>
-                                                <a href="#!" class="btn btn-soft-primary btn-sm"><iconify-icon
-                                                        icon="solar:pen-2-broken"
-                                                        class="align-middle fs-18"></iconify-icon></a>
-                                                <a href="#!" class="btn btn-soft-danger btn-sm"><iconify-icon
-                                                        icon="solar:trash-bin-minimalistic-2-broken"
-                                                        class="align-middle fs-18"></iconify-icon></a>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            #456754/80
-                                        </td>
-                                        <td>20/04/2024</td>
-                                        <td>
-                                            <a href="#!" class="link-primary fw-medium">Trần Thị B</a>
-                                        </td>
-                                        <td>Bình Thường</td>
-                                        <td>987.000đ</td>
-                                        <td><span class="badge bg-success text-light px-2 py-1 fs-13">Đã Thanh
-                                                Toán</span></td>
-                                        <td>2</td>
-                                        <td>-</td>
-                                        <td><span class="badge border border-warning text-warning px-2 py-1 fs-13">Đang
-                                                Đóng Gói</span></td>
-                                        <td>
-                                            <div class="d-flex gap-2">
-                                                <a href="#!" class="btn btn-light btn-sm"><iconify-icon
-                                                        icon="solar:eye-broken"
-                                                        class="align-middle fs-18"></iconify-icon></a>
-                                                <a href="#!" class="btn btn-soft-primary btn-sm"><iconify-icon
-                                                        icon="solar:pen-2-broken"
-                                                        class="align-middle fs-18"></iconify-icon></a>
-                                                <a href="#!" class="btn btn-soft-danger btn-sm"><iconify-icon
-                                                        icon="solar:trash-bin-minimalistic-2-broken"
-                                                        class="align-middle fs-18"></iconify-icon></a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            #578246/80
-                                        </td>
-                                        <td>19/04/2024</td>
-                                        <td>
-                                            <a href="#!" class="link-primary fw-medium">Lê Văn C</a>
-                                        </td>
-                                        <td>Cao</td>
-                                        <td>1.478.000đ</td>
-                                        <td><span class="badge bg-success text-light px-2 py-1 fs-13">Đã Thanh
-                                                Toán</span></td>
-                                        <td>5</td>
-                                        <td>#D-57837678</td>
-                                        <td><span class="badge border border-success text-success px-2 py-1 fs-13">Hoàn
-                                                Thành</span></td>
-                                        <td>
-                                            <div class="d-flex gap-2">
-                                                <a href="#!" class="btn btn-light btn-sm"><iconify-icon
-                                                        icon="solar:eye-broken"
-                                                        class="align-middle fs-18"></iconify-icon></a>
-                                                <a href="#!" class="btn btn-soft-primary btn-sm"><iconify-icon
-                                                        icon="solar:pen-2-broken"
-                                                        class="align-middle fs-18"></iconify-icon></a>
-                                                <a href="#!" class="btn btn-soft-danger btn-sm"><iconify-icon
-                                                        icon="solar:trash-bin-minimalistic-2-broken"
-                                                        class="align-middle fs-18"></iconify-icon></a>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            #348930/80
-                                        </td>
-                                        <td>04/04/2024</td>
-                                        <td>
-                                            <a href="#!" class="link-primary fw-medium">Phạm Thị D</a>
-                                        </td>
-                                        <td>Bình Thường</td>
-                                        <td>720.000đ</td>
-                                        <td><span class="badge bg-light text-dark px-2 py-1 fs-13">Hoàn Tiền</span></td>
-                                        <td>4</td>
-                                        <td>-</td>
-                                        <td><span class="badge border border-danger text-danger px-2 py-1 fs-13">Đã
-                                                Hủy</span></td>
-                                        <td>
-                                            <div class="d-flex gap-2">
-                                                <a href="#!" class="btn btn-light btn-sm"><iconify-icon
-                                                        icon="solar:eye-broken"
-                                                        class="align-middle fs-18"></iconify-icon></a>
-                                                <a href="#!" class="btn btn-soft-primary btn-sm"><iconify-icon
-                                                        icon="solar:pen-2-broken"
-                                                        class="align-middle fs-18"></iconify-icon></a>
-                                                <a href="#!" class="btn btn-soft-danger btn-sm"><iconify-icon
-                                                        icon="solar:trash-bin-minimalistic-2-broken"
-                                                        class="align-middle fs-18"></iconify-icon></a>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-
-                                    <tr>
-                                        <td>
-                                            #391367/80
-                                        </td>
-                                        <td>02/04/2024</td>
-                                        <td>
-                                            <a href="#!" class="link-primary fw-medium">Vũ Văn E</a>
-                                        </td>
-                                        <td>Bình Thường</td>
-                                        <td>1.909.000đ</td>
-                                        <td><span class="badge bg-success text-light px-2 py-1 fs-13">Đã Thanh
-                                                Toán</span></td>
-                                        <td>6</td>
-                                        <td>#D-89734235</td>
-                                        <td><span class="badge border border-success text-success px-2 py-1 fs-13">Hoàn
-                                                Thành</span></td>
-                                        <td>
-                                            <div class="d-flex gap-2">
-                                                <a href="#!" class="btn btn-light btn-sm"><iconify-icon
-                                                        icon="solar:eye-broken"
-                                                        class="align-middle fs-18"></iconify-icon></a>
-                                                <a href="#!" class="btn btn-soft-primary btn-sm"><iconify-icon
-                                                        icon="solar:pen-2-broken"
-                                                        class="align-middle fs-18"></iconify-icon></a>
-                                                <a href="#!" class="btn btn-soft-danger btn-sm"><iconify-icon
-                                                        icon="solar:trash-bin-minimalistic-2-broken"
-                                                        class="align-middle fs-18"></iconify-icon></a>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-
-                                    <tr>
-                                        <td>
-                                            #930447/80
-                                        </td>
-                                        <td>28/03/2024</td>
-                                        <td>
-                                            <a href="#!" class="link-primary fw-medium">Hoàng Thị F</a>
-                                        </td>
-                                        <td>Cao</td>
-                                        <td>879.000đ</td>
-                                        <td><span class="badge bg-success text-light px-2 py-1 fs-13">Đã Thanh
-                                                Toán</span></td>
-                                        <td>4</td>
-                                        <td>#D-35227268</td>
-                                        <td><span class="badge border border-success text-success px-2 py-1 fs-13">Hoàn
-                                                Thành</span></td>
-                                        <td>
-                                            <div class="d-flex gap-2">
-                                                <a href="#!" class="btn btn-light btn-sm"><iconify-icon
-                                                        icon="solar:eye-broken"
-                                                        class="align-middle fs-18"></iconify-icon></a>
-                                                <a href="#!" class="btn btn-soft-primary btn-sm"><iconify-icon
-                                                        icon="solar:pen-2-broken"
-                                                        class="align-middle fs-18"></iconify-icon></a>
-                                                <a href="#!" class="btn btn-soft-danger btn-sm"><iconify-icon
-                                                        icon="solar:trash-bin-minimalistic-2-broken"
-                                                        class="align-middle fs-18"></iconify-icon></a>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            #462397/80
-                                        </td>
-                                        <td>20/03/2024</td>
-                                        <td>
-                                            <a href="#!" class="link-primary fw-medium">Đỗ Văn G</a>
-                                        </td>
-                                        <td>Cao</td>
-                                        <td>1.230.000đ</td>
-                                        <td><span class="badge bg-light text-dark px-2 py-1 fs-13">Hoàn Tiền</span></td>
-                                        <td>2</td>
-                                        <td>-</td>
-                                        <td><span class="badge border border-danger text-danger px-2 py-1 fs-13">Đã
-                                                Hủy</span></td>
-                                        <td>
-                                            <div class="d-flex gap-2">
-                                                <a href="#!" class="btn btn-light btn-sm"><iconify-icon
-                                                        icon="solar:eye-broken"
-                                                        class="align-middle fs-18"></iconify-icon></a>
-                                                <a href="#!" class="btn btn-soft-primary btn-sm"><iconify-icon
-                                                        icon="solar:pen-2-broken"
-                                                        class="align-middle fs-18"></iconify-icon></a>
-                                                <a href="#!" class="btn btn-soft-danger btn-sm"><iconify-icon
-                                                        icon="solar:trash-bin-minimalistic-2-broken"
-                                                        class="align-middle fs-18"></iconify-icon></a>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            #472356/80
-                                        </td>
-                                        <td>12/03/2024</td>
-                                        <td>
-                                            <a href="#!" class="link-primary fw-medium">Lý Thị H</a>
-                                        </td>
-                                        <td>Bình Thường</td>
-                                        <td>1.264.000đ</td>
-                                        <td><span class="badge bg-success text-light px-2 py-1 fs-13">Đã Thanh
-                                                Toán</span></td>
-                                        <td>3</td>
-                                        <td>#D-74922656</td>
-                                        <td><span class="badge border border-success text-success px-2 py-1 fs-13">Hoàn
-                                                Thành</span></td>
-                                        <td>
-                                            <div class="d-flex gap-2">
-                                                <a href="#!" class="btn btn-light btn-sm"><iconify-icon
-                                                        icon="solar:eye-broken"
-                                                        class="align-middle fs-18"></iconify-icon></a>
-                                                <a href="#!" class="btn btn-soft-primary btn-sm"><iconify-icon
-                                                        icon="solar:pen-2-broken"
-                                                        class="align-middle fs-18"></iconify-icon></a>
-                                                <a href="#!" class="btn btn-soft-danger btn-sm"><iconify-icon
-                                                        icon="solar:trash-bin-minimalistic-2-broken"
-                                                        class="align-middle fs-18"></iconify-icon></a>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            #448226/80
-                                        </td>
-                                        <td>02/03/2024</td>
-                                        <td>
-                                            <a href="#!" class="link-primary fw-medium">Mai Văn I</a>
-                                        </td>
-                                        <td>Cao</td>
-                                        <td>1.787.000đ</td>
-                                        <td><span class="badge bg-success text-light px-2 py-1 fs-13">Đã Thanh
-                                                Toán</span></td>
-                                        <td>4</td>
-                                        <td>-</td>
-                                        <td><span class="badge border border-warning text-warning px-2 py-1 fs-13">Đang
-                                                Đóng Gói</span></td>
-                                        <td>
-                                            <div class="d-flex gap-2">
-                                                <a href="#!" class="btn btn-light btn-sm"><iconify-icon
-                                                        icon="solar:eye-broken"
-                                                        class="align-middle fs-18"></iconify-icon></a>
-                                                <a href="#!" class="btn btn-soft-primary btn-sm"><iconify-icon
-                                                        icon="solar:pen-2-broken"
-                                                        class="align-middle fs-18"></iconify-icon></a>
-                                                <a href="#!" class="btn btn-soft-danger btn-sm"><iconify-icon
-                                                        icon="solar:trash-bin-minimalistic-2-broken"
-                                                        class="align-middle fs-18"></iconify-icon></a>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- end table-responsive -->
-                    </div>
-                    <div class="card-footer border-top">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-end mb-0">
-                                <li class="page-item"><a class="page-link" href="javascript:void(0);">Trước</a></li>
-                                <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a></li>
-                                <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-                                <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
-                                <li class="page-item"><a class="page-link" href="javascript:void(0);">Sau</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
+      </div>
     </div>
-    <!-- End Container Fluid -->
+  </div>
+  <!-- End Container Fluid -->
 
-    <!-- ========== Footer Start ========== -->
-    <footer class="footer">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12 text-center">
-                    &copy; VNFarm. Crafted by <iconify-icon icon="iconamoon:heart-duotone"
-                        class="fs-18 align-middle text-danger"></iconify-icon> <a href="#" class="fw-bold footer-text"
-                        target="_blank">Hệ Thống Quản Lý Nông Sản VNFarm</a>
-                </div>
-            </div>
+  <!-- ========== Footer Start ========== -->
+  <footer class="footer">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12 text-center">
+          &copy; Hệ Thống Quản Lý Nông Sản VNFarm. All rights reserved.
         </div>
-    </footer>
-    <!-- ========== Footer End ========== -->
-
+      </div>
+    </div>
+  </footer>
+  <!-- ========== Footer End ========== -->
 </div>
 
 <!-- Modal Lọc -->
-<div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="filterModalLabel">Lọc Đơn Hàng</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div
+  class="modal fade"
+  id="filterModal"
+  tabindex="-1"
+  aria-labelledby="filterModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="filterModalLabel">Lọc Sản Phẩm</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label class="form-label">Danh Mục</label>
+            <select class="form-select" id="category-filter">
+              <option value="-999">Tất cả</option>
+            </select>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Xuất Xứ</label>
+            <select class="form-select" id="origin-filter">
+              <option value="-999">Tất cả</option>
+            </select>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Giá (VNĐ)</label>
+            <div class="row">
+              <div class="col-6">
+                <input type="number" class="form-control" placeholder="Từ" id="min-price-filter" />
+              </div>
+              <div class="col-6">
+                <input type="number" class="form-control" placeholder="Đến" id="max-price-filter" />
+              </div>
             </div>
-            <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <label class="form-label">Trạng Thái Đơn Hàng</label>
-                        <select class="form-select">
-                            <option value="">Tất cả</option>
-                            <option value="draft">Nháp</option>
-                            <option value="processing">Đang Xử Lý</option>
-                            <option value="packaging">Đang Đóng Gói</option>
-                            <option value="shipping">Đang Giao</option>
-                            <option value="completed">Hoàn Thành</option>
-                            <option value="cancelled">Đã Hủy</option>
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Trạng Thái Thanh Toán</label>
-                        <select class="form-select">
-                            <option value="">Tất cả</option>
-                            <option value="paid">Đã Thanh Toán</option>
-                            <option value="unpaid">Chưa Thanh Toán</option>
-                            <option value="refunded">Hoàn Tiền</option>
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Khoảng Thời Gian</label>
-                        <div class="row">
-                            <div class="col-6">
-                                <input type="date" class="form-control" placeholder="Từ ngày">
-                            </div>
-                            <div class="col-6">
-                                <input type="date" class="form-control" placeholder="Đến ngày">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Khoảng Giá (VNĐ)</label>
-                        <div class="row">
-                            <div class="col-6">
-                                <input type="number" class="form-control" placeholder="Từ">
-                            </div>
-                            <div class="col-6">
-                                <input type="number" class="form-control" placeholder="Đến">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Độ Ưu Tiên</label>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="priorityHigh">
-                            <label class="form-check-label" for="priorityHigh">
-                                Cao
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="priorityNormal">
-                            <label class="form-check-label" for="priorityNormal">
-                                Bình Thường
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="priorityLow">
-                            <label class="form-check-label" for="priorityLow">
-                                Thấp
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Sắp Xếp Theo</label>
-                        <select class="form-select">
-                            <option value="">Mặc định</option>
-                            <option value="date_desc">Ngày tạo (Mới nhất)</option>
-                            <option value="date_asc">Ngày tạo (Cũ nhất)</option>
-                            <option value="amount_desc">Tổng tiền (Cao đến thấp)</option>
-                            <option value="amount_asc">Tổng tiền (Thấp đến cao)</option>
-                            <option value="products_desc">Số sản phẩm (Nhiều đến ít)</option>
-                            <option value="products_asc">Số sản phẩm (Ít đến nhiều)</option>
-                        </select>
-                    </div>
-                </form>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Tình Trạng Kho</label>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                id="inStock"
+                name="stock-status"
+                checked
+              />
+              <label class="form-check-label" for="inStock"> Còn hàng </label>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Hủy</button>
-                <button type="button" class="btn btn-danger me-2">Xóa Bộ Lọc</button>
-                <button type="button" class="btn btn-primary">Áp Dụng</button>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" id="outOfStock" name="stock-status" />
+              <label class="form-check-label" for="outOfStock">
+                Hết hàng
+              </label>
             </div>
-        </div>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Sắp Xếp Theo</label>
+            <select class="form-select" id="sort-by-filter">
+              <option value="0">Mặc định</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+          Hủy
+        </button>
+        <button type="button" class="btn btn-primary" id="apply-filter-button">Áp Dụng</button>
+      </div>
     </div>
+  </div>
 </div>
+
+<script type="module">
+  import { BaseService } from "/custom/BaseService.js";
+  import createFilterProduct from "/custom/filterProduct.js";
+  import { SortType } from "/custom/Enum.js";
+  import { EnumService } from "/custom/EnumService.js";
+
+  const jwt = null;
+  const enumService = new EnumService("http://localhost:5172", jwt);
+  const productService = new BaseService(
+    "http://localhost:5172/api/Product",
+    jwt
+  );
+  const categoryService = new BaseService(
+    "http://localhost:5172/api/Category",
+    jwt
+  );
+
+  const appProduct = {
+    filter: new createFilterProduct({
+      searchTerm: "",
+      sortBy: SortType.Latest,
+      page: 1,
+      pageSize: 10,
+      minPrice: 0,
+      maxPrice: 2147483647,
+      categoryId: -999,
+      origin: "",
+      isActive: null,
+      isInStock: null,
+      unit: -999,
+    }),
+    appliedFilters: {},
+    categories: [],
+    origins: [],
+    units: {},
+    init: function () {
+      this.loadCategories();
+      this.loadOrigins();
+      this.loadUnits();
+      this.loadSortType();
+      this.handleFilterFunction();
+      this.handleResetFilter();
+      this.handleApplyFilter();
+      this.handleSearchFunction();
+      this.handlePagingFunction();
+      this.handleSelectAll();
+      this.initializeFilters();
+
+      // Tải dữ liệu ban đầu
+      this.applyFilter();
+    },
+
+    initializeFilters: function () {
+      // Khởi tạo giá trị mặc định cho các bộ lọc
+      this.updateAppliedFiltersDisplay();
+    },
+
+    applyFilter: function () {
+      const _this = this;
+
+      productService
+        .find(_this.filter)
+        .then((data) => {
+          console.log("Product data:", data);
+          if (data && data.success) {
+            const items = data.data || [];
+            _this.reloadTable(items);
+
+            // Cập nhật phân trang
+            const start = (_this.filter.page - 1) * _this.filter.pageSize + 1;
+            const end = start + items.length - 1;
+            const totalCount = data.totalCount || 0;
+
+            document.getElementById(
+              "paging-count"
+            ).textContent = `Hiển thị ${start} - ${end}/${totalCount} sản phẩm`;
+
+            // Cập nhật danh sách phân trang
+            const pagingList = document.getElementById("paging-list");
+            pagingList.innerHTML = `
+              <li class="page-item" id="btn-prev">
+                <a href="#" class="page-link"><i class="bx bx-left-arrow-alt"></i></a>
+              </li>`;
+
+            const totalPages = Math.ceil(totalCount / _this.filter.pageSize);
+
+            for (let i = 1; i <= totalPages; i++) {
+              const li = document.createElement("li");
+              li.classList.add("page-item");
+
+              if (i === _this.filter.page) {
+                li.classList.add("active");
+              }
+
+              li.addEventListener("click", () => {
+                _this.filter.page = i;
+                _this.applyFilter();
+              });
+
+              const a = document.createElement("a");
+              a.classList.add("page-link");
+              a.textContent = i;
+              a.href = "#";
+
+              li.appendChild(a);
+              pagingList.appendChild(li);
+            }
+
+            pagingList.innerHTML += `
+              <li class="page-item" id="btn-next">
+                <a href="#" class="page-link"><i class="bx bx-right-arrow-alt"></i></a>
+              </li>`;
+
+            // Vô hiệu hóa nút Prev nếu đang ở trang đầu tiên
+            if (_this.filter.page === 1) {
+              document.getElementById("btn-prev").classList.add("disabled");
+            }
+
+            // Vô hiệu hóa nút Next nếu đang ở trang cuối cùng
+            if (_this.filter.page === totalPages) {
+              document.getElementById("btn-next").classList.add("disabled");
+            }
+          } else {
+            // Hiển thị thông báo lỗi
+            document.getElementById("product-table-body").innerHTML = `
+              <tr>
+                <td colspan="7" class="text-center text-danger">
+                  Không thể tải dữ liệu sản phẩm. Vui lòng thử lại sau.
+                </td>
+              </tr>`;
+
+            document.getElementById("paging-count").textContent =
+              "Không có dữ liệu";
+          }
+        })
+        .catch((error) => {
+          console.error("Error retrieving products:", error);
+          document.getElementById("product-table-body").innerHTML = `
+            <tr>
+              <td colspan="7" class="text-center text-danger">
+                Đã xảy ra lỗi khi tải dữ liệu. Vui lòng thử lại sau.
+              </td>
+            </tr>`;
+
+          document.getElementById("paging-count").textContent = "Đã xảy ra lỗi";
+        });
+    },
+
+    loadCategories: function () {
+      // Load danh mục vào dropdown
+      const categoryDropdown = document.getElementById("category-filter");
+      categoryDropdown.innerHTML =
+        "<option value='-999' selected>Tất cả</option>";
+
+      categoryService
+        .getAll()
+        .then((data) => {
+          if (data && data.success) {
+            const items = data.data || [];
+            this.categories = items;
+
+            items.forEach((item) => {
+              const option = document.createElement("option");
+              option.value = item.id;
+              option.textContent = item.name;
+              categoryDropdown.appendChild(option);
+            });
+          }
+        })
+        .catch((error) => {
+          console.error("Error retrieving categories:", error);
+        });
+    },
+
+    loadOrigins: function () {
+      // Load xuất xứ vào dropdown
+      const originDropdown = document.getElementById("origin-filter");
+      originDropdown.innerHTML = "<option value=''>Tất cả</option>";
+
+      enumService
+        .getOriginTypes()
+        .then((data) => {
+          if (data) {
+            this.origins = data;
+
+            data.forEach((origin) => {
+              const option = document.createElement("option");
+              option.value = origin;
+              option.textContent = origin;
+              originDropdown.appendChild(option);
+            });
+          }
+        })
+        .catch((error) => {
+          console.error("Error retrieving origins:", error);
+        });
+    },
+    
+    loadUnits: function () {
+      enumService.getUnitTypes().then((data) => {
+        if (data) {
+          this.units = data;
+        }
+      })
+      .catch((error) => {
+        console.error("Error retrieving units:", error);
+      });
+    },
+
+    loadSortType: function () {
+      const sortByDropdown = document.getElementById("sort-by-filter");
+      sortByDropdown.innerHTML = "";
+
+      enumService
+        .getSortTypesByEntity("Product")
+        .then((data) => {
+          if (data) {
+            Object.keys(data).forEach((key) => {
+              const option = document.createElement("option");
+              option.value = key;
+              option.textContent = data[key];
+              sortByDropdown.appendChild(option);
+            });
+          }
+        })
+        .catch((error) => {
+          console.error("Error retrieving sort types:", error);
+          // Thêm các giá trị mặc định nếu API thất bại
+          const defaultSortOptions = [
+            { value: "0", text: "Mặc định" },
+            { value: "0", text: "Không thể tải dữ liệu" },
+          ];
+
+          defaultSortOptions.forEach((option) => {
+            const optionElement = document.createElement("option");
+            optionElement.value = option.value;
+            optionElement.textContent = option.text;
+            sortByDropdown.appendChild(optionElement);
+          });
+        });
+    },
+
+    handleFilterFunction: function () {
+      // Sự kiện khi bấm nút lọc trên giao diện chính
+      const filterButton = document.querySelector(
+        "[data-bs-target='#filterModal']"
+      );
+      const _this = this;
+
+      filterButton.addEventListener("click", () => {
+        // Cập nhật các giá trị trong modal filter từ filter hiện tại
+        _this.updateFilterModal();
+      });
+    },
+
+    updateFilterModal: function () {
+      // Cập nhật giá trị trong modal từ filter hiện tại
+      const categoryDropdown = document.getElementById("category-filter");
+      const originDropdown = document.getElementById("origin-filter");
+      const minPriceInput = document.getElementById("min-price-filter");
+      const maxPriceInput = document.getElementById("max-price-filter");
+      const stockRadios = document.querySelectorAll("[name='stock-status']");
+      const sortByDropdown = document.getElementById("sort-by-filter");
+
+      // Đặt giá trị cho từng trường
+      if (this.filter.categoryId !== -999) {
+        categoryDropdown.value = this.filter.categoryId;
+      } else {
+        categoryDropdown.value = -999;
+      }
+
+      if (this.filter.origin) {
+        originDropdown.value = this.filter.origin;
+      } else {
+        originDropdown.value = "";
+      }
+
+      minPriceInput.value =
+        this.filter.minPrice > 0 ? this.filter.minPrice : "";
+      maxPriceInput.value =
+        this.filter.maxPrice < 2147483647 ? this.filter.maxPrice : "";
+
+      // Cập nhật radio buttons tồn kho
+      if (this.filter.isInStock === true) {
+        document.getElementById("inStock").checked = true;
+      } else if (this.filter.isInStock === false) {
+        document.getElementById("outOfStock").checked = true;
+      } 
+
+      // Cập nhật sort by
+      if (
+        sortByDropdown.querySelector(`option[value="${this.filter.sortBy}"]`)
+      ) {
+        sortByDropdown.value = this.filter.sortBy;
+      }
+    },
+
+    handleResetFilter: function () {
+      const resetButton = document.getElementById("reset-filter-button");
+      const _this = this;
+
+      resetButton.addEventListener("click", () => {
+        // Reset filter về giá trị mặc định
+        _this.filter = new createFilterProduct({
+          searchTerm: "",
+          sortBy: SortType.Latest,
+          page: 1,
+          pageSize: 10,
+          minPrice: 0,
+          maxPrice: 2147483647,
+          categoryId: -999,
+          origin: "",
+          isActive: null,
+          isInStock: null,
+          unit: -999,
+        });
+
+        // Reset ô tìm kiếm
+        document.getElementById("product-search-input").value = "";
+
+        // Cập nhật lại UI
+        _this.updateAppliedFiltersDisplay();
+        _this.applyFilter();
+      });
+    },
+
+    handleApplyFilter: function () {
+      const applyButton = document.getElementById("apply-filter-button");
+      const _this = this;
+
+      applyButton.addEventListener("click", () => {
+        // Lấy giá trị từ các trường trong modal
+        const categoryId = document.getElementById("category-filter").value;
+        const origin = document.getElementById("origin-filter").value;
+        const minPrice = document.getElementById("min-price-filter").value;
+        const maxPrice = document.getElementById("max-price-filter").value;
+        const isStock = document.getElementById("inStock").checked;
+        const sortBy = document.getElementById("sort-by-filter").value;
+
+        // Cập nhật filter
+        if (categoryId) {
+          _this.filter.categoryId = parseInt(categoryId);
+        }
+
+        if (origin) {
+          _this.filter.origin = origin;
+        } else {
+          _this.filter.origin = "";
+        }
+
+        if (minPrice) {
+          _this.filter.minPrice = parseInt(minPrice);
+        } else {
+          _this.filter.minPrice = 0;
+        }
+
+        if (maxPrice) {
+          _this.filter.maxPrice = parseInt(maxPrice);
+        } else {
+          _this.filter.maxPrice = 2147483647;
+        }
+        console.log(isStock)
+        if (isStock) {
+          _this.filter.isInStock = true;
+        } else {
+          _this.filter.isInStock = false;
+        }
+
+        if (sortBy) {
+          _this.filter.sortBy = parseInt(sortBy);
+        }
+
+        // Reset trang về 1
+        _this.filter.page = 1;
+
+        // Đóng modal
+        const filterModal = bootstrap.Modal.getInstance(
+          document.getElementById("filterModal")
+        );
+        filterModal.hide();
+
+        // Cập nhật hiển thị bộ lọc đã áp dụng
+        _this.updateAppliedFiltersDisplay();
+
+        // Áp dụng bộ lọc
+        _this.applyFilter();
+      });
+    },
+
+    updateAppliedFiltersDisplay: function () {
+      // Không cần code vì đã tạo static trong HTML
+    },
+
+    handleSearchFunction: function () {
+      const searchInput = document.getElementById("product-search-input");
+      const searchButton = document.getElementById("product-search-button");
+      const _this = this;
+
+      // Xử lý khi nhấn nút tìm kiếm
+      searchButton.addEventListener("click", () => {
+        _this.filter.searchTerm = searchInput.value;
+        _this.filter.page = 1; // Reset về trang 1
+        _this.updateAppliedFiltersDisplay();
+        _this.applyFilter();
+      });
+
+      // Xử lý khi nhấn Enter trong ô tìm kiếm
+      searchInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+          _this.filter.searchTerm = searchInput.value;
+          _this.filter.page = 1; // Reset về trang 1
+          _this.updateAppliedFiltersDisplay();
+          _this.applyFilter();
+          e.preventDefault();
+        }
+      });
+    },
+
+    handlePagingFunction: function () {
+      const _this = this;
+
+      // Sự kiện cho nút Previous
+      document.addEventListener("click", function (e) {
+        if (
+          e.target.closest("#btn-prev") &&
+          !e.target.closest("#btn-prev").classList.contains("disabled")
+        ) {
+          e.preventDefault();
+          if (_this.filter.page > 1) {
+            _this.filter.page--;
+            _this.applyFilter();
+          }
+        }
+      });
+
+      // Sự kiện cho nút Next
+      document.addEventListener("click", function (e) {
+        if (
+          e.target.closest("#btn-next") &&
+          !e.target.closest("#btn-next").classList.contains("disabled")
+        ) {
+          e.preventDefault();
+          _this.filter.page++;
+          _this.applyFilter();
+        }
+      });
+    },
+
+    handleSelectAll: function () {
+      const selectAllCheckbox = document.getElementById("select-all-checkbox");
+
+      selectAllCheckbox.addEventListener("change", () => {
+        const isChecked = selectAllCheckbox.checked;
+        const checkboxes = document.querySelectorAll(
+          "#product-table-body .form-check-input"
+        );
+
+        checkboxes.forEach((checkbox) => {
+          checkbox.checked = isChecked;
+        });
+      });
+    },
+
+    reloadTable: function (items) {
+      const tableBody = document.getElementById("product-table-body");
+      tableBody.innerHTML = "";
+
+      if (!items || items.length === 0) {
+        tableBody.innerHTML = `
+          <tr>
+            <td colspan="7" class="text-center">
+              Không tìm thấy sản phẩm nào phù hợp với điều kiện tìm kiếm.
+            </td>
+          </tr>`;
+        return;
+      }
+
+      items.forEach((product) => {
+        // Tạo một hàng mới cho bảng
+        const row = document.createElement("tr");
+
+        // Tạo ô checkbox
+        const checkboxCell = document.createElement("td");
+        checkboxCell.innerHTML = `
+          <div class="form-check ms-1">
+            <input type="checkbox" class="form-check-input" id="product-${product.id}">
+            <label class="form-check-label" for="product-${product.id}">&nbsp;</label>
+          </div>
+        `;
+
+        // Tạo ô thông tin sản phẩm
+        const productInfoCell = document.createElement("td");
+        productInfoCell.innerHTML = `
+          <div class="d-flex align-items-center gap-2">
+            <div class="rounded bg-light avatar-md d-flex align-items-center justify-content-center">
+              <img id="product-image-${product.id}" src="${
+                product.imageUrl || "/custom/no-image.webp"
+              }" alt="" class="avatar-md" onerror="this.src='/custom/no-image.webp'">
+            </div>
+            <div>
+              <a href="/Admin/ProductDetail?id=${product.id}" class="text-dark fw-medium fs-15">${product.name}</a>
+              <p class="text-muted mb-0 mt-1 fs-13">
+                <span>Xuất xứ: </span>${product.origin || "Không có thông tin"}
+                <br>
+                <span>Đơn vị: </span>${this.units[product.unit] || "Không có thông tin"}
+              </p>
+            </div>
+          </div>
+        `;
+        //Render image 
+        productService.fetchImage(product.imageUrl, "Products")
+          .then(function(response) {
+            document.getElementById(`product-image-${product.id}`).src = response;
+          });
+
+        // Tạo ô giá
+        const priceCell = document.createElement("td");
+        priceCell.textContent = new Intl.NumberFormat("vi-VN", {
+          style: "currency",
+          currency: "VND",
+        }).format(product.price);
+
+        // Tạo ô tồn kho
+        const stockCell = document.createElement("td");
+        stockCell.innerHTML = `
+          <p class="mb-1 text-muted">
+            <span class="text-dark fw-medium">${product.stockQuantity} ${
+          this.units[product.unit] || "đvt"
+        }</span> 
+          </p>
+        `;
+
+        // Tạo ô danh mục
+        const categoryCell = document.createElement("td");
+        categoryCell.textContent = this.getCategoryName(product.categoryId);
+
+        // Tạo ô đánh giá
+        const ratingCell = document.createElement("td");
+        ratingCell.innerHTML = `
+          <a class="badge p-1 bg-light text-dark fs-12 me-1" href="/Admin/ProductReview?id=${product.id}">
+            <i class="bx bxs-star align-text-top fs-14 text-warning me-1"></i>
+            ${product.averageRating?.toFixed(1) || "N/A"}
+          </a>
+          ${product.reviewCount || 0} Đánh giá
+        `;
+
+        // Tạo ô thao tác
+        const actionCell = document.createElement("td");
+        actionCell.innerHTML = `
+          <div class="d-flex gap-2">
+            <a href="/Admin/ProductDetail?id=${product.id}" class="btn btn-light btn-sm view-product" data-id="${product.id}">
+              <iconify-icon icon="solar:eye-broken" class="align-middle fs-18"></iconify-icon>
+            </a>
+            <a href="/Admin/ProductEdit?id=${product.id}" class="btn btn-soft-primary btn-sm edit-product" data-id="${product.id}">
+              <iconify-icon icon="solar:pen-2-broken" class="align-middle fs-18"></iconify-icon>
+            </a>
+            <a href="#!" class="btn btn-soft-danger btn-sm delete-product" data-id="${product.id}">
+              <iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="align-middle fs-18"></iconify-icon>
+            </a>
+          </div>
+        `;
+
+        // Thêm các ô vào hàng
+        row.appendChild(checkboxCell);
+        row.appendChild(productInfoCell);
+        row.appendChild(priceCell);
+        row.appendChild(stockCell);
+        row.appendChild(categoryCell);
+        row.appendChild(ratingCell);
+        row.appendChild(actionCell);
+
+        // Thêm hàng vào bảng
+        tableBody.appendChild(row);
+      });
+
+      // Thêm sự kiện cho các nút trong bảng
+      this.addTableEventListeners();
+    },
+
+    getCategoryName: function (categoryId) {
+      const category = this.categories.find((c) => c.id === categoryId);
+      return category ? category.name : "Không phân loại";
+    },
+
+    addTableEventListeners: function () {
+      // Sự kiện cho nút xem chi tiết
+      document.querySelectorAll(".view-product").forEach((button) => {
+        button.addEventListener("click", (e) => {
+          e.preventDefault();
+          const productId = button.getAttribute("data-id");
+          window.location.href = `/Admin/ProductDetail?id=${productId}`;
+        });
+      });
+
+      // Sự kiện cho nút sửa
+      document.querySelectorAll(".edit-product").forEach((button) => {
+        button.addEventListener("click", (e) => {
+          e.preventDefault();
+          const productId = button.getAttribute("data-id");
+          window.location.href = `00_layout.html?file=00_product_edit.html?id=${productId}`;
+        });
+      });
+
+      // Sự kiện cho nút xóa
+      document.querySelectorAll(".delete-product").forEach((button) => {
+        button.addEventListener("click", (e) => {
+          e.preventDefault();
+          const productId = button.getAttribute("data-id");
+
+          if (confirm("Bạn có chắc chắn muốn xóa sản phẩm này?")) {
+            productService
+              .delete(productId)
+              .then((response) => {
+                if (response && response.success) {
+                  alert("Xóa sản phẩm thành công!");
+                  this.applyFilter(); // Tải lại danh sách
+                } else {
+                  alert(
+                    "Xóa sản phẩm thất bại: " +
+                      (response.message || "Không rõ lỗi")
+                  );
+                }
+              })
+              .catch((error) => {
+                console.error("Lỗi khi xóa sản phẩm:", error);
+                alert("Đã xảy ra lỗi khi xóa sản phẩm. Vui lòng thử lại sau.");
+              });
+          }
+        });
+      });
+    },
+  };
+  appProduct.init();
+</script>

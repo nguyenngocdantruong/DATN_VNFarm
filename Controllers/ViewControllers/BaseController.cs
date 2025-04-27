@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using VNFarm_FinalFinal.Enums;
+using VNFarm.Enums;
 
-namespace VNFarm_FinalFinal.Controllers
+namespace VNFarm.Controllers
 {
     public class BaseController : Controller
     {

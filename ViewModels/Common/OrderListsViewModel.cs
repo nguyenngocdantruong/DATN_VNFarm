@@ -1,6 +1,7 @@
-using VNFarm_FinalFinal.DTOs.Response;
-using VNFarm_FinalFinal.DTOs.Filters;
-namespace VNFarm_FinalFinal.ViewModels.Admin
+using VNFarm.DTOs.Filters;
+using VNFarm.DTOs.Response;
+
+namespace VNFarm.ViewModels.Admin
 {
     public class OrderListsViewModel
     {

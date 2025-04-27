@@ -1,6 +1,6 @@
-using VNFarm_FinalFinal.Entities;
+using VNFarm.Entities;
 
-namespace VNFarm_FinalFinal.Interfaces.Repositories
+namespace VNFarm.Interfaces.Repositories
 {
     public interface IUserRepository : IRepository<User>
     {

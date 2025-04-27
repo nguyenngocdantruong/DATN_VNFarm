@@ -1,6 +1,6 @@
-using VNFarm_FinalFinal.DTOs.Response;
+using VNFarm.DTOs.Response;
 
-namespace VNFarm_FinalFinal.ViewModels.Buyer
+namespace VNFarm.ViewModels.Buyer
 {
     public class BuyerSummaryViewModel
     {

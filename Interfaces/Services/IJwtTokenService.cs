@@ -1,7 +1,6 @@
+using VNFarm.DTOs.Response;
 
-using VNFarm_FinalFinal.DTOs.Response;
-
-namespace VNFarm_FinalFinal.Interfaces.Services
+namespace VNFarm.Interfaces.Services
 {
     public interface IJwtTokenService
     {

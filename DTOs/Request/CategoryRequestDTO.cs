@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace VNFarm_FinalFinal.DTOs.Request
+namespace VNFarm.DTOs.Request
 {
     public class CategoryRequestDTO : BaseRequestDTO
     {

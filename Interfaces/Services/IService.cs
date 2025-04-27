@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using VNFarm_FinalFinal.DTOs.Filters;
-using VNFarm_FinalFinal.DTOs.Request;
-using VNFarm_FinalFinal.DTOs.Response;
-using VNFarm_FinalFinal.Entities;
+using VNFarm.DTOs.Filters;
+using VNFarm.DTOs.Request;
+using VNFarm.DTOs.Response;
+using VNFarm.Entities;
 
-namespace VNFarm_FinalFinal.Interfaces.Services
+namespace VNFarm.Interfaces.Services
 {
     public interface IService<TEntity, TReq, TRes> where TEntity : BaseEntity where TReq : BaseRequestDTO where TRes : BaseResponseDTO
     {

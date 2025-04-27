@@ -21,18 +21,18 @@
                                     <div class="card-body">
                                         <div class="text-center">
                                             <div class="mb-4">
-                                                <img src="assets/images/users/avatar-1.jpg" alt="" class="avatar-xl rounded-circle">
+                                                <img id="shop-avatar" src="assets/images/users/avatar-1.jpg" alt="" class="avatar-xl rounded-circle">
                                             </div>
-                                            <h5 class="mb-1">Nông Sản Sạch ABC</h5>
-                                            <p class="text-muted mb-4">Nguyễn Văn A</p>
+                                            <h5 class="mb-1" id="shop-name">Đang tải...</h5>
+                                            <p class="text-muted mb-4" id="owner-name">Đang tải...</p>
                                             <div class="mb-4">
-                                                <span class="badge bg-warning">Chờ Duyệt</span>
+                                                <span class="badge" id="request-status">Đang tải...</span>
                                             </div>
-                                            <div class="d-flex justify-content-center gap-2">
-                                                <button type="button" class="btn btn-success">
+                                            <div class="d-flex justify-content-center gap-2" id="action-buttons">
+                                                <button type="button" class="btn btn-success" id="btn-approve">
                                                     <i class="bx bx-check me-1"></i> Duyệt
                                                 </button>
-                                                <button type="button" class="btn btn-danger">
+                                                <button type="button" class="btn btn-danger" id="btn-reject">
                                                     <i class="bx bx-x me-1"></i> Từ Chối
                                                 </button>
                                             </div>
@@ -48,29 +48,29 @@
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Mã Yêu Cầu</label>
-                                                    <p class="text-muted mb-0">#YC001</p>
+                                                    <p class="text-muted mb-0" id="request-code">Đang tải...</p>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="form-label">Loại Shop</label>
-                                                    <p class="text-muted mb-0">Nông Sản</p>
+                                                    <p class="text-muted mb-0" id="business-type">Đang tải...</p>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="form-label">Ngày Yêu Cầu</label>
-                                                    <p class="text-muted mb-0">15/03/2024</p>
+                                                    <p class="text-muted mb-0" id="request-date">Đang tải...</p>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Email</label>
-                                                    <p class="text-muted mb-0">nongsansach@gmail.com</p>
+                                                    <p class="text-muted mb-0" id="owner-email">Đang tải...</p>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="form-label">Số Điện Thoại</label>
-                                                    <p class="text-muted mb-0">0987654321</p>
+                                                    <p class="text-muted mb-0" id="owner-phone">Đang tải...</p>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="form-label">Địa Chỉ</label>
-                                                    <p class="text-muted mb-0">123 Đường ABC, Quận 1, TP.HCM</p>
+                                                    <p class="text-muted mb-0" id="owner-address">Đang tải...</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -84,24 +84,24 @@
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Mã Số Thuế</label>
-                                                    <p class="text-muted mb-0">0123456789</p>
+                                                    <p class="text-muted mb-0" id="tax-code">Đang tải...</p>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="form-label">Giấy Phép Kinh Doanh</label>
-                                                    <div class="d-flex align-items-center">
+                                                    <div class="d-flex align-items-center" id="business-license">
                                                         <i class="bx bx-file-pdf text-danger fs-4 me-2"></i>
-                                                        <a href="#" class="text-primary">Xem file</a>
+                                                        <a href="#" class="text-primary">Đang tải...</a>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Tên Doanh Nghiệp</label>
-                                                    <p class="text-muted mb-0">Công Ty TNHH Nông Sản Sạch ABC</p>
+                                                    <p class="text-muted mb-0" id="business-name">Đang tải...</p>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="form-label">Địa Chỉ Trụ Sở</label>
-                                                    <p class="text-muted mb-0">456 Đường XYZ, Quận 2, TP.HCM</p>
+                                                    <p class="text-muted mb-0" id="business-address">Đang tải...</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -117,14 +117,14 @@
                                                     <label class="form-label">CMND/CCCD</label>
                                                     <div class="d-flex align-items-center">
                                                         <i class="bx bx-file-pdf text-danger fs-4 me-2"></i>
-                                                        <a href="#" class="text-primary">Xem file</a>
+                                                        <a href="#" class="text-primary" id="id-card">Xem file</a>
                                                     </div>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="form-label">Sổ Hộ Khẩu</label>
                                                     <div class="d-flex align-items-center">
                                                         <i class="bx bx-file-pdf text-danger fs-4 me-2"></i>
-                                                        <a href="#" class="text-primary">Xem file</a>
+                                                        <a href="#" class="text-primary" id="household-book">Xem file</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -133,14 +133,14 @@
                                                     <label class="form-label">Giấy Xác Nhận Địa Chỉ</label>
                                                     <div class="d-flex align-items-center">
                                                         <i class="bx bx-file-pdf text-danger fs-4 me-2"></i>
-                                                        <a href="#" class="text-primary">Xem file</a>
+                                                        <a href="#" class="text-primary" id="address-verification">Xem file</a>
                                                     </div>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="form-label">Giấy Cam Kết</label>
                                                     <div class="d-flex align-items-center">
                                                         <i class="bx bx-file-pdf text-danger fs-4 me-2"></i>
-                                                        <a href="#" class="text-primary">Xem file</a>
+                                                        <a href="#" class="text-primary" id="commitment-letter">Xem file</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -152,12 +152,39 @@
                                     <div class="card-body">
                                         <h5 class="card-title mb-4">Ghi Chú</h5>
                                         <div class="mb-3">
-                                            <textarea class="form-control" rows="3" placeholder="Nhập ghi chú (nếu có)"></textarea>
+                                            <textarea class="form-control" id="notes-input" rows="3" placeholder="Nhập ghi chú (nếu có)"></textarea>
                                         </div>
                                         <div class="text-end">
-                                            <button type="button" class="btn btn-primary">
+                                            <button type="button" class="btn btn-primary" id="btn-save-notes">
                                                 <i class="bx bx-save me-1"></i> Lưu Ghi Chú
                                             </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card border shadow-none">
+                                    <div class="card-body">
+                                        <h5 class="card-title mb-4">Lịch Sử Duyệt Yêu Cầu</h5>
+                                        <div class="table-responsive">
+                                            <table class="table table-hover align-middle mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Thời Gian</th>
+                                                        <th scope="col">Người Duyệt</th>
+                                                        <th scope="col">Trạng Thái</th>
+                                                        <th scope="col">Ghi Chú</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="approval-history">
+                                                    <!-- Dữ liệu sẽ được điền bởi JavaScript -->
+                                                    <tr>
+                                                        <td colspan="4" class="text-center">
+                                                            <span id="approval-loading" class="text-muted">Đang tải dữ liệu...</span>
+                                                            <span id="approval-empty" class="text-muted" style="display: none;">Chưa có lịch sử duyệt</span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -171,3 +198,360 @@
     <!-- End Container Fluid -->
 </div>
 <!-- End Page Content --> 
+<script type="module">
+    import {BaseService} from '/custom/BaseService.js';
+    import {EnumService} from '/custom/EnumService.js';
+
+    const key = null;
+    const businessRegistrationService = new BaseService('http://localhost:5172/api/BusinessRegistration', key);
+    const enumService = new EnumService('http://localhost:5172', key);
+    
+    // Khai báo biến toàn cục
+    let registrationData = null;
+    let businessTypes = {};
+    let registrationStatuses = {};
+    let requestId = null;
+    
+    // Hàm lấy ID từ URL
+    const getRequestIdFromUrl = () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('id');
+    };
+    
+    // Hàm tải dữ liệu từ API
+    const loadRequestData = async () => {
+        try {
+            // Lấy ID từ URL
+            requestId = getRequestIdFromUrl();
+            
+            if (!requestId) {
+                showError('Không tìm thấy ID yêu cầu trong URL');
+                return;
+            }
+            
+            // Gọi API để lấy thông tin yêu cầu
+            const response = await businessRegistrationService.getById(requestId);
+            
+            if (response && response.success) {
+                registrationData = response.data;
+                updateUI();
+                updateApprovalHistory();
+            } else {
+                showError('Không thể tải thông tin yêu cầu đăng ký');
+            }
+        } catch (error) {
+            console.error('Lỗi khi tải dữ liệu:', error);
+            showError('Đã xảy ra lỗi khi tải dữ liệu');
+        }
+    };
+    
+    // Hàm tải các giá trị enum
+    const loadEnumValues = async () => {
+        try {
+            // Tải trạng thái đăng ký
+            const statusResponse = await enumService.getRegistrationStatuses();
+            if (statusResponse) {
+                registrationStatuses = statusResponse;
+            } else {
+                // Sử dụng giá trị mặc định
+                registrationStatuses = {
+                    0: "Đang xử lý", 
+                    1: "Đã duyệt", 
+                    2: "Từ chối", 
+                    3: "Yêu cầu bổ sung",
+                    4: "Chờ duyệt"
+                };
+            }
+            
+            // Tải loại kinh doanh
+            const typeResponse = await enumService.getShopTypes();
+            if (typeResponse) {
+                businessTypes = typeResponse;
+            } else {
+                // Sử dụng giá trị mặc định
+                businessTypes = {
+                    0: "Nông Sản", 
+                    1: "Thực Phẩm", 
+                    2: "Hải Sản"
+                };
+            }
+        } catch (error) {
+            console.error('Lỗi khi tải giá trị enum:', error);
+            
+            // Sử dụng giá trị mặc định nếu không thể tải từ API
+            registrationStatuses = {
+                0: "Đang xử lý", 
+                1: "Đã duyệt", 
+                2: "Từ chối", 
+                3: "Yêu cầu bổ sung",
+                4: "Chờ duyệt"
+            };
+            
+            businessTypes = {
+                0: "Nông Sản", 
+                1: "Thực Phẩm", 
+                2: "Hải Sản"
+            };
+        }
+    };
+    
+    // Hàm cập nhật giao diện người dùng
+    const updateUI = () => {
+        if (!registrationData) return;
+        
+        const user = registrationData.user || {};
+        
+        // Cập nhật thông tin shop và chủ sở hữu
+        document.getElementById('shop-name').textContent = registrationData.businessName || 'Không có tên Shop';
+        document.getElementById('owner-name').textContent = user.fullName || 'Không có thông tin chủ sở hữu';
+        
+        // Cập nhật ảnh đại diện
+        const avatarElement = document.getElementById('shop-avatar');
+        if (user.imageUrl) {
+            avatarElement.src = user.imageUrl.startsWith('/') ? `http://localhost:5172${user.imageUrl}` : user.imageUrl;
+            avatarElement.addEventListener('error', () => {
+                avatarElement.src = '/custom/default.jpg';
+            });
+        }
+        
+        // Cập nhật trạng thái đăng ký
+        const statusElement = document.getElementById('request-status');
+        const status = registrationData.registrationStatus;
+        let statusText = registrationStatuses[status] || 'Không xác định';
+        let statusClass = '';
+        
+        switch(parseInt(status)) {
+            case 0: // Đang xử lý
+                statusClass = 'bg-secondary';
+                break;
+            case 4: // Chờ duyệt
+                statusClass = 'bg-warning';
+                break;
+            case 1: // Đã duyệt
+                statusClass = 'bg-success';
+                break;
+            case 2: // Từ chối
+                statusClass = 'bg-danger';
+                break;
+            case 3: // Yêu cầu bổ sung
+                statusClass = 'bg-info';
+                break;
+            default:
+                statusClass = 'bg-secondary';
+        }
+        
+        statusElement.textContent = statusText;
+        statusElement.className = `badge ${statusClass}`;
+        
+        // Hiển thị hoặc ẩn các nút hành động dựa trên trạng thái
+        const actionButtons = document.getElementById('action-buttons');
+        if (parseInt(status) === 0 || parseInt(status) === 4) { // Chỉ hiển thị nút khi trạng thái là Chờ duyệt hoặc Đang xử lý
+            actionButtons.style.display = 'flex';
+        } else {
+            actionButtons.style.display = 'none';
+        }
+        
+        // Cập nhật thông tin shop
+        document.getElementById('request-code').textContent = `#${registrationData.id}`;
+        document.getElementById('business-type').textContent = businessTypes[registrationData.businessType] || 'Không xác định';
+        document.getElementById('request-date').textContent = new Date(registrationData.createdAt).toLocaleDateString('vi-VN');
+        
+        // Cập nhật thông tin liên hệ
+        document.getElementById('owner-email').textContent = user.email || 'Không có thông tin';
+        document.getElementById('owner-phone').textContent = user.phoneNumber || 'Không có thông tin';
+        document.getElementById('owner-address').textContent = user.address || 'Không có thông tin';
+        
+        // Cập nhật thông tin doanh nghiệp
+        document.getElementById('tax-code').textContent = registrationData.taxCode || 'Không có thông tin';
+        document.getElementById('business-name').textContent = registrationData.businessName || 'Không có thông tin';
+        document.getElementById('business-address').textContent = registrationData.address || 'Không có thông tin';
+        
+        // Cập nhật liên kết giấy phép kinh doanh
+        const licenseElement = document.getElementById('business-license');
+        if (registrationData.businessLicenseUrl) {
+            licenseElement.innerHTML = `
+                <i class="bx bx-file-pdf text-danger fs-4 me-2"></i>
+                <a href="${registrationData.businessLicenseUrl}" target="_blank" class="text-primary">Xem file</a>
+            `;
+        } else {
+            licenseElement.innerHTML = `
+                <i class="bx bx-file-pdf text-danger fs-4 me-2"></i>
+                <span class="text-muted">Không có file</span>
+            `;
+        }
+        
+        // Cập nhật ghi chú nếu có
+        document.getElementById('notes-input').value = registrationData.notes || '';
+    };
+    
+    // Hàm cập nhật lịch sử duyệt
+    const updateApprovalHistory = () => {
+        const approvalHistoryElement = document.getElementById('approval-history');
+        const approvalLoadingElement = document.getElementById('approval-loading');
+        const approvalEmptyElement = document.getElementById('approval-empty');
+        
+        if (!registrationData || !registrationData.approvalResults || registrationData.approvalResults.length === 0) {
+            approvalLoadingElement.style.display = 'none';
+            approvalEmptyElement.style.display = 'block';
+            return;
+        }
+        
+        approvalLoadingElement.style.display = 'none';
+        approvalEmptyElement.style.display = 'none';
+        
+        // Xóa dòng loading
+        approvalHistoryElement.innerHTML = '';
+        
+        // Thêm dữ liệu lịch sử duyệt
+        registrationData.approvalResults.forEach(approval => {
+            const row = document.createElement('tr');
+            
+            // Định dạng trạng thái
+            let statusClass = '';
+            let statusText = registrationStatuses[approval.status] || 'Không xác định';
+            
+            switch(parseInt(approval.status)) {
+                case 1: // Đã duyệt
+                    statusClass = 'bg-success';
+                    break;
+                case 2: // Từ chối
+                    statusClass = 'bg-danger';
+                    break;
+                case 3: // Yêu cầu bổ sung
+                    statusClass = 'bg-info';
+                    break;
+                default:
+                    statusClass = 'bg-secondary';
+            }
+            
+            // Định dạng thời gian
+            const approvalDate = new Date(approval.approvedAt || approval.createdAt || new Date());
+            const formattedDate = approvalDate.toLocaleDateString('vi-VN') + ' ' + approvalDate.toLocaleTimeString('vi-VN');
+            
+            row.innerHTML = `
+                <td>${formattedDate}</td>
+                <td>${approval.approverName || 'Admin'}</td>
+                <td><span class="badge ${statusClass}">${statusText}</span></td>
+                <td>${approval.notes || ''}</td>
+            `;
+            
+            approvalHistoryElement.appendChild(row);
+        });
+    };
+    
+    // Hàm hiển thị lỗi
+    const showError = (message) => {
+        // Hiển thị thông báo lỗi ở đây - có thể sử dụng toast hoặc alert
+        alert(`Lỗi: ${message}`);
+    };
+    
+    // Hàm xử lý duyệt yêu cầu
+    const handleApprove = async () => {
+        if (!requestId) return;
+        
+        try {
+            if (confirm('Bạn có chắc chắn muốn duyệt yêu cầu này?')) {
+                const notes = document.getElementById('notes-input').value;
+                
+                const approvalData = { 
+                    registrationStatus: 1, // Trạng thái Đã duyệt
+                    notes: notes,
+                    approvalResult: {
+                        status: 1,
+                        notes: notes,
+                        approverName: "Admin",
+                        approvedAt: new Date().toISOString()
+                    }
+                };
+                
+                const response = await businessRegistrationService.update(requestId, approvalData);
+                
+                if (response && response.success) {
+                    alert('Duyệt yêu cầu thành công!');
+                    loadRequestData(); // Tải lại dữ liệu
+                } else {
+                    showError('Không thể duyệt yêu cầu');
+                }
+            }
+        } catch (error) {
+            console.error('Lỗi khi duyệt yêu cầu:', error);
+            showError('Đã xảy ra lỗi khi duyệt yêu cầu');
+        }
+    };
+    
+    // Hàm xử lý từ chối yêu cầu
+    const handleReject = async () => {
+        if (!requestId) return;
+        
+        try {
+            if (confirm('Bạn có chắc chắn muốn từ chối yêu cầu này?')) {
+                const notes = document.getElementById('notes-input').value;
+                
+                if (!notes.trim()) {
+                    alert('Vui lòng nhập lý do từ chối trong ô ghi chú');
+                    return;
+                }
+                
+                const approvalData = { 
+                    registrationStatus: 2, // Trạng thái Từ chối
+                    notes: notes,
+                    approvalResult: {
+                        status: 2,
+                        notes: notes,
+                        approverName: "Admin",
+                        approvedAt: new Date().toISOString()
+                    }
+                };
+                
+                const response = await businessRegistrationService.update(requestId, approvalData);
+                
+                if (response && response.success) {
+                    alert('Từ chối yêu cầu thành công!');
+                    loadRequestData(); // Tải lại dữ liệu
+                } else {
+                    showError('Không thể từ chối yêu cầu');
+                }
+            }
+        } catch (error) {
+            console.error('Lỗi khi từ chối yêu cầu:', error);
+            showError('Đã xảy ra lỗi khi từ chối yêu cầu');
+        }
+    };
+    
+    // Hàm xử lý lưu ghi chú
+    const handleSaveNotes = async () => {
+        if (!requestId) return;
+        
+        try {
+            const notes = document.getElementById('notes-input').value;
+            
+            const response = await businessRegistrationService.update(requestId, { 
+                notes: notes
+            });
+            
+            if (response && response.success) {
+                alert('Lưu ghi chú thành công!');
+                loadRequestData(); // Tải lại dữ liệu
+            } else {
+                showError('Không thể lưu ghi chú');
+            }
+        } catch (error) {
+            console.error('Lỗi khi lưu ghi chú:', error);
+            showError('Đã xảy ra lỗi khi lưu ghi chú');
+        }
+    };
+    
+    // Khởi tạo trang
+    new Promise(async (resolve, reject) => {
+        // Tải giá trị enum trước
+        await loadEnumValues();
+        // Tải dữ liệu yêu cầu
+        await loadRequestData();
+        resolve();
+    }).then(() => {
+        // Thêm sự kiện cho các nút
+        document.getElementById('btn-approve').addEventListener('click', handleApprove);
+        document.getElementById('btn-reject').addEventListener('click', handleReject);
+        document.getElementById('btn-save-notes').addEventListener('click', handleSaveNotes);
+    });
+</script>

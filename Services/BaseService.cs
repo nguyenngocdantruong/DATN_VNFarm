@@ -4,14 +4,14 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using VNFarm_FinalFinal.DTOs.Filters;
-using VNFarm_FinalFinal.DTOs.Request;
-using VNFarm_FinalFinal.DTOs.Response;
-using VNFarm_FinalFinal.Entities;
-using VNFarm_FinalFinal.Interfaces.Repositories;
-using VNFarm_FinalFinal.Interfaces.Services;
+using VNFarm.DTOs.Filters;
+using VNFarm.DTOs.Request;
+using VNFarm.DTOs.Response;
+using VNFarm.Entities;
+using VNFarm.Interfaces.Repositories;
+using VNFarm.Interfaces.Services;
 
-namespace VNFarm.Infrastructure.Services
+namespace VNFarm.Services
 {
     public abstract class BaseService<TEntity, TReq, TRes> : IService<TEntity, TReq, TRes> where TEntity : BaseEntity where TReq : BaseRequestDTO where TRes : BaseResponseDTO
     {

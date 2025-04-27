@@ -1,7 +1,7 @@
-using VNFarm_FinalFinal.DTOs.Filters;
-using VNFarm_FinalFinal.Entities;
+using VNFarm.DTOs.Filters;
+using VNFarm.Entities;
 
-namespace VNFarm_FinalFinal.Interfaces.Repositories
+namespace VNFarm.Interfaces.Repositories
 {
     public interface ICategoryRepository : IRepository<Category>
     {

@@ -1,16 +1,16 @@
-using VNFarm_FinalFinal.DTOs.Request;
-using VNFarm_FinalFinal.DTOs.Response;
-using VNFarm_FinalFinal.Entities;
-using VNFarm_FinalFinal.Interfaces.Repositories;
-using VNFarm_FinalFinal.Interfaces.Services;
-using VNFarm.Infrastructure.Persistence.Context;
-using VNFarm_FinalFinal.Enums;
-using VNFarm_FinalFinal.Helpers;
-using VNFarm_FinalFinal.Mappers;
-using VNFarm_FinalFinal.DTOs.Filters;
+using VNFarm.DTOs.Request;
+using VNFarm.DTOs.Response;
+using VNFarm.Entities;
+using VNFarm.Interfaces.Repositories;
+using VNFarm.Interfaces.Services;
+using VNFarm.Enums;
+using VNFarm.Helpers;
+using VNFarm.Mappers;
+using VNFarm.DTOs.Filters;
 using Microsoft.EntityFrameworkCore;
+using VNFarm.Data;
 
-namespace VNFarm.Infrastructure.Services
+namespace VNFarm.Services
 {
     public class NotificationService : BaseService<Notification, NotificationRequestDTO, NotificationResponseDTO>, INotificationService
     {

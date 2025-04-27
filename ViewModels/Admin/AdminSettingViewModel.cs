@@ -1,6 +1,6 @@
-using VNFarm_FinalFinal.DTOs.Response;
+using VNFarm.DTOs.Response;
 
-namespace VNFarm_FinalFinal.ViewModels.Admin
+namespace VNFarm.ViewModels.Admin
 {
     public class AdminSettingViewModel
     {

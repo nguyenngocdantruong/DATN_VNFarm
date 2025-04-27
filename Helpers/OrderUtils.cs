@@ -1,7 +1,7 @@
-using VNFarm_FinalFinal.Entities;
-using VNFarm_FinalFinal.Enums;
+using VNFarm.Entities;
+using VNFarm.Enums;
 
-namespace VNFarm_FinalFinal.Helpers
+namespace VNFarm.Helpers
 {
     public static class OrderUtils
     {

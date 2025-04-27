@@ -1,8 +1,8 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using VNFarm_FinalFinal.Enums;
+using VNFarm.Enums;
 using Swashbuckle.AspNetCore.Annotations;
-namespace VNFarm_FinalFinal.DTOs.Request
+namespace VNFarm.DTOs.Request
 { 
     public class ChatRequestDTO : BaseRequestDTO
     {
