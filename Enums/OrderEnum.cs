@@ -47,4 +47,15 @@ namespace VNFarm.Enums
         Completed = 1,
         Cancelled = 2,
     }
+    public enum OrderItemStatus
+    {
+        Pending = 0,
+        Processing = 1,
+        Packed = 2,
+        Shipped = 3,
+        Delivered = 4,
+        Cancelled = 5,
+        Returned = 6,
+        All = -999
+    }
 } 

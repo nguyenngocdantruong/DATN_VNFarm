@@ -15,7 +15,7 @@ namespace VNFarm.Controllers.ApiControllers
     {
         private readonly ICategoryService _categoryService;
 
-        public CategoryController(ICategoryService categoryService, ILogger<CategoryController> logger) : base(categoryService, logger)
+        public CategoryController(ICategoryService categoryService, IJwtTokenService jwtTokenService, ILogger<CategoryController> logger) : base(categoryService, jwtTokenService, logger)
         {
             _categoryService = categoryService;
         }

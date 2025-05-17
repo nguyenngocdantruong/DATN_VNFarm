@@ -19,7 +19,7 @@ namespace VNFarm.Controllers.ApiControllers
         private readonly IProductService _productService;
         private readonly IOrderService _orderService;
 
-        public StoreController(IStoreService storeService, IProductService productService, IOrderService orderService, ILogger<StoreController> logger) : base(storeService, logger)
+        public StoreController(IStoreService storeService, IProductService productService, IOrderService orderService, IJwtTokenService jwtTokenService, ILogger<StoreController> logger) : base(storeService, jwtTokenService, logger)
         {
             _storeService = storeService;
             _productService = productService;
@@ -84,9 +84,15 @@ namespace VNFarm.Controllers.ApiControllers
         {
             var success = await _storeService.VerifyStoreAsync(id);
             if (!success)
-                return NotFound();
+                return BadRequest(new {
+                    success = false,
+                    message = "Có lỗi xảy ra khi xác minh cửa hàng"
+                });
 
-            return NoContent();
+            return Ok(new {
+                success = true,
+                message = "Phê duyệt cửa hàng thành công"
+            });
         }
 
         /// <summary>
@@ -127,13 +133,47 @@ namespace VNFarm.Controllers.ApiControllers
 
             return NoContent();
         }
-        [HttpGet("get-statistics-store/{storeId}")]
+        [HttpGet("{storeId}/get-statistics-store")]
         public async Task<IActionResult> GetStatisticsStore(int storeId)
         {
+            // Kiểm tra xem có phải là cửa hàng của người dùng hiện tại không
+            var currentUserId = GetCurrentUserId();
+            if(currentUserId == null){
+                return Unauthorized(new {
+                    success = false,
+                    message = "Bạn cần đăng nhập để xem thông tin cửa hàng"
+                });
+            }
+            var store = await _storeService.GetByIdAsync(storeId);
+            if(store == null || 
+                (store.OwnerId != currentUserId && !IsCurrentUserAdmin)){
+                return Unauthorized(new {
+                    success = false,
+                    message = "Bạn không có quyền truy cập vào cửa hàng này"
+                });
+            }
+
             var totalProduct = await _productService.CountAsync(m => m.IsDeleted == false && m.StoreId == storeId);
             var totalProductEmptyStock = await _productService.CountAsync(m => m.IsDeleted == false && m.StoreId == storeId && m.StockQuantity == 0);
-            var totalOrders = await _orderService.CountAsync(m => m.IsDeleted == false && m.StoreId == storeId);
-            var totalRenenvue = (await _orderService.FindAsync(m => m.IsDeleted == false && m.StoreId == storeId)).Sum(m => m != null ? m.TotalAmount : 0);
+            var totalOrders = await _orderService.CountAsync(m => m.IsDeleted == false && m.OrderItems.Any(item => item.Product != null && item.Product.StoreId == storeId));
+            var totalRenenvue = (await _orderService.FindAsync(m => m.IsDeleted == false && m.OrderItems.Any(item => item.Product != null && item.Product.StoreId == storeId))).Sum(m => m != null ? m.TotalAmount : 0);
+            var listRenenvueInYear = new List<decimal>();
+            var currentYear = DateTime.Now.Year;
+            
+            for(int month = 1; month <= 12; month++) {
+                var startDate = new DateTime(currentYear, month, 1);
+                var endDate = startDate.AddMonths(1).AddDays(-1);
+                
+                var monthlyRevenue = (await _orderService.FindAsync(o => 
+                    o.IsDeleted == false && 
+                    o.OrderItems.Any(item => item.Product != null && item.Product.StoreId == storeId) &&
+                    o.CreatedAt >= startDate && 
+                    o.CreatedAt <= endDate &&
+                    o.PaymentStatus == PaymentStatus.Paid
+                )).Sum(o => o != null ? o.TotalAmount : 0);
+                
+                listRenenvueInYear.Add(monthlyRevenue);
+            }
             return Ok(new 
             {
                 success = true,
@@ -142,9 +182,9 @@ namespace VNFarm.Controllers.ApiControllers
                     totalProduct,
                     totalProductEmptyStock,
                     totalOrders,
-                    totalRenenvue
+                    totalRenenvue,
+                    listRenenvueInYear
                 },
-                totalCount  = 4,
                 storeId = storeId
             });
         }

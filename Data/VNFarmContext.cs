@@ -20,6 +20,7 @@ namespace VNFarm.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<OrderTimeline> OrderTimelines { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Discount> Discounts { get; set; }
@@ -30,6 +31,10 @@ namespace VNFarm.Data
         public DbSet<BusinessRegistration> BusinessRegistrations { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<RegistrationApprovalResult> RegistrationApprovalResults { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<ShopCart> ShopCarts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<ContactRequest> ContactRequests { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -67,22 +72,32 @@ namespace VNFarm.Data
                 .WithMany(u => u.Orders)
                 .HasForeignKey(o => o.BuyerId);
 
-            modelBuilder.Entity<Order>()
-                .HasOne(o => o.Store)
-                .WithMany()
-                .HasForeignKey(o => o.StoreId)
-                .IsRequired(false);
-
-            // OrderDetail
-            modelBuilder.Entity<OrderDetail>()
-                .HasOne<Order>()
-                .WithMany(o => o.OrderDetails)
-                .HasForeignKey(od => od.OrderId);
+            // modelBuilder.Entity<Order>()
+            //     .HasOne(o => o.Store)
+            //     .WithMany()
+            //     .HasForeignKey(o => o.StoreId)
+            //     .IsRequired(false);
 
             modelBuilder.Entity<OrderDetail>()
                 .HasOne(od => od.Product)
                 .WithMany()
                 .HasForeignKey(od => od.ProductId);
+                
+            // OrderItem
+            modelBuilder.Entity<OrderItem>()
+                .HasOne(oi => oi.Order)
+                .WithMany(o => o.OrderItems)
+                .HasForeignKey(oi => oi.OrderId);
+                
+            modelBuilder.Entity<OrderItem>()
+                .HasOne(oi => oi.Product)
+                .WithMany()
+                .HasForeignKey(oi => oi.ProductId);
+                
+            modelBuilder.Entity<OrderItem>()
+                .HasOne(oi => oi.Shop)
+                .WithMany()
+                .HasForeignKey(oi => oi.ShopId);
 
             // OrderTimeline
             modelBuilder.Entity<OrderTimeline>()
@@ -186,6 +201,34 @@ namespace VNFarm.Data
                 .HasOne(rar => rar.Admin)
                 .WithMany()
                 .HasForeignKey(rar => rar.AdminId);
+
+            // Cart-User relationship
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Cart)
+                .WithOne(c => c.User)
+                .HasForeignKey<Cart>(c => c.UserId);
+            
+            // ShopCart relationships
+            modelBuilder.Entity<ShopCart>()
+                .HasOne(sc => sc.Cart)
+                .WithMany(c => c.ShopCarts)
+                .HasForeignKey(sc => sc.CartId);
+            
+            modelBuilder.Entity<ShopCart>()
+                .HasOne(sc => sc.Shop)
+                .WithMany()
+                .HasForeignKey(sc => sc.ShopId);
+            
+            // CartItem relationships
+            modelBuilder.Entity<CartItem>()
+                .HasOne(ci => ci.Product)
+                .WithMany()
+                .HasForeignKey(ci => ci.ProductId);
+            
+            modelBuilder.Entity<CartItem>()
+                .HasOne<ShopCart>()
+                .WithMany(sc => sc.CartItems)
+                .HasForeignKey(ci => ci.ShopCartId);
 
             // Apply global query filter for soft delete
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())

@@ -36,6 +36,7 @@ namespace VNFarm.Entities
         
         #region Thông tin thanh toán
         // Trạng thái thanh toán
+        public long OrderPaymentId { get; set; }
         public PaymentStatus PaymentStatus { get; set; } = PaymentStatus.Unpaid;
         
         // Phương thức thanh toán
@@ -76,14 +77,12 @@ namespace VNFarm.Entities
 
         // Foreign keys - Khóa ngoại
         public int BuyerId { get; set; }              // ID người mua
-        public int? StoreId { get; set; }             // ID cửa hàng
         public int? DiscountId { get; set; }          // ID mã giảm giá
 
         // Navigation properties - Các thuộc tính liên kết
         public User? Buyer { get; set; }                // Thông tin người mua
-        public Store? Store { get; set; }               // Thông tin cửa hàng
         public Discount? Discount { get; set; }         // Thông tin giảm giá
-        public ICollection<OrderDetail> OrderDetails { get; set; } = [];  // Chi tiết đơn hàng
+        public ICollection<OrderItem> OrderItems { get; set; } = [];  // Chi tiết đơn hàng
         public ICollection<OrderTimeline> OrderTimelines { get; set; } = [];    // Lịch sử đơn hàng
         public Transaction? Transaction { get; set; }   
     }

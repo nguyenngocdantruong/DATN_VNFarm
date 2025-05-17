@@ -9,6 +9,9 @@ using VNFarm.DTOs.Response;
 using VNFarm.Entities;
 using VNFarm.Enums;
 using VNFarm.Interfaces.Services;
+using Microsoft.Extensions.DependencyInjection;
+using VNFarm.Interfaces.External;
+using VNFarm.Helpers;
 
 namespace VNFarm.Controllers.ApiControllers
 {
@@ -20,17 +23,20 @@ namespace VNFarm.Controllers.ApiControllers
         private readonly IUserService _userService;
         private readonly IStoreService _storeService;
         private readonly IDiscountService _discountService;
-
+        private readonly IEmailService _emailService;
         public OrderController(IOrderService orderService,
             IUserService userService,
             IStoreService storeService,
             IDiscountService discountService,
-            ILogger<OrderController> logger) : base(orderService, logger)
+            IJwtTokenService jwtTokenService,
+            IEmailService emailService,
+            ILogger<OrderController> logger) : base(orderService, jwtTokenService, logger)
         {
             _orderService = orderService;
             _userService = userService;
             _storeService = storeService;
             _discountService = discountService;
+            _emailService = emailService;
         }
 
         /// <summary>
@@ -112,11 +118,21 @@ namespace VNFarm.Controllers.ApiControllers
         [HttpPost("filter")]
         public async Task<ActionResult<IEnumerable<OrderResponseDTO>>> GetOrdersByFilter([FromBody] OrderCriteriaFilter filter)
         {
+            if (filter.UserId.HasValue)
+            {
+                var currentUserId = GetCurrentUserId();
+                var isValid = User.IsInRole("Admin") || (currentUserId.HasValue && currentUserId.Value == filter.UserId.Value);
+                if (!isValid)
+                {
+                    return Unauthorized(new { success = false, message = "Bạn không có quyền xem đơn hàng của người dùng khác" });
+                }
+            }
             var orders = await _orderService.Query(filter);
-            orders = orders.Include(m => m.Buyer);
             var totalCount = orders.Count();
             var results = await _orderService.ApplyPagingAndSortingAsync(orders, filter);
-            return Ok(new {
+            results = await Task.WhenAll(results.Select(async m => await IncludeNavigation(m)));
+            return Ok(new
+            {
                 success = true,
                 data = results,
                 totalCount = totalCount
@@ -130,6 +146,7 @@ namespace VNFarm.Controllers.ApiControllers
         public async Task<ActionResult<IEnumerable<OrderTimeline>>> GetOrderTimeline(int id)
         {
             var timeline = await _orderService.GetOrderTimelineAsync(id);
+            timeline = timeline.OrderByDescending(m => m.Id).ToList();
             return Ok(timeline);
         }
 
@@ -141,6 +158,42 @@ namespace VNFarm.Controllers.ApiControllers
         {
             if (id != orderTimelineRequest.OrderId)
                 return BadRequest("OrderId không khớp");
+            var order = await _orderService.GetByIdAsync(id);
+            // Kiểm tra nếu đơn hàng đã hoàn thành thì không thể thêm trạng thái mới
+            if (order == null)
+                return NotFound(new { success = false, message = "Không tìm thấy đơn hàng" });
+
+            if (orderTimelineRequest.EventType == OrderEventType.OrderCreated)
+            {
+                order = await _orderService.GetByIdAsync(id);
+                if (order == null)
+                    return BadRequest("Không tìm thấy đơn hàng");
+            }
+
+            if (order.Status == OrderStatus.Completed || order.Status == OrderStatus.Cancelled)
+            {
+                return BadRequest(new { success = false, message = "Không thể thêm trạng thái mới cho đơn hàng đã hoàn thành hoặc đã hủy" });
+            }
+            // Kiểm tra xem trạng thái có hợp lệ không
+            if (!Enum.IsDefined(typeof(OrderTimelineStatus), orderTimelineRequest.Status))
+            {
+                return BadRequest(new { success = false, message = "Trạng thái không hợp lệ" });
+            }
+            var user = await _userService.GetByIdAsync(order.BuyerId);
+            if (user != null && !string.IsNullOrEmpty(user.Email))
+            {
+                // Gửi email thông báo cập nhật trạng thái đơn hàng nếu có thay đổi trạng thái
+                try
+                {
+                    var orderContents = OrderUtils.GetOrderEventTypeForForm();
+                    var content = orderContents.TryGetValue((int)orderTimelineRequest.EventType, out var value) ? value.ToString() : "Không thể xác định trạng thái";
+                    await _emailService.SendOrderStatusUpdateAsync(user.Email, id, content ?? "Không thể xác định trạng thái");
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Lỗi khi gửi email thông báo cập nhật trạng thái đơn hàng {OrderId}", id);
+                }
+            }
 
             var timeline = await _orderService.AddOrderTimelineAsync(id, orderTimelineRequest);
             if (timeline == null)
@@ -202,7 +255,7 @@ namespace VNFarm.Controllers.ApiControllers
             var totalShipping = await _orderService.CountAsync(m => m.Status == OrderStatus.Shipping);
             var totalRefunded = await _orderService.CountAsync(m => m.Status == OrderStatus.Refunded);
             var totalPending = await _orderService.CountAsync(m => m.Status == OrderStatus.Pending);
-            var totalCompleted = await _orderService.CountAsync(m => m.Status == OrderStatus.Completed);            
+            var totalCompleted = await _orderService.CountAsync(m => m.Status == OrderStatus.Completed);
             var stats = new
             {
                 TotalOrders = totalOrders,
@@ -212,7 +265,8 @@ namespace VNFarm.Controllers.ApiControllers
                 TotalPending = totalPending,
                 TotalCompleted = totalCompleted
             };
-            return Ok(new {
+            return Ok(new
+            {
                 success = true,
                 data = stats
             });
@@ -315,49 +369,108 @@ namespace VNFarm.Controllers.ApiControllers
         /// <summary>
         /// Thêm chi tiết đơn hàng
         /// </summary>
-        [HttpPost("{id}/details")]
-        public async Task<ActionResult<OrderDetailResponseDTO>> AddOrderDetail(int id, [FromBody] OrderDetailRequestDTO orderDetailRequest)
+        [HttpPost("{id}/items")]
+        public async Task<ActionResult<OrderItemResponseDTO>> AddOrderItem(int id, [FromBody] OrderItemRequestDTO orderItemRequest)
         {
-            var detail = await _orderService.AddOrderDetailAsync(id, orderDetailRequest);
-            if (detail == null)
-                return BadRequest("Không thể thêm chi tiết đơn hàng");
+            var item = await _orderService.AddOrderItemAsync(id, orderItemRequest);
+            if (item == null)
+                return BadRequest(new { success = false, message = "Không thể thêm chi tiết đơn hàng." });
 
-            return CreatedAtAction(nameof(GetOrderDetail), new { id = id }, detail);
+            return CreatedAtAction(nameof(GetOrderItems), new { id = id }, item);
         }
 
         /// <summary>
         /// Lấy chi tiết đơn hàng
         /// </summary>
-        [HttpGet("{id}/details")]
-        public async Task<ActionResult<IEnumerable<OrderDetailResponseDTO>>> GetOrderDetail(int id)
+        [HttpGet("{id}/items")]
+        public async Task<ActionResult<IEnumerable<OrderItemResponseDTO>>> GetOrderItems(int id)
         {
-            var details = await _orderService.GetOrderDetailAsync(id);
-            return Ok(details);
+            var items = await _orderService.GetOrderItemsAsync(id);
+            return Ok(new { success = true, data = items });
         }
 
         /// <summary>
         /// Cập nhật trạng thái chi tiết đơn hàng
         /// </summary>
-        [HttpPut("{id}/details/{productId}/status/{status}")]
-        public async Task<ActionResult> UpdateOrderDetailStatus(int id, int productId, OrderDetailStatus status)
+        [HttpPut("{id}/items/{productId}/status/{status}")]
+        public async Task<ActionResult> UpdateOrderItemStatus(int id, int productId, OrderItemStatus status)
         {
-            var success = await _orderService.UpdateOrderDetailStatusAsync(id, productId, status);
+            var success = await _orderService.UpdateOrderItemStatusAsync(id, productId, status);
             if (!success)
-                return NotFound();
+                return NotFound(new { success = false, message = "Không tìm thấy chi tiết đơn hàng." });
 
-            return NoContent();
+            return Ok(new { success = true, message = "Cập nhật trạng thái thành công." });
         }
         #endregion
+
+        #region Create Order
+        /// <summary>
+        /// Tạo đơn hàng mới từ thông tin checkout
+        /// </summary>
+        [HttpPost("create")]
+        public async Task<ActionResult> CreateOrder([FromBody] CheckoutRequestDTO checkoutRequest)
+        {
+            try
+            {
+                var userId = GetCurrentUserId();
+                if (userId == null)
+                    return Unauthorized(new { success = false, message = "Không thể xác thực người dùng." });
+
+                var order = await _orderService.CreateOrderFromCheckoutAsync(userId.Value, checkoutRequest);
+                if (order == null)
+                    return BadRequest(new { success = false, message = "Không thể tạo đơn hàng." });
+
+                // Thêm thông tin navigation
+                order = await IncludeNavigation(order);
+
+                return Ok(new
+                {
+                    success = true,
+                    message = "Đặt hàng thành công!",
+                    data = order,
+                    orderCode = order.OrderCode,
+                    orderId = order.Id
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Lỗi khi tạo đơn hàng");
+                return StatusCode(500, new { success = false, message = ex.Message });
+            }
+        }
+        #endregion
+
         protected async override Task<OrderResponseDTO> IncludeNavigation(OrderResponseDTO item)
         {
+            // Thông tin người mua
             item.Buyer = await _userService.GetByIdAsync(item.BuyerId);
-            if(item.StoreId != null)
-                item.Store = await _storeService.GetByIdAsync(item.StoreId.Value);
-            if(item.DiscountId != null)
+
+            // Thông tin giảm giá
+            if (item.DiscountId != null)
                 item.Discount = await _discountService.GetByIdAsync(item.DiscountId.Value);
-            item.OrderDetails = (await _orderService.GetOrderDetailAsync(item.Id)).ToList();
-            item.OrderTimelines = (await _orderService.GetOrderTimelineAsync(item.Id)).ToList();
+
+            // Thông tin chi tiết đơn hàng
+            item.OrderItems = (await _orderService.GetOrderItemsAsync(item.Id)).ToList();
+
+            // Thông tin lịch sử đơn hàng
+            item.OrderTimelines = (await _orderService.GetOrderTimelineAsync(item.Id)).OrderByDescending(m => m.Id).ToList();
+
             return await base.IncludeNavigation(item);
+        }
+
+        /// <summary>
+        /// Lấy đơn hàng theo ID với đầy đủ thông tin liên quan
+        /// </summary>
+        [HttpGet("{orderCode}/full")]
+        public async Task<ActionResult<OrderResponseDTO>> Get(string orderCode)
+        {
+            var order = (await _orderService.FindAsync(m => m.OrderCode == orderCode)).FirstOrDefault();
+            if (order == null)
+                return NotFound(new { success = false, message = "Không tìm thấy đơn hàng." });
+            // Thêm thông tin navigation
+            order = await IncludeNavigation(order);
+
+            return Ok(new { success = true, data = order });
         }
     }
 }

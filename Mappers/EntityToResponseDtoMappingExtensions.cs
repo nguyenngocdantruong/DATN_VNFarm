@@ -141,37 +141,49 @@ namespace VNFarm.Mappers
                 ImageUrl = orderDetail.Product?.ImageUrl,
             };
         }
-        public static OrderResponseDTO ToResponseDTO(this Order order)
+        public static OrderResponseDTO ToResponseDTO(this Order entity)
         {
-            var orderResponseDto =  new OrderResponseDTO
+            if (entity == null) return null;
+
+            return new OrderResponseDTO
             {
-                Id = order.Id,
-                CreatedAt = order.CreatedAt,
-                UpdatedAt = order.UpdatedAt,
-                OrderCode = order.OrderCode,
-                Status = order.Status,
-                Notes = order.Notes,
-                TotalAmount = order.TotalAmount,
-                ShippingFee = order.ShippingFee,
-                TaxAmount = order.TaxAmount,
-                DiscountAmount = order.DiscountAmount,
-                FinalAmount = order.FinalAmount,
-                PaymentStatus = order.PaymentStatus,
-                PaymentMethod = order.PaymentMethod,
-                PaidAt = order.PaidAt,
-                BuyerId = order.BuyerId,
-                StoreId = order.StoreId,
-                DiscountId = order.DiscountId,
-                //Navigation properties
-                Buyer = order.Buyer?.ToResponseDTO(),
-                Store = order.Store?.ToResponseDTO(),
-                Discount = order.Discount?.ToResponseDTO(),
-                OrderDetails = order.OrderDetails?.Select(od => od.ToResponseDTO()).ToList(),
-                OrderTimelines = order.OrderTimelines?.Select(ot => ot.ToResponseDTO()).ToList(),
-                Shipping = order.ToShippingResponseDTO(),
-                Address = order.ToAddressResponseDTO(),
+                Id = entity.Id,
+                CreatedAt = entity.CreatedAt,
+                UpdatedAt = entity.UpdatedAt,
+                OrderCode = entity.OrderCode,
+                Status = entity.Status,
+                Notes = entity.Notes,
+                TotalAmount = entity.TotalAmount,
+                ShippingFee = entity.ShippingFee,
+                TaxAmount = entity.TaxAmount,
+                DiscountAmount = entity.DiscountAmount,
+                FinalAmount = entity.FinalAmount,
+                PaymentStatus = entity.PaymentStatus,
+                PaymentMethod = entity.PaymentMethod,
+                PaidAt = entity.PaidAt,
+                BuyerId = entity.BuyerId,
+                DiscountId = entity.DiscountId,
+                Address = new AddressResponseDTO
+                {
+                    OrderId = entity.Id,
+                    ShippingName = entity.ShippingName,
+                    ShippingPhone = entity.ShippingPhone,
+                    ShippingAddress = entity.ShippingAddress,
+                    ShippingProvince = entity.ShippingProvince,
+                    ShippingDistrict = entity.ShippingDistrict,
+                    ShippingWard = entity.ShippingWard
+                },
+                Shipping = new ShippingResponseDTO
+                {
+                    OrderId = entity.Id,
+                    TrackingNumber = entity.TrackingNumber,
+                    ShippingMethod = entity.ShippingMethod,
+                    ShippingPartner = entity.ShippingPartner,
+                    ShippedAt = entity.ShippedAt,
+                    DeliveredAt = entity.DeliveredAt
+                },
+                OrderItems = entity.OrderItems?.Select(od => od.ToResponseDTO()).ToList() ?? []
             };
-            return orderResponseDto;
         }
         public static OrderTimelineResponseDTO ToResponseDTO(this OrderTimeline orderTimeline)
         {
@@ -221,8 +233,6 @@ namespace VNFarm.Mappers
                 ImageUrl = product.ImageUrl,
                 AverageRating = product.AverageRating,
                 Category = product.Category?.ToResponseDTO(),
-                Store = product.Store?.ToResponseDTO(),
-                Reviews = product.Reviews?.Select(r => r.ToResponseDTO()).ToList(),
                 ReviewStar1Count = product.ReviewStar1Count,
                 ReviewStar2Count = product.ReviewStar2Count,
                 ReviewStar3Count = product.ReviewStar3Count,
@@ -295,7 +305,6 @@ namespace VNFarm.Mappers
                 OwnerId = store.UserId,
                 //Navigation properties
                 Owner = store.User?.ToResponseDTO(),
-                Products = store.Products?.Select(p => p.ToResponseDTO()).ToList()
             };
         }
         public static TransactionResponseDTO ToResponseDTO(this Transaction transaction)
@@ -335,6 +344,81 @@ namespace VNFarm.Mappers
                 OrderStatusNotificationsEnabled = user.OrderStatusNotificationsEnabled,
                 DiscountNotificationsEnabled = user.DiscountNotificationsEnabled,
                 AdminNotificationsEnabled = user.AdminNotificationsEnabled,
+            };
+        }
+        public static CartResponseDTO ToResponseDTO(this Cart cart)
+        {
+            return new CartResponseDTO
+            {
+                Id = cart.Id,
+                CreatedAt = cart.CreatedAt,
+                UpdatedAt = cart.UpdatedAt,
+                UserId = cart.UserId,
+                User = cart.User?.ToResponseDTO(),
+                ShopCarts = cart.ShopCarts?.Select(sc => sc.ToResponseDTO()).ToList()
+            };
+        }
+        public static ShopCartResponseDTO ToResponseDTO(this ShopCart shopCart)
+        {
+            return new ShopCartResponseDTO
+            {
+                Id = shopCart.Id,
+                CreatedAt = shopCart.CreatedAt,
+                UpdatedAt = shopCart.UpdatedAt,
+                ShopId = shopCart.ShopId,
+                CartId = shopCart.CartId,
+                Shop = shopCart.Shop?.ToResponseDTO(),
+                CartItems = shopCart.CartItems?.Select(ci => ci.ToResponseDTO()).ToList()
+            };
+        }
+        public static CartItemResponseDTO ToResponseDTO(this CartItem cartItem)
+        {
+            return new CartItemResponseDTO
+            {
+                Id = cartItem.Id,
+                CreatedAt = cartItem.CreatedAt,
+                UpdatedAt = cartItem.UpdatedAt,
+                ProductId = cartItem.ProductId,
+                Quantity = cartItem.Quantity,
+                ShopCartId = cartItem.ShopCartId,
+                Product = cartItem.Product?.ToResponseDTO()
+            };
+        }
+        public static OrderItemResponseDTO ToResponseDTO(this OrderItem entity)
+        {
+            if (entity == null) return null;
+            
+            return new OrderItemResponseDTO
+            {
+                Id = entity.Id,
+                CreatedAt = entity.CreatedAt,
+                UpdatedAt = entity.UpdatedAt,
+                OrderId = entity.OrderId,
+                ProductId = entity.ProductId,
+                Quantity = entity.Quantity,
+                Unit = entity.Unit,
+                UnitPrice = entity.UnitPrice,
+                ShippingFee = entity.ShippingFee,
+                TaxAmount = entity.TaxAmount,
+                Subtotal = entity.Subtotal,
+                PackagingStatus = entity.PackagingStatus,
+                ShopId = entity.ShopId,
+                Product = entity.Product?.ToResponseDTO(),
+                Shop = entity.Shop?.ToResponseDTO()
+            };
+        }
+        public static ContactRequestResponseDTO ToResponseDTO(this ContactRequest contactRequest)
+        {
+            return new ContactRequestResponseDTO
+            {
+                Id = contactRequest.Id,
+                CreatedAt = contactRequest.CreatedAt,
+                UpdatedAt = contactRequest.UpdatedAt,
+                FullName = contactRequest.FullName,
+                Email = contactRequest.Email,
+                ServiceType = contactRequest.ServiceType,
+                PhoneNumber = contactRequest.PhoneNumber,
+                Message = contactRequest.Message
             };
         }
     }

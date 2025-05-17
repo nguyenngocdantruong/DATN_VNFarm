@@ -102,5 +102,15 @@ namespace VNFarm.Repositories
         {
             return await _context.SaveChangesAsync() > 0;
         }
+
+        public async Task<int> UpdateRangeAsync(IEnumerable<T> entities)
+        {
+            foreach (var entity in entities)
+            {
+                entity.UpdatedAt = DateTime.UtcNow;
+                _context.Entry(entity).State = EntityState.Modified;
+            }
+            return await _context.SaveChangesAsync();
+        }
     }
 } 

@@ -22,15 +22,13 @@ namespace VNFarm.Controllers.ApiControllers
         private readonly ICategoryService _categoryService;
         private readonly IStoreService _storeService;
         private readonly IUserService _userService;
-        private readonly ILogger<ProductController> _logger;
 
-        public ProductController(IProductService productService,ICategoryService categoryService, IStoreService storeService, IUserService userService, ILogger<ProductController> logger) : base(productService, logger)
+        public ProductController(IProductService productService,ICategoryService categoryService, IStoreService storeService, IUserService userService, IJwtTokenService jwtTokenService, ILogger<ProductController> logger) : base(productService, jwtTokenService, logger)
         {
             _productService = productService;
             _categoryService = categoryService;
             _storeService = storeService;
             _userService = userService;
-            _logger = logger;
         }
 
         /// <summary>

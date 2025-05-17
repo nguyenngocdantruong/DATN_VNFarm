@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using VNFarm.Enums;
 
 namespace VNFarm.DTOs.Request
 {
@@ -28,6 +29,8 @@ namespace VNFarm.DTOs.Request
         public string? ImageUrl { get; set; }
         // Only for admin
         public bool? IsActive { get; set; }
+        // Vai trò người dùng
+        public UserRole? Role { get; set; }
         #endregion
         
         #region Cài đặt thông báo

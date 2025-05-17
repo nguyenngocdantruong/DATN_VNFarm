@@ -18,7 +18,8 @@ namespace VNFarm.Controllers.ApiControllers
 
         public BusinessRegistrationController(IBusinessRegistrationService businessRegistrationService, 
                                 IUserService userService,
-                                ILogger<BusinessRegistrationController> logger) : base(businessRegistrationService, logger)
+                                IJwtTokenService jwtTokenService,
+                                ILogger<BusinessRegistrationController> logger) : base(businessRegistrationService, jwtTokenService, logger)
         {
             _businessRegistrationService = businessRegistrationService;
             _userService = userService;

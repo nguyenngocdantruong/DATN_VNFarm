@@ -19,5 +19,10 @@ namespace VNFarm.Interfaces.Repositories
         Task<IEnumerable<OrderDetail>> GetOrderDetailAsync(int orderId);
         Task<bool> UpdateOrderDetailAsync(int orderId, OrderDetail orderDetail);
         #endregion
+        #region Order Item
+        Task<OrderItem> AddOrderItemAsync(int orderId, OrderItem orderItem);
+        Task<IEnumerable<OrderItem>> GetOrderItemsAsync(int orderId);
+        Task<bool> UpdateOrderItemAsync(int orderId, OrderItem orderItem);
+        #endregion
     }
 } 

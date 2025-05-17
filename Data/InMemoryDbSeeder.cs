@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using VNFarm.Data;
 using VNFarm.Entities;
 using VNFarm.Enums;
+using VNFarm.Helpers;
 
 namespace VNFarm.Data.Data
 {
@@ -40,6 +41,7 @@ namespace VNFarm.Data.Data
                 await SeedPaymentMethodsAsync(context);
                 await SeedBusinessRegistrationsAsync(context);
                 await SeedOrderTimelinesAsync(context);
+                await SeedDiscountsAsync(context);
 
 
                 logger.LogInformation("Đã khởi tạo dữ liệu mẫu thành công");
@@ -219,8 +221,7 @@ namespace VNFarm.Data.Data
                     new Order {
                         Id = 1,
                         OrderCode = "ORD001",
-                        BuyerId = 6,
-                        StoreId = 1,
+                        BuyerId = 1,
                         TotalAmount = 150000,
                         ShippingFee = 30000,
                         TaxAmount = 15000,
@@ -241,8 +242,7 @@ namespace VNFarm.Data.Data
                     new Order {
                         Id = 2,
                         OrderCode = "ORD002",
-                        BuyerId = 7,
-                        StoreId = 2,
+                        BuyerId = 1,
                         TotalAmount = 250000,
                         ShippingFee = 30000,
                         TaxAmount = 25000,
@@ -262,8 +262,7 @@ namespace VNFarm.Data.Data
                     new Order {
                         Id = 3,
                         OrderCode = "ORD003",
-                        BuyerId = 8,
-                        StoreId = 3,
+                        BuyerId = 1,
                         TotalAmount = 350000,
                         ShippingFee = 30000,
                         TaxAmount = 35000,
@@ -286,8 +285,7 @@ namespace VNFarm.Data.Data
                     new Order {
                         Id = 4,
                         OrderCode = "ORD004",
-                        BuyerId = 9,
-                        StoreId = 1,
+                        BuyerId = 2,
                         TotalAmount = 180000,
                         ShippingFee = 30000,
                         TaxAmount = 18000,
@@ -308,8 +306,7 @@ namespace VNFarm.Data.Data
                     new Order {
                         Id = 5,
                         OrderCode = "ORD005",
-                        BuyerId = 10,
-                        StoreId = 2,
+                        BuyerId = 2,
                         TotalAmount = 320000,
                         ShippingFee = 30000,
                         TaxAmount = 32000,
@@ -330,8 +327,7 @@ namespace VNFarm.Data.Data
                     new Order {
                         Id = 6,
                         OrderCode = "ORD006",
-                        BuyerId = 11,
-                        StoreId = 3,
+                        BuyerId = 2,
                         TotalAmount = 410000,
                         ShippingFee = 30000,
                         TaxAmount = 41000,
@@ -352,8 +348,7 @@ namespace VNFarm.Data.Data
                     new Order {
                         Id = 7,
                         OrderCode = "ORD007",
-                        BuyerId = 12,
-                        StoreId = 4,
+                        BuyerId = 2,
                         TotalAmount = 280000,
                         ShippingFee = 30000,
                         TaxAmount = 28000,
@@ -375,7 +370,6 @@ namespace VNFarm.Data.Data
                         Id = 8,
                         OrderCode = "ORD008",
                         BuyerId = 18,
-                        StoreId = 5,
                         TotalAmount = 190000,
                         ShippingFee = 30000,
                         TaxAmount = 19000,
@@ -396,7 +390,6 @@ namespace VNFarm.Data.Data
                         Id = 9,
                         OrderCode = "ORD009",
                         BuyerId = 19,
-                        StoreId = 6,
                         TotalAmount = 360000,
                         ShippingFee = 30000,
                         TaxAmount = 36000,
@@ -418,7 +411,6 @@ namespace VNFarm.Data.Data
                         Id = 10,
                         OrderCode = "ORD010",
                         BuyerId = 20,
-                        StoreId = 7,
                         TotalAmount = 270000,
                         ShippingFee = 30000,
                         TaxAmount = 27000,
@@ -440,7 +432,6 @@ namespace VNFarm.Data.Data
                         Id = 11,
                         OrderCode = "ORD011",
                         BuyerId = 21,
-                        StoreId = 8,
                         TotalAmount = 320000,
                         ShippingFee = 30000,
                         TaxAmount = 32000,
@@ -462,7 +453,6 @@ namespace VNFarm.Data.Data
                         Id = 12,
                         OrderCode = "ORD012",
                         BuyerId = 22,
-                        StoreId = 9,
                         TotalAmount = 450000,
                         ShippingFee = 30000,
                         TaxAmount = 45000,
@@ -483,7 +473,6 @@ namespace VNFarm.Data.Data
                         Id = 13,
                         OrderCode = "ORD013",
                         BuyerId = 23,
-                        StoreId = 10,
                         TotalAmount = 200000,
                         ShippingFee = 30000,
                         TaxAmount = 20000,
@@ -505,7 +494,6 @@ namespace VNFarm.Data.Data
                         Id = 14,
                         OrderCode = "ORD014",
                         BuyerId = 24,
-                        StoreId = 1,
                         TotalAmount = 380000,
                         ShippingFee = 30000,
                         TaxAmount = 38000,
@@ -527,7 +515,6 @@ namespace VNFarm.Data.Data
                         Id = 15,
                         OrderCode = "ORD015",
                         BuyerId = 25,
-                        StoreId = 2,
                         TotalAmount = 240000,
                         ShippingFee = 30000,
                         TaxAmount = 24000,
@@ -549,7 +536,6 @@ namespace VNFarm.Data.Data
                         Id = 16,
                         OrderCode = "ORD016",
                         BuyerId = 6,
-                        StoreId = 3,
                         TotalAmount = 290000,
                         ShippingFee = 30000,
                         TaxAmount = 29000,
@@ -571,7 +557,6 @@ namespace VNFarm.Data.Data
                         Id = 17,
                         OrderCode = "ORD017",
                         BuyerId = 7,
-                        StoreId = 4,
                         TotalAmount = 310000,
                         ShippingFee = 30000,
                         TaxAmount = 31000,
@@ -593,7 +578,6 @@ namespace VNFarm.Data.Data
                         Id = 18,
                         OrderCode = "ORD018",
                         BuyerId = 8,
-                        StoreId = 5,
                         TotalAmount = 420000,
                         ShippingFee = 30000,
                         TaxAmount = 42000,
@@ -615,7 +599,6 @@ namespace VNFarm.Data.Data
                         Id = 19,
                         OrderCode = "ORD019",
                         BuyerId = 9,
-                        StoreId = 6,
                         TotalAmount = 180000,
                         ShippingFee = 30000,
                         TaxAmount = 18000,
@@ -637,7 +620,6 @@ namespace VNFarm.Data.Data
                         Id = 20,
                         OrderCode = "ORD020",
                         BuyerId = 10,
-                        StoreId = 7,
                         TotalAmount = 340000,
                         ShippingFee = 30000,
                         TaxAmount = 34000,
@@ -1580,63 +1562,53 @@ namespace VNFarm.Data.Data
         }
         private static async Task SeedOrderTimelinesAsync(VNFarmContext context)
         {
+            
             if (!context.OrderTimelines.Any())
             {
                 var timelines = new List<OrderTimeline>();
 
                 for (int i = 1; i <= 20; i++) // Có 20 đơn hàng
                 {
-                    timelines.AddRange(new List<OrderTimeline>
-            {
-                new OrderTimeline
-                {
-                    OrderId = i,
-                    EventType = OrderEventType.OrderCreated,
-                    Status = OrderTimelineStatus.Completed,
-                    Description = "Đơn hàng được tạo tự động",
-                    CreatedAt = DateTime.Now.AddDays(-i)
-                },
-                new OrderTimeline
-                {
-                    OrderId = i,
-                    EventType = OrderEventType.OrderAcceptedBySeller,
-                    Status = OrderTimelineStatus.Completed,
-                    Description = "Người bán đã xác nhận đơn hàng",
-                    CreatedAt = DateTime.Now.AddDays(-i).AddHours(2)
-                },
-                new OrderTimeline
-                {
-                    OrderId = i,
-                    EventType = OrderEventType.OrderPackaging,
-                    Status = OrderTimelineStatus.Completed,
-                    Description = "Đơn hàng đang được đóng gói",
-                    CreatedAt = DateTime.Now.AddDays(-i).AddHours(5)
-                },
-                new OrderTimeline
-                {
-                    OrderId = i,
-                    EventType = OrderEventType.OrderReadyToShip,
-                    Status = OrderTimelineStatus.Completed,
-                    Description = "Đơn hàng sẵn sàng để giao",
-                    CreatedAt = DateTime.Now.AddDays(-i).AddHours(10)
-                },
-                new OrderTimeline
-                {
-                    OrderId = i,
-                    EventType = OrderEventType.OrderShipped,
-                    Status = OrderTimelineStatus.Completed,
-                    Description = "Đơn hàng đã được giao cho đơn vị vận chuyển",
-                    CreatedAt = DateTime.Now.AddDays(-i).AddHours(15)
-                },
-                new OrderTimeline
-                {
-                    OrderId = i,
-                    EventType = OrderEventType.OrderCompleted,
-                    Status = OrderTimelineStatus.Completed,
-                    Description = "Đơn hàng đã hoàn tất",
-                    CreatedAt = DateTime.Now.AddDays(-i).AddHours(20)
-                },
-            });
+                    // Tạo số lượng timeline bằng Max(1, i%6) cho mỗi đơn hàng
+                    int timelineCount = Math.Max(1, i % 7);
+                    var baseTime = DateTime.Now.AddDays(-i);
+                    
+                    // Luôn thêm OrderCreated làm timeline đầu tiên
+                    timelines.Add(new OrderTimeline
+                    {
+                        OrderId = i,
+                        EventType = OrderEventType.OrderCreated,
+                        Status = OrderTimelineStatus.Completed,
+                        Description = "Đơn hàng được tạo tự động",
+                        CreatedAt = baseTime
+                    });
+                    
+                    // Danh sách các loại sự kiện có thể có
+                    var possibleEvents = new List<OrderEventType>
+                    {
+                        OrderEventType.OrderAcceptedBySeller,
+                        OrderEventType.OrderPackaging,
+                        OrderEventType.OrderReadyToShip,
+                        OrderEventType.OrderShipped,
+                        OrderEventType.OrderCompleted
+                    };
+                    
+                    // Thêm các timeline tiếp theo nếu cần
+                    for (int j = 1; j < timelineCount; j++)
+                    {
+                        if (j < possibleEvents.Count)
+                        {
+                            timelines.Add(new OrderTimeline
+                            {
+                                OrderId = i,
+                                EventType = possibleEvents[j],
+                                Status = OrderTimelineStatus.Completed,
+                                Description = OrderUtils.GetContentForOrderTimeline(new OrderTimeline { EventType = possibleEvents[j] }),
+                                CreatedAt = baseTime.AddHours(j * 4), // Mỗi sự kiện cách nhau 4 giờ
+                                UpdatedAt = baseTime.AddHours(j * 4)
+                            });
+                        }
+                    }
                 }
 
                 await context.OrderTimelines.AddRangeAsync(timelines);
@@ -1644,5 +1616,116 @@ namespace VNFarm.Data.Data
             }
         }
 
+        private static async Task SeedDiscountsAsync(VNFarmContext context)
+        {
+            if (!context.Discounts.Any())
+            {
+                var discounts = new List<Discount>
+                {
+                    // Mã giảm giá theo phần trăm
+                    new Discount
+                    {
+                        Id = 1,
+                        Code = "GIAM10PT",
+                        Description = "Giảm 10% cho tất cả đơn hàng",
+                        RemainingQuantity = 100,
+                        Status = DiscountStatus.Active,
+                        StartDate = DateTime.Now.AddDays(-10),
+                        EndDate = DateTime.Now.AddDays(30),
+                        Type = DiscountType.Percentage,
+                        DiscountAmount = 10,
+                        MinimumOrderAmount = 100000,
+                        MaximumDiscountAmount = 50000,
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    },
+                    new Discount
+                    {
+                        Id = 2,
+                        Code = "GIAM20PT",
+                        Description = "Giảm 20% cho tất cả đơn hàng",
+                        RemainingQuantity = 50,
+                        Status = DiscountStatus.Active,
+                        StartDate = DateTime.Now.AddDays(-5),
+                        EndDate = DateTime.Now.AddDays(15),
+                        Type = DiscountType.Percentage,
+                        DiscountAmount = 20,
+                        MinimumOrderAmount = 200000,
+                        MaximumDiscountAmount = 100000,
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    },
+                    new Discount
+                    {
+                        Id = 3,
+                        Code = "GIAM30PT",
+                        Description = "Giảm 30% cho tất cả đơn hàng",
+                        RemainingQuantity = 30,
+                        Status = DiscountStatus.Active,
+                        StartDate = DateTime.Now.AddDays(-2),
+                        EndDate = DateTime.Now.AddDays(10),
+                        Type = DiscountType.Percentage,
+                        DiscountAmount = 30,
+                        MinimumOrderAmount = 300000,
+                        MaximumDiscountAmount = 150000,
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    },
+                    
+                    // Mã giảm giá theo số tiền cố định
+                    new Discount
+                    {
+                        Id = 4,
+                        Code = "GIAM50K",
+                        Description = "Giảm 50.000đ cho tất cả đơn hàng",
+                        RemainingQuantity = 100,
+                        Status = DiscountStatus.Active,
+                        StartDate = DateTime.Now.AddDays(-10),
+                        EndDate = DateTime.Now.AddDays(30),
+                        Type = DiscountType.FixedAmount,
+                        DiscountAmount = 50000,
+                        MinimumOrderAmount = 150000,
+                        MaximumDiscountAmount = 50000,
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    },
+                    new Discount
+                    {
+                        Id = 5,
+                        Code = "GIAM100K",
+                        Description = "Giảm 100.000đ cho tất cả đơn hàng",
+                        RemainingQuantity = 50,
+                        Status = DiscountStatus.Active,
+                        StartDate = DateTime.Now.AddDays(-5),
+                        EndDate = DateTime.Now.AddDays(15),
+                        Type = DiscountType.FixedAmount,
+                        DiscountAmount = 100000,
+                        MinimumOrderAmount = 300000,
+                        MaximumDiscountAmount = 100000,
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    },
+                    new Discount
+                    {
+                        Id = 6,
+                        Code = "GIAM200K",
+                        Description = "Giảm 200.000đ cho tất cả đơn hàng",
+                        RemainingQuantity = 30,
+                        Status = DiscountStatus.Active,
+                        StartDate = DateTime.Now.AddDays(-2),
+                        EndDate = DateTime.Now.AddDays(10),
+                        Type = DiscountType.FixedAmount,
+                        DiscountAmount = 200000,
+                        MinimumOrderAmount = 500000,
+                        MaximumDiscountAmount = 200000,
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    }
+                };
+
+                await context.Discounts.AddRangeAsync(discounts);
+                await context.SaveChangesAsync();
+            }
+        }
     }
 }

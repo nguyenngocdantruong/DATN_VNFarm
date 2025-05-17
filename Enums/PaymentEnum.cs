@@ -7,7 +7,8 @@ namespace VNFarm.Enums
         PartiallyPaid = 2,
         Paid = 3,
         Refunded = 4,
-        Failed = 5
+        Failed = 5,
+        WaitRefund = 6
     }
     public enum PaymentType
     {

@@ -47,7 +47,7 @@ namespace VNFarm.Services
         protected override Store? MapToEntity(StoreRequestDTO dto)
         {
             if (dto == null) return null;
-            return dto.ToEntity(-1);
+            return dto.ToEntity();
         }
 
         public override async Task<bool> UpdateAsync(StoreRequestDTO storeDto)
@@ -194,8 +194,7 @@ namespace VNFarm.Services
 
                 store.VerificationStatus = StoreStatus.Verified;
                 store.UpdatedAt = DateTime.UtcNow;
-                await _storeRepository.UpdateAsync(store);
-                return true;
+                return await _storeRepository.UpdateAsync(store);
             }
             catch (Exception ex)
             {

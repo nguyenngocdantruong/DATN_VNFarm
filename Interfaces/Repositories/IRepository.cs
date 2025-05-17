@@ -19,5 +19,6 @@ namespace VNFarm.Interfaces.Repositories
         Task<bool> ExistsAsync(int id);
         Task<int> CountAsync(Expression<Func<T, bool>>? predicate = null);
         Task<bool> SaveChangesAsync();
+        Task<int> UpdateRangeAsync(IEnumerable<T> entities);
     }
 } 

@@ -14,7 +14,7 @@ namespace VNFarm.Repositories
 
         public async Task<User?> GetByEmailAsync(string email)
         {
-            return await _dbSet
+            return await _dbSet.Include(u => u.Store)
                 .FirstOrDefaultAsync(u => u.Email == email && !u.IsDeleted);
         }
         

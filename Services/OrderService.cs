@@ -23,17 +23,20 @@ namespace VNFarm.Services
         private readonly ILogger<OrderService> _logger;
         private readonly IDiscountRepository _discountRepository;
         private readonly IProductRepository _productRepository;
+        private readonly ICartRepository _cartRepository;
 
         public OrderService(
             IRepository<Order> repository,
             IOrderRepository orderRepository,
             IDiscountRepository discountRepository,
             IProductRepository productRepository,
+            ICartRepository cartRepository,
             ILogger<OrderService> logger) : base(repository)
         {
             _orderRepository = orderRepository;
             _discountRepository = discountRepository;
             _productRepository = productRepository;
+            _cartRepository = cartRepository;
             _logger = logger;
         }
         #endregion
@@ -103,8 +106,14 @@ namespace VNFarm.Services
             var query = await _repository.GetQueryableAsync();
             if (filter is OrderCriteriaFilter orderCriteriaFilter)
             {
+                // if (orderCriteriaFilter.StoreId.HasValue)
+                //     query = query.Where(o => o.StoreId == orderCriteriaFilter.StoreId.Value);
+
+                if (orderCriteriaFilter.UserId.HasValue)
+                    query = query.Where(o => o.BuyerId == orderCriteriaFilter.UserId.Value);
+
                 if (orderCriteriaFilter.StoreId.HasValue)
-                    query = query.Where(o => o.StoreId == orderCriteriaFilter.StoreId.Value);
+                    query = query.Where(o => o.OrderItems.Any(item => item.Product != null && item.Product.StoreId == orderCriteriaFilter.StoreId.Value));
 
                 if (!string.IsNullOrEmpty(orderCriteriaFilter.SearchTerm))
                     query = query.Where(o => o.Notes.Contains(orderCriteriaFilter.SearchTerm) || o.OrderCode.Contains(orderCriteriaFilter.SearchTerm));
@@ -154,14 +163,14 @@ namespace VNFarm.Services
         public async Task<IEnumerable<OrderResponseDTO?>> GetOrdersByUserIdAsync(int userId)
         {
             var orders = await _repository.FindAsync(
-                o => o.BuyerId == userId || o.StoreId == userId
+                o => o.BuyerId == userId
             );
             return orders.Select(MapToDTO).ToList();
         }
 
         public async Task<IEnumerable<OrderResponseDTO?>> GetOrdersByStoreIdAsync(int storeId)
         {
-            var orders = await _repository.FindAsync(o => o.StoreId == storeId);
+            var orders = await _repository.FindAsync(o => o.OrderItems.Any(item => item.Product != null && item.Product.StoreId == storeId));
             return orders.Select(MapToDTO).ToList();
         }
 
@@ -221,32 +230,53 @@ namespace VNFarm.Services
         }
         #endregion
 
-        #region Order Details Management
-        public async Task<OrderDetailResponseDTO?> AddOrderDetailAsync(int orderId, OrderDetailRequestDTO orderDetailRequest)
+        #region Order Items Management
+        public async Task<OrderItemResponseDTO?> AddOrderItemAsync(int orderId, OrderItemRequestDTO orderItemRequest)
         {
-            if (orderId != orderDetailRequest.OrderId) return null;
-            var product = await _productRepository.GetByIdAsync(orderDetailRequest.ProductId);
+            if (orderId != orderItemRequest.OrderId) return null;
+            var product = await _productRepository.GetByIdAsync(orderItemRequest.ProductId);
             if (product == null) return null;
-            var orderDetail = orderDetailRequest.ToEntity(product.ToResponseDTO());
-            orderDetail.OrderId = orderId;
-            await _orderRepository.AddOrderDetailAsync(orderId, orderDetail);
-            return orderDetail.ToResponseDTO();
+            
+            var orderItem = new OrderItem
+            {
+                OrderId = orderId,
+                ProductId = orderItemRequest.ProductId,
+                Quantity = orderItemRequest.Quantity,
+                UnitPrice = orderItemRequest.UnitPrice,
+                ShopId = orderItemRequest.ShopId,
+                Unit = product.Unit,
+                ShippingFee = 0,
+                TaxAmount = orderItemRequest.UnitPrice * orderItemRequest.Quantity * 0.1m,
+                Subtotal = orderItemRequest.UnitPrice * orderItemRequest.Quantity * 1.1m,
+                PackagingStatus = orderItemRequest.PackagingStatus,
+                Product = product
+            };
+            
+            var order = await _repository.GetByIdAsync(orderId);
+            if (order == null) return null;
+            
+            order.OrderItems.Add(orderItem);
+            await _repository.UpdateAsync(order);
+            
+            return orderItem.ToResponseDTO();
         }
 
-        public async Task<IEnumerable<OrderDetailResponseDTO>> GetOrderDetailAsync(int orderId)
+        public async Task<IEnumerable<OrderItemResponseDTO>> GetOrderItemsAsync(int orderId)
         {
-            var orderDetails = await _orderRepository.GetOrderDetailAsync(orderId);
-            return orderDetails.Select(e => e.ToResponseDTO()).ToList();
+            var orderItems = await _orderRepository.GetOrderItemsAsync(orderId);
+            return orderItems.Select(e => e.ToResponseDTO()).ToList();
         }
 
-        public async Task<bool> UpdateOrderDetailStatusAsync(int orderId, int productId, OrderDetailStatus status)
+        public async Task<bool> UpdateOrderItemStatusAsync(int orderId, int productId, OrderItemStatus status)
         {
-            var orderDetails = await _orderRepository.GetOrderDetailAsync(orderId);
-            if (orderDetails == null) return false;
-            var orderDetail = orderDetails.FirstOrDefault(e => e.ProductId == productId);
-            if (orderDetail == null) return false;
-            orderDetail.PackagingStatus = status;
-            return await _orderRepository.SaveChangesAsync();
+            var order = await _repository.GetByIdAsync(orderId);
+            if (order == null) return false;
+            
+            var orderItem = order.OrderItems.FirstOrDefault(e => e.ProductId == productId);
+            if (orderItem == null) return false;
+            
+            orderItem.PackagingStatus = status;
+            return await _repository.UpdateAsync(order);
         }
         #endregion
 
@@ -269,7 +299,7 @@ namespace VNFarm.Services
         #region Order Calculations
         public async Task<decimal> GetTotalRevenueByStoreIdAsync(int storeId)
         {
-            var orders = await _repository.FindAsync(o => o.StoreId == storeId);
+            var orders = await _repository.FindAsync(o => o.OrderItems.Any(item => item.Product != null && item.Product.StoreId == storeId));
             return orders.Sum(o => o.TotalAmount);
         }
 
@@ -376,6 +406,192 @@ namespace VNFarm.Services
             await _productRepository.AddReviewAsync(review);
             return true;
         }
+        #endregion
+
+        #region Create Order
+        public async Task<OrderResponseDTO?> CreateOrderFromCheckoutAsync(int userId, CheckoutRequestDTO checkoutRequest)
+        {
+            try
+            {
+                // 1. Lấy thông tin giỏ hàng của người dùng
+                var cart = await _cartRepository.GetCartByUserIdAsync(userId);
+                if (cart == null)
+                {
+                    throw new Exception("Không tìm thấy giỏ hàng");
+                }
+
+                // 2. Tạo đơn hàng mới
+                var order = new Order
+                {
+                    OrderCode = GenerateOrderCode(),
+                    Status = OrderStatus.Pending,
+                    Notes = checkoutRequest.Notes,
+                    BuyerId = userId,
+                    ShippingName = checkoutRequest.Address.ShippingName,
+                    ShippingPhone = checkoutRequest.Address.ShippingPhone,
+                    ShippingAddress = checkoutRequest.Address.ShippingAddress,
+                    ShippingProvince = checkoutRequest.Address.ShippingProvince,
+                    ShippingDistrict = checkoutRequest.Address.ShippingDistrict,
+                    ShippingWard = checkoutRequest.Address.ShippingWard,
+                    PaymentMethod = checkoutRequest.PaymentMethod,
+                    PaymentStatus = PaymentStatus.Unpaid,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                };
+
+                // 3. Xử lý mã giảm giá nếu có
+                if (!string.IsNullOrEmpty(checkoutRequest.DiscountCode))
+                {
+                    var discount = (await _discountRepository.FindAsync(d => d.Code == checkoutRequest.DiscountCode)).FirstOrDefault();
+                    if (discount != null && discount.Status == DiscountStatus.Active)
+                    {
+                        order.DiscountId = discount.Id;
+                    }
+                }
+
+                // 4. Thêm đơn hàng vào database
+                await _repository.AddAsync(order);
+
+                // 5. Tạo chi tiết đơn hàng từ các mục trong giỏ hàng
+                decimal totalAmount = 0;
+                decimal shippingFee = 0;
+                decimal taxAmount = 0;
+
+                // Lấy danh sách CartItem được chọn
+                var selectedCartItems = new List<CartItem>();
+                var shopCarts = new Dictionary<int, ShopCart>();
+
+                foreach (var shopCart in cart.ShopCarts)
+                {
+                    foreach (var cartItem in shopCart.CartItems)
+                    {
+                        // Thêm tất cả sản phẩm vào đơn hàng không cần kiểm tra
+                        selectedCartItems.Add(cartItem);
+                        
+                        // Thêm ShopCart vào danh sách nếu chưa có
+                        if (!shopCarts.ContainsKey(shopCart.Id))
+                        {
+                            shopCarts[shopCart.Id] = shopCart;
+                            // Tính phí vận chuyển: mỗi cửa hàng 50,000 VND
+                            shippingFee += 50000;
+                        }
+
+                        // Tạo chi tiết đơn hàng
+                        var product = cartItem.Product;
+                        if (product != null)
+                        {
+                            decimal itemPrice = product.Price * cartItem.Quantity;
+                            decimal itemTax = itemPrice * 0.1m; // Thuế 10%
+                            
+                            var orderItem = new OrderItem
+                            {
+                                OrderId = order.Id,
+                                ProductId = cartItem.ProductId,
+                                Quantity = cartItem.Quantity,
+                                Unit = product.Unit,
+                                UnitPrice = product.Price,
+                                ShippingFee = 0, // Phí vận chuyển tính theo cửa hàng
+                                TaxAmount = itemTax,
+                                Subtotal = itemPrice + itemTax,
+                                PackagingStatus = OrderItemStatus.Pending,
+                                ShopId = shopCart.ShopId,
+                                Product = product
+                            };
+                            
+                            await _orderRepository.AddOrderItemAsync(order.Id, orderItem);
+                            
+                            // Cập nhật tổng tiền
+                            totalAmount += itemPrice;
+                            taxAmount += itemTax;
+                        }
+                    }
+                }
+
+                // 6. Cập nhật thông tin giá cả cho đơn hàng
+                order.TotalAmount = totalAmount;
+                order.ShippingFee = shippingFee;
+                order.TaxAmount = taxAmount;
+                
+                // Tính giảm giá nếu có
+                decimal discountAmount = 0;
+                if (order.DiscountId.HasValue)
+                {
+                    discountAmount = await CalculateOrderDiscountAmountAsync(order.Id);
+                }
+                
+                order.DiscountAmount = discountAmount;
+                order.FinalAmount = totalAmount + shippingFee + taxAmount - discountAmount;
+                
+                await _repository.UpdateAsync(order);
+
+                // 7. Tạo timeline cho đơn hàng
+                var orderTimeline = new OrderTimeline
+                {
+                    OrderId = order.Id,
+                    Status = OrderTimelineStatus.Pending,
+                    Description = "Đơn hàng đã được tạo",
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                };
+                
+                await _orderRepository.AddOrderTimelineAsync(order.Id, orderTimeline);
+
+                // 8. Xóa các CartItem đã được chọn khỏi giỏ hàng
+                foreach (var cartItem in selectedCartItems)
+                {
+                    var shopCart = shopCarts[cartItem.ShopCartId];
+                    shopCart.CartItems.Remove(cartItem);
+                    
+                    // Xóa ShopCart nếu không còn CartItem nào
+                    if (!shopCart.CartItems.Any())
+                    {
+                        cart.ShopCarts.Remove(shopCart);
+                    }
+                }
+                
+                await _orderRepository.SaveChangesAsync();
+
+                // 9. Trả về OrderResponseDTO
+                return MapToDTO(order);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Lỗi khi tạo đơn hàng từ checkout");
+                return null;
+            }
+        }
+
+        // Phương thức tạo mã đơn hàng
+        private string GenerateOrderCode()
+        {
+            // Format: VNF-yyyyMMdd-randomNumber
+            string dateCode = DateTime.Now.ToString("yyyyMMdd");
+            string randomCode = new Random().Next(1000, 9999).ToString();
+            return $"VNF-{dateCode}-{randomCode}";
+        }
+
+        public async Task<bool?> SetOrderPaymentIdAsync(int orderId, long orderPaymentId)
+        {
+            var order = await _repository.GetByIdAsync(orderId);
+            if (order == null) return null;
+            order.OrderPaymentId = orderPaymentId;
+            return await _repository.UpdateAsync(order);
+        }
+
+        public async Task<bool?> SetOrderPaymentStatusAsync(int id, PaymentStatus paymentStatus)
+        {
+            var order = await _repository.GetByIdAsync(id);
+            if (order == null) return null;
+            order.PaymentStatus = paymentStatus;
+            return await _repository.UpdateAsync(order);
+        }
+
+        public async Task<IEnumerable<OrderItemResponseDTO>> GetOrderItemsByOrderIdAndStoreIdAsync(int orderId, int storeId)
+        {
+            var orderItems = await _orderRepository.GetOrderItemsAsync(orderId);
+            return orderItems.Where(e => e.ShopId == storeId).Select(e => e.ToResponseDTO()).ToList();
+        }
+
         #endregion
     }
 }

@@ -13,6 +13,8 @@ namespace VNFarm.DTOs.Request
         public int Rating { get; set; }
         public string? Content { get; set; } = string.Empty;
         public string? ShopResponse { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Mã đơn hàng là bắt buộc")]
+        public int OrderId { get; set; }
         public string? ImageUrl { get; set; } = string.Empty;
         public IFormFile? ImageFile { get; set; }
     }

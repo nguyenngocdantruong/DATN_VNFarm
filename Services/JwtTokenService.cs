@@ -25,11 +25,11 @@ namespace VNFarm.Services
             var expires = DateTime.UtcNow.AddYears(2);
 
             var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
-            new Claim(ClaimTypes.Email, email),
-            new Claim(ClaimTypes.Role, role)
-        };
+            {
+                new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
+                new Claim(ClaimTypes.Email, email),
+                new Claim(ClaimTypes.Role, role)
+            };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -48,5 +48,77 @@ namespace VNFarm.Services
                 Expiration = expires
             };
         }
+    public int? GetUserIdFromToken(string token)
+    {
+        try
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"] ?? throw new Exception("Missing JWT Key"));
+            
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateIssuer = true,
+                ValidIssuer = _configuration["Jwt:Issuer"],
+                ValidateAudience = true,
+                ValidAudience = _configuration["Jwt:Audience"],
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
+            };
+
+            // Giải mã token 🔑
+            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out var validatedToken);
+            
+            // Lấy thông tin user id từ claims 👤
+            var userIdClaim = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            
+            if (userIdClaim != null && int.TryParse(userIdClaim, out int userId))
+            {
+                return userId;
+            }
+            
+            return null;
+        }
+        catch (Exception)
+        {
+            // Trả về null nếu token không hợp lệ hoặc có lỗi xảy ra 🚫
+            return null;
+        }
+    }
+    
+    public string? GetRoleFromToken(string token)
+    {
+        try
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"] ?? throw new Exception("Missing JWT Key"));
+            
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateIssuer = true,
+                ValidIssuer = _configuration["Jwt:Issuer"],
+                ValidateAudience = true,
+                ValidAudience = _configuration["Jwt:Audience"],
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
+            };
+
+            // Giải mã token 🔑
+            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out var validatedToken);
+            
+            // Lấy thông tin role từ claims 👑
+            var roleClaim = principal.FindFirst(ClaimTypes.Role)?.Value;
+            
+            return roleClaim?.Trim();
+        }
+        catch (Exception)
+        {
+            // Trả về null nếu token không hợp lệ hoặc có lỗi xảy ra 🚫
+            return null;
+        }
+    }
     }
 }

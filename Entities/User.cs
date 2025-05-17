@@ -49,5 +49,6 @@ namespace VNFarm.Entities
         public ICollection<Chat>? ReceivedMessages { get; set; }           // Tin nhắn đã nhận
         public ICollection<Notification>? Notifications { get; set; }       // Thông báo
         public ICollection<PaymentMethod>? PaymentMethods { get; set; }    // Phương thức thanh toán
+        public Cart? Cart { get; set; }
     }
 } 

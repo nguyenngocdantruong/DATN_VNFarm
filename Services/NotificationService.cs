@@ -16,6 +16,7 @@ namespace VNFarm.Services
     {
         #region Fields & Constructor
         private readonly INotificationRepository _notificationRepository;
+        private readonly IStoreRepository _storeRepository;
         private readonly IUserRepository _userRepository;
         private readonly ILogger<NotificationService> _logger;
         private readonly VNFarmContext _context;
@@ -23,11 +24,13 @@ namespace VNFarm.Services
         public NotificationService(
             INotificationRepository notificationRepository, 
             IUserRepository userRepository, 
+            IStoreRepository storeRepository,
             ILogger<NotificationService> logger, 
             VNFarmContext context) : base(notificationRepository)
         {
             _notificationRepository = notificationRepository;
             _userRepository = userRepository;
+            _storeRepository = storeRepository;
             _logger = logger;
             _context = context;
         }
@@ -102,6 +105,18 @@ namespace VNFarm.Services
             {
                 query = query.Where(n => n.Content.Contains(filter.SearchTerm));
             }
+            if(filter is NotificationCriteriaFilter notificationFilter){
+                if(notificationFilter.UserId != null){
+                    query = query.Where(n => n.UserId == notificationFilter.UserId);
+                }
+                if(notificationFilter.StoreId != null){
+                    var store = await _storeRepository.GetByIdAsync(notificationFilter.StoreId.Value);
+                    int userId = store?.UserId ?? 0;
+                    if(userId > 0){
+                        query = query.Where(n => n.UserId == userId);
+                    }
+                }
+            }
             return query;
         }
 
@@ -121,6 +136,14 @@ namespace VNFarm.Services
             }
             // Apply paging
             query = query.Skip((filter.Page - 1) * filter.PageSize).Take(filter.PageSize);
+            //Mark all notifications in query as read
+            List<Notification> notifications = [];
+            foreach(var notification in query){
+                if(notification.IsRead == false){
+                    notifications.Add(notification);
+                }
+            }
+            await _notificationRepository.UpdateRangeAsync(notifications);
             return (await query.ToListAsync()).Select(MapToDTO);
         }
         #endregion

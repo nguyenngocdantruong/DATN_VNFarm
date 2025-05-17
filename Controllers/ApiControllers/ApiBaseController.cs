@@ -11,14 +11,14 @@ namespace VNFarm.Controllers.ApiControllers
     [ApiController]
     [Route("api/[controller]")]
     [Produces("application/json")]
-    [Authorize]
-    public abstract class ApiBaseController<TEntity, TReq, TRes>(IService<TEntity, TReq, TRes> service, ILogger<ApiBaseController<TEntity, TReq, TRes>> logger) : ControllerBase where TEntity : BaseEntity where TReq : BaseRequestDTO where TRes : BaseResponseDTO
+    public abstract class ApiBaseController<TEntity, TReq, TRes>(IService<TEntity, TReq, TRes> service, IJwtTokenService jwtTokenService, ILogger<ApiBaseController<TEntity, TReq, TRes>> logger) : ControllerBase where TEntity : BaseEntity where TReq : BaseRequestDTO where TRes : BaseResponseDTO
     {
         protected readonly IService<TEntity, TReq, TRes> _service = service;
+        protected readonly IJwtTokenService _jwtTokenService = jwtTokenService;
         protected readonly ILogger<ApiBaseController<TEntity, TReq, TRes>> _logger = logger;
 
         [HttpPost]
-        public async Task<IActionResult> AddAsync([FromForm] TReq dto)
+        public virtual async Task<IActionResult> AddAsync([FromForm] TReq dto)
         {
             try
             {
@@ -28,7 +28,6 @@ namespace VNFarm.Controllers.ApiControllers
                 var result = await _service.AddAsync(uploadedDto);
                 if (result == null)
                     return BadRequest(new { success = false, message = "Không thể thêm mới dữ liệu." });
-
                 return CreatedAtAction(nameof(GetByIdAsync), new { id = result.Id }, new { success = true, data = result });
             }
             catch (Exception ex)
@@ -107,7 +106,7 @@ namespace VNFarm.Controllers.ApiControllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync()
+        public virtual async Task<IActionResult> GetAllAsync()
         {
             try
             {
@@ -148,7 +147,7 @@ namespace VNFarm.Controllers.ApiControllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(int id, [FromForm] TReq dto)
+        public virtual async Task<IActionResult> UpdateAsync(int id, [FromForm] TReq dto)
         {
             try
             {
@@ -161,8 +160,10 @@ namespace VNFarm.Controllers.ApiControllers
                 var exists = await _service.ExistsAsync(id);
                 if (!exists)
                     return NotFound(new { success = false, message = "Không tìm thấy dữ liệu." });
-                    
-                var result = await _service.UpdateAsync(dto);
+                var uploadedDto = await UploadFile(dto);
+                if (uploadedDto == null)
+                    return BadRequest(new { success = false, message = "Không thể tải lên tệp." });
+                var result = await _service.UpdateAsync(uploadedDto);
                 if (!result)
                     return BadRequest(new { success = false, message = "Không thể cập nhật dữ liệu." });
 
@@ -189,5 +190,27 @@ namespace VNFarm.Controllers.ApiControllers
                 return StatusCode(500, new { success = false, message = "Đã xảy ra lỗi khi xử lý yêu cầu." });
             }
         }
+
+        protected int? GetCurrentUserId()
+        {
+            var authHeader = HttpContext.Request.Headers["Authorization"].ToString();
+            if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
+                return null;
+
+            var token = authHeader.Substring("Bearer ".Length).Trim();
+            return _jwtTokenService.GetUserIdFromToken(token);
+        }
+
+        private string? GetCurrentUserRole()
+        {
+            var authHeader = HttpContext.Request.Headers["Authorization"].ToString();
+            if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
+                return null;
+            var token = authHeader.Substring("Bearer ".Length).Trim();
+            return _jwtTokenService.GetRoleFromToken(token);
+        }
+        protected bool IsCurrentUserAdmin => GetCurrentUserRole() == "Admin";
+        protected bool IsCurrentUserCustomer => GetCurrentUserRole() == "Buyer" || GetCurrentUserRole() == "User";
+        protected bool IsCurrentUserSeller => GetCurrentUserRole() == "Seller";
     }
 }

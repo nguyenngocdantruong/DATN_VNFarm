@@ -13,7 +13,7 @@ namespace VNFarm.Controllers.ApiControllers
     {
         private readonly IChatRoomService _chatRoomService;
 
-        public ChatRoomController(IChatRoomService chatRoomService, ILogger<ChatRoomController> logger) : base(chatRoomService, logger)
+        public ChatRoomController(IChatRoomService chatRoomService, IJwtTokenService jwtTokenService, ILogger<ChatRoomController> logger) : base(chatRoomService, jwtTokenService, logger)
         {
             _chatRoomService = chatRoomService;
         }

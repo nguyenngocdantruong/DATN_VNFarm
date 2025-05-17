@@ -52,9 +52,19 @@ namespace VNFarm.Interfaces.Services
         #endregion
 
         #region Order Detail
-        Task<OrderDetailResponseDTO?> AddOrderDetailAsync(int orderId, OrderDetailRequestDTO orderDetailRequest);
-        Task<IEnumerable<OrderDetailResponseDTO>> GetOrderDetailAsync(int orderId);
-        Task<bool> UpdateOrderDetailStatusAsync(int orderId, int productId, OrderDetailStatus status);
+        Task<OrderItemResponseDTO?> AddOrderItemAsync(int orderId, OrderItemRequestDTO orderItemRequest);
+        Task<IEnumerable<OrderItemResponseDTO>> GetOrderItemsAsync(int orderId);
+        Task<bool> UpdateOrderItemStatusAsync(int orderId, int productId, OrderItemStatus status);
+        Task<IEnumerable<OrderItemResponseDTO>> GetOrderItemsByOrderIdAndStoreIdAsync(int orderId, int storeId);
+        #endregion
+        
+        #region Create Order
+        Task<OrderResponseDTO?> CreateOrderFromCheckoutAsync(int userId, CheckoutRequestDTO checkoutRequest);
+        #endregion
+
+        #region Payment
+        Task<bool?> SetOrderPaymentIdAsync(int orderId, long orderPaymentId);
+        Task<bool?> SetOrderPaymentStatusAsync(int id, PaymentStatus paymentStatus);
         #endregion
     }
 } 

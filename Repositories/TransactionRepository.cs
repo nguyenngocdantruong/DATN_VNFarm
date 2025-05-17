@@ -32,7 +32,7 @@ namespace VNFarm.Repositories
         public async Task<decimal> GetTotalRevenueAsync(int storeId, DateTime startDate, DateTime endDate)
         {
             var totalRevenue = await _context.Transactions
-                .Where(t => t.Order != null && t.Order.StoreId == storeId && t.CreatedAt >= startDate && t.CreatedAt <= endDate)
+                .Where(t => t.Order != null && t.Order.OrderItems.Any(item => item.Product != null && item.Product.StoreId == storeId) && t.CreatedAt >= startDate && t.CreatedAt <= endDate)
                 .SumAsync(t => t.Amount);
             return totalRevenue;
         }
@@ -49,7 +49,7 @@ namespace VNFarm.Repositories
         {
             var transactions = await _context.Transactions
                 .Include(t => t.Order)
-                .Where(t => t.Order != null && t.Order.StoreId == storeId)
+                .Where(t => t.Order != null && t.Order.OrderItems.Any(item => item.Product != null && item.Product.StoreId == storeId))
                 .ToListAsync();
             return transactions;
         }

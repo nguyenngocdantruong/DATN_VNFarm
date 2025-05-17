@@ -1,4 +1,3 @@
-using VNFarm.DTOs.Payment;
 using VNFarm.DTOs.Request;
 using VNFarm.DTOs.Response;
 using VNFarm.Entities;
@@ -132,7 +131,6 @@ namespace VNFarm.Mappers
                 ShippingDistrict = "",
                 ShippingWard = "",
                 BuyerId = requestDto.BuyerId,
-                StoreId = requestDto.StoreId,
             };
         }
         public static OrderTimeline ToEntity(this OrderTimelineRequestDTO requestDto)
@@ -202,7 +200,7 @@ namespace VNFarm.Mappers
                 ImageUrl = requestDto.ImageFile != null ? requestDto.ImageUrl : "",
             };
         }
-        public static Store ToEntity(this StoreRequestDTO requestDto, int userId)
+        public static Store ToEntity(this StoreRequestDTO requestDto)
         {
             return new Store
             {
@@ -217,7 +215,7 @@ namespace VNFarm.Mappers
                 VerificationStatus = StoreStatus.Pending,
                 AverageRating = 0,
                 ReviewCount = 0,
-                UserId = userId,
+                UserId = requestDto.UserId,
             };
         }
         public static Transaction ToEntity(this TransactionRequestDTO requestDto, OrderResponseDTO? orderResponseDTO)
@@ -241,17 +239,53 @@ namespace VNFarm.Mappers
             {
                 FullName = requestDto.FullName,
                 Email = requestDto.Email,
-                PhoneNumber = requestDto.PhoneNumber,
+                PhoneNumber = requestDto.PhoneNumber ?? "",
                 Address = requestDto.Address ?? "",
-                IsActive = true,
+                IsActive = requestDto.IsActive ?? true,
                 ImageUrl = requestDto.ImageFile != null ? requestDto.ImageUrl : "",
-                Role = UserRole.Buyer,
-                PasswordHash = AuthUtils.GenerateMd5Hash(requestDto.PasswordNew),
-                EmailVerified = true,
-                EmailNotificationsEnabled = true,
-                OrderStatusNotificationsEnabled = true,
-                DiscountNotificationsEnabled = true,
-                AdminNotificationsEnabled = true,
+                Role = requestDto.Role ?? UserRole.User,
+                PasswordHash = requestDto.PasswordNew,
+                EmailVerified = requestDto.IsActive ?? true,
+                EmailNotificationsEnabled = requestDto.EmailNotificationsEnabled ?? true,
+                OrderStatusNotificationsEnabled = requestDto.OrderStatusNotificationsEnabled ?? true,
+                DiscountNotificationsEnabled = requestDto.DiscountNotificationsEnabled ?? true,
+                AdminNotificationsEnabled = requestDto.AdminNotificationsEnabled ?? true,
+            };
+        }
+        public static Cart ToEntity(this CartRequestDTO requestDto)
+        {
+            return new Cart
+            {
+                UserId = requestDto.UserId
+            };
+        }
+        public static ShopCart ToEntity(this ShopCartRequestDTO requestDto)
+        {
+            return new ShopCart
+            {
+                ShopId = requestDto.ShopId,
+                CartId = requestDto.CartId
+            };
+        }
+        public static CartItem ToEntity(this CartItemRequestDTO requestDto)
+        {
+            return new CartItem
+            {
+                ProductId = requestDto.ProductId,
+                Quantity = requestDto.Quantity,
+                ShopCartId = requestDto.ShopCartId
+            };
+        }
+        public static ContactRequest ToEntity(this ContactRequestDTO requestDto)
+        {
+            return new ContactRequest
+            {
+                Id = requestDto.Id,
+                FullName = requestDto.FullName,
+                Email = requestDto.Email,
+                ServiceType = requestDto.ServiceType,
+                PhoneNumber = requestDto.PhoneNumber,
+                Message = requestDto.Message
             };
         }
     }

@@ -32,15 +32,13 @@ namespace VNFarm.DTOs.Response
         
         #region Foreign keys
         public int BuyerId { get; set; }
-        public int? StoreId { get; set; }
         public int? DiscountId { get; set; }
         #endregion
         
         #region Related Properties
         public UserResponseDTO? Buyer { get; set; }
-        public StoreResponseDTO? Store { get; set; }
         public DiscountResponseDTO? Discount { get; set; }
-        public List<OrderDetailResponseDTO> OrderDetails { get; set; } = [];
+        public List<OrderItemResponseDTO> OrderItems { get; set; } = [];
         public List<OrderTimelineResponseDTO?> OrderTimelines { get; set; } = [];
         #endregion
     }

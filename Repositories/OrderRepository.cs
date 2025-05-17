@@ -27,7 +27,8 @@ namespace VNFarm.Repositories
         public async Task<IEnumerable<Order>> GetOrdersByStoreIdAsync(int storeId)
         {
             return await _dbSet
-                .Where(o => o.StoreId == storeId && !o.IsDeleted)
+                .Where(o => o.OrderItems.Any(item => item.Product != null && item.Product.StoreId == storeId) && 
+                       !o.IsDeleted)
                 .OrderByDescending(o => o.CreatedAt)
                 .ToListAsync();
         }
@@ -64,7 +65,7 @@ namespace VNFarm.Repositories
         public async Task<decimal> GetTotalRevenueByStoreIdAsync(int storeId)
         {
             return await _dbSet
-                .Where(o => o.StoreId == storeId && 
+                .Where(o => o.OrderItems.Any(item => item.Product != null && item.Product.StoreId == storeId) && 
                        o.Status == OrderStatus.Completed && 
                        !o.IsDeleted)
                 .SumAsync(o => o.TotalAmount);
@@ -117,5 +118,32 @@ namespace VNFarm.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
+        
+        #region Order Item
+        public async Task<OrderItem> AddOrderItemAsync(int orderId, OrderItem orderItem)
+        {
+            orderItem.OrderId = orderId;
+            await _context.OrderItems.AddAsync(orderItem);
+            await _context.SaveChangesAsync();
+            return orderItem;
+        }
+
+        public async Task<IEnumerable<OrderItem>> GetOrderItemsAsync(int orderId)
+        {
+            return await _context.OrderItems
+                .Include(oi => oi.Product)
+                .Include(oi => oi.Shop)
+                .Where(oi => oi.OrderId == orderId)
+                .ToListAsync();
+        }
+
+        public async Task<bool> UpdateOrderItemAsync(int orderId, OrderItem orderItem)
+        {
+            orderItem.OrderId = orderId;
+            _context.OrderItems.Update(orderItem);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        #endregion
     }
 } 

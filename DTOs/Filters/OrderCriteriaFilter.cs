@@ -13,5 +13,6 @@ namespace VNFarm.DTOs.Filters
         public decimal? MinTotal { get; set; } = 0;
         public decimal? MaxTotal { get; set; } = decimal.MaxValue;
         public int? StoreId {get;set;}
+        public int? UserId {get;set;}
     }
 } 

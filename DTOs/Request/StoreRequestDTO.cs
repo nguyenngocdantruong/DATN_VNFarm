@@ -33,5 +33,6 @@ namespace VNFarm.DTOs.Request
         public bool? IsActive { get; set; }
         public StoreStatus? VerificationStatus { get; set; }
         public IFormFile? LogoFile { get; set; }
+        public int UserId { get; set; } = -1;
     }
 }

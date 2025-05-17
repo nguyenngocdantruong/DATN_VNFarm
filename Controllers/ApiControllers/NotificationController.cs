@@ -6,6 +6,8 @@ using VNFarm.DTOs.Request;
 using VNFarm.DTOs.Response;
 using VNFarm.Entities;
 using VNFarm.Interfaces.Services;
+using VNFarm.DTOs.Filters;
+using Microsoft.EntityFrameworkCore;
 
 namespace VNFarm.Controllers.ApiControllers
 {
@@ -15,7 +17,7 @@ namespace VNFarm.Controllers.ApiControllers
     {
         private readonly INotificationService _notificationService;
 
-        public NotificationController(INotificationService notificationService, ILogger<NotificationController> logger) : base(notificationService, logger)
+        public NotificationController(INotificationService notificationService, IJwtTokenService jwtTokenService, ILogger<NotificationController> logger) : base(notificationService, jwtTokenService, logger)
         {
             _notificationService = notificationService;
         }
@@ -67,6 +69,30 @@ namespace VNFarm.Controllers.ApiControllers
                 return BadRequest("Không thể xóa thông báo");
 
             return NoContent();
+        }
+        [HttpPost("filter")]
+        public async Task<ActionResult<IEnumerable<NotificationResponseDTO>>> Filter([FromBody] NotificationCriteriaFilter filter)
+        {
+            if(filter.UserId.HasValue){
+                var currentUserId = GetCurrentUserId();
+                if((currentUserId == null || currentUserId != filter.UserId) && !IsCurrentUserAdmin){
+                    return Unauthorized(new {
+                        totalCount = 0,
+                        data = new List<NotificationResponseDTO>(),
+                        success = false,
+                        message = "Bạn không có quyền truy cập vào thông báo của người dùng này"
+                    });
+                }
+            }
+            var notifications = await _notificationService.Query(filter);
+            var totalCount = await notifications.CountAsync();
+            var result = await _notificationService.ApplyPagingAndSortingAsync(notifications, filter);
+            return Ok(new {
+                totalCount = totalCount,
+                data = result,
+                success = true,
+                message = "Lấy thông báo thành công"
+            });
         }
     }
 }

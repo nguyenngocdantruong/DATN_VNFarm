@@ -30,7 +30,7 @@ namespace VNFarm.Helpers
             }
             // Generate unique file name
             var fileName = Guid.NewGuid().ToString() + fileExtension;
-            var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "Images", folderName);
+            var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", folderName);
             if (!Directory.Exists(folderPath))
             {
                 Directory.CreateDirectory(folderPath);

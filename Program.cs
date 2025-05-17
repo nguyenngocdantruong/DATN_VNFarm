@@ -14,6 +14,10 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using VNFarm.Services;
 using VNFarm.Entities;
+using VNPAY.NET;
+using VNFarm.Interfaces.External;
+using VNFarm.ExternalServices.Payment;
+using VNFarm.ExternalServices.Email;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,7 +55,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend",
         policy => policy
-            .WithOrigins("http://127.0.0.1:5500", "http://localhost:5500")
+            .WithOrigins("http://127.0.0.1:5500", "http://localhost:5500", "http://localhost:5011", "http://127.0.0.1:5011")
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials());
@@ -95,6 +99,9 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+//Đăng ký VNPAY
+builder.Services.AddScoped<IVnpay, Vnpay>();
+
 // Đăng ký repository
 builder.Services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -107,6 +114,10 @@ builder.Services.AddScoped<IChatRoomRepository, ChatRoomRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<IBusinessRegistrationRepository, BusinessRegistrationRepository>();
 builder.Services.AddScoped<IDiscountRepository, DiscountRepository>();
+builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddScoped<IContactRequestRepository, ContactRequestRepository>();
+builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
+builder.Services.AddScoped<IPaymentService, VnpayPayment>();
 
 // Đăng ký các service
 builder.Services.AddScoped<IUserService, UserService>();
@@ -119,6 +130,11 @@ builder.Services.AddScoped<IChatRoomService, ChatRoomService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IBusinessRegistrationService, BusinessRegistrationService>();
 builder.Services.AddScoped<IDiscountService, DiscountService>();
+builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<IContactRequestService, ContactRequestService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddTransient<IEmailService, TempMailService>();
+
 
 var app = builder.Build();
 
