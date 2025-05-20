@@ -450,13 +450,15 @@
 
       loadStatistics: function () {
         const _this = this;
-        storeService.fetchApi(`/get-statistics-store/${_this.filter.storeId}`, 'GET').then(response => {
+        storeService.fetchApi(`/${_this.filter.storeId}/get-statistics-store`, 'GET').then(response => {
           console.log("Response statistics:", response);
           let cards = document.querySelectorAll('.counter-value');
             let i = 0;
             for(let key in response.data){
+              console.log("Key:", key);
               if(i == 3){
                 cards[i].textContent = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(response.data[key]);
+                break;
               }else{
                 cards[i].textContent = response.data[key];
               }
@@ -730,6 +732,7 @@
             isActive: null,
             isInStock: null,
             unit: -999,
+            storeId: _this.filter.storeId
           });
   
           // Reset ô tìm kiếm
@@ -910,9 +913,7 @@
           productInfoCell.innerHTML = `
             <div class="d-flex align-items-center gap-2">
               <div class="rounded bg-light avatar-md d-flex align-items-center justify-content-center">
-                <img src="${
-                  product.imageUrl
-                }" alt="" class="avatar-md" onerror="this.src='/custom/no-image.webp'">
+                <img src="/img/Products/${product.imageUrl}" alt="" class="avatar-md" onerror="this.src='/custom/no-image.webp'">
               </div>
               <div>
                 <a href="#!" class="text-dark fw-medium fs-15">${product.name}</a>
@@ -960,7 +961,7 @@
           const actionCell = document.createElement("td");
           actionCell.innerHTML = `
             <div class="d-flex gap-2">
-              <a href="/Admin/ProductDetail?id=${product.id}" class="btn btn-light btn-sm view-product" data-id="${product.id}">
+              <a href="@Url.Action("ProductDetail", "Admin", new { id = 3 })" class="btn btn-light btn-sm view-product" data-id="${product.id}">
                 <iconify-icon icon="solar:eye-broken" class="align-middle fs-18"></iconify-icon>
               </a>
               <a href="/Admin/ProductEdit?id=${product.id}" class="btn btn-soft-primary btn-sm edit-product" data-id="${product.id}">
@@ -1000,7 +1001,7 @@
           button.addEventListener("click", (e) => {
             e.preventDefault();
             const productId = button.getAttribute("data-id");
-            window.location.href = `/ProductDetail?id=${productId}`;
+            window.location.href = `/Admin/ProductDetail?id=${productId}`;
           });
         });
   
@@ -1009,7 +1010,7 @@
           button.addEventListener("click", (e) => {
             e.preventDefault();
             const productId = button.getAttribute("data-id");
-            window.location.href = `/ProductEdit?id=${productId}`;
+            window.location.href = `/Admin/ProductEdit?id=${productId}`;
           });
         });
   

@@ -31,6 +31,15 @@ namespace VNFarm.Controllers.ApiControllers
             var orderStatus = OrderUtils.GetOrderStatusName();
             return Ok(orderStatus);
         }
+        [HttpGet("order-item-statuses")]
+        public IActionResult GetOrderItemStatuses()
+        {
+            var orderItemStatus = OrderUtils.GetOrderItemStatusName();
+            return Ok(new {
+                success = true,
+                data = orderItemStatus
+            });
+        }
         [HttpGet("order-event-types")]
         public IActionResult GetOrderEventTypes()
         {

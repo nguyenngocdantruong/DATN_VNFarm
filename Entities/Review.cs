@@ -12,6 +12,9 @@ namespace VNFarm.Entities
         // ID sản phẩm được đánh giá
         public int ProductId { get; set; }
         
+        // ID đơn hàng liên quan
+        public int OrderId { get; set; }
+        
         // Điểm đánh giá (1-5 sao)
         public int Rating { get; set; }
         
@@ -27,5 +30,6 @@ namespace VNFarm.Entities
         
         // Navigation properties - Các thuộc tính liên kết
         public virtual User? User { get; set; }      // Thông tin người đánh giá
+        public virtual Order? Order { get; set; }    // Thông tin đơn hàng
     }
 } 

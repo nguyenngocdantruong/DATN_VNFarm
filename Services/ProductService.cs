@@ -84,10 +84,10 @@ namespace VNFarm.Services
                 }
 
                 //Apply storeid filter
-                // if (productCriteriaFilter.StoreId.HasValue)
-                // {
-                //     query = query.Where(p => p.StoreId == productCriteriaFilter.StoreId.Value);
-                // }
+                if (productCriteriaFilter.StoreId.HasValue)
+                {
+                    query = query.Where(p => p.StoreId == productCriteriaFilter.StoreId.Value);
+                }
 
                 // Apply category filter
                 if (productCriteriaFilter.CategoryId != -999)

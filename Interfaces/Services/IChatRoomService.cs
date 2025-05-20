@@ -10,8 +10,9 @@ namespace VNFarm.Interfaces.Services
 {
     public interface IChatRoomService : IService<ChatRoom, ChatRoomRequestDTO, ChatRoomResponseDTO>
     {
-        Task<IEnumerable<Chat>> GetChatsByRoomIdAsync(int roomId, int take = 20, int skip = 0);
+        Task<IEnumerable<ChatResponseDTO>> GetChatsByRoomIdAsync(int roomId, int take = 20, int skip = 0);
         Task<IEnumerable<ChatRoomResponseDTO>> GetUserChatListAsync(int userId);
         Task<bool> SendMessageAsync(ChatRequestDTO chat);
+        Task<ChatRoomResponseDTO?> CreateChatRoomAsync(CreateChatRoomRequestDTO request);
     }
 } 

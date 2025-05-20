@@ -36,18 +36,6 @@ namespace VNFarm.Helpers
                     value = "Đơn hàng được người bán xác nhận",
                     complete = false
                 } },
-                { (int)OrderEventType.OrderInvoiceCreated, new {
-                    value = "Đã tạo hóa đơn",
-                    complete = false
-                } },
-                { (int)OrderEventType.OrderInvoiceSent, new {
-                    value = "Đã gửi hóa đơn cho khách hàng qua email",
-                    complete = false
-                } },
-                { (int)OrderEventType.OrderPackaging, new {
-                    value = "Đang đóng gói",
-                    complete = false
-                } },
                 { (int)OrderEventType.OrderReadyToShip, new {
                     value = "Đã sẵn sàng giao hàng",
                     complete = false
@@ -68,6 +56,14 @@ namespace VNFarm.Helpers
                     value = "Đơn hàng đã được hoàn tiền",
                     complete = true
                 } },
+                { (int)OrderEventType.OrderShippingUpdated, new {
+                    value = "Cập nhật thông tin vận chuyển",
+                    complete = false
+                } },
+                { (int)OrderEventType.OrderAddressUpdated, new {
+                    value = "Cập nhật địa chỉ giao hàng",
+                    complete = false
+                } },
             };
         }
         public static string GetContentForOrderTimeline(OrderTimeline timeline)
@@ -77,9 +73,6 @@ namespace VNFarm.Helpers
                 { OrderEventType.OrderCreated, "Đơn hàng được tạo" },
                 { OrderEventType.OrderPaymentReceived, "Đã nhận được tiền" },
                 { OrderEventType.OrderAcceptedBySeller, "Đơn hàng được người bán xác nhận" },
-                { OrderEventType.OrderInvoiceCreated, "Đã tạo hóa đơn" },
-                { OrderEventType.OrderInvoiceSent, "Đã gửi hóa đơn cho khách hàng qua email" },
-                { OrderEventType.OrderPackaging, "Đang đóng gói" },
                 { OrderEventType.OrderReadyToShip, "Đã sẵn sàng giao hàng" },
                 { OrderEventType.OrderShipped, "Đã giao hàng" },
                 { OrderEventType.OrderCompleted, "Đơn hàng hoàn tất" },
@@ -106,5 +99,20 @@ namespace VNFarm.Helpers
                 { (int)OrderTimelineStatus.Cancelled, "Đã hủy" },
             };
         }
+
+        public static Dictionary<int, string> GetOrderItemStatusName()
+        {
+            return new Dictionary<int, string>
+            {
+                { (int)OrderItemStatus.Pending, "Chờ xử lý" },
+                { (int)OrderItemStatus.Processing, "Đang xử lý" },
+                { (int)OrderItemStatus.Packed, "Đã đóng gói" },
+                { (int)OrderItemStatus.Shipped, "Đang vận chuyển" },
+                { (int)OrderItemStatus.Delivered, "Đã giao hàng" },
+                { (int)OrderItemStatus.Cancelled, "Đã hủy" },
+                { (int)OrderItemStatus.Returned, "Đã trả hàng" },
+            };
+        }
+        
     }
 }

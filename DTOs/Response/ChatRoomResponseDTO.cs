@@ -19,6 +19,8 @@ namespace VNFarm.DTOs.Response
         public required int BuyerId { get; set; }
         public required int SellerId { get; set; }
         public int? OrderId { get; set; }
+        public required UserResponseDTO? Buyer { get; set; }
+        public required UserResponseDTO? Seller { get; set; }
         public ICollection<ChatResponseDTO> Messages { get; set; } = new List<ChatResponseDTO>();
     }
 }

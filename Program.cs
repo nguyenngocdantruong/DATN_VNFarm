@@ -18,6 +18,7 @@ using VNPAY.NET;
 using VNFarm.Interfaces.External;
 using VNFarm.ExternalServices.Payment;
 using VNFarm.ExternalServices.Email;
+using PusherServer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +43,20 @@ builder.Services.AddAuthentication("Bearer")
                 Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)
             )
         };
+        // Cho phép SignalR lấy JWT qua query string
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var accessToken = context.Request.Query["access_token"];
+                var path = context.HttpContext.Request.Path;
+                if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/chatHub"))
+                {
+                    context.Token = accessToken;
+                }
+                return Task.CompletedTask;
+            }
+        };
     });
 
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
@@ -49,6 +64,9 @@ builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 
 // Thêm MVC
 builder.Services.AddControllersWithViews();
+
+// Thêm SignalR
+builder.Services.AddSignalR();
 
 // Add CORS policy to allow all origins
 builder.Services.AddCors(options =>
@@ -65,7 +83,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddSwaggerGen(c =>
 {
     c.EnableAnnotations();
-    c.UseInlineDefinitionsForEnums(); 
+    c.UseInlineDefinitionsForEnums();
     c.SwaggerDoc("v1", new OpenApiInfo
     {
         Title = "VNFarm API",
@@ -134,6 +152,19 @@ builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IContactRequestService, ContactRequestService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddTransient<IEmailService, TempMailService>();
+builder.Services.AddSingleton<IUserConnectionService, UserConnectionService>();
+
+
+// Add Pusher
+builder.Services.AddSingleton(new Pusher(
+    appId: builder.Configuration["Pusher:AppId"],
+    appKey: builder.Configuration["Pusher:Key"],
+    appSecret: builder.Configuration["Pusher:Secret"],
+    options: new PusherOptions
+    {
+        Cluster = builder.Configuration["Pusher:Cluster"],
+        Encrypted = true
+    }));
 
 
 var app = builder.Build();
@@ -149,7 +180,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.MapStaticAssets();
 app.UseStaticFiles();
 
@@ -164,7 +195,7 @@ app.Use(async (context, next) =>
 });
 
 // Sử dụng CORS policy đã định nghĩa ở trên
-app.UseCors("AllowFrontend"); 
+app.UseCors("AllowFrontend");
 
 app.UseRouting();
 app.UseAuthentication();
@@ -181,6 +212,7 @@ app.MapControllerRoute(
 
 app.MapControllers();
 
+
 //// Cấu hình middleware cho các route
 //app.Map("/admin", adminApp =>
 //{
@@ -195,11 +227,13 @@ app.MapControllers();
 //    });
 //});
 
-app.Map("/user", userApp => {
+app.Map("/user", userApp =>
+{
     userApp.UseRouting();
     userApp.UseAuthorization();
     userApp.UseUserOnly();
-    userApp.UseEndpoints(endpoints => {
+    userApp.UseEndpoints(endpoints =>
+    {
         endpoints.MapControllerRoute(
             name: "user",
             pattern: "{controller=User}/{action=Index}/{id?}");

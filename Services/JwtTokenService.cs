@@ -48,30 +48,10 @@ namespace VNFarm.Services
                 Expiration = expires
             };
         }
-    public int? GetUserIdFromToken(string token)
-    {
-        try
+        
+        public int? GetUserIdFromToken(ClaimsPrincipal claimsPrincipal)
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"] ?? throw new Exception("Missing JWT Key"));
-            
-            var tokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(key),
-                ValidateIssuer = true,
-                ValidIssuer = _configuration["Jwt:Issuer"],
-                ValidateAudience = true,
-                ValidAudience = _configuration["Jwt:Audience"],
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero
-            };
-
-            // Giải mã token 🔑
-            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out var validatedToken);
-            
-            // Lấy thông tin user id từ claims 👤
-            var userIdClaim = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var userIdClaim = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             
             if (userIdClaim != null && int.TryParse(userIdClaim, out int userId))
             {
@@ -80,45 +60,78 @@ namespace VNFarm.Services
             
             return null;
         }
-        catch (Exception)
+        
+        public int? GetUserIdFromToken(string token)
         {
-            // Trả về null nếu token không hợp lệ hoặc có lỗi xảy ra 🚫
-            return null;
-        }
-    }
-    
-    public string? GetRoleFromToken(string token)
-    {
-        try
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"] ?? throw new Exception("Missing JWT Key"));
-            
-            var tokenValidationParameters = new TokenValidationParameters
+            try
             {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(key),
-                ValidateIssuer = true,
-                ValidIssuer = _configuration["Jwt:Issuer"],
-                ValidateAudience = true,
-                ValidAudience = _configuration["Jwt:Audience"],
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero
-            };
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"] ?? throw new Exception("Missing JWT Key"));
+                
+                var tokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = true,
+                    ValidIssuer = _configuration["Jwt:Issuer"],
+                    ValidateAudience = true,
+                    ValidAudience = _configuration["Jwt:Audience"],
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
+                };
 
-            // Giải mã token 🔑
-            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out var validatedToken);
-            
-            // Lấy thông tin role từ claims 👑
-            var roleClaim = principal.FindFirst(ClaimTypes.Role)?.Value;
-            
-            return roleClaim?.Trim();
+                // Giải mã token 🔑
+                var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out var validatedToken);
+                
+                // Lấy thông tin user id từ claims 👤
+                var userIdClaim = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                
+                if (userIdClaim != null && int.TryParse(userIdClaim, out int userId))
+                {
+                    return userId;
+                }
+                
+                return null;
+            }
+            catch (Exception)
+            {
+                // Trả về null nếu token không hợp lệ hoặc có lỗi xảy ra 🚫
+                return null;
+            }
         }
-        catch (Exception)
+        
+        public string? GetRoleFromToken(string token)
         {
-            // Trả về null nếu token không hợp lệ hoặc có lỗi xảy ra 🚫
-            return null;
+            try
+            {
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"] ?? throw new Exception("Missing JWT Key"));
+                
+                var tokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = true,
+                    ValidIssuer = _configuration["Jwt:Issuer"],
+                    ValidateAudience = true,
+                    ValidAudience = _configuration["Jwt:Audience"],
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
+                };
+
+                // Giải mã token 🔑
+                var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out var validatedToken);
+                
+                // Lấy thông tin role từ claims 👑
+                var roleClaim = principal.FindFirst(ClaimTypes.Role)?.Value;
+                
+                return roleClaim?.Trim();
+            }
+            catch (Exception)
+            {
+                // Trả về null nếu token không hợp lệ hoặc có lỗi xảy ra 🚫
+                return null;
+            }
         }
-    }
     }
 }

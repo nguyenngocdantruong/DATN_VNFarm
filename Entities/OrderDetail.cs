@@ -4,6 +4,7 @@ namespace VNFarm.Entities
 {
     // Entity chi tiết đơn hàng
     // Quản lý thông tin chi tiết của từng sản phẩm trong đơn hàng
+    [Obsolete("Use OrderItem instead")]
     public class OrderDetail : BaseEntity
     {
         // ID đơn hàng

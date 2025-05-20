@@ -12,10 +12,6 @@ namespace VNFarm.Helpers
     {
         public static void UpdateFromRequestDto(this Order order, AddressRequestDTO addressRequestDTO)
         {
-            if(addressRequestDTO.OrderId != order.Id)
-            {
-                throw new ArgumentException("Mã đơn hàng không hợp lệ");
-            }
             order.ShippingName = addressRequestDTO.ShippingName;
             order.ShippingPhone = addressRequestDTO.ShippingPhone;
             order.ShippingAddress = addressRequestDTO.ShippingAddress;

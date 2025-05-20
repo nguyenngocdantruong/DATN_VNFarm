@@ -440,6 +440,243 @@ namespace VNFarm.Controllers.ApiControllers
         }
         #endregion
 
+        /// <summary>
+        /// Cập nhật trạng thái đơn hàng và thanh toán (Admin)
+        /// </summary>
+        [HttpPut("{id}/admin-update")]
+        public async Task<ActionResult> AdminUpdateOrderStatus(int id, [FromBody] OrderAdminUpdateDTO updateRequest)
+        {
+            try
+            {
+                // Kiểm tra quyền admin
+                if (!User.IsInRole("Admin"))
+                {
+                    return Unauthorized(new { success = false, message = "Bạn không có quyền thực hiện thao tác này" });
+                }
+
+                var order = await _orderService.GetByIdAsync(id);
+                if (order == null)
+                    return NotFound(new { success = false, message = "Không tìm thấy đơn hàng" });
+
+                // Lưu trạng thái cũ để so sánh
+                var oldStatus = order.Status;
+                var oldPaymentStatus = order.PaymentStatus;
+
+                // Cập nhật trạng thái thanh toán
+                if (updateRequest.PaymentStatus.HasValue && updateRequest.PaymentStatus.Value != oldPaymentStatus)
+                {
+                    await _orderService.UpdateOrderPaymentStatusAsync(id, updateRequest.PaymentStatus.Value);
+                    
+                    // Thêm timeline cho trạng thái thanh toán
+                    var paymentTimelineRequest = new OrderTimelineRequestDTO
+                    {
+                        OrderId = id,
+                        EventType = OrderEventType.OrderPaymentReceived,
+                        Status = OrderTimelineStatus.Completed,
+                        Description = $"Trạng thái thanh toán được cập nhật từ [{GetPaymentStatusName(oldPaymentStatus)}] thành [{GetPaymentStatusName(updateRequest.PaymentStatus.Value)}] bởi Admin"
+                    };
+                    
+                    await _orderService.AddOrderTimelineAsync(id, paymentTimelineRequest);
+                    
+                    // Gửi email thông báo cho khách hàng
+                    var buyer = await _userService.GetByIdAsync(order.BuyerId);
+                    if (buyer != null && !string.IsNullOrEmpty(buyer.Email))
+                    {
+                        await _emailService.SendOrderStatusUpdateAsync(buyer.Email, id, $"Trạng thái thanh toán đơn hàng của bạn đã được cập nhật thành: {GetPaymentStatusName(updateRequest.PaymentStatus.Value)}");
+                    }
+                }
+
+                // Cập nhật trạng thái đơn hàng
+                if (updateRequest.Status.HasValue && updateRequest.Status.Value != oldStatus)
+                {
+                    await _orderService.UpdateOrderStatusAsync(id, updateRequest.Status.Value);
+                    
+                    // Thêm timeline cho trạng thái đơn hàng
+                    var orderTimelineRequest = new OrderTimelineRequestDTO
+                    {
+                        OrderId = id,
+                        EventType = GetOrderEventTypeFromStatus(updateRequest.Status.Value),
+                        Status = OrderTimelineStatus.Completed,
+                        Description = $"Trạng thái đơn hàng được cập nhật từ [{GetStatusName(oldStatus)}] thành [{GetStatusName(updateRequest.Status.Value)}] bởi Admin"
+                    };
+                    
+                    await _orderService.AddOrderTimelineAsync(id, orderTimelineRequest);
+                    
+                    // Gửi email thông báo cho khách hàng
+                    var buyer = await _userService.GetByIdAsync(order.BuyerId);
+                    if (buyer != null && !string.IsNullOrEmpty(buyer.Email))
+                    {
+                        await _emailService.SendOrderStatusUpdateAsync(buyer.Email, id, $"Đơn hàng của bạn đã được cập nhật sang trạng thái: {GetStatusName(updateRequest.Status.Value)}");
+                    }
+                    
+                    // Gửi email thông báo cho các cửa hàng liên quan
+                    var orderItems = await _orderService.GetOrderItemsAsync(id);
+                    var storeIds = orderItems.Select(item => item.ShopId).Distinct().ToList();
+                    
+                    foreach (var storeId in storeIds)
+                    {
+                        var store = await _storeService.GetByIdAsync(storeId);
+                        if (store != null && !string.IsNullOrEmpty(store.Email))
+                        {
+                            await _emailService.SendOrderStatusUpdateAsync(store.Email, id, $"Đơn hàng #{order.OrderCode} đã được cập nhật sang trạng thái: {GetStatusName(updateRequest.Status.Value)}");
+                        }
+                    }
+                }
+
+                // Lấy đơn hàng đã cập nhật với đầy đủ thông tin
+                var updatedOrder = await _orderService.GetByIdAsync(id);
+                updatedOrder = await IncludeNavigation(updatedOrder);
+
+                return Ok(new { success = true, message = "Cập nhật thành công", data = updatedOrder });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Lỗi khi cập nhật trạng thái đơn hàng {OrderId}", id);
+                return StatusCode(500, new { success = false, message = "Đã xảy ra lỗi khi cập nhật đơn hàng" });
+            }
+        }
+
+        /// <summary>
+        /// Cập nhật thông tin vận chuyển và địa chỉ đơn hàng (Admin)
+        /// </summary>
+        [HttpPut("{id}/admin-shipping-update")]
+        public async Task<ActionResult> AdminUpdateOrderShipping(int id, [FromBody] OrderAdminShippingUpdateDTO updateRequest)
+        {
+            try
+            {
+                // Kiểm tra quyền admin
+                if (!User.IsInRole("Admin"))
+                {
+                    return Unauthorized(new { success = false, message = "Bạn không có quyền thực hiện thao tác này" });
+                }
+
+                _logger.LogInformation("Cập nhật thông tin vận chuyển đơn hàng {OrderId} - {OrderCode}", id, updateRequest.Shipping.OrderId);
+
+                var order = await _orderService.GetByIdAsync(id);
+                if (order == null)
+                    return NotFound(new { success = false, message = "Không tìm thấy đơn hàng" });
+
+                // Cập nhật thông tin vận chuyển
+                if (updateRequest.Shipping != null)
+                {
+                    var shippingRequest = new ShippingRequestDTO
+                    {
+                        OrderId = updateRequest.Shipping.OrderId,
+                        TrackingNumber = updateRequest.Shipping.TrackingNumber ?? "",
+                        ShippingMethod = updateRequest.Shipping.ShippingMethod ?? "",
+                        ShippingPartner = updateRequest.Shipping.ShippingPartner ?? "",
+                        ShippedAt = updateRequest.Shipping.ShippedAt,
+                        DeliveredAt = updateRequest.Shipping.DeliveredAt
+                    };
+                    
+                    await _orderService.UpdateOrderShippingAsync(id, shippingRequest);
+                    
+                    // Thêm timeline cho cập nhật thông tin vận chuyển
+                    var shippingTimelineRequest = new OrderTimelineRequestDTO
+                    {
+                        OrderId = id,
+                        EventType = OrderEventType.OrderShippingUpdated,
+                        Status = OrderTimelineStatus.Completed,
+                        Description = "Thông tin vận chuyển đã được cập nhật bởi Admin"
+                    };
+                    
+                    await _orderService.AddOrderTimelineAsync(id, shippingTimelineRequest);
+                    
+                    // Gửi email thông báo cho khách hàng
+                    var buyer = await _userService.GetByIdAsync(order.BuyerId);
+                    if (buyer != null && !string.IsNullOrEmpty(buyer.Email))
+                    {
+                        await _emailService.SendOrderStatusUpdateAsync(buyer.Email, id, "Thông tin vận chuyển đơn hàng của bạn đã được cập nhật");
+                    }
+                }
+
+                // Cập nhật thông tin địa chỉ
+                if (updateRequest.Address != null)
+                {
+                    var addressRequest = new AddressRequestDTO
+                    {
+                        ShippingName = updateRequest.Address.ShippingName,
+                        ShippingPhone = updateRequest.Address.ShippingPhone,
+                        ShippingAddress = updateRequest.Address.ShippingAddress,
+                        ShippingProvince = updateRequest.Address.ShippingProvince,
+                        ShippingDistrict = updateRequest.Address.ShippingDistrict,
+                        ShippingWard = updateRequest.Address.ShippingWard
+                    };
+                    
+                    await _orderService.UpdateOrderAddressAsync(id, addressRequest);
+                    
+                    // Thêm timeline cho cập nhật địa chỉ
+                    var addressTimelineRequest = new OrderTimelineRequestDTO
+                    {
+                        OrderId = id,
+                        EventType = OrderEventType.OrderAddressUpdated,
+                        Status = OrderTimelineStatus.Completed,
+                        Description = "Địa chỉ giao hàng đã được cập nhật bởi Admin"
+                    };
+                    
+                    await _orderService.AddOrderTimelineAsync(id, addressTimelineRequest);
+                }
+
+                // Lấy đơn hàng đã cập nhật với đầy đủ thông tin
+                var updatedOrder = await _orderService.GetByIdAsync(id);
+                updatedOrder = await IncludeNavigation(updatedOrder);
+
+                return Ok(new { success = true, message = "Cập nhật thông tin vận chuyển thành công", data = updatedOrder });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Lỗi khi cập nhật thông tin vận chuyển đơn hàng {OrderId}", id);
+                return StatusCode(500, new { success = false, message = "Đã xảy ra lỗi khi cập nhật thông tin vận chuyển" });
+            }
+        }
+
+        // Phương thức hỗ trợ chuyển đổi OrderStatus sang OrderEventType
+        private OrderEventType GetOrderEventTypeFromStatus(OrderStatus status)
+        {
+            return status switch
+            {
+                OrderStatus.Pending => OrderEventType.OrderCreated,
+                OrderStatus.Processing => OrderEventType.OrderAcceptedBySeller,
+                OrderStatus.Shipping => OrderEventType.OrderShipped,
+                OrderStatus.Delivered => OrderEventType.OrderCompleted,
+                OrderStatus.Completed => OrderEventType.OrderCompleted,
+                OrderStatus.Cancelled => OrderEventType.OrderCancelled,
+                OrderStatus.Refunded => OrderEventType.OrderRefunded,
+                _ => OrderEventType.OrderReadyToShip,
+            };
+        }
+
+        // Phương thức lấy tên trạng thái đơn hàng
+        private string GetStatusName(OrderStatus status)
+        {
+            return status switch
+            {
+                OrderStatus.Pending => "Chờ xác nhận",
+                OrderStatus.Processing => "Đang xử lý",
+                OrderStatus.Packaged => "Đã đóng gói",
+                OrderStatus.Shipping => "Đang vận chuyển",
+                OrderStatus.Delivered => "Đã giao hàng",
+                OrderStatus.Completed => "Đã hoàn thành",
+                OrderStatus.Cancelled => "Đã hủy",
+                OrderStatus.Refunded => "Đã hoàn tiền",
+                _ => "Không xác định",
+            };
+        }
+
+        // Phương thức lấy tên trạng thái thanh toán
+        private string GetPaymentStatusName(PaymentStatus status)
+        {
+            return status switch
+            {
+                PaymentStatus.Unpaid => "Chưa thanh toán",
+                PaymentStatus.PartiallyPaid => "Thanh toán một phần",
+                PaymentStatus.Paid => "Đã thanh toán",
+                PaymentStatus.Refunded => "Đã hoàn tiền",
+                PaymentStatus.Failed => "Thanh toán thất bại",
+                _ => "Không xác định",
+            };
+        }
+
         protected async override Task<OrderResponseDTO> IncludeNavigation(OrderResponseDTO item)
         {
             // Thông tin người mua
@@ -471,6 +708,346 @@ namespace VNFarm.Controllers.ApiControllers
             order = await IncludeNavigation(order);
 
             return Ok(new { success = true, data = order });
+        }
+
+        /// <summary>
+        /// Lấy đơn hàng cho seller với thông tin phù hợp
+        /// </summary>
+        [HttpPost("seller")]
+        public async Task<ActionResult<OrderForSellerResponseDTO>> GetOrdersForSeller([FromBody] OrderCriteriaFilter filter)
+        {
+            try
+            {
+                // Kiểm tra người dùng đã đăng nhập và có quyền seller
+                if (!IsCurrentUserSeller)
+                {
+                    return Unauthorized(new { success = false, message = "Bạn không có quyền truy cập thông tin này" });
+                }
+
+                // Lấy ID của người đang đăng nhập (seller)
+                var sellerId = GetCurrentUserId();
+                if (sellerId == null)
+                {
+                    return Unauthorized(new { success = false, message = "Không thể xác thực người dùng" });
+                }
+
+                // Lấy thông tin store của seller
+                var store = await _storeService.GetStoreByUserIdAsync(sellerId.Value);
+                if (store == null)
+                {
+                    return BadRequest(new { success = false, message = "Không tìm thấy thông tin cửa hàng của bạn" });
+                }
+
+                // Thêm storeId vào filter để chỉ lấy đơn hàng thuộc về store này
+                filter.StoreId = store.Id;
+
+                // Thực hiện query lấy đơn hàng
+                var orders = await _orderService.Query(filter);
+                var totalCount = orders.Count();
+                
+                // Áp dụng phân trang và sắp xếp
+                var orderResponses = await _orderService.ApplyPagingAndSortingAsync(orders, filter);
+                
+                // Chuyển đổi OrderResponseDTO sang OrderForSellerResponseDTO
+                var sellerOrderResponses = new List<OrderForSellerResponseDTO>();
+                
+                foreach (var order in orderResponses)
+                {
+                    // Lấy thông tin chi tiết của đơn hàng
+                    var orderItems = await _orderService.GetOrderItemsAsync(order.Id);
+                    var orderTimelines = await _orderService.GetOrderTimelineAsync(order.Id);
+                    
+                    // Lọc các orderItems thuộc về store của seller
+                    var storeOrderItems = orderItems.Where(item => item.ShopId == store.Id).ToList();
+                    
+                    // Chỉ trả về thông tin nếu đơn hàng có sản phẩm thuộc store này
+                    if (storeOrderItems.Any())
+                    {
+                        var sellerOrder = new OrderForSellerResponseDTO
+                        {
+                            Id = order.Id,
+                            OrderCode = order.OrderCode,
+                            Status = order.Status,
+                            Notes = order.Notes ?? "",
+                            Address = new AddressResponseDTO
+                            {
+                                OrderId = order.Id,
+                                ShippingName = order.Address.ShippingName,
+                                ShippingPhone = order.Address.ShippingPhone,
+                                ShippingAddress = order.Address.ShippingAddress,
+                                ShippingProvince = order.Address.ShippingProvince,
+                                ShippingDistrict = order.Address.ShippingDistrict,
+                                ShippingWard = order.Address.ShippingWard
+                            },
+                            Shipping = new ShippingResponseDTO
+                            {
+                                OrderId = order.Id,
+                                TrackingNumber = order.Shipping.TrackingNumber ?? "",
+                                ShippingMethod = order.Shipping.ShippingMethod ?? "",
+                                ShippingPartner = order.Shipping.ShippingPartner ?? "",
+                                ShippedAt = order.Shipping.ShippedAt,
+                                DeliveredAt = order.Shipping.DeliveredAt
+                            },
+                            PaymentStatus = order.PaymentStatus,
+                            BuyerId = order.BuyerId,
+                            StoreId = store.Id,
+                            OrderItems = storeOrderItems,
+                            OrderTimelines = orderTimelines.OrderByDescending(m => m.Id).ToList(),
+                            CreatedAt = order.CreatedAt,
+                            UpdatedAt = order.UpdatedAt
+                        };
+                        
+                        sellerOrderResponses.Add(sellerOrder);
+                    }
+                }
+
+                return Ok(new
+                {
+                    success = true,
+                    data = sellerOrderResponses,
+                    totalCount = totalCount
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Lỗi khi lấy đơn hàng cho seller");
+                return StatusCode(500, new { success = false, message = "Đã xảy ra lỗi khi xử lý yêu cầu" });
+            }
+        }
+
+        /// <summary>
+        /// Lấy thông tin chi tiết đơn hàng cho seller theo ID
+        /// </summary>
+        [HttpGet("seller/{id}")]
+        public async Task<ActionResult<OrderForSellerResponseDTO>> GetOrderForSellerById(int id)
+        {
+            try
+            {
+                // Kiểm tra người dùng đã đăng nhập và có quyền seller
+                if (!IsCurrentUserSeller)
+                {
+                    return Unauthorized(new { success = false, message = "Bạn không có quyền truy cập thông tin này" });
+                }
+
+                // Lấy ID của người đang đăng nhập (seller)
+                var sellerId = GetCurrentUserId();
+                if (sellerId == null)
+                {
+                    return Unauthorized(new { success = false, message = "Không thể xác thực người dùng" });
+                }
+
+                // Lấy thông tin store của seller
+                var store = await _storeService.GetStoreByUserIdAsync(sellerId.Value);
+                if (store == null)
+                {
+                    return BadRequest(new { success = false, message = "Không tìm thấy thông tin cửa hàng của bạn" });
+                }
+
+                // Lấy thông tin đơn hàng
+                var order = await _orderService.GetByIdAsync(id);
+                if (order == null)
+                {
+                    return NotFound(new { success = false, message = "Không tìm thấy đơn hàng" });
+                }
+
+                // Lấy thông tin chi tiết của đơn hàng
+                var orderItems = await _orderService.GetOrderItemsAsync(id);
+                var orderTimelines = await _orderService.GetOrderTimelineAsync(id);
+                
+                // Lọc các orderItems thuộc về store của seller
+                var storeOrderItems = orderItems.Where(item => item.ShopId == store.Id).ToList();
+                
+                // Kiểm tra xem đơn hàng có sản phẩm thuộc store này không
+                if (!storeOrderItems.Any())
+                {
+                    return NotFound(new { success = false, message = "Đơn hàng này không thuộc về cửa hàng của bạn" });
+                }
+
+                // Tạo response
+                var sellerOrder = new OrderForSellerResponseDTO
+                {
+                    Id = order.Id,
+                    OrderCode = order.OrderCode,
+                    Status = order.Status,
+                    Notes = order.Notes ?? "",
+                    Address = new AddressResponseDTO
+                    {
+                        OrderId = order.Id,
+                        ShippingName = order.Address.ShippingName,
+                        ShippingPhone = order.Address.ShippingPhone,
+                        ShippingAddress = order.Address.ShippingAddress,
+                        ShippingProvince = order.Address.ShippingProvince,
+                        ShippingDistrict = order.Address.ShippingDistrict,
+                        ShippingWard = order.Address.ShippingWard
+                    },
+                    Shipping = new ShippingResponseDTO
+                    {
+                        OrderId = order.Id,
+                        TrackingNumber = order.Shipping.TrackingNumber ?? "",
+                        ShippingMethod = order.Shipping.ShippingMethod ?? "",
+                        ShippingPartner = order.Shipping.ShippingPartner ?? "",
+                        ShippedAt = order.Shipping.ShippedAt,
+                        DeliveredAt = order.Shipping.DeliveredAt
+                    },
+                    PaymentStatus = order.PaymentStatus,
+                    BuyerId = order.BuyerId,
+                    StoreId = store.Id,
+                    OrderItems = storeOrderItems,
+                    OrderTimelines = orderTimelines.OrderByDescending(m => m.Id).ToList(),
+                    CreatedAt = order.CreatedAt,
+                    UpdatedAt = order.UpdatedAt
+                };
+
+                return Ok(new { success = true, data = sellerOrder });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Lỗi khi lấy thông tin chi tiết đơn hàng cho seller");
+                return StatusCode(500, new { success = false, message = "Đã xảy ra lỗi khi xử lý yêu cầu" });
+            }
+        }
+
+        /// <summary>
+        /// Cập nhật trạng thái chi tiết đơn hàng cho seller
+        /// </summary>
+        [HttpPut("seller/item/{orderId}/{orderItemId}/status")]
+        public async Task<ActionResult> UpdateOrderItemStatusForSeller(int orderId, int orderItemId, [FromBody] OrderItemStatusUpdateDTO updateRequest)
+        {
+            try
+            {
+                // Kiểm tra người dùng đã đăng nhập và có quyền seller
+                if (!IsCurrentUserSeller)
+                {
+                    return Unauthorized(new { success = false, message = "Bạn không có quyền truy cập thông tin này" });
+                }
+
+                // Lấy ID của người đang đăng nhập (seller)
+                var sellerId = GetCurrentUserId();
+                if (sellerId == null)
+                {
+                    return Unauthorized(new { success = false, message = "Không thể xác thực người dùng" });
+                }
+
+                // Lấy thông tin store của seller
+                var store = await _storeService.GetStoreByUserIdAsync(sellerId.Value);
+                if (store == null)
+                {
+                    return BadRequest(new { success = false, message = "Không tìm thấy thông tin cửa hàng của bạn" });
+                }
+
+                // Lấy thông tin đơn hàng
+                var order = await _orderService.GetByIdAsync(orderId);
+                if (order == null)
+                {
+                    return NotFound(new { success = false, message = "Không tìm thấy đơn hàng" });
+                }
+
+                // Lấy thông tin chi tiết của đơn hàng
+                var orderItems = await _orderService.GetOrderItemsAsync(orderId);
+                
+                // Lọc các orderItems thuộc về store của seller
+                var storeOrderItems = orderItems.Where(item => item.ShopId == store.Id).ToList();
+                
+                // Kiểm tra xem đơn hàng có sản phẩm thuộc store này không
+                if (!storeOrderItems.Any())
+                {
+                    return NotFound(new { success = false, message = "Đơn hàng này không thuộc về cửa hàng của bạn" });
+                }
+
+                // Tìm OrderItem cụ thể cần cập nhật
+                var orderItem = storeOrderItems.FirstOrDefault(item => item.Id == orderItemId);
+                if (orderItem == null)
+                {
+                    return NotFound(new { success = false, message = "Không tìm thấy sản phẩm này trong đơn hàng của bạn" });
+                }
+
+                // Kiểm tra trạng thái đơn hàng, chỉ cho phép cập nhật nếu đơn hàng chưa hoàn thành hoặc hủy
+                if (order.Status == OrderStatus.Completed || order.Status == OrderStatus.Cancelled)
+                {
+                    return BadRequest(new { success = false, message = "Không thể cập nhật sản phẩm trong đơn hàng đã hoàn thành hoặc đã hủy" });
+                }
+
+                // Cập nhật trạng thái OrderItem
+                var success = await _orderService.UpdateOrderItemStatusAsync(orderId, orderItem.ProductId, updateRequest.Status);
+                if (!success)
+                {
+                    return BadRequest(new { success = false, message = "Không thể cập nhật trạng thái sản phẩm" });
+                }
+
+                // Nếu tất cả sản phẩm trong đơn hàng đều đã đóng gói xong (Packed), cập nhật toàn bộ đơn hàng sang trạng thái Packaged
+                if (updateRequest.Status == OrderItemStatus.Packed)
+                {
+                    // Lấy lại thông tin cập nhật mới nhất sau khi cập nhật 1 item
+                    var updatedItems = await _orderService.GetOrderItemsByOrderIdAndStoreIdAsync(orderId, store.Id);
+                    
+                    // Kiểm tra xem tất cả sản phẩm của cửa hàng này đã packed chưa
+                    bool allItemsPacked = updatedItems.All(item => item.PackagingStatus == OrderItemStatus.Packed);
+                    
+                    if (allItemsPacked)
+                    {
+                        // Tự động cập nhật trạng thái đơn hàng nếu tất cả sản phẩm đã được đóng gói
+                        if (order.Status < OrderStatus.Packaged)
+                        {
+                            await _orderService.UpdateOrderStatusAsync(orderId, OrderStatus.Packaged);
+                            
+                            // Thêm timeline cho cập nhật trạng thái đơn hàng
+                            var packagedTimelineRequest = new OrderTimelineRequestDTO
+                            {
+                                OrderId = orderId,
+                                EventType = OrderEventType.OrderReadyToShip,
+                                Status = OrderTimelineStatus.Completed,
+                                Description = "Tất cả sản phẩm đã được đóng gói và sẵn sàng giao hàng"
+                            };
+                            
+                            await _orderService.AddOrderTimelineAsync(orderId, packagedTimelineRequest);
+                        }
+                    }
+                }
+
+                return Ok(new { success = true, message = "Cập nhật trạng thái sản phẩm thành công" });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Lỗi khi cập nhật trạng thái sản phẩm {OrderId}, {OrderItemId}", orderId, orderItemId);
+                return StatusCode(500, new { success = false, message = "Đã xảy ra lỗi khi xử lý yêu cầu" });
+            }
+        }
+
+        // Class DTO cho cập nhật trạng thái OrderItem
+        public class OrderItemStatusUpdateDTO
+        {
+            public required OrderItemStatus Status { get; set; }
+        }
+
+        // Phương thức hỗ trợ chuyển đổi OrderItemStatus sang OrderEventType
+        private OrderEventType GetOrderEventTypeFromOrderItemStatus(OrderItemStatus status)
+        {
+            return status switch
+            {
+                OrderItemStatus.Processing => OrderEventType.OrderAcceptedBySeller,
+                OrderItemStatus.Packed => OrderEventType.OrderReadyToShip,
+                OrderItemStatus.Shipped => OrderEventType.OrderShipped,
+                OrderItemStatus.Delivered => OrderEventType.OrderCompleted,
+                OrderItemStatus.Cancelled => OrderEventType.OrderCancelled,
+                OrderItemStatus.Returned => OrderEventType.OrderRefunded,
+                _ => OrderEventType.OrderReadyToShip,
+            };
+        }
+
+        // Phương thức lấy tên trạng thái OrderItem
+        private string GetOrderItemStatusName(OrderItemStatus status)
+        {
+            return status switch
+            {
+                OrderItemStatus.Pending => "Chờ xử lý",
+                OrderItemStatus.Processing => "Đang xử lý",
+                OrderItemStatus.Packed => "Đã đóng gói",
+                OrderItemStatus.Shipped => "Đã giao cho đơn vị vận chuyển",
+                OrderItemStatus.Delivered => "Đã giao hàng",
+                OrderItemStatus.Cancelled => "Đã hủy",
+                OrderItemStatus.Returned => "Đã trả hàng",
+                _ => "Không xác định",
+            };
         }
     }
 }

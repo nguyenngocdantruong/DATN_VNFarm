@@ -71,42 +71,13 @@
                     </p>
                   </div>
                   <div>
-                    <button id="refund-btn" class="btn btn-outline-secondary">
-                      Hoàn Tiền
+                    <button id="update-status-btn" class="btn btn-warning">
+                      Cập Nhật Trạng Thái
                     </button>
-                    <button id="return-btn" class="btn btn-outline-secondary">
-                      Trả Hàng
+                    <button id="update-shipping-btn" class="btn btn-info">
+                      Chỉnh Sửa Vận Chuyển
                     </button>
-                    <a id="edit-order-btn" href="#" class="btn btn-primary"
-                      >Chỉnh Sửa Đơn</a
-                    >
                   </div>
-                </div>
-
-                <div class="mt-4">
-                  <h4 class="fw-medium text-dark">Tiến Độ</h4>
-                </div>
-                <div
-                  class="row row-cols-xxl-5 row-cols-md-2 row-cols-1"
-                  id="order-progress"
-                >
-                  <!-- Progress steps sẽ được tạo bởi JavaScript -->
-                </div>
-              </div>
-              <div
-                class="card-footer d-flex flex-wrap align-items-center justify-content-between bg-light-subtle gap-2"
-              >
-                <p class="border rounded mb-0 px-2 py-1 bg-body">
-                  <i class="bx bx-arrow-from-left align-middle fs-16"></i>
-                  Ngày giao hàng dự kiến:
-                  <span id="expected-delivery-date" class="text-dark fw-medium"
-                    >Đang tải...</span
-                  >
-                </p>
-                <div>
-                  <button id="mark-ready-btn" class="btn btn-primary">
-                    Đánh Dấu Sẵn Sàng Giao
-                  </button>
                 </div>
               </div>
             </div>
@@ -231,6 +202,15 @@
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Thông Tin Vận Chuyển</h4>
+              </div>
+              <div class="card-body" id="shipping-info">
+                <!-- Nội dung sẽ được tạo bởi JavaScript -->
+                <p class="text-muted">Đang tải thông tin vận chuyển...</p>
               </div>
             </div>
           </div>
@@ -384,12 +364,7 @@
                 >
               </div>
             </div>
-            <div class="d-flex justify-content-between mt-3">
-              <h5 class="">Số Điện Thoại</h5>
-              <div>
-                <a href="#!"><i class="bx bx-edit-alt fs-18"></i></a>
-              </div>
-            </div>
+            
             <p class="mb-1" id="customer-phone">Đang tải...</p>
 
             <div class="d-flex justify-content-between mt-3">
@@ -423,6 +398,113 @@
   </div>
 </div>
 
+<!-- Modal Cập Nhật Trạng Thái -->
+<div class="modal fade" id="updateStatusModal" tabindex="-1" aria-labelledby="updateStatusModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateStatusModalLabel">Cập Nhật Trạng Thái Đơn Hàng</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="order-status-select" class="form-label">Trạng Thái Đơn Hàng</label>
+          <select class="form-select" id="order-status-select">
+            <!-- Options sẽ được thêm bằng JavaScript -->
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="payment-status-select" class="form-label">Trạng Thái Thanh Toán</label>
+          <select class="form-select" id="payment-status-select">
+            <!-- Options sẽ được thêm bằng JavaScript -->
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" class="btn btn-primary" id="save-status-btn">Lưu Thay Đổi</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Thêm Modal Chỉnh sửa thông tin vận chuyển -->
+<div class="modal fade" id="updateShippingModal" tabindex="-1" aria-labelledby="updateShippingModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateShippingModalLabel">Chỉnh Sửa Thông Tin Vận Chuyển</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+            <h6 class="mb-3">Thông tin vận chuyển</h6>
+            <div class="mb-3">
+              <label for="tracking-number" class="form-label">Mã vận đơn</label>
+              <input type="text" class="form-control" id="tracking-number">
+            </div>
+            <div class="mb-3">
+              <label for="shipping-method" class="form-label">Phương thức vận chuyển</label>
+              <input type="text" class="form-control" id="shipping-method">
+            </div>
+            <div class="mb-3">
+              <label for="shipping-partner" class="form-label">Đối tác vận chuyển</label>
+              <input type="text" class="form-control" id="shipping-partner">
+            </div>
+            <div class="mb-3">
+              <label for="shipped-at" class="form-label">Ngày gửi hàng</label>
+              <input type="datetime-local" class="form-control" id="shipped-at">
+            </div>
+            <div class="mb-3">
+              <label for="delivered-at" class="form-label">Ngày giao hàng</label>
+              <input type="datetime-local" class="form-control" id="delivered-at">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <h6 class="mb-3">Thông tin địa chỉ</h6>
+            <div class="mb-3">
+              <label for="shipping-name" class="form-label">Tên người nhận</label>
+              <input type="text" class="form-control" id="shipping-name-input">
+            </div>
+            <div class="mb-3">
+              <label for="shipping-phone" class="form-label">Số điện thoại</label>
+              <input type="text" class="form-control" id="shipping-phone-input">
+            </div>
+            <div class="mb-3">
+              <label for="shipping-address" class="form-label">Địa chỉ</label>
+              <input type="text" class="form-control" id="shipping-address-input">
+            </div>
+            <div class="mb-3">
+              <label for="shipping-province" class="form-label">Tỉnh/Thành phố</label>
+              <input type="text" class="form-control" id="shipping-province-input">
+            </div>
+            <div class="mb-3">
+              <label for="shipping-district" class="form-label">Quận/Huyện</label>
+              <input type="text" class="form-control" id="shipping-district-input">
+            </div>
+            <div class="mb-3">
+              <label for="shipping-ward" class="form-label">Phường/Xã</label>
+              <input type="text" class="form-control" id="shipping-ward-input">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" class="btn btn-primary" id="save-shipping-btn">Lưu Thay Đổi</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Loading overlay -->
+<div id="loading-overlay" class="loading-overlay" style="display: none;">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
 <script type="module">
   import { BaseService } from "/custom/BaseService.js";
   import { EnumService } from "/custom/EnumService.js";
@@ -445,6 +527,39 @@
     paymentMethods: {},
     orderEventTypes: {},
     orderTimelineStatuses: {},
+    
+    // Hiển thị loading overlay
+    showLoading: function(show) {
+      const loadingOverlay = document.getElementById('loading-overlay');
+      if (loadingOverlay) {
+        loadingOverlay.style.display = show ? 'flex' : 'none';
+      }
+    },
+    
+    // Hiển thị thông báo lỗi
+    showError: function(message) {
+      console.error(message);
+      alert(message);
+    },
+    
+    // Format tiền tệ
+    formatCurrency: function(amount) {
+      return new Intl.NumberFormat('vi-VN').format(amount || 0);
+    },
+    
+    // Format ngày
+    formatDate: function(dateString) {
+      if (!dateString) return '';
+      const date = new Date(dateString);
+      return date.toLocaleDateString('vi-VN');
+    },
+    
+    // Format thời gian
+    formatTime: function(dateString) {
+      if (!dateString) return '';
+      const date = new Date(dateString);
+      return date.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+    },
     
     // Khởi tạo ứng dụng
     init: async function() {
@@ -474,7 +589,7 @@
         await this.loadOrderDetail();
 
         // Tải thông tin sản phẩm sau khi đã có dữ liệu đơn hàng
-        if (this.orderData && this.orderData.orderDetails && this.orderData.orderDetails.length > 0) {
+        if (this.orderData && this.orderData.orderItems && this.orderData.orderItems.length > 0) {
           await this.loadProductsInfo();
         }
         
@@ -499,7 +614,7 @@
         }
       } catch (error) {
         console.error("Lỗi tải loại sự kiện đơn hàng:", error);
-        throw error;
+        this.orderEventTypes = {}; // Khởi tạo đối tượng rỗng để tránh lỗi
       }
     },
 
@@ -513,7 +628,7 @@
         }
       } catch (error) {
         console.error("Lỗi tải trạng thái timeline đơn hàng:", error);
-        throw error;
+        this.orderTimelineStatuses = {}; // Khởi tạo đối tượng rỗng để tránh lỗi
       }
     },
     
@@ -527,7 +642,7 @@
         }
       } catch (error) {
         console.error("Lỗi tải trạng thái đơn hàng:", error);
-        throw error;
+        this.statuses = {}; // Khởi tạo đối tượng rỗng để tránh lỗi
       }
     },
 
@@ -538,10 +653,12 @@
         if (data && data.data) {
           console.log("Payment Statuses:", data.data);
           this.paymentStatuses = data.data;
+        } else {
+          this.paymentStatuses = {}; // Khởi tạo đối tượng rỗng nếu không có dữ liệu
         }
       } catch (error) {
         console.error("Lỗi tải trạng thái thanh toán:", error);
-        throw error;
+        this.paymentStatuses = {}; // Khởi tạo đối tượng rỗng để tránh lỗi
       }
     },
 
@@ -552,11 +669,19 @@
         if (data && data.success && data.data) {
           console.log("Payment Methods:", data.data);
           this.paymentMethods = data.data;
+        } else {
+          this.paymentMethods = {}; // Khởi tạo đối tượng rỗng nếu không có dữ liệu
         }
       } catch (error) {
         console.error("Lỗi tải phương thức thanh toán:", error);
-        throw error;
+        this.paymentMethods = {}; // Khởi tạo đối tượng rỗng để tránh lỗi
       }
+    },
+
+    // Tải thông tin sản phẩm
+    loadProductsInfo: async function() {
+      // Phương thức này sẽ được triển khai nếu cần tải thông tin sản phẩm bổ sung
+      console.log("Thông tin sản phẩm đã được tải từ orderData");
     },
 
     // Tải chi tiết đơn hàng
@@ -567,6 +692,16 @@
         if (response && response.success && response.data) {
           console.log("Order Detail:", response.data);
           this.orderData = response.data;
+          
+          // Lưu thông tin sản phẩm từ response
+          if (this.orderData.orderItems && this.orderData.orderItems.length > 0) {
+            this.orderData.orderItems.forEach(item => {
+              if (item.product) {
+                this.productsData[item.productId] = item.product;
+              }
+            });
+          }
+          
           this.renderOrderDetail();
         } else {
           this.showError("Không thể tải thông tin đơn hàng");
@@ -602,14 +737,19 @@
       // Thông tin vận chuyển
       this.renderShippingInfo();
       
-      // Thông tin cửa hàng
-      document.getElementById('store-name').textContent = order.store.name;
+      // Thông tin cửa hàng - Hiển thị thông tin từ shop của item đầu tiên nếu có
+      if (order.orderItems && order.orderItems.length > 0 && order.orderItems[0].shop) {
+        document.getElementById('store-name').textContent = order.orderItems[0].shop.name;
+      } else {
+        document.getElementById('store-name').textContent = 'Không có thông tin';
+      }
       
       // Người thanh toán
-      document.getElementById('buyer-name').textContent = order.buyer.fullName;
-      
-      // Hiển thị tiến độ đơn hàng
-      this.renderOrderProgress(order.status);
+      if (order.buyer) {
+        document.getElementById('buyer-name').textContent = order.buyer.fullName;
+      } else {
+        document.getElementById('buyer-name').textContent = 'Không có thông tin';
+      }
       
       // Hiển thị sản phẩm trong đơn hàng
       this.renderOrderItems();
@@ -622,9 +762,6 @@
       
       // Tổng kết đơn hàng
       this.renderOrderSummary();
-      
-      // Cập nhật URL cho nút chỉnh sửa
-      document.getElementById('edit-order-btn').href = `00_order_edit.html?id=${order.id}`;
       
       // Hiển thị thông tin ghi chú nếu có
       const notesSection = document.getElementById('notes-section');
@@ -712,129 +849,13 @@
       paymentStatusBadge.textContent = statusText;
     },
 
-    // Hiển thị tiến độ đơn hàng
-    renderOrderProgress: function (currentStatus) {
-      const progressContainer = document.getElementById("order-progress");
-      progressContainer.innerHTML = "";
-
-      // Định nghĩa các trạng thái trong tiến trình
-      const progressSteps = [
-        { status: 0, label: "Xác Nhận Đơn" },
-        { status: 8, label: "Chờ Thanh Toán" },
-        { status: 1, label: "Đang Xử Lý" },
-        { status: 3, label: "Đang Giao" },
-        { status: 4, label: "Đã Giao" },
-      ];
-
-      // Trường hợp đơn hàng bị hủy hoặc hoàn tiền
-      if (currentStatus === 6 || currentStatus === 7) {
-        // Hiển thị trạng thái đặc biệt cho đơn hủy hoặc hoàn tiền
-        const cancelledStep = document.createElement("div");
-        cancelledStep.className = "col";
-        cancelledStep.innerHTML = `
-             <div class="progress mt-3" style="height: 10px;">
-               <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-             </div>
-             <p class="mb-0 mt-2">${this.statuses[currentStatus]}</p>
-           `;
-        progressContainer.appendChild(cancelledStep);
-        return;
-      }
-
-      // Render các bước tiến trình
-      progressSteps.forEach((step) => {
-        const stepElement = document.createElement("div");
-        stepElement.className = "col";
-
-        // Xác định trạng thái của bước này (hoàn thành, đang thực hiện, chưa bắt đầu)
-        let progressClass = "";
-        let progressWidth = "0%";
-        let loading = "";
-
-        // FIX: Sửa logic để đánh dấu đúng các bước đã hoàn thành
-        if (currentStatus === 5) {
-          // Nếu đơn hàng đã hoàn thành, tất cả các bước đều là hoàn thành
-          progressClass = "bg-success";
-          progressWidth = "100%";
-        } else if (step.status === 8 && this.orderData.paymentStatus === 3) {
-          // Trường hợp "Chờ thanh toán" và đã thanh toán
-          progressClass = "bg-success";
-          progressWidth = "100%";
-        } else if (step.status < currentStatus) {
-          // Các bước trước bước hiện tại đều hoàn thành
-          progressClass = "bg-success";
-          progressWidth = "100%";
-        } else if (step.status === currentStatus) {
-          // Bước đang thực hiện
-          progressClass = "bg-warning";
-          progressWidth = "60%";
-          loading = `
-               <div class="spinner-border spinner-border-sm text-warning" role="status">
-                 <span class="visually-hidden">Đang tải...</span>
-               </div>
-             `;
-        } else if (step.status === 4 && currentStatus === 5) {
-          // Trường hợp bước "Đã giao" và đơn hàng đã hoàn thành
-          progressClass = "bg-success";
-          progressWidth = "100%";
-        } else {
-          // Bước chưa thực hiện
-          progressClass = "bg-primary";
-          progressWidth = "0%";
-        }
-
-        stepElement.innerHTML = `
-             <div class="progress mt-3" style="height: 10px;">
-               <div class="progress-bar progress-bar-striped progress-bar-animated ${progressClass}" 
-                    role="progressbar" style="width: ${progressWidth}" 
-                    aria-valuenow="70" aria-valuemin="0" aria-valuemax="70">
-               </div>
-             </div>
-             <div class="d-flex align-items-center gap-2 mt-2">
-               <p class="mb-0">${step.label}</p>
-               ${loading}
-             </div>
-           `;
-
-        progressContainer.appendChild(stepElement);
-      });
-
-      // Cập nhật nút hành động tùy theo trạng thái
-      const actionButton = document.getElementById("mark-ready-btn");
-
-      if (currentStatus === 1) {
-        actionButton.textContent = "Đánh Dấu Sẵn Sàng Giao";
-        actionButton.disabled = false;
-      } else if (currentStatus === 2) {
-        actionButton.textContent = "Đánh Dấu Đang Giao Hàng";
-        actionButton.disabled = false;
-      } else if (currentStatus === 3) {
-        actionButton.textContent = "Đánh Dấu Đã Giao Hàng";
-        actionButton.disabled = false;
-      } else if (currentStatus === 4) {
-        actionButton.textContent = "Đánh Dấu Hoàn Thành";
-        actionButton.disabled = false;
-      } else {
-        actionButton.textContent = "Cập Nhật Trạng Thái";
-        actionButton.disabled =
-          currentStatus === 5 || currentStatus === 6 || currentStatus === 7;
-      }
-
-      // Ngày giao hàng dự kiến (giả định là 3 ngày sau ngày tạo đơn)
-      const createdDate = new Date(this.orderData.createdAt);
-      const expectedDate = new Date(createdDate);
-      expectedDate.setDate(expectedDate.getDate() + 3);
-      document.getElementById("expected-delivery-date").textContent =
-        this.formatDate(expectedDate);
-    },
-
     // Hiển thị sản phẩm trong đơn hàng
     renderOrderItems: function() {
       const itemsContainer = document.getElementById('order-items');
       itemsContainer.innerHTML = '';
       
       // Nếu không có chi tiết đơn hàng
-      if (!this.orderData.orderDetails || this.orderData.orderDetails.length === 0) {
+      if (!this.orderData.orderItems || this.orderData.orderItems.length === 0) {
         itemsContainer.innerHTML = `
           <tr>
             <td colspan="6" class="text-center">Không có sản phẩm nào trong đơn hàng</td>
@@ -844,23 +865,22 @@
       }
       
       // Hiển thị từng sản phẩm
-      this.orderData.orderDetails.forEach((item) => {
+      this.orderData.orderItems.forEach((item) => {
         const packagingStatus = this.getPackagingStatusBadge(item.packagingStatus);
-        const productInfo = this.productsData[item.productId];
+        const product = item.product;
         
         const row = document.createElement('tr');
         
         // Nếu có thông tin sản phẩm, hiển thị thông tin chi tiết
-        // Nếu không, hiển thị thông tin cơ bản với ID sản phẩm
-        if (productInfo) {
+        if (product) {
           row.innerHTML = `
             <td>
               <div class="d-flex align-items-center gap-2">
                 <div class="rounded bg-light avatar-md d-flex align-items-center justify-content-center">
-                  <img src="/custom/no-image.webp" alt="${productInfo.name}" class="avatar-md">
+                  <img src="/img/Products/${product.imageUrl}" alt="${product.name}" class="avatar-md" id="product-image-${product.id}">
                 </div>
                 <div>
-                  <a href="#!" class="text-dark fw-medium fs-15">${productInfo.name}</a>
+                  <a href="#!" class="text-dark fw-medium fs-15">${product.name}</a>
                   <p class="text-muted mb-0 mt-1 fs-13">
                     <span>Kích thước: </span>${this.getUnitName(item.unit)}
                   </p>
@@ -876,7 +896,7 @@
             <td>${this.formatCurrency(item.subtotal)}đ</td>
           `;
         } else {
-          // Hiển thị với thông tin tối thiểu nếu không lấy được thông tin sản phẩm
+          // Hiển thị với thông tin tối thiểu nếu không có thông tin sản phẩm
           row.innerHTML = `
             <td>
               <div class="d-flex align-items-center gap-2">
@@ -901,13 +921,7 @@
           `;
         }
         itemsContainer.appendChild(row);
-        //Render image product
-        @* orderService.fetchImage(productInfo.imageUrl, "Products").then(image => {
-          document.getElementById("product-image").src = image;
-        }); *@
-
       });
-
     },
 
     // Lấy trạng thái đóng gói sản phẩm
@@ -916,22 +930,42 @@
         case 0:
           return {
             class: "badge bg-light text-dark px-2 py-1 fs-13",
-            text: "Đang Đóng Gói",
+            text: "Chờ xử lý",
           };
         case 1:
           return {
-            class: "badge bg-success-subtle text-success px-2 py-1 fs-13",
-            text: "Sẵn Sàng",
+            class: "badge bg-primary-subtle text-primary px-2 py-1 fs-13",
+            text: "Đang xử lý",
           };
         case 2:
           return {
+            class: "badge bg-success-subtle text-success px-2 py-1 fs-13",
+            text: "Đã đóng gói",
+          };
+        case 3:
+          return {
+            class: "badge bg-info-subtle text-info px-2 py-1 fs-13",
+            text: "Đang vận chuyển",
+          };
+        case 4:
+          return {
+            class: "badge bg-success text-white px-2 py-1 fs-13",
+            text: "Đã giao hàng",
+          };
+        case 5:
+          return {
+            class: "badge bg-danger-subtle text-danger px-2 py-1 fs-13",
+            text: "Đã hủy",
+          };
+        case 6:
+          return {
             class: "badge bg-warning-subtle text-warning px-2 py-1 fs-13",
-            text: "Chờ Kiểm Tra",
+            text: "Đã trả hàng",
           };
         default:
           return {
             class: "badge bg-light text-dark px-2 py-1 fs-13",
-            text: "Không Xác Định",
+            text: "Không xác định",
           };
       }
     },
@@ -974,7 +1008,14 @@
       } else {
         // Hiển thị timeline từ dữ liệu API
         this.orderData.orderTimelines.forEach((event, index) => {
-          const orderEvent = this.orderEventTypes[event.eventType];
+          let orderEvent = this.orderEventTypes[event.eventType];
+          if(orderEvent == null)
+          {
+            orderEvent = {
+              value: "Không xác định " + event.eventType,
+              complete: false
+            };
+          }
           const timelineItem = this.createTimelineItem(
             {
               title: orderEvent.value,
@@ -1050,14 +1091,14 @@
       const confirmDate = new Date(paymentDate);
       confirmDate.setMinutes(confirmDate.getMinutes() - 5);
       
-      const itemCount = this.orderData.orderDetails ? this.orderData.orderDetails.length : 0;
+      const itemCount = this.orderData.orderItems ? this.orderData.orderItems.length : 0;
       events.push({
         title: `${itemCount} sản phẩm được xác nhận bởi Hệ thống`,
         description: "",
         date: confirmDate,
         isActive: false,
         isCompleted: true,
-        products: this.orderData.orderDetails
+        products: this.orderData.orderItems
       });
       
       return events;
@@ -1270,212 +1311,226 @@
     setupEventListeners: function () {
       const _this = this;
 
-      // Nút "Hoàn Tiền"
+      // Nút "Cập nhật trạng thái"
       document
-        .getElementById("refund-btn")
+        .getElementById("update-status-btn")
         .addEventListener("click", function () {
-          _this.handleRefund();
+          _this.showUpdateStatusModal();
         });
-
-      // Nút "Trả Hàng"
+      
+      // Nút "Chỉnh sửa vận chuyển"
       document
-        .getElementById("return-btn")
+        .getElementById("update-shipping-btn")
         .addEventListener("click", function () {
-          _this.handleReturn();
+          _this.showUpdateShippingModal();
         });
-
-      // Nút cập nhật trạng thái
+      
       document
-        .getElementById("mark-ready-btn")
+        .getElementById("save-status-btn")
         .addEventListener("click", function () {
-          _this.updateOrderStatus();
+          _this.saveOrderStatus();
+        });
+        
+      document
+        .getElementById("save-shipping-btn")
+        .addEventListener("click", function () {
+          _this.saveShippingInfo();
         });
     },
 
-    // Xử lý hoàn tiền
-    handleRefund: function () {
-      alert("Chức năng hoàn tiền đang được phát triển");
+    // Hiển thị modal cập nhật trạng thái
+    showUpdateStatusModal: function() {
+      const orderStatusSelect = document.getElementById('order-status-select');
+      const paymentStatusSelect = document.getElementById('payment-status-select');
+      
+      // Xóa các options cũ
+      orderStatusSelect.innerHTML = '';
+      paymentStatusSelect.innerHTML = '';
+      
+      // Thêm options cho trạng thái đơn hàng
+      for (const [key, value] of Object.entries(this.statuses)) {
+        const option = document.createElement('option');
+        option.value = key;
+        option.textContent = value;
+        option.selected = parseInt(key) === this.orderData.status;
+        orderStatusSelect.appendChild(option);
+      }
+      
+      // Thêm options cho trạng thái thanh toán
+      for (const [key, value] of Object.entries(this.paymentStatuses)) {
+        const option = document.createElement('option');
+        option.value = key;
+        option.textContent = value;
+        option.selected = parseInt(key) === this.orderData.paymentStatus;
+        paymentStatusSelect.appendChild(option);
+      }
+      
+      // Hiển thị modal
+      const updateStatusModal = new bootstrap.Modal(document.getElementById('updateStatusModal'));
+      updateStatusModal.show();
     },
-
-    // Xử lý trả hàng
-    handleReturn: function () {
-      alert("Chức năng trả hàng đang được phát triển");
-    },
-
-    // Cập nhật trạng thái đơn hàng
-    updateOrderStatus: function () {
-      const currentStatus = this.orderData.status;
-      let nextStatus = currentStatus;
-
-      // Xác định trạng thái tiếp theo
-      if (currentStatus === 1) nextStatus = 2; // Đang xử lý -> Đang đóng gói
-      else if (currentStatus === 2)
-        nextStatus = 3; // Đang đóng gói -> Đang vận chuyển
-      else if (currentStatus === 3)
-        nextStatus = 4; // Đang vận chuyển -> Đã giao hàng
-      else if (currentStatus === 4) nextStatus = 5; // Đã giao hàng -> Đã hoàn thành
-
-      if (nextStatus === currentStatus) {
-        alert("Không thể cập nhật trạng thái đơn hàng");
+    
+    // Lưu trạng thái đơn hàng
+    saveOrderStatus: function() {
+      const orderStatusSelect = document.getElementById('order-status-select');
+      const paymentStatusSelect = document.getElementById('payment-status-select');
+      
+      const orderStatus = parseInt(orderStatusSelect.value);
+      const paymentStatus = parseInt(paymentStatusSelect.value);
+      
+      // Kiểm tra xem có thay đổi không
+      if (orderStatus === this.orderData.status && paymentStatus === this.orderData.paymentStatus) {
+        alert('Không có thay đổi nào được thực hiện');
         return;
       }
-
+      
       // Xác nhận từ người dùng
-      if (
-        !confirm(
-          `Bạn có chắc chắn muốn cập nhật trạng thái đơn hàng từ "${this.statuses[currentStatus]}" thành "${this.statuses[nextStatus]}"?`
-        )
-      ) {
+      if (!confirm('Bạn có chắc chắn muốn cập nhật trạng thái đơn hàng?')) {
         return;
       }
-
+      
       this.showLoading(true);
-
+      
       // Gọi API cập nhật trạng thái
-      orderService
-        .update(this.orderId, { status: nextStatus })
-        .then((response) => {
-          if (response && response.success) {
-            alert("Cập nhật trạng thái đơn hàng thành công");
-            // Tải lại dữ liệu
-            this.loadOrderDetail();
-          } else {
-            alert("Không thể cập nhật trạng thái đơn hàng");
-          }
-        })
-        .catch((error) => {
-          console.error("Lỗi cập nhật trạng thái đơn hàng:", error);
-          alert("Đã xảy ra lỗi khi cập nhật trạng thái đơn hàng");
-        })
-        .finally(() => {
-          this.showLoading(false);
-        });
-    },
-
-    // Hiển thị loading
-    showLoading: function (isLoading) {
-      const cards = document.querySelectorAll(".card");
-
-      if (isLoading) {
-        cards.forEach((card) => {
-          // Kiểm tra xem đã có overlay chưa
-          if (!card.querySelector(".loading-overlay")) {
-            const overlay = document.createElement("div");
-            overlay.className = "loading-overlay";
-            overlay.innerHTML = `
-          <div class="text-center">
-            <div class="spinner-border text-primary" role="status">
-              <span class="visually-hidden">Đang tải...</span>
-            </div>
-            <p class="mt-2">Đang tải dữ liệu...</p>
-          </div>
-        `;
-            card.appendChild(overlay);
-          }
-        });
-      } else {
-        // Xóa tất cả các overlay
-        document.querySelectorAll(".loading-overlay").forEach((overlay) => {
-          overlay.remove();
-        });
-      }
-    },
-
-    // Hiển thị thông báo lỗi
-    showError: function (message) {
-      const cards = document.querySelectorAll(".card");
-
-      cards.forEach((card) => {
-        if (card.querySelector(".card-body")) {
-          card.querySelector(".card-body").innerHTML = `
-        <div class="alert alert-danger" role="alert">
-          <i class="bx bx-error-circle me-2"></i> ${message}
-        </div>
-      `;
+      orderService.fetchApi(`/${this.orderData.id}/admin-update`, 'PUT', {
+        status: orderStatus,
+        paymentStatus: paymentStatus
+      })
+      .then(response => {
+        if (response && response.success) {
+          // Cập nhật dữ liệu đơn hàng
+          this.orderData = response.data;
+          
+          // Render lại giao diện
+          this.renderOrderDetail();
+          
+          // Đóng modal
+          const updateStatusModal = bootstrap.Modal.getInstance(document.getElementById('updateStatusModal'));
+          updateStatusModal.hide();
+          
+          // Hiển thị thông báo thành công
+          alert('Cập nhật trạng thái đơn hàng thành công');
+        } else {
+          alert('Không thể cập nhật trạng thái đơn hàng: ' + (response.message || 'Đã xảy ra lỗi'));
         }
+      })
+      .catch(error => {
+        console.error('Lỗi khi cập nhật trạng thái đơn hàng:', error);
+        alert('Đã xảy ra lỗi khi cập nhật trạng thái đơn hàng');
+      })
+      .finally(() => {
+        this.showLoading(false);
       });
     },
 
-    // Định dạng tiền tệ
-    formatCurrency: function (amount) {
-      if (amount === null || amount === undefined) return "0";
-      return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    },
-
-    // Định dạng ngày
-    formatDate: function (dateString) {
-      if (!dateString) return "";
-
-      const date = new Date(dateString);
-      const day = date.getDate().toString().padStart(2, "0");
-      const month = (date.getMonth() + 1).toString().padStart(2, "0");
-      const year = date.getFullYear();
-
-      return `${day}/${month}/${year}`;
-    },
-
-    // Định dạng giờ
-    formatTime: function (dateString) {
-      if (!dateString) return "";
-
-      const date = new Date(dateString);
-      const hours = date.getHours().toString().padStart(2, "0");
-      const minutes = date.getMinutes().toString().padStart(2, "0");
-
-      return `${hours}:${minutes}`;
-    },
-
-    // Tải thông tin chi tiết của các sản phẩm
-    loadProductsInfo: async function() {
-      try {
-        const productIds = this.orderData.orderDetails.map(item => item.productId);
-        
-        // Hiển thị loading cho bảng sản phẩm
-        document.getElementById('order-items').innerHTML = `
-          <tr>
-            <td colspan="6" class="text-center">
-              <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Đang tải thông tin sản phẩm...</span>
-              </div>
-              <p class="mt-2">Đang tải thông tin sản phẩm...</p>
-            </td>
-          </tr>
-        `;
-        
-        // Tải thông tin cho từng sản phẩm và lưu vào đối tượng productsData
-        const productPromises = productIds.map(async (productId) => {
-          try {
-            const response = await productService.getById(productId);
-            if (response && response.success && response.data) {
-              this.productsData[productId] = response.data;
-            }
-          } catch (error) {
-            console.error(`Lỗi khi lấy thông tin sản phẩm ID ${productId}:`, error);
-          }
-        });
-        
-        // Đợi tất cả các yêu cầu API được hoàn thành
-        await Promise.all(productPromises);
-        
-        // Render lại bảng sản phẩm với thông tin đã lấy được
-        this.renderOrderItems();
-      } catch (error) {
-        console.error("Lỗi khi tải thông tin sản phẩm:", error);
-        // Hiển thị thông báo lỗi trong bảng sản phẩm
-        document.getElementById('order-items').innerHTML = `
-          <tr>
-            <td colspan="6" class="text-center text-danger">
-              <i class="bx bx-error-circle me-2"></i> Không thể tải thông tin chi tiết sản phẩm
-            </td>
-          </tr>
-        `;
+    // Thêm phương thức hiển thị modal chỉnh sửa vận chuyển
+    showUpdateShippingModal: function() {
+      // Điền thông tin vận chuyển hiện tại vào form
+      const shipping = this.orderData.shipping || {};
+      const address = this.orderData.address || {};
+      
+      // Điền thông tin vận chuyển
+      document.getElementById('tracking-number').value = shipping.trackingNumber || '';
+      document.getElementById('shipping-method').value = shipping.shippingMethod || '';
+      document.getElementById('shipping-partner').value = shipping.shippingPartner || '';
+      
+      // Xử lý ngày tháng
+      if (shipping.shippedAt) {
+        document.getElementById('shipped-at').value = this.formatDateTimeForInput(shipping.shippedAt);
       }
+      if (shipping.deliveredAt) {
+        document.getElementById('delivered-at').value = this.formatDateTimeForInput(shipping.deliveredAt);
+      }
+      
+      // Điền thông tin địa chỉ
+      document.getElementById('shipping-name-input').value = address.shippingName || '';
+      document.getElementById('shipping-phone-input').value = address.shippingPhone || '';
+      document.getElementById('shipping-address-input').value = address.shippingAddress || '';
+      document.getElementById('shipping-province-input').value = address.shippingProvince || '';
+      document.getElementById('shipping-district-input').value = address.shippingDistrict || '';
+      document.getElementById('shipping-ward-input').value = address.shippingWard || '';
+      
+      // Hiển thị modal
+      const updateShippingModal = new bootstrap.Modal(document.getElementById('updateShippingModal'));
+      updateShippingModal.show();
+    },
+
+    // Thêm phương thức lưu thông tin vận chuyển
+    saveShippingInfo: function() {
+      // Lấy dữ liệu từ form
+      const shippingData = {
+        orderId: this.orderData.id,
+        trackingNumber: document.getElementById('tracking-number').value,
+        shippingMethod: document.getElementById('shipping-method').value,
+        shippingPartner: document.getElementById('shipping-partner').value,
+        shippedAt: document.getElementById('shipped-at').value || null,
+        deliveredAt: document.getElementById('delivered-at').value || null
+      };
+      
+      const addressData = {
+        shippingName: document.getElementById('shipping-name-input').value,
+        shippingPhone: document.getElementById('shipping-phone-input').value,
+        shippingAddress: document.getElementById('shipping-address-input').value,
+        shippingProvince: document.getElementById('shipping-province-input').value,
+        shippingDistrict: document.getElementById('shipping-district-input').value,
+        shippingWard: document.getElementById('shipping-ward-input').value
+      };
+      
+      // Xác nhận từ người dùng
+      if (!confirm('Bạn có chắc chắn muốn cập nhật thông tin vận chuyển?')) {
+        return;
+      }
+      
+      this.showLoading(true);
+      
+      // Gọi API cập nhật thông tin vận chuyển
+      orderService.fetchApi(`/${this.orderData.id}/admin-shipping-update`, 'PUT', {
+        shipping: shippingData,
+        address: addressData
+      })
+      .then(response => {
+        if (response && response.success) {
+          // Cập nhật dữ liệu đơn hàng
+          this.orderData = response.data;
+          
+          // Render lại giao diện
+          this.renderOrderDetail();
+          
+          // Đóng modal
+          const updateShippingModal = bootstrap.Modal.getInstance(document.getElementById('updateShippingModal'));
+          updateShippingModal.hide();
+          
+          // Hiển thị thông báo thành công
+          alert('Cập nhật thông tin vận chuyển thành công');
+        } else {
+          alert('Không thể cập nhật thông tin vận chuyển: ' + (response.message || 'Đã xảy ra lỗi'));
+        }
+      })
+      .catch(error => {
+        console.error('Lỗi khi cập nhật thông tin vận chuyển:', error);
+        alert('Đã xảy ra lỗi khi cập nhật thông tin vận chuyển');
+      })
+      .finally(() => {
+        this.showLoading(false);
+      });
+    },
+
+    // Thêm phương thức format ngày tháng cho input datetime-local
+    formatDateTimeForInput: function(dateString) {
+      if (!dateString) return '';
+      
+      const date = new Date(dateString);
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const day = date.getDate().toString().padStart(2, '0');
+      const hours = date.getHours().toString().padStart(2, '0');
+      const minutes = date.getMinutes().toString().padStart(2, '0');
+      
+      return `${year}-${month}-${day}T${hours}:${minutes}`;
     },
 
     // Hiển thị thông tin vận chuyển
     renderShippingInfo: function() {
-      if (!this.orderData.shipping) return;
-      
       const shipping = this.orderData.shipping;
       const shippingInfoContainer = document.getElementById('shipping-info');
       
@@ -1483,49 +1538,48 @@
       if (!shippingInfoContainer) return;
       
       // Xóa nội dung cũ
-      shippingInfoContainer.innerHTML = `<div class="d-flex justify-content-between mt-3 mb-2">
-        <h5 class="">Thông Tin Vận Chuyển</h5>
-      </div>`;
+      shippingInfoContainer.innerHTML = '';
       
-      // Hiển thị mã theo dõi vận chuyển nếu có
-      if (shipping.trackingNumber) {
-        let trackingHTML = `
-          <div class="mb-3">
-            <h6 class="fw-medium">Mã Vận Đơn</h6>
-            <div class="d-flex align-items-center">
-              <p class="mb-0 me-2">${shipping.trackingNumber}</p>
+      if (!shipping) {
+        shippingInfoContainer.innerHTML = '<p class="text-muted">Chưa có thông tin vận chuyển</p>';
+        return;
+      }
+      
+      // Hiển thị mã theo dõi vận chuyển
+      let trackingHTML = `
+        <div class="mb-3">
+          <h6 class="fw-medium">Mã Vận Đơn</h6>
+          <div class="d-flex align-items-center">
+            <p class="mb-0 me-2">${shipping.trackingNumber || 'Chưa có'}</p>
+            ${shipping.trackingNumber ? `
               <button class="btn btn-sm btn-outline-primary" onclick="navigator.clipboard.writeText('${shipping.trackingNumber}')">
                 <i class='bx bx-copy'></i> Sao chép
               </button>
-            </div>
+            ` : ''}
           </div>
-        `;
-        shippingInfoContainer.innerHTML += trackingHTML;
-      }
+        </div>
+      `;
+      shippingInfoContainer.innerHTML += trackingHTML;
       
-      // Hiển thị đơn vị vận chuyển nếu có
-      if (shipping.shippingPartner) {
-        let partnerHTML = `
-          <div class="mb-3">
-            <h6 class="fw-medium">Đơn Vị Vận Chuyển</h6>
-            <p class="mb-0">${shipping.shippingPartner}</p>
-          </div>
-        `;
-        shippingInfoContainer.innerHTML += partnerHTML;
-      }
+      // Hiển thị đơn vị vận chuyển
+      let partnerHTML = `
+        <div class="mb-3">
+          <h6 class="fw-medium">Đơn Vị Vận Chuyển</h6>
+          <p class="mb-0">${shipping.shippingPartner || 'Chưa có'}</p>
+        </div>
+      `;
+      shippingInfoContainer.innerHTML += partnerHTML;
       
-      // Hiển thị phương thức vận chuyển nếu có
-      if (shipping.shippingMethod) {
-        let methodHTML = `
-          <div class="mb-3">
-            <h6 class="fw-medium">Phương Thức Vận Chuyển</h6>
-            <p class="mb-0">${shipping.shippingMethod}</p>
-          </div>
-        `;
-        shippingInfoContainer.innerHTML += methodHTML;
-      }
+      // Hiển thị phương thức vận chuyển
+      let methodHTML = `
+        <div class="mb-3">
+          <h6 class="fw-medium">Phương Thức Vận Chuyển</h6>
+          <p class="mb-0">${shipping.shippingMethod || 'Chưa có'}</p>
+        </div>
+      `;
+      shippingInfoContainer.innerHTML += methodHTML;
       
-      // Hiển thị thời gian vận chuyển nếu có
+      // Hiển thị thời gian vận chuyển
       if (shipping.shippedAt) {
         let shippedHTML = `
           <div class="mb-3">
@@ -1536,7 +1590,7 @@
         shippingInfoContainer.innerHTML += shippedHTML;
       }
       
-      // Hiển thị thời gian giao hàng nếu có
+      // Hiển thị thời gian giao hàng
       if (shipping.deliveredAt) {
         let deliveredHTML = `
           <div class="mb-3">

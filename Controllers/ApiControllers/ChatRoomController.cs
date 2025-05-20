@@ -4,6 +4,7 @@ using VNFarm.DTOs.Request;
 using VNFarm.DTOs.Response;
 using VNFarm.Entities;
 using VNFarm.Interfaces.Services;
+using VNFarm.Enums;
 
 namespace VNFarm.Controllers.ApiControllers
 {
@@ -60,6 +61,37 @@ namespace VNFarm.Controllers.ApiControllers
             var chatRooms = await _chatRoomService.Query(filter);
             var results = await _chatRoomService.ApplyPagingAndSortingAsync(chatRooms, filter);
             return Ok(results);
+        }
+        
+        /// <summary>
+        /// Cập nhật trạng thái phòng chat
+        /// </summary>
+        [HttpPut("{id}/status")]
+        public async Task<ActionResult> UpdateStatus(int id, [FromBody] ChatRoomStatus status)
+        {
+            var room = await _chatRoomService.GetByIdAsync(id);
+            if (room == null)
+                return NotFound("Không tìm thấy phòng chat");
+                
+            room.Status = status;
+            
+            var updateSuccess = await _chatRoomService.UpdateAsync(new ChatRoomRequestDTO 
+            {
+                Id = id,
+                NameRoom = room.NameRoom,
+                Description = room.Description,
+                BuyerId = room.BuyerId,
+                SellerId = room.SellerId,
+                OrderId = room.OrderId,
+                Type = room.Type,
+                Status = status,
+                IsActive = room.IsActive
+            });
+            
+            if (!updateSuccess)
+                return BadRequest("Không thể cập nhật trạng thái phòng chat");
+                
+            return Ok();
         }
     }
 }

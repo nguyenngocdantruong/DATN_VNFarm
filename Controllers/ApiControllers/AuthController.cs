@@ -29,16 +29,15 @@ namespace VNFarm.Controllers.ApiControllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDTO request)
         {
-            var user = await _userService.GetByEmailAsync(request.Email);
-            bool isLoginSuccess = user != null;
-            // var password =  AuthUtils.GenerateMd5Hash(request.Password);
-            // var isLoginSuccess = await _userService.FindAsync(x => x.Email == request.Email && x.PasswordHash == password);
-            if (!isLoginSuccess)
+            var password =  AuthUtils.GenerateMd5Hash(request.Password);
+            _logger.LogInformation("Password: {password}", password);
+            var user = (await _userService.FindAsync(x => x.Email == request.Email && x.PasswordHash == password)).FirstOrDefault();
+            if (user == null)
             {
                 return Ok(new
                 {
                     status = 401,
-                    message = "Email or password is incorrect"
+                    message = "Thông tin đăng nhập không chính xác"
                 });
             }
             string role = "User";
@@ -62,7 +61,7 @@ namespace VNFarm.Controllers.ApiControllers
                 status = 200,
                 token = token,
                 user = user,
-                store = store,
+                store = store.FirstOrDefault(),
                 role = role
             });
         }

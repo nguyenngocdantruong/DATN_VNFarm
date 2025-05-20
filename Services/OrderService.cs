@@ -289,9 +289,20 @@ namespace VNFarm.Services
 
         public async Task<OrderTimelineResponseDTO?> AddOrderTimelineAsync(int orderId, OrderTimelineRequestDTO orderTimelineRequestDTO)
         {
+            // Lấy tất cả timeline hiện tại của đơn hàng
+            var existingTimelines = await _orderRepository.GetOrderTimelineAsync(orderId);
+            
+            // Cập nhật tất cả timeline trước đó thành trạng thái đã hoàn thành
+            foreach (var timeline in existingTimelines)
+            {
+                timeline.Status = OrderTimelineStatus.Completed;
+            }
+            // Thêm timeline mới
             var orderTimeline = orderTimelineRequestDTO.ToEntity();
             orderTimeline.OrderId = orderId;
             await _orderRepository.AddOrderTimelineAsync(orderId, orderTimeline);
+            await _orderRepository.SaveChangesAsync();
+            
             return orderTimeline.ToResponseDTO();
         }
         #endregion

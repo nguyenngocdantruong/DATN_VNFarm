@@ -668,11 +668,8 @@
         imageContainer.className = "text-center product-image-container";
         
         const image = document.createElement("img");
-        this.productService.fetchImage(product.imageUrl, "Products")
-          .then(function(response) {
-            console.log("Load Image", response);
-            image.src = response;
-          })
+        image.src = "/img/Products/" + product.imageUrl;
+        image.alt = product.name;
         
         image.alt = product.name;
         image.className = "img-fluid rounded p-2";
@@ -840,7 +837,7 @@
           <p class="text-muted">${review.content || "Không có nội dung đánh giá"}</p>
           ${review.imageUrl ? `
             <div class="my-2">
-              <img id="review-image" src="${review.imageUrl}" alt="Hình ảnh đánh giá" class="img-fluid rounded" style="max-height: 120px;" onerror="this.src='/custom/no-image.webp'">
+              <img id="review-image" src="/img/Reviews/${review.imageUrl}" alt="Hình ảnh đánh giá" class="img-fluid rounded" style="max-height: 120px;" onerror="this.src='/custom/no-image.webp'">
             </div>
           ` : ''}
           ${review.shopResponse ? `

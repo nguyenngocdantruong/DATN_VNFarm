@@ -86,6 +86,8 @@ namespace VNFarm.Mappers
                 BuyerId = chatRoom.BuyerId,
                 SellerId = chatRoom.SellerId,
                 OrderId = chatRoom.OrderId,
+                Buyer = chatRoom.Buyer?.ToResponseDTO(),
+                Seller = chatRoom.Seller?.ToResponseDTO(),
             };
         }
         public static DiscountResponseDTO ToResponseDTO(this Discount discount)

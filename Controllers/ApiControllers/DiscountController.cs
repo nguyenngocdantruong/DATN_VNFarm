@@ -214,6 +214,7 @@ namespace VNFarm.Controllers.ApiControllers
                                     ProductId = ciRequest.ProductId,
                                     Quantity = ciRequest.Quantity,
                                     ShopCartId = 0, // Temporary ID
+                                    ProductResponse = product
                                 };
                                 
                                 // Thêm CartItem vào ShopCart
@@ -234,9 +235,9 @@ namespace VNFarm.Controllers.ApiControllers
                 {
                     foreach (var item in shopCart.CartItems)
                     {
-                        if (item.Product != null)
+                        if (item.ProductResponse != null)
                         {
-                            totalPrice += item.Product.Price * item.Quantity;
+                            totalPrice += item.ProductResponse.Price * item.Quantity;
                         }
                         else
                         {

@@ -175,25 +175,13 @@ namespace VNFarm.Controllers.ApiControllers
         public async Task<IActionResult> GetUserStats([FromQuery] int id){
             var user = await _userService.GetByIdAsync(id);
             if(user == null) return NotFound(new { success = false, data = "Không tìm thấy người dùng." });
-            var transactionCount = await _transactionService.CountAsync(t => t.BuyerId == id);
-            var orderCount = await _orderService.CountAsync(o => o.BuyerId == id);
-            decimal totalRevenue = 0;
-            try{
-                var store = await _storeService.GetStoreByUserIdAsync(id);
-                if(store != null){
-                    orderCount += await _orderService.CountAsync(o => o.OrderItems.Any(item => item.Product != null && item.Product.StoreId == store.Id));
-                    totalRevenue = await _transactionService.CalculateTotalRevenueByStoreIdAsync(store.Id);
-                }
-            } catch (Exception ex){
-                _logger.LogError(ex, $"Lỗi khi lấy thông tin cửa hàng của người dùng với ID: {id}");
-            }
+            var orders = await _orderService.FindAsync(o => o.BuyerId == id);
             return Ok(new {
                 success = true,
                 data = new {
                     userId = id,
-                    transactionCount = transactionCount,
-                    orderCount = orderCount,
-                    totalRevenue = totalRevenue
+                    orderCount = orders.Count(),
+                    totalRevenue = orders.Sum(o => o.TotalAmount)
                 }
             });
         }

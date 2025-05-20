@@ -1,4 +1,4 @@
-@model ProductListViewModel
+@model DiscountListViewModel
 
 @{
     Layout = "_LayoutAdmin";
@@ -13,10 +13,10 @@
           <div
             class="card-header d-flex justify-content-between align-items-center gap-1"
           >
-            <h4 class="card-title flex-grow-1">Danh Sách Sản Phẩm Nông Sản</h4>
+            <h4 class="card-title flex-grow-1">Danh Sách Phiếu Giảm Giá</h4>
 
-            <a href="product-add.html" class="btn btn-sm btn-primary">
-              <i class="bx bx-plus me-1"></i>Thêm Sản Phẩm
+            <a asp-action="DiscountAdd" asp-controller="Admin" class="btn btn-sm btn-primary">
+              <i class="bx bx-plus me-1"></i>Thêm Phiếu Giảm Giá
             </a>
           </div>
           <div class="card-body">
@@ -27,10 +27,10 @@
                   <input
                     type="text"
                     class="form-control"
-                    placeholder="Tìm kiếm sản phẩm..."
-                    id="product-search-input"
+                    placeholder="Tìm kiếm phiếu giảm giá..."
+                    id="discount-search-input"
                   />
-                  <button class="btn btn-primary" type="button" id="product-search-button">
+                  <button class="btn btn-primary" type="button" id="discount-search-button">
                     <i class="bx bx-search"></i>
                   </button>
                 </div>
@@ -66,15 +66,16 @@
                         ></label>
                       </div>
                     </th>
-                    <th>Tên Sản Phẩm & Thông Tin</th>
-                    <th>Giá</th>
-                    <th>Tồn Kho</th>
-                    <th>Danh Mục</th>
-                    <th>Đánh Giá</th>
+                    <th>Mã Code</th>
+                    <th>Mô Tả</th>
+                    <th>Loại</th>
+                    <th>Giá Trị</th>
+                    <th>Thời Gian</th>
+                    <th>Trạng Thái</th>
                     <th>Thao Tác</th>
                   </tr>
                 </thead>
-                <tbody id="product-table-body">
+                <tbody id="discount-table-body">
                   <!-- JavaScript sẽ tạo ra các dòng dữ liệu tại đây -->
                 </tbody>
               </table>
@@ -133,7 +134,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="filterModalLabel">Lọc Sản Phẩm</h5>
+        <h5 class="modal-title" id="filterModalLabel">Lọc Phiếu Giảm Giá</h5>
         <button
           type="button"
           class="btn-close"
@@ -144,54 +145,54 @@
       <div class="modal-body">
         <form>
           <div class="mb-3">
-            <label class="form-label">Danh Mục</label>
-            <select class="form-select" id="category-filter">
+            <label class="form-label">Loại Giảm Giá</label>
+            <select class="form-select" id="discount-type-filter">
               <option value="-999">Tất cả</option>
+              <option value="0">Phần trăm</option>
+              <option value="1">Số tiền cố định</option>
+              <option value="2">Miễn phí vận chuyển</option>
             </select>
           </div>
           
           <div class="mb-3">
-            <label class="form-label">Xuất Xứ</label>
-            <select class="form-select" id="origin-filter">
+            <label class="form-label">Trạng Thái</label>
+            <select class="form-select" id="status-filter">
               <option value="-999">Tất cả</option>
+              <option value="0">Đang hoạt động</option>
+              <option value="1">Không hoạt động</option>
             </select>
           </div>
           
           <div class="mb-3">
-            <label class="form-label">Giá (VNĐ)</label>
+            <label class="form-label">Thời Gian</label>
             <div class="row">
               <div class="col-6">
-                <input type="number" class="form-control" placeholder="Từ" id="min-price-filter" />
+                <label class="form-label">Từ ngày</label>
+                <input type="date" class="form-control" id="start-date-filter" />
               </div>
               <div class="col-6">
-                <input type="number" class="form-control" placeholder="Đến" id="max-price-filter" />
+                <label class="form-label">Đến ngày</label>
+                <input type="date" class="form-control" id="end-date-filter" />
               </div>
             </div>
           </div>
+          
           <div class="mb-3">
-            <label class="form-label">Tình Trạng Kho</label>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="radio"
-                id="inStock"
-                name="stock-status"
-                checked
-              />
-              <label class="form-check-label" for="inStock"> Còn hàng </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" id="outOfStock" name="stock-status" />
-              <label class="form-check-label" for="outOfStock">
-                Hết hàng
-              </label>
-            </div>
+            <label class="form-label">Cửa Hàng</label>
+            <select class="form-select" id="store-filter">
+              <option value="-999">Tất cả</option>
+              <!-- JavaScript sẽ thêm các option tại đây -->
+            </select>
           </div>
           
           <div class="mb-3">
             <label class="form-label">Sắp Xếp Theo</label>
             <select class="form-select" id="sort-by-filter">
-              <option value="0">Mặc định</option>
+              <option value="0">Mặc định (Mới nhất)</option>
+              <option value="1">Cũ nhất</option>
+              <option value="2">Giá trị tăng dần</option>
+              <option value="3">Giá trị giảm dần</option>
+              <option value="4">Ngày hết hạn gần nhất</option>
             </select>
           </div>
         </form>
@@ -208,44 +209,37 @@
 
 <script type="module">
   import { BaseService } from "/custom/BaseService.js";
-  import createFilterProduct from "/custom/filterProduct.js";
   import { SortType } from "/custom/Enum.js";
   import { EnumService } from "/custom/EnumService.js";
 
   const jwt = null;
   const enumService = new EnumService("http://localhost:5172", jwt);
-  const productService = new BaseService(
-    "http://localhost:5172/api/Product",
+  const discountService = new BaseService(
+    "http://localhost:5172/api/Discount",
     jwt
   );
-  const categoryService = new BaseService(
-    "http://localhost:5172/api/Category",
+  const storeService = new BaseService(
+    "http://localhost:5172/api/Store",
     jwt
   );
 
-  const appProduct = {
-    filter: new createFilterProduct({
+  const appDiscount = {
+    filter: {
       searchTerm: "",
-      sortBy: SortType.Latest,
+      sortBy: 0, // Mặc định
       page: 1,
       pageSize: 10,
-      minPrice: 0,
-      maxPrice: 2147483647,
-      categoryId: -999,
-      origin: "",
-      isActive: null,
-      isInStock: null,
-      unit: -999,
-    }),
+      status: -999, // Tất cả
+      type: -999, // Tất cả
+      startDate: null,
+      endDate: null,
+      storeId: -999 // Tất cả
+    },
     appliedFilters: {},
-    categories: [],
-    origins: [],
-    units: {},
+    stores: [],
+    
     init: function () {
-      this.loadCategories();
-      this.loadOrigins();
-      this.loadUnits();
-      this.loadSortType();
+      this.loadStores();
       this.handleFilterFunction();
       this.handleResetFilter();
       this.handleApplyFilter();
@@ -266,12 +260,12 @@
     applyFilter: function () {
       const _this = this;
 
-      productService
+      discountService
         .find(_this.filter)
         .then((data) => {
-          console.log("Product data:", data);
-          if (data && data.success) {
-            const items = data.data || [];
+          console.log("Discount data:", data);
+          if (data.length > 0) {
+            const items = data || [];
             _this.reloadTable(items);
 
             // Cập nhật phân trang
@@ -281,7 +275,7 @@
 
             document.getElementById(
               "paging-count"
-            ).textContent = `Hiển thị ${start} - ${end}/${totalCount} sản phẩm`;
+            ).textContent = `Hiển thị ${start} - ${end}/${totalCount} phiếu giảm giá`;
 
             // Cập nhật danh sách phân trang
             const pagingList = document.getElementById("paging-list");
@@ -330,10 +324,10 @@
             }
           } else {
             // Hiển thị thông báo lỗi
-            document.getElementById("product-table-body").innerHTML = `
+            document.getElementById("discount-table-body").innerHTML = `
               <tr>
-                <td colspan="7" class="text-center text-danger">
-                  Không thể tải dữ liệu sản phẩm. Vui lòng thử lại sau.
+                <td colspan="8" class="text-center text-danger">
+                  Không thể tải dữ liệu phiếu giảm giá. Vui lòng thử lại sau.
                 </td>
               </tr>`;
 
@@ -342,10 +336,10 @@
           }
         })
         .catch((error) => {
-          console.error("Error retrieving products:", error);
-          document.getElementById("product-table-body").innerHTML = `
+          console.error("Error retrieving discounts:", error);
+          document.getElementById("discount-table-body").innerHTML = `
             <tr>
-              <td colspan="7" class="text-center text-danger">
+              <td colspan="8" class="text-center text-danger">
                 Đã xảy ra lỗi khi tải dữ liệu. Vui lòng thử lại sau.
               </td>
             </tr>`;
@@ -354,97 +348,29 @@
         });
     },
 
-    loadCategories: function () {
-      // Load danh mục vào dropdown
-      const categoryDropdown = document.getElementById("category-filter");
-      categoryDropdown.innerHTML =
+    loadStores: function () {
+      // Load cửa hàng vào dropdown
+      const storeDropdown = document.getElementById("store-filter");
+      storeDropdown.innerHTML =
         "<option value='-999' selected>Tất cả</option>";
 
-      categoryService
+      storeService
         .getAll()
         .then((data) => {
           if (data && data.success) {
             const items = data.data || [];
-            this.categories = items;
+            this.stores = items;
 
             items.forEach((item) => {
               const option = document.createElement("option");
               option.value = item.id;
               option.textContent = item.name;
-              categoryDropdown.appendChild(option);
+              storeDropdown.appendChild(option);
             });
           }
         })
         .catch((error) => {
-          console.error("Error retrieving categories:", error);
-        });
-    },
-
-    loadOrigins: function () {
-      // Load xuất xứ vào dropdown
-      const originDropdown = document.getElementById("origin-filter");
-      originDropdown.innerHTML = "<option value=''>Tất cả</option>";
-
-      enumService
-        .getOriginTypes()
-        .then((data) => {
-          if (data) {
-            this.origins = data;
-
-            data.forEach((origin) => {
-              const option = document.createElement("option");
-              option.value = origin;
-              option.textContent = origin;
-              originDropdown.appendChild(option);
-            });
-          }
-        })
-        .catch((error) => {
-          console.error("Error retrieving origins:", error);
-        });
-    },
-    
-    loadUnits: function () {
-      enumService.getUnitTypes().then((data) => {
-        if (data) {
-          this.units = data;
-        }
-      })
-      .catch((error) => {
-        console.error("Error retrieving units:", error);
-      });
-    },
-
-    loadSortType: function () {
-      const sortByDropdown = document.getElementById("sort-by-filter");
-      sortByDropdown.innerHTML = "";
-
-      enumService
-        .getSortTypesByEntity("Product")
-        .then((data) => {
-          if (data) {
-            Object.keys(data).forEach((key) => {
-              const option = document.createElement("option");
-              option.value = key;
-              option.textContent = data[key];
-              sortByDropdown.appendChild(option);
-            });
-          }
-        })
-        .catch((error) => {
-          console.error("Error retrieving sort types:", error);
-          // Thêm các giá trị mặc định nếu API thất bại
-          const defaultSortOptions = [
-            { value: "0", text: "Mặc định" },
-            { value: "0", text: "Không thể tải dữ liệu" },
-          ];
-
-          defaultSortOptions.forEach((option) => {
-            const optionElement = document.createElement("option");
-            optionElement.value = option.value;
-            optionElement.textContent = option.text;
-            sortByDropdown.appendChild(optionElement);
-          });
+          console.error("Error retrieving stores:", error);
         });
     },
 
@@ -463,44 +389,33 @@
 
     updateFilterModal: function () {
       // Cập nhật giá trị trong modal từ filter hiện tại
-      const categoryDropdown = document.getElementById("category-filter");
-      const originDropdown = document.getElementById("origin-filter");
-      const minPriceInput = document.getElementById("min-price-filter");
-      const maxPriceInput = document.getElementById("max-price-filter");
-      const stockRadios = document.querySelectorAll("[name='stock-status']");
+      const typeDropdown = document.getElementById("discount-type-filter");
+      const statusDropdown = document.getElementById("status-filter");
+      const startDateInput = document.getElementById("start-date-filter");
+      const endDateInput = document.getElementById("end-date-filter");
+      const storeDropdown = document.getElementById("store-filter");
       const sortByDropdown = document.getElementById("sort-by-filter");
 
       // Đặt giá trị cho từng trường
-      if (this.filter.categoryId !== -999) {
-        categoryDropdown.value = this.filter.categoryId;
-      } else {
-        categoryDropdown.value = -999;
+      typeDropdown.value = this.filter.type;
+      statusDropdown.value = this.filter.status;
+      
+      if (this.filter.startDate) {
+        startDateInput.value = this.filter.startDate.substring(0, 10);
       }
-
-      if (this.filter.origin) {
-        originDropdown.value = this.filter.origin;
-      } else {
-        originDropdown.value = "";
+      
+      if (this.filter.endDate) {
+        endDateInput.value = this.filter.endDate.substring(0, 10);
       }
-
-      minPriceInput.value =
-        this.filter.minPrice > 0 ? this.filter.minPrice : "";
-      maxPriceInput.value =
-        this.filter.maxPrice < 2147483647 ? this.filter.maxPrice : "";
-
-      // Cập nhật radio buttons tồn kho
-      if (this.filter.isInStock === true) {
-        document.getElementById("inStock").checked = true;
-      } else if (this.filter.isInStock === false) {
-        document.getElementById("outOfStock").checked = true;
-      } 
+      
+      if (this.filter.storeId !== -999) {
+        storeDropdown.value = this.filter.storeId;
+      } else {
+        storeDropdown.value = -999;
+      }
 
       // Cập nhật sort by
-      if (
-        sortByDropdown.querySelector(`option[value="${this.filter.sortBy}"]`)
-      ) {
-        sortByDropdown.value = this.filter.sortBy;
-      }
+      sortByDropdown.value = this.filter.sortBy;
     },
 
     handleResetFilter: function () {
@@ -509,22 +424,20 @@
 
       resetButton.addEventListener("click", () => {
         // Reset filter về giá trị mặc định
-        _this.filter = new createFilterProduct({
+        _this.filter = {
           searchTerm: "",
-          sortBy: SortType.Latest,
+          sortBy: 0,
           page: 1,
           pageSize: 10,
-          minPrice: 0,
-          maxPrice: 2147483647,
-          categoryId: -999,
-          origin: "",
-          isActive: null,
-          isInStock: null,
-          unit: -999,
-        });
+          status: -999,
+          type: -999,
+          startDate: null,
+          endDate: null,
+          storeId: -999
+        };
 
         // Reset ô tìm kiếm
-        document.getElementById("product-search-input").value = "";
+        document.getElementById("discount-search-input").value = "";
 
         // Cập nhật lại UI
         _this.updateAppliedFiltersDisplay();
@@ -538,45 +451,20 @@
 
       applyButton.addEventListener("click", () => {
         // Lấy giá trị từ các trường trong modal
-        const categoryId = document.getElementById("category-filter").value;
-        const origin = document.getElementById("origin-filter").value;
-        const minPrice = document.getElementById("min-price-filter").value;
-        const maxPrice = document.getElementById("max-price-filter").value;
-        const isStock = document.getElementById("inStock").checked;
-        const sortBy = document.getElementById("sort-by-filter").value;
+        const typeValue = document.getElementById("discount-type-filter").value;
+        const statusValue = document.getElementById("status-filter").value;
+        const startDateValue = document.getElementById("start-date-filter").value;
+        const endDateValue = document.getElementById("end-date-filter").value;
+        const storeIdValue = document.getElementById("store-filter").value;
+        const sortByValue = document.getElementById("sort-by-filter").value;
 
         // Cập nhật filter
-        if (categoryId) {
-          _this.filter.categoryId = parseInt(categoryId);
-        }
-
-        if (origin) {
-          _this.filter.origin = origin;
-        } else {
-          _this.filter.origin = "";
-        }
-
-        if (minPrice) {
-          _this.filter.minPrice = parseInt(minPrice);
-        } else {
-          _this.filter.minPrice = 0;
-        }
-
-        if (maxPrice) {
-          _this.filter.maxPrice = parseInt(maxPrice);
-        } else {
-          _this.filter.maxPrice = 2147483647;
-        }
-        console.log(isStock)
-        if (isStock) {
-          _this.filter.isInStock = true;
-        } else {
-          _this.filter.isInStock = false;
-        }
-
-        if (sortBy) {
-          _this.filter.sortBy = parseInt(sortBy);
-        }
+        _this.filter.type = parseInt(typeValue);
+        _this.filter.status = parseInt(statusValue);
+        _this.filter.startDate = startDateValue ? startDateValue : null;
+        _this.filter.endDate = endDateValue ? endDateValue : null;
+        _this.filter.storeId = parseInt(storeIdValue);
+        _this.filter.sortBy = parseInt(sortByValue);
 
         // Reset trang về 1
         _this.filter.page = 1;
@@ -600,8 +488,8 @@
     },
 
     handleSearchFunction: function () {
-      const searchInput = document.getElementById("product-search-input");
-      const searchButton = document.getElementById("product-search-button");
+      const searchInput = document.getElementById("discount-search-input");
+      const searchButton = document.getElementById("discount-search-button");
       const _this = this;
 
       // Xử lý khi nhấn nút tìm kiếm
@@ -660,7 +548,7 @@
       selectAllCheckbox.addEventListener("change", () => {
         const isChecked = selectAllCheckbox.checked;
         const checkboxes = document.querySelectorAll(
-          "#product-table-body .form-check-input"
+          "#discount-table-body .form-check-input"
         );
 
         checkboxes.forEach((checkbox) => {
@@ -670,20 +558,20 @@
     },
 
     reloadTable: function (items) {
-      const tableBody = document.getElementById("product-table-body");
+      const tableBody = document.getElementById("discount-table-body");
       tableBody.innerHTML = "";
 
       if (!items || items.length === 0) {
         tableBody.innerHTML = `
           <tr>
-            <td colspan="7" class="text-center">
-              Không tìm thấy sản phẩm nào phù hợp với điều kiện tìm kiếm.
+            <td colspan="8" class="text-center">
+              Không tìm thấy phiếu giảm giá nào phù hợp với điều kiện tìm kiếm.
             </td>
           </tr>`;
         return;
       }
 
-      items.forEach((product) => {
+      items.forEach((discount) => {
         // Tạo một hàng mới cho bảng
         const row = document.createElement("tr");
 
@@ -691,78 +579,84 @@
         const checkboxCell = document.createElement("td");
         checkboxCell.innerHTML = `
           <div class="form-check ms-1">
-            <input type="checkbox" class="form-check-input" id="product-${product.id}">
-            <label class="form-check-label" for="product-${product.id}">&nbsp;</label>
+            <input type="checkbox" class="form-check-input" id="discount-${discount.id}">
+            <label class="form-check-label" for="discount-${discount.id}">&nbsp;</label>
           </div>
         `;
 
-        // Tạo ô thông tin sản phẩm
-        const productInfoCell = document.createElement("td");
-        productInfoCell.innerHTML = `
-          <div class="d-flex align-items-center gap-2">
-            <div class="rounded bg-light avatar-md d-flex align-items-center justify-content-center">
-              <img id="product-image-${product.id}" src="/img/Products/${
-                product.imageUrl || "/custom/no-image.webp"
-              }" alt="" class="avatar-md" onerror="this.src='/custom/no-image.webp'">
-            </div>
-            <div>
-              <a href="/Admin/ProductDetail?id=${product.id}" class="text-dark fw-medium fs-15">${product.name}</a>
-              <p class="text-muted mb-0 mt-1 fs-13">
-                <span>Xuất xứ: </span>${product.origin || "Không có thông tin"}
-                <br>
-                <span>Đơn vị: </span>${this.units[product.unit] || "Không có thông tin"}
-              </p>
-            </div>
+        // Tạo ô mã code
+        const codeCell = document.createElement("td");
+        codeCell.innerHTML = `
+          <div class="d-flex align-items-center">
+            <span class="badge bg-primary-subtle text-primary fw-medium p-2">${discount.code}</span>
           </div>
         `;
-        //Render image 
-        productService.fetchImage(product.imageUrl, "Products")
-          .then(function(response) {
-            document.getElementById(`product-image-${product.id}`).src = response;
-          });
 
-        // Tạo ô giá
-        const priceCell = document.createElement("td");
-        priceCell.textContent = new Intl.NumberFormat("vi-VN", {
-          style: "currency",
-          currency: "VND",
-        }).format(product.price);
+        // Tạo ô mô tả
+        const descCell = document.createElement("td");
+        descCell.textContent = discount.description || "Không có mô tả";
 
-        // Tạo ô tồn kho
-        const stockCell = document.createElement("td");
-        stockCell.innerHTML = `
-          <p class="mb-1 text-muted">
-            <span class="text-dark fw-medium">${product.stockQuantity} ${
-          this.units[product.unit] || "đvt"
-        }</span> 
-          </p>
+        // Tạo ô loại giảm giá
+        const typeCell = document.createElement("td");
+        let typeText = "Không xác định";
+        if (discount.type === 0) typeText = "Phần trăm";
+        else if (discount.type === 1) typeText = "Số tiền cố định";
+        else if (discount.type === 2) typeText = "Miễn phí vận chuyển";
+        typeCell.textContent = typeText;
+
+        // Tạo ô giá trị
+        const valueCell = document.createElement("td");
+        if (discount.type === 0) {
+          valueCell.innerHTML = `${discount.discountAmount}% <small>(Tối đa ${new Intl.NumberFormat("vi-VN", {
+            style: "currency",
+            currency: "VND",
+          }).format(discount.maximumDiscountAmount)})</small>`;
+        } else if (discount.type === 1) {
+          valueCell.textContent = new Intl.NumberFormat("vi-VN", {
+            style: "currency",
+            currency: "VND",
+          }).format(discount.discountAmount);
+        } else {
+          valueCell.textContent = "Miễn phí vận chuyển";
+        }
+
+        // Tạo ô thời gian
+        const timeCell = document.createElement("td");
+        const startDate = new Date(discount.startDate).toLocaleDateString('vi-VN');
+        const endDate = new Date(discount.endDate).toLocaleDateString('vi-VN');
+        timeCell.innerHTML = `
+          <div>
+            <div class="text-success">Bắt đầu: ${startDate}</div>
+            <div class="text-danger">Kết thúc: ${endDate}</div>
+          </div>
         `;
 
-        // Tạo ô danh mục
-        const categoryCell = document.createElement("td");
-        categoryCell.textContent = this.getCategoryName(product.categoryId);
-
-        // Tạo ô đánh giá
-        const ratingCell = document.createElement("td");
-        ratingCell.innerHTML = `
-          <a class="badge p-1 bg-light text-dark fs-12 me-1" href="/Admin/ProductReview?id=${product.id}">
-            <i class="bx bxs-star align-text-top fs-14 text-warning me-1"></i>
-            ${product.averageRating?.toFixed(1) || "N/A"}
-          </a>
-          ${product.reviewCount || 0} Đánh giá
-        `;
+        // Tạo ô trạng thái
+        const statusCell = document.createElement("td");
+        let statusClass = discount.status === 0 ? "success" : "danger";
+        let statusText = discount.status === 0 ? "Đang hoạt động" : "Không hoạt động";
+        
+        // Kiểm tra thêm nếu đã hết hạn
+        const now = new Date();
+        const expiry = new Date(discount.endDate);
+        if (expiry < now) {
+          statusClass = "warning";
+          statusText = "Đã hết hạn";
+        }
+        
+        statusCell.innerHTML = `<span class="badge bg-${statusClass}-subtle text-${statusClass} px-2 py-1">${statusText}</span>`;
 
         // Tạo ô thao tác
         const actionCell = document.createElement("td");
         actionCell.innerHTML = `
           <div class="d-flex gap-2">
-            <a href="/Admin/ProductDetail?id=${product.id}" class="btn btn-light btn-sm view-product" data-id="${product.id}">
+            <a href="/Admin/DiscountDetail?id=${discount.id}" class="btn btn-light btn-sm">
               <iconify-icon icon="solar:eye-broken" class="align-middle fs-18"></iconify-icon>
             </a>
-            <a href="/Admin/ProductEdit?id=${product.id}" class="btn btn-soft-primary btn-sm edit-product" data-id="${product.id}">
+            <a href="/Admin/DiscountEdit?id=${discount.id}" class="btn btn-soft-primary btn-sm">
               <iconify-icon icon="solar:pen-2-broken" class="align-middle fs-18"></iconify-icon>
             </a>
-            <a href="#!" class="btn btn-soft-danger btn-sm delete-product" data-id="${product.id}">
+            <a href="#!" class="btn btn-soft-danger btn-sm delete-discount" data-id="${discount.id}">
               <iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="align-middle fs-18"></iconify-icon>
             </a>
           </div>
@@ -770,11 +664,12 @@
 
         // Thêm các ô vào hàng
         row.appendChild(checkboxCell);
-        row.appendChild(productInfoCell);
-        row.appendChild(priceCell);
-        row.appendChild(stockCell);
-        row.appendChild(categoryCell);
-        row.appendChild(ratingCell);
+        row.appendChild(codeCell);
+        row.appendChild(descCell);
+        row.appendChild(typeCell);
+        row.appendChild(valueCell);
+        row.appendChild(timeCell);
+        row.appendChild(statusCell);
         row.appendChild(actionCell);
 
         // Thêm hàng vào bảng
@@ -785,58 +680,43 @@
       this.addTableEventListeners();
     },
 
-    getCategoryName: function (categoryId) {
-      const category = this.categories.find((c) => c.id === categoryId);
-      return category ? category.name : "Không phân loại";
+    getStoreName: function (storeId) {
+      if (!storeId) return "Toàn hệ thống";
+      const store = this.stores.find((s) => s.id === storeId);
+      return store ? store.name : "Không xác định";
     },
 
     addTableEventListeners: function () {
-      // Sự kiện cho nút xem chi tiết
-      document.querySelectorAll(".view-product").forEach((button) => {
-        button.addEventListener("click", (e) => {
-          e.preventDefault();
-          const productId = button.getAttribute("data-id");
-          window.location.href = `/Admin/ProductDetail?id=${productId}`;
-        });
-      });
-
-      // Sự kiện cho nút sửa
-      document.querySelectorAll(".edit-product").forEach((button) => {
-        button.addEventListener("click", (e) => {
-          e.preventDefault();
-          const productId = button.getAttribute("data-id");
-          window.location.href = `00_layout.html?file=00_product_edit.html?id=${productId}`;
-        });
-      });
-
       // Sự kiện cho nút xóa
-      document.querySelectorAll(".delete-product").forEach((button) => {
+      document.querySelectorAll(".delete-discount").forEach((button) => {
         button.addEventListener("click", (e) => {
           e.preventDefault();
-          const productId = button.getAttribute("data-id");
+          const discountId = button.getAttribute("data-id");
 
-          if (confirm("Bạn có chắc chắn muốn xóa sản phẩm này?")) {
-            productService
-              .delete(productId)
+          if (confirm("Bạn có chắc chắn muốn xóa phiếu giảm giá này?")) {
+            discountService
+              .delete(discountId)
               .then((response) => {
                 if (response && response.success) {
-                  alert("Xóa sản phẩm thành công!");
+                  alert("Xóa phiếu giảm giá thành công!");
                   this.applyFilter(); // Tải lại danh sách
                 } else {
                   alert(
-                    "Xóa sản phẩm thất bại: " +
+                    "Xóa phiếu giảm giá thất bại: " +
                       (response.message || "Không rõ lỗi")
                   );
                 }
               })
               .catch((error) => {
-                console.error("Lỗi khi xóa sản phẩm:", error);
-                alert("Đã xảy ra lỗi khi xóa sản phẩm. Vui lòng thử lại sau.");
+                console.error("Lỗi khi xóa phiếu giảm giá:", error);
+                alert("Đã xảy ra lỗi khi xóa phiếu giảm giá. Vui lòng thử lại sau.");
               });
           }
         });
       });
     },
   };
-  appProduct.init();
-</script>
+  
+  // Khởi tạo ứng dụng
+  appDiscount.init();
+</script> 
