@@ -16,6 +16,7 @@ namespace VNFarm.Controllers.ApiControllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class ProductController : ApiBaseController<Product, ProductRequestDTO, ProductResponseDTO>
     {
         private readonly IProductService _productService;
@@ -34,6 +35,7 @@ namespace VNFarm.Controllers.ApiControllers
         /// <summary>
         /// Lấy danh sách sản phẩm theo danh mục (id)
         /// </summary>
+        [AllowAnonymous]
         [HttpGet("category/{categoryId}")]
         public async Task<ActionResult<IEnumerable<ProductResponseDTO>>> GetByCategory(int categoryId)
         {
@@ -44,6 +46,7 @@ namespace VNFarm.Controllers.ApiControllers
         /// <summary>
         /// Lấy danh sách sản phẩm theo cửa hàng (id)
         /// </summary>
+        [AllowAnonymous]
         [HttpGet("store/{storeId}")]
         public async Task<ActionResult<IEnumerable<ProductResponseDTO>>> GetByStore(int storeId)
         {
@@ -54,6 +57,7 @@ namespace VNFarm.Controllers.ApiControllers
         /// <summary>
         /// Lấy danh sách sản phẩm bán chạy nhất
         /// </summary>
+        [AllowAnonymous]
         [HttpGet("top-selling")]
         public async Task<ActionResult<IEnumerable<ProductResponseDTO>>> GetTopSellingProducts([FromQuery] int page = 1, [FromQuery] int count = 10)
         {
@@ -64,6 +68,7 @@ namespace VNFarm.Controllers.ApiControllers
         /// <summary>
         /// Cập nhật số lượng tồn kho của sản phẩm
         /// </summary>
+        [Authorize(Roles = "Admin,Seller")]
         [HttpPut("{productId}/stock")]
         public async Task<IActionResult> UpdateStock(int productId, [FromBody] int quantity)
         {
@@ -74,6 +79,7 @@ namespace VNFarm.Controllers.ApiControllers
         /// <summary>
         /// Lấy danh sách sản phẩm theo bộ lọc
         /// </summary>
+        [AllowAnonymous]
         [HttpPost("filter")]
         public async Task<ActionResult<IEnumerable<ProductResponseDTO>>> GetProducts([FromBody] ProductCriteriaFilter filter)
         {
@@ -91,6 +97,7 @@ namespace VNFarm.Controllers.ApiControllers
         /// <summary>
         /// Lấy danh sách đánh giá của sản phẩm
         /// </summary>
+        [AllowAnonymous]
         [HttpGet("{productId}/reviews")]
         public async Task<ActionResult<IEnumerable<ReviewResponseDTO>>> GetReviews(int productId)
         {
