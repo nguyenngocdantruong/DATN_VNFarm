@@ -68,12 +68,38 @@ cd DATN_VNFarm
 dotnet restore
 ```
 
-3. Đổi tên `appsettings.template` thành `appsettings.json` và cấu hình chuỗi kết nối trong `appsettings.json`:
+3. Đổi tên `appsettings.template` thành `appsettings.json` và cấu hình các thông tin sau trong `appsettings.json`:
 ```json
 "ConnectionStrings": {
   "SqlServer": "Server=YourServerName;Database=YourDatabaseName;Trusted_Connection=True;TrustServerCertificate=True;"
+},
+"Jwt": {
+  "Key": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "Issuer": "VNFarm",
+  "Audience": "VNFarmUsers"
+},
+"Vnpay": {
+  "TmnCode": "XXXXXXXX",
+  "HashSecret": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "BaseUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html",
+  "ReturnUrl": "http://localhost:5172/api/Payment/Callback"
+},
+"EmailSettings": {
+  "SmtpServer": "smtp.gmail.com",
+  "SmtpPort": 587,
+  "SmtpUsername": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "SmtpPassword": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "SenderEmail": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "SenderName": "VNFarm"
+},
+"Pusher": {
+  "AppId": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "Key": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "Secret": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "Cluster": "ap1"
 }
 ```
+
 Có thể tham khảo schema của database tại file `data.sql`
 
 4. Chạy ứng dụng:
