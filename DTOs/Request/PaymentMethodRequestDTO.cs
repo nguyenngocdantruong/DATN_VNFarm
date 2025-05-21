@@ -5,6 +5,7 @@ using VNFarm.Enums;
 
 namespace VNFarm.DTOs.Request
 {
+    [Obsolete("Don't use this class anymore")]
     public class PaymentMethodRequestDTO : BaseRequestDTO
     {
         #region Thông tin cơ bản

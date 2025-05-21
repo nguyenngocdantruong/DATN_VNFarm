@@ -4,9 +4,9 @@ using VNFarm.DTOs.Request;
 using VNFarm.DTOs.Response;
 using VNFarm.Entities;
 using VNFarm.Enums;
-using VNFarm.Interfaces.Repositories;
-using VNFarm.Interfaces.Services;
 using VNFarm.Mappers;
+using VNFarm.Repositories.Interfaces;
+using VNFarm.Services.Interfaces;
 
 namespace VNFarm.Services
 {
@@ -163,7 +163,7 @@ namespace VNFarm.Services
             }
             var currentRating = product.AverageRating;
             var newRating = Math.Round((currentRating * product.ReviewCount + rating) / (product.ReviewCount + 1), 1);
-            product.AverageRating = newRating;
+            product.AverageRating = (double)newRating;
             product.ReviewCount++;
             await _productRepository.UpdateAsync(product);
             return (double)newRating;

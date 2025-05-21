@@ -4,6 +4,7 @@ using VNFarm.Enums;
 
 namespace VNFarm.DTOs.Response
 {
+    [Obsolete("Don't use this class anymore")]
     public class BusinessRegistrationResponseDTO : BaseResponseDTO
     {
         public required int UserId { get; set; }

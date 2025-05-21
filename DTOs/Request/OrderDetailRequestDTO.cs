@@ -2,8 +2,10 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using VNFarm.Enums;
 using Swashbuckle.AspNetCore.Annotations;
+
 namespace VNFarm.DTOs.Request
 {
+    [Obsolete("Use OrderItemRequestDTO instead")]
     public class OrderDetailRequestDTO : BaseRequestDTO
     {
         [Required(ErrorMessage = "Mã đơn hàng không được để trống")]

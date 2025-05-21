@@ -8,20 +8,6 @@ namespace VNFarm.Mappers
 {
     public static class RequestDtoToEntityMappingExtensions
     {
-        public static BusinessRegistration ToEntity(this BusinessRegistrationRequestDTO requestDto)
-        {
-            return new BusinessRegistration
-            {
-                UserId = requestDto.UserId,
-                BusinessName = requestDto.BusinessName,
-                BusinessType = requestDto.BusinessType,
-                TaxCode = requestDto.TaxCode,
-                BusinessLicenseUrl = requestDto.BusinessLicenseFile != null ? requestDto.BusinessLicenseUrl: "",
-                Address = requestDto.Address,
-                Notes = "",
-                RegistrationStatus = RegistrationStatus.Pending,
-            };
-        }
         public static Category ToEntity(this CategoryRequestDTO requestDto)
         {
             return new Category
@@ -89,21 +75,7 @@ namespace VNFarm.Mappers
                 IsRead = false
             };
         }
-        public static OrderDetail ToEntity(this OrderDetailRequestDTO requestDto, ProductResponseDTO productResponseDTO)
-        {
-            return new OrderDetail
-            {
-                OrderId = requestDto.OrderId,
-                ProductId = requestDto.ProductId,
-                Quantity = requestDto.Quantity,
-                UnitPrice = productResponseDTO.Price,
-                ShippingFee = 20000,
-                TaxAmount = productResponseDTO.Price * 0.1M,
-                Subtotal = productResponseDTO.Price * requestDto.Quantity + 20000 + productResponseDTO.Price * 0.1M,
-                PackagingStatus = OrderDetailStatus.Pending,
-                Unit = productResponseDTO.Unit,
-            };
-        }
+        
         public static Order ToEntity(this OrderRequestDTO requestDto)
         {
             return new Order
@@ -143,17 +115,7 @@ namespace VNFarm.Mappers
                 Description = requestDto.Description,
             };
         }
-        public static Entities.PaymentMethod ToEntity(this PaymentMethodRequestDTO requestDto)
-        {
-            return new Entities.PaymentMethod
-            {
-                CardName = requestDto.CardName,
-                PaymentType = requestDto.PaymentType,
-                AccountNumber = requestDto.AccountNumber,
-                AccountHolderName = requestDto.AccountHolderName,
-                BankName = requestDto.BankName,
-            };
-        }
+        
         public static Product ToEntity(this ProductRequestDTO requestDto)
         {
             var product = new Product
@@ -178,16 +140,6 @@ namespace VNFarm.Mappers
             }
             return product;
         }
-        public static RegistrationApprovalResult ToEntity(this RegistrationApprovalResultRequestDTO requestDto, int adminId)
-        {
-            return new RegistrationApprovalResult
-            {
-                RegistrationId = requestDto.RegistrationId,
-                AdminId = adminId,
-                ApprovalResult = requestDto.ApprovalResult,
-                Note = requestDto.Note,
-            };
-        }
         public static Review ToEntity(this ReviewRequestDTO requestDto)
         {
             return new Review
@@ -198,6 +150,7 @@ namespace VNFarm.Mappers
                 Content = requestDto.Content ?? "",
                 ShopResponse = "",
                 ImageUrl = requestDto.ImageFile != null ? requestDto.ImageUrl : "",
+                OrderId = requestDto.OrderId
             };
         }
         public static Store ToEntity(this StoreRequestDTO requestDto)
@@ -206,31 +159,16 @@ namespace VNFarm.Mappers
             {
                 Name = requestDto.Name,
                 Description = requestDto.Description,
-                LogoUrl = requestDto.LogoFile != null ? requestDto.LogoUrl : "",
+                LogoUrl = requestDto.LogoFile != null ? requestDto.LogoUrl : "default.jpg",
                 Address = requestDto.Address,
                 PhoneNumber = requestDto.PhoneNumber,
                 Email = requestDto.Email,
                 BusinessType = requestDto.BusinessType ?? StoreType.Farmer,
-                IsActive = true,
+                IsActive = requestDto.IsActive ?? false,
                 VerificationStatus = StoreStatus.Pending,
                 AverageRating = 0,
                 ReviewCount = 0,
                 UserId = requestDto.UserId,
-            };
-        }
-        public static Transaction ToEntity(this TransactionRequestDTO requestDto, OrderResponseDTO? orderResponseDTO)
-        {
-            return new Transaction
-            {
-                TransactionCode = Generator.GenerateTransactionCode(),
-                OrderId = requestDto.OrderId,
-                BuyerId = requestDto.BuyerId,
-                Amount = orderResponseDTO.FinalAmount,
-                PaymentMethod = requestDto.PaymentMethod,
-                Status = TransactionStatus.Pending,
-                PaymentDueDate = DateTime.Now.AddDays(7),
-                PaymentDate = null,
-                Details = requestDto.Details ?? "",
             };
         }
         public static User ToEntity(this UserRequestDTO requestDto)
@@ -242,7 +180,7 @@ namespace VNFarm.Mappers
                 PhoneNumber = requestDto.PhoneNumber ?? "",
                 Address = requestDto.Address ?? "",
                 IsActive = requestDto.IsActive ?? true,
-                ImageUrl = requestDto.ImageFile != null ? requestDto.ImageUrl : "",
+                ImageUrl = requestDto.ImageFile != null ? requestDto.ImageUrl : "default.jpg", 
                 Role = requestDto.Role ?? UserRole.User,
                 PasswordHash = requestDto.PasswordNew,
                 EmailVerified = requestDto.IsActive ?? true,
@@ -276,17 +214,6 @@ namespace VNFarm.Mappers
                 ShopCartId = requestDto.ShopCartId
             };
         }
-        public static ContactRequest ToEntity(this ContactRequestDTO requestDto)
-        {
-            return new ContactRequest
-            {
-                Id = requestDto.Id,
-                FullName = requestDto.FullName,
-                Email = requestDto.Email,
-                ServiceType = requestDto.ServiceType,
-                PhoneNumber = requestDto.PhoneNumber,
-                Message = requestDto.Message
-            };
-        }
+        
     }
 }

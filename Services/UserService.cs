@@ -8,11 +8,12 @@ using VNFarm.DTOs.Request;
 using VNFarm.DTOs.Response;
 using VNFarm.DTOs.Filters;
 using VNFarm.Entities;
-using VNFarm.Interfaces.Repositories;
-using VNFarm.Interfaces.Services;
 using VNFarm.Enums;
 using VNFarm.Helpers;
 using VNFarm.Mappers;
+using VNFarm.Repositories.Interfaces;
+using VNFarm.Services.Interfaces;
+using VNFarm.Services.External.Interfaces;
 
 namespace VNFarm.Services
 {
@@ -20,12 +21,14 @@ namespace VNFarm.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly ILogger<UserService> _logger;
-
+        private readonly IEmailService _emailService;
         public UserService(
             IUserRepository userRepository,
+            IEmailService emailService,
             ILogger<UserService> logger) : base(userRepository)
         {
             _userRepository = userRepository;
+            _emailService = emailService;
             _logger = logger;
         }
 
@@ -56,7 +59,7 @@ namespace VNFarm.Services
             }
         }
 
-        public async override Task<IQueryable<User>> Query(IFilterCriteria filter)
+        public override async Task<IQueryable<User>> Query(IFilterCriteria filter)
         {
             var query = await _userRepository.GetQueryableAsync();
             if (filter is UserCriteriaFilter userCriteriaFilter)
@@ -64,10 +67,11 @@ namespace VNFarm.Services
                 // Áp dụng bộ lọc
                 if (!string.IsNullOrEmpty(userCriteriaFilter.SearchTerm))
                 {
+                    userCriteriaFilter.SearchTerm = userCriteriaFilter.SearchTerm.Trim().ToLower();
                     query = query.Where(u =>
-                        u.FullName.Contains(userCriteriaFilter.SearchTerm, StringComparison.OrdinalIgnoreCase) ||
-                        u.Email.Contains(userCriteriaFilter.SearchTerm, StringComparison.OrdinalIgnoreCase) ||
-                        u.PhoneNumber.Contains(userCriteriaFilter.SearchTerm, StringComparison.OrdinalIgnoreCase));
+                        u.FullName.ToLower().Contains(userCriteriaFilter.SearchTerm) ||
+                        u.Email.ToLower().Contains(userCriteriaFilter.SearchTerm) ||
+                        u.PhoneNumber.ToLower().Contains(userCriteriaFilter.SearchTerm));
                 }
 
                 // Lọc theo vai trò người dùng
@@ -83,15 +87,15 @@ namespace VNFarm.Services
                 }
 
                 // Lọc theo trạng thái xác thực email
-                if (userCriteriaFilter.EmailVerified.HasValue)
-                {
-                    query = query.Where(u => u.EmailVerified == userCriteriaFilter.EmailVerified.Value);
-                }
+                // if (userCriteriaFilter.EmailVerified.HasValue)
+                // {
+                //     query = query.Where(u => u.EmailVerified == userCriteriaFilter.EmailVerified.Value);
+                // }
             }
             return query;
         }
 
-        public async override Task<IEnumerable<UserResponseDTO?>> ApplyPagingAndSortingAsync(IQueryable<User> query, IFilterCriteria filter)
+        public override async Task<IEnumerable<UserResponseDTO?>> ApplyPagingAndSortingAsync(IQueryable<User> query, IFilterCriteria filter)
         {
             // Sắp xếp
             switch (filter.SortBy)
@@ -117,6 +121,21 @@ namespace VNFarm.Services
             var users = await query.ToListAsync();
             return users.Select(MapToDTO);
         }
+
+        public override async Task<UserResponseDTO?> AddAsync(UserRequestDTO? dto)
+        {
+            if(dto != null && !string.IsNullOrEmpty(dto.PasswordNew))
+            {
+                dto.PasswordNew = AuthUtils.GenerateMd5Hash(dto.PasswordNew);
+            }
+            var result = await base.AddAsync(dto);
+            if(result != null)
+            {
+                await _emailService.SendWelcomeEmailAsync(result.Email, result.FullName);
+            }
+            return result;
+        }
+
 
         public override async Task<bool> UpdateAsync(UserRequestDTO? dto)
         {
@@ -160,16 +179,19 @@ namespace VNFarm.Services
             if (user == null)
                 return false;
             user.IsActive = isActive;
-            await _userRepository.UpdateAsync(user);
-            return true;
+            bool result = await _userRepository.UpdateAsync(user);
+            // Gửi email
+            await _emailService.SendUserActiveEmailAsync(user.Email, user.FullName, isActive);
+            return result;
         }
 
         public override async Task<IEnumerable<UserResponseDTO?>> QueryAsync(string query)
         {
+            query = query.Trim().ToLower();
             var users = await _userRepository.FindAsync(u =>
-                u.FullName.Contains(query, StringComparison.OrdinalIgnoreCase) ||
-                u.Email.Contains(query, StringComparison.OrdinalIgnoreCase) ||
-                u.PhoneNumber.Contains(query, StringComparison.OrdinalIgnoreCase));
+                u.FullName.ToLower().Contains(query) ||
+                u.Email.ToLower().Contains(query) ||
+                u.PhoneNumber.ToLower().Contains(query));
             return users.Select(MapToDTO);
         }
     }

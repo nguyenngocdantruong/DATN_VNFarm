@@ -7,7 +7,8 @@ using VNFarm.DTOs.Request;
 using VNFarm.DTOs.Response;
 using VNFarm.Entities;
 using VNFarm.Enums;
-using VNFarm.Interfaces.Services;
+using VNFarm.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VNFarm.Controllers.ApiControllers
 {
@@ -29,6 +30,7 @@ namespace VNFarm.Controllers.ApiControllers
         /// <summary>
         /// Lấy cửa hàng theo người dùng
         /// </summary>
+        [Authorize]
         [HttpGet("user/{userId}")]
         public async Task<ActionResult<StoreResponseDTO>> GetStoreByUserId(int userId)
         {
@@ -66,7 +68,8 @@ namespace VNFarm.Controllers.ApiControllers
         public async Task<ActionResult<IEnumerable<StoreResponseDTO>>> GetStoresByFilter([FromBody] StoreCriteriaFilter filter)
         {
             var stores = await _storeService.Query(filter);
-            stores = stores.Include(m => m.User);
+            if(stores.Any())
+                stores = stores.Include(m => m.User);
             var totalCount = stores.Count();
             var results = await _storeService.ApplyPagingAndSortingAsync(stores, filter);
             return Ok(new {
@@ -156,7 +159,7 @@ namespace VNFarm.Controllers.ApiControllers
             var totalProduct = await _productService.CountAsync(m => m.IsDeleted == false && m.StoreId == storeId);
             var totalProductEmptyStock = await _productService.CountAsync(m => m.IsDeleted == false && m.StoreId == storeId && m.StockQuantity == 0);
             var totalOrders = await _orderService.CountAsync(m => m.IsDeleted == false && m.OrderItems.Any(item => item.Product != null && item.Product.StoreId == storeId));
-            var totalRenenvue = (await _orderService.FindAsync(m => m.IsDeleted == false && m.OrderItems.Any(item => item.Product != null && item.Product.StoreId == storeId))).Sum(m => m != null ? m.TotalAmount : 0);
+            var totalRenenvue = await _orderService.GetTotalRevenueByStoreIdAsync(storeId);
             var listRenenvueInYear = new List<decimal>();
             var currentYear = DateTime.Now.Year;
             
@@ -164,13 +167,8 @@ namespace VNFarm.Controllers.ApiControllers
                 var startDate = new DateTime(currentYear, month, 1);
                 var endDate = startDate.AddMonths(1).AddDays(-1);
                 
-                var monthlyRevenue = (await _orderService.FindAsync(o => 
-                    o.IsDeleted == false && 
-                    o.OrderItems.Any(item => item.Product != null && item.Product.StoreId == storeId) &&
-                    o.CreatedAt >= startDate && 
-                    o.CreatedAt <= endDate &&
-                    o.PaymentStatus == PaymentStatus.Paid
-                )).Sum(o => o != null ? o.TotalAmount : 0);
+                // Sử dụng phương thức tính doanh thu theo khoảng thời gian và lọc theo cửa hàng
+                var monthlyRevenue = await _orderService.GetMonthlyRevenueByStoreAsync(storeId, startDate, endDate);
                 
                 listRenenvueInYear.Add(monthlyRevenue);
             }

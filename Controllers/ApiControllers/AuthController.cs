@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using VNFarm.DTOs.Request;
 using VNFarm.Enums;
-using VNFarm.Interfaces.Services;
 using VNFarm.Entities;
 using VNFarm.Helpers;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using VNFarm.Caching;
+using VNFarm.Services.Interfaces;
+using VNFarm.Services.External.Interfaces;
 
 namespace VNFarm.Controllers.ApiControllers
 {
@@ -17,13 +19,17 @@ namespace VNFarm.Controllers.ApiControllers
         private readonly IUserService _userService;
         private readonly IStoreService _storeService;
         private readonly ILogger<AuthController> _logger;
+        private readonly IEmailService _emailService;
+        private readonly MyOtpService _otpService;
 
-        public AuthController(IJwtTokenService jwtTokenService, IUserService userService, IStoreService storeService, ILogger<AuthController> logger)
+        public AuthController(IJwtTokenService jwtTokenService, IUserService userService, IStoreService storeService, ILogger<AuthController> logger, IEmailService emailService, MyOtpService otpService)
         {
             _jwtTokenService = jwtTokenService;
             _userService = userService;
             _storeService = storeService;
             _logger = logger;
+            _emailService = emailService;
+            _otpService = otpService;
         }
 
         [HttpPost("login")]
@@ -40,6 +46,14 @@ namespace VNFarm.Controllers.ApiControllers
                     message = "Thông tin đăng nhập không chính xác"
                 });
             }
+            if(!user.IsActive)
+            {
+                return Ok(new
+                {
+                    status = 401,
+                    message = "Tài khoản của bạn không hoạt động lúc này. Vui lòng liên hệ quản trị viên để được hỗ trợ."
+                });
+            }
             string role = "User";
             switch (user.Role)
             {
@@ -48,6 +62,9 @@ namespace VNFarm.Controllers.ApiControllers
                     break;
                 case UserRole.User:
                     role = "User";
+                    break;
+                case UserRole.Buyer:
+                    role = "Buyer";
                     break;
                 case UserRole.Seller:
                     role = "Seller";
@@ -67,7 +84,7 @@ namespace VNFarm.Controllers.ApiControllers
         }
 
         [HttpPost("Register")]
-        public async Task<IActionResult> Register([FromBody] RegisterRequestDTO request)
+        public async Task<IActionResult> Register([FromForm] RegisterRequestDTO request)
         {
             try
             {
@@ -88,8 +105,9 @@ namespace VNFarm.Controllers.ApiControllers
                     FullName = request.FullName,
                     Email = request.Email,
                     PasswordNew = request.Password, // Sẽ được hash trong service
-                    IsActive = request.UserRole == UserRole.User, // User được kích hoạt ngay, Seller đợi duyệt
-                    Role = request.UserRole // Đặt role theo yêu cầu đăng ký
+                    IsActive = request.UserRole == UserRole.Buyer, // Buyer được kích hoạt ngay, Seller đợi duyệt
+                    Role = request.UserRole, // Đặt role theo yêu cầu đăng ký
+                    ImageUrl = "default.jpg"
                 };
 
                 // Thêm user vào database
@@ -111,7 +129,7 @@ namespace VNFarm.Controllers.ApiControllers
                     return Ok(new
                     {
                         status = 200,
-                        message = request.UserRole == UserRole.User
+                        message = request.UserRole == UserRole.Buyer
                             ? "Đăng ký thành công"
                             : "Đăng ký thành công. Vui lòng đợi quản trị viên duyệt tài khoản.",
                         token = token,
@@ -121,7 +139,7 @@ namespace VNFarm.Controllers.ApiControllers
                             fullName = result.FullName,
                             email = result.Email,
                             role = request.UserRole,
-                            isActive = request.UserRole == UserRole.User
+                            isActive = request.UserRole == UserRole.Buyer
                         }
                     });
                 }
@@ -129,7 +147,7 @@ namespace VNFarm.Controllers.ApiControllers
                 {
                     if (request.UserRole == UserRole.Seller)
                     {
-                        var logoUrl = "no-image.webp";
+                        var logoUrl = "default.jpg";
                         if(request.LogoFile != null)
                         {
                             logoUrl = await FileUpload.UploadFile(request.LogoFile, FileUpload.StoreFolder);
@@ -146,7 +164,9 @@ namespace VNFarm.Controllers.ApiControllers
                             Email = request.StoreEmail ?? "",
                             BusinessType = request.BusinessType,
                             VerificationStatus = StoreStatus.Pending,
-                            UserId = result.Id
+                            UserId = result.Id,
+                            LogoFile = request.LogoFile,
+                            IsActive = true
                         });
                     }
                     return Ok(new
@@ -164,6 +184,80 @@ namespace VNFarm.Controllers.ApiControllers
                 {
                     status = 500,
                     message = "Đã có lỗi xảy ra khi đăng ký tài khoản"
+                });
+            }
+        }
+        [HttpPost("ForgotPassword")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequestDTO request)
+        {
+            var user = (await _userService.FindAsync(x => x.Email == request.Email)).FirstOrDefault();
+            if(user == null)
+                return NotFound(new
+                {
+                    status = 404,
+                    message = "Email không tồn tại"
+                });
+            
+            var otp = new Random().Next(100000, 999999);
+            _otpService.SetOtp(user.Email, otp);
+            await _emailService.SendEmailAsync(
+                user.Email, 
+                "Đặt lại mật khẩu", 
+                $"Chúng tôi nhận được yêu cầu đặt lại mật khẩu của bạn trên sàn TMĐT VnFarm. <br>Mã OTP để đặt lại mật khẩu của bạn là: {otp}. Mã có hiệu lực trong 15 phút. Vui lòng không chia sẻ với bất kì ai.", true);
+            return Ok(new
+            {
+                status = 200,
+                message = "Mã OTP đặt lại mật khẩu đã được gửi đến email của bạn !"
+            });
+        }
+        
+        [HttpPost("ResetPassword")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequestDTO request)
+        {
+            var user = (await _userService.FindAsync(x => x.Email == request.Email)).FirstOrDefault();
+            
+            if(user == null)
+                return BadRequest(new
+                {
+                    status = 400,
+                    message = "Không tồn tại email này"
+                });
+
+            // Kiểm tra token
+            int otpExpected = _otpService.GetOtp(user.Email);
+            if (otpExpected == -1)
+            {
+                return BadRequest(new
+                {
+                    status = 400,
+                    message = "OTP không hợp lệ hoặc quá hạn"
+                });
+            }
+            else if (otpExpected != request.OTP)
+            {
+                return BadRequest(new
+                {
+                    status = 400,
+                    message = "Mã OTP không chính xác"
+                });
+            }
+            else
+            {
+                var userRequestDTO = new UserRequestDTO
+                {
+                    Id = user.Id,
+                    PasswordNew = request.NewPassword,
+                    Email = request.Email,
+                    FullName = user.FullName,
+                    PhoneNumber = user.PhoneNumber,
+                };
+
+                await _userService.UpdateAsync(userRequestDTO);
+
+                return Ok(new
+                {
+                    status = 200,
+                    message = "Đặt lại mật khẩu thành công!"
                 });
             }
         }

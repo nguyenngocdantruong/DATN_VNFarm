@@ -28,7 +28,7 @@ namespace VNFarm.DTOs.Response
         public required string ImageUrl { get; set; }
         #endregion
 
-        public required decimal AverageRating { get; set; }
+        public required double AverageRating { get; set; }
         public required int ReviewStar1Count { get; set; }
         public required int ReviewStar2Count { get; set; }
         public required int ReviewStar3Count { get; set; }

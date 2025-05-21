@@ -8,8 +8,8 @@ using VNFarm.DTOs.Filters;
 using VNFarm.DTOs.Request;
 using VNFarm.DTOs.Response;
 using VNFarm.Entities;
-using VNFarm.Interfaces.Repositories;
-using VNFarm.Interfaces.Services;
+using VNFarm.Repositories.Interfaces;
+using VNFarm.Services.Interfaces;
 
 namespace VNFarm.Services
 {

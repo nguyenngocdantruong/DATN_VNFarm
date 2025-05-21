@@ -19,19 +19,19 @@ namespace VNFarm.Entities
         
         #region Thông tin giá cả
         // Tổng giá trị đơn hàng (Tạm tính)
-        public decimal TotalAmount { get; set; }
+        public int TotalAmount { get; set; }
         
         // Phí vận chuyển
-        public decimal ShippingFee { get; set; }
+        public int ShippingFee { get; set; }
         
         // Thuế VAT
-        public decimal TaxAmount { get; set; }
+        public int TaxAmount { get; set; }
         
         // Số tiền được giảm giá
-        public decimal DiscountAmount { get; set; }
+        public int DiscountAmount { get; set; }
         
         // Tổng số tiền phải thanh toán
-        public decimal FinalAmount { get; set; }
+        public int FinalAmount { get; set; }
         #endregion
         
         #region Thông tin thanh toán
@@ -84,6 +84,5 @@ namespace VNFarm.Entities
         public Discount? Discount { get; set; }         // Thông tin giảm giá
         public ICollection<OrderItem> OrderItems { get; set; } = [];  // Chi tiết đơn hàng
         public ICollection<OrderTimeline> OrderTimelines { get; set; } = [];    // Lịch sử đơn hàng
-        public Transaction? Transaction { get; set; }   
     }
 } 

@@ -1,5 +1,7 @@
 using System.Security.Cryptography;
 using System.Text;
+using VNFarm.DTOs.Response;
+using VNFarm.Entities;
 
 namespace VNFarm.Helpers
 {

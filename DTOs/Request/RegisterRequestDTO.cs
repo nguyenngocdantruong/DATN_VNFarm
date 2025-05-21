@@ -29,7 +29,8 @@ namespace VNFarm.DTOs.Request
         public string? StorePhoneNumber { get; set; }
         
         public string? StoreEmail { get; set; }
-        
+
+        [EnumDataType(typeof(StoreType), ErrorMessage = "Loại cửa hàng không hợp lệ")]
         public StoreType BusinessType { get; set; } = StoreType.Farmer;
         
         public IFormFile? LogoFile { get; set; }

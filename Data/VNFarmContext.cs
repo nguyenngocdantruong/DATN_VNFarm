@@ -19,7 +19,7 @@ namespace VNFarm.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderDetail> OrderDetails { get; set; }
+        // public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<OrderTimeline> OrderTimelines { get; set; }
         public DbSet<Review> Reviews { get; set; }
@@ -27,14 +27,14 @@ namespace VNFarm.Data
         public DbSet<Chat> Chats { get; set; }
         public DbSet<ChatRoom> ChatRooms { get; set; }
         public DbSet<Notification> Notifications { get; set; }
-        public DbSet<PaymentMethod> PaymentMethods { get; set; }
-        public DbSet<BusinessRegistration> BusinessRegistrations { get; set; }
-        public DbSet<Transaction> Transactions { get; set; }
-        public DbSet<RegistrationApprovalResult> RegistrationApprovalResults { get; set; }
+        // public DbSet<PaymentMethod> PaymentMethods { get; set; }
+        // public DbSet<BusinessRegistration> BusinessRegistrations { get; set; }
+        // public DbSet<Transaction> Transactions { get; set; }
+        // public DbSet<RegistrationApprovalResult> RegistrationApprovalResults { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<ShopCart> ShopCarts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
-        public DbSet<ContactRequest> ContactRequests { get; set; }
+        // public DbSet<ContactRequest> ContactRequests { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -78,10 +78,10 @@ namespace VNFarm.Data
             //     .HasForeignKey(o => o.StoreId)
             //     .IsRequired(false);
 
-            modelBuilder.Entity<OrderDetail>()
-                .HasOne(od => od.Product)
-                .WithMany()
-                .HasForeignKey(od => od.ProductId);
+            // modelBuilder.Entity<OrderDetail>()
+            //     .HasOne(od => od.Product)
+            //     .WithMany()
+            //     .HasForeignKey(od => od.ProductId);
                 
             // OrderItem
             modelBuilder.Entity<OrderItem>()
@@ -162,16 +162,16 @@ namespace VNFarm.Data
                 .IsRequired(false);
 
             // Transaction relationships
-            modelBuilder.Entity<Transaction>()
-                .HasOne(t => t.Order)
-                .WithMany()
-                .HasForeignKey(t => t.OrderId)
-                .IsRequired(false);
+            // modelBuilder.Entity<Transaction>()
+            //     .HasOne(t => t.Order)
+            //     .WithMany()
+            //     .HasForeignKey(t => t.OrderId)
+            //     .IsRequired(false);
                 
-            modelBuilder.Entity<Transaction>()
-                .HasOne(t => t.Buyer)
-                .WithMany()
-                .HasForeignKey(t => t.BuyerId);
+            // modelBuilder.Entity<Transaction>()
+            //     .HasOne(t => t.Buyer)
+            //     .WithMany()
+            //     .HasForeignKey(t => t.BuyerId);
 
             // Notification-User relationship
             modelBuilder.Entity<Notification>()
@@ -180,27 +180,27 @@ namespace VNFarm.Data
                 .HasForeignKey(n => n.UserId);
 
             // BusinessRegistration-User relationship
-            modelBuilder.Entity<BusinessRegistration>()
-                .HasOne(br => br.User)
-                .WithOne()
-                .HasForeignKey<BusinessRegistration>(br => br.UserId);
+            // modelBuilder.Entity<BusinessRegistration>()
+            //     .HasOne(br => br.User)
+            //     .WithOne()
+            //     .HasForeignKey<BusinessRegistration>(br => br.UserId);
 
             // PaymentMethod-User relationship
-            modelBuilder.Entity<PaymentMethod>()
-                .HasOne<User>()
-                .WithMany(u => u.PaymentMethods)
-                .HasForeignKey(pm => pm.UserId);
+            // modelBuilder.Entity<PaymentMethod>()
+            //     .HasOne<User>()
+            //     .WithMany(u => u.PaymentMethods)
+            //     .HasForeignKey(pm => pm.UserId);
 
             // RegistrationApprovalResult relationships
-            modelBuilder.Entity<RegistrationApprovalResult>()
-                .HasOne<BusinessRegistration>()
-                .WithMany(br => br.ApprovalResults)
-                .HasForeignKey(rar => rar.RegistrationId);
+            // modelBuilder.Entity<RegistrationApprovalResult>()
+            //     .HasOne<BusinessRegistration>()
+            //     .WithMany(br => br.ApprovalResults)
+            //     .HasForeignKey(rar => rar.RegistrationId);
                 
-            modelBuilder.Entity<RegistrationApprovalResult>()
-                .HasOne(rar => rar.Admin)
-                .WithMany()
-                .HasForeignKey(rar => rar.AdminId);
+            // modelBuilder.Entity<RegistrationApprovalResult>()
+            //     .HasOne(rar => rar.Admin)
+            //     .WithMany()
+            //     .HasForeignKey(rar => rar.AdminId);
 
             // Cart-User relationship
             modelBuilder.Entity<User>()

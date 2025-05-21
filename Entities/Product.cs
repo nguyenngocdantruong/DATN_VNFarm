@@ -15,7 +15,7 @@ namespace VNFarm.Entities
         public string Description { get; set; } = "";
         
         // Giá bán (đơn giá, đơn vị VNĐ)
-        public decimal Price { get; set; }
+        public int Price { get; set; }
         
         // URL ảnh chính của sản phẩm
         public string ImageUrl { get; set; } = "";
@@ -27,7 +27,7 @@ namespace VNFarm.Entities
         public Unit Unit { get; set; } = Unit.Kg;
         
         // Số lượng đã bán
-        public decimal SoldQuantity { get; set; } = 0;
+        public int SoldQuantity { get; set; } = 0;
         
         // ID cửa hàng sở hữu sản phẩm
         public int StoreId { get; set; }
@@ -41,7 +41,7 @@ namespace VNFarm.Entities
         // Xuất xứ sản phẩm
         public string Origin { get; set; } = "";
         // Đánh giá 
-        public decimal AverageRating { get; set; }
+        public double AverageRating { get; set; }
         public int TotalSoldQuantity { get; set; }
         public int ReviewCount { get; set; }
         public int ReviewStar1Count {get;set;} = 0;

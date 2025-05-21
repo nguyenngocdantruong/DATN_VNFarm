@@ -5,7 +5,8 @@ using VNFarm.DTOs.Filters;
 using VNFarm.DTOs.Request;
 using VNFarm.DTOs.Response;
 using VNFarm.Entities;
-using VNFarm.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
+using VNFarm.Services.Interfaces;
 
 namespace VNFarm.Controllers.ApiControllers
 {
@@ -29,6 +30,16 @@ namespace VNFarm.Controllers.ApiControllers
             var categories = await _categoryService.Query(filter);
             var results = await _categoryService.ApplyPagingAndSortingAsync(categories, filter);
             return Ok(results);
+        }
+        [Authorize(Roles = "Admin")]
+        public override async Task<IActionResult> AddAsync([FromForm] CategoryRequestDTO dto)
+        {
+            return await base.AddAsync(dto);
+        }
+        [Authorize(Roles = "Admin")]
+        public override Task<IActionResult> UpdateAsync(int id, [FromForm] CategoryRequestDTO dto)
+        {
+            return base.UpdateAsync(id, dto);
         }
     }
 }

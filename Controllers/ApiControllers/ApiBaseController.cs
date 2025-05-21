@@ -4,7 +4,7 @@ using VNFarm.Helpers;
 using VNFarm.DTOs.Request;
 using VNFarm.DTOs.Response;
 using VNFarm.Entities;
-using VNFarm.Interfaces.Services;
+using VNFarm.Services.Interfaces;
 
 namespace VNFarm.Controllers.ApiControllers
 {

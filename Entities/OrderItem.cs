@@ -19,16 +19,16 @@ namespace VNFarm.Entities
         public Unit Unit { get; set; }
         
         // Đơn giá sản phẩm tại thời điểm đặt hàng
-        public decimal UnitPrice { get; set; }
+        public int UnitPrice { get; set; }
         
         // Phí vận chuyển cho sản phẩm này
-        public decimal ShippingFee { get; set; }
+        public int ShippingFee { get; set; }
         
         // Thuế VAT cho sản phẩm này
-        public decimal TaxAmount { get; set; }
+        public int TaxAmount { get; set; }
         
         // Tổng giá trị của sản phẩm (số lượng * đơn giá) + VAT
-        public decimal Subtotal { get; set; }
+        public int Subtotal { get; set; }
         
         // Trạng thái đóng gói
         public OrderItemStatus PackagingStatus { get; set; } = OrderItemStatus.Pending;

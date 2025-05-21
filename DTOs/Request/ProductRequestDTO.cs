@@ -17,9 +17,9 @@ namespace VNFarm.DTOs.Request
 
         #region Thông tin giá & số lượng
         [Required(ErrorMessage = "Đơn giá sản phẩm là bắt buộc")]
-        [Range(0.01, double.MaxValue, ErrorMessage = "Đơn giá sản phẩm phải lớn hơn 0")]
+        [Range(1, int.MaxValue, ErrorMessage = "Đơn giá sản phẩm phải lớn hơn 0")]
         [DataType(DataType.Currency)]
-        public decimal Price { get; set; }
+        public int Price { get; set; }
 
         [Required(ErrorMessage = "Số lượng trong kho là bắt buộc")]
         [Range(0, int.MaxValue, ErrorMessage = "Số lượng trong kho không được âm")]

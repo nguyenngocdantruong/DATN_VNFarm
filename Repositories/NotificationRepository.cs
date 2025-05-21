@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using VNFarm.Data;
 using VNFarm.Entities;
 using VNFarm.Enums;
-using VNFarm.Interfaces.Repositories;
+using VNFarm.Repositories.Interfaces;
 
 namespace VNFarm.Repositories
 {

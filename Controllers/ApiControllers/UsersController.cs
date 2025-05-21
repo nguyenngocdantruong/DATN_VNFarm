@@ -4,8 +4,9 @@ using VNFarm.DTOs.Filters;
 using VNFarm.DTOs.Request;
 using VNFarm.DTOs.Response;
 using VNFarm.Entities;
-using VNFarm.Interfaces.Services;
 using VNFarm.Enums;
+using VNFarm.Services.Interfaces;
+using VNFarm.Services.External.Interfaces;
 
 namespace VNFarm.Controllers.ApiControllers
 {
@@ -16,25 +17,21 @@ namespace VNFarm.Controllers.ApiControllers
     {
         private readonly IUserService _userService;
         private readonly IStoreService _storeService;
-        private readonly ITransactionService _transactionService;
         private readonly IOrderService _orderService;
-        private readonly IJwtTokenService _jwtTokenService;
         private readonly IProductService _productService;
 
         public UsersController(
             IUserService userService,
             IStoreService storeService,
-            ITransactionService transactionService,
             IOrderService orderService,
             IJwtTokenService jwtTokenService,
             IProductService productService,
+            IEmailService emailService,
             ILogger<UsersController> logger) : base(userService, jwtTokenService, logger)
         {
             _userService = userService;
             _storeService = storeService;
             _orderService = orderService;
-            _transactionService = transactionService;
-            _jwtTokenService = jwtTokenService;
             _productService = productService;
         }
 
@@ -117,6 +114,9 @@ namespace VNFarm.Controllers.ApiControllers
             {
                 if (id <= 0)
                     return BadRequest(new { success = false, message = "ID không hợp lệ." });
+                var user = await _userService.GetByIdAsync(id);
+                if(user == null)
+                    return NotFound(new { success = false, message = "Không tìm thấy người dùng." });
 
                 var success = await _userService.SetUserActiveAsync(id, isActive);
                 if (!success)
@@ -152,23 +152,10 @@ namespace VNFarm.Controllers.ApiControllers
         }
         protected override async Task<UserResponseDTO> IncludeNavigation(UserResponseDTO item)
         {
-            var transactions = await _transactionService.GetTransactionsByUserIdAsync(item.Id);
-            item.Transactions = transactions;
             if(item.Role == Enums.UserRole.Seller){
                 var store = await _storeService.GetStoreByUserIdAsync(item.Id);
                 item.Store = store;
-                if(item.Store != null){
-                    var transactionsStore = await _transactionService.GetTransactionsByStoreIdAsync(item.Store.Id);
-                    // Add store transactions to existing transactions instead of replacing them
-                    if(item.Transactions == null) {
-                        item.Transactions = transactionsStore;
-                    } else {
-                        item.Transactions = item.Transactions.Concat(transactionsStore).ToList();
-                    }
-                }
             }
-            var paymentMethods = await _transactionService.GetPaymentMethodsByUserIdAsync(item.Id);
-            item.PaymentMethods = paymentMethods;
             return await base.IncludeNavigation(item);
         }
         [HttpGet("stats")]
@@ -240,7 +227,12 @@ namespace VNFarm.Controllers.ApiControllers
             }
 
             var totalOrders = await _orderService.CountAsync(m => m.IsDeleted == false && m.BuyerId == userId);
-            var totalRenenvue = (await _orderService.FindAsync(m => m.IsDeleted == false && m.BuyerId == userId)).Sum(m => m != null ? m.TotalAmount : 0);
+            var totalRenenvue = (await _orderService.FindAsync(m => 
+                m.IsDeleted == false && 
+                m.BuyerId == userId && 
+                (m.Status == OrderStatus.Completed || m.Status == OrderStatus.Delivered) && 
+                m.PaymentStatus == PaymentStatus.Paid
+            )).Sum(m => m != null ? m.TotalAmount : 0);
             var listRenenvueInYear = new List<decimal>();
             var currentYear = DateTime.Now.Year;
             
@@ -253,6 +245,7 @@ namespace VNFarm.Controllers.ApiControllers
                     o.BuyerId == userId &&
                     o.CreatedAt >= startDate && 
                     o.CreatedAt <= endDate &&
+                    (o.Status == OrderStatus.Completed || o.Status == OrderStatus.Delivered) &&
                     o.PaymentStatus == PaymentStatus.Paid
                 )).Sum(o => o != null ? o.TotalAmount : 0);
                 

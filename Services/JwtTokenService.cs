@@ -4,7 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using VNFarm.DTOs.Response;
-using VNFarm.Interfaces.Services;
+using VNFarm.Services.Interfaces;
 
 namespace VNFarm.Services
 {

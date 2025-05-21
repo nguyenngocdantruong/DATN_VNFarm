@@ -20,26 +20,26 @@ namespace VNFarm.Mappers
                 ShippingWard = order.ShippingWard,
             };
         }
-        public static BusinessRegistrationResponseDTO ToResponseDTO(this BusinessRegistration businessRegistration)
-        {
-            return new BusinessRegistrationResponseDTO
-            {
-                Id = businessRegistration.Id,
-                CreatedAt = businessRegistration.CreatedAt,
-                UpdatedAt = businessRegistration.UpdatedAt,
-                UserId = businessRegistration.UserId,
-                BusinessName = businessRegistration.BusinessName,
-                TaxCode = businessRegistration.TaxCode,
-                BusinessLicenseUrl = businessRegistration.BusinessLicenseUrl,
-                Address = businessRegistration.Address,
-                Notes = businessRegistration.Notes,
-                RegistrationStatus = businessRegistration.RegistrationStatus,
-                BusinessType = businessRegistration.BusinessType,
-                //Navigation Properties
-                User = businessRegistration.User?.ToResponseDTO(),
-                ApprovalResults = businessRegistration.ApprovalResults?.Select(ar => ar.ToResponseDTO()).ToList(),
-            };
-        }
+        //public static BusinessRegistrationResponseDTO ToResponseDTO(this BusinessRegistration businessRegistration)
+        //{
+        //    return new BusinessRegistrationResponseDTO
+        //    {
+        //        Id = businessRegistration.Id,
+        //        CreatedAt = businessRegistration.CreatedAt,
+        //        UpdatedAt = businessRegistration.UpdatedAt,
+        //        UserId = businessRegistration.UserId,
+        //        BusinessName = businessRegistration.BusinessName,
+        //        TaxCode = businessRegistration.TaxCode,
+        //        BusinessLicenseUrl = businessRegistration.BusinessLicenseUrl,
+        //        Address = businessRegistration.Address,
+        //        Notes = businessRegistration.Notes,
+        //        RegistrationStatus = businessRegistration.RegistrationStatus,
+        //        BusinessType = businessRegistration.BusinessType,
+        //        //Navigation Properties
+        //        User = businessRegistration.User?.ToResponseDTO(),
+        //        ApprovalResults = businessRegistration.ApprovalResults?.Select(ar => ar.ToResponseDTO()).ToList(),
+        //    };
+        //}
         public static CategoryResponseDTO ToResponseDTO(this Category category)
         {
             return new CategoryResponseDTO
@@ -124,25 +124,7 @@ namespace VNFarm.Mappers
                 IsRead = notification.IsRead,
             };
         }
-        public static OrderDetailResponseDTO ToResponseDTO(this OrderDetail orderDetail)
-        {
-            return new OrderDetailResponseDTO
-            {
-                Id = orderDetail.Id,
-                CreatedAt = orderDetail.CreatedAt,
-                UpdatedAt = orderDetail.UpdatedAt,
-                OrderId = orderDetail.OrderId,
-                ProductId = orderDetail.ProductId,
-                Quantity = orderDetail.Quantity,
-                UnitPrice = orderDetail.UnitPrice,
-                ShippingFee = orderDetail.ShippingFee,
-                TaxAmount = orderDetail.TaxAmount,
-                Subtotal = orderDetail.Subtotal,
-                PackagingStatus = orderDetail.PackagingStatus,
-                Unit = orderDetail.Unit,
-                ImageUrl = orderDetail.Product?.ImageUrl,
-            };
-        }
+       
         public static OrderResponseDTO ToResponseDTO(this Order entity)
         {
             if (entity == null) return null;
@@ -200,20 +182,7 @@ namespace VNFarm.Mappers
                 Description = orderTimeline.Description,
             };
         }
-        public static PaymentMethodResponseDTO ToResponseDTO(this PaymentMethod paymentMethod)
-        {
-            return new PaymentMethodResponseDTO
-            {
-                Id = paymentMethod.Id,
-                CreatedAt = paymentMethod.CreatedAt,
-                UpdatedAt = paymentMethod.UpdatedAt,
-                CardName = paymentMethod.CardName,
-                PaymentType = paymentMethod.PaymentType,
-                AccountNumber = paymentMethod.AccountNumber,
-                AccountHolderName = paymentMethod.AccountHolderName,
-                BankName = paymentMethod.BankName,
-            };
-        }
+        
         public static ProductResponseDTO ToResponseDTO(this Product product)
         {
             return new ProductResponseDTO
@@ -242,19 +211,7 @@ namespace VNFarm.Mappers
                 ReviewStar5Count = product.ReviewStar5Count,
             };
         }
-        public static RegistrationApprovalResultResponseDTO ToResponseDTO(this RegistrationApprovalResult registrationApprovalResult)
-        {
-            return new RegistrationApprovalResultResponseDTO
-            {
-                Id = registrationApprovalResult.Id,
-                CreatedAt = registrationApprovalResult.CreatedAt,
-                UpdatedAt = registrationApprovalResult.UpdatedAt,
-                RegistrationId = registrationApprovalResult.RegistrationId,
-                AdminId = registrationApprovalResult.AdminId,
-                ApprovalResult = registrationApprovalResult.ApprovalResult,
-                Note = registrationApprovalResult.Note,
-            };
-        }
+        
         public static ReviewResponseDTO ToResponseDTO(this Review review)
         {
             return new ReviewResponseDTO
@@ -309,24 +266,7 @@ namespace VNFarm.Mappers
                 Owner = store.User?.ToResponseDTO(),
             };
         }
-        public static TransactionResponseDTO ToResponseDTO(this Transaction transaction)
-        {
-            return new TransactionResponseDTO
-            {
-                Id = transaction.Id,
-                CreatedAt = transaction.CreatedAt,
-                UpdatedAt = transaction.UpdatedAt,
-                TransactionCode = transaction.TransactionCode,
-                OrderId = transaction.OrderId,
-                BuyerId = transaction.BuyerId,
-                Amount = transaction.Amount,
-                Details = transaction.Details,
-                PaymentMethod = transaction.PaymentMethod,
-                Status = transaction.Status,
-                PaymentDueDate = transaction.PaymentDueDate,
-                PaymentDate = transaction.PaymentDate,
-            };
-        }
+        
         public static UserResponseDTO ToResponseDTO(this User user)
         {
             return new UserResponseDTO
@@ -407,20 +347,6 @@ namespace VNFarm.Mappers
                 ShopId = entity.ShopId,
                 Product = entity.Product?.ToResponseDTO(),
                 Shop = entity.Shop?.ToResponseDTO()
-            };
-        }
-        public static ContactRequestResponseDTO ToResponseDTO(this ContactRequest contactRequest)
-        {
-            return new ContactRequestResponseDTO
-            {
-                Id = contactRequest.Id,
-                CreatedAt = contactRequest.CreatedAt,
-                UpdatedAt = contactRequest.UpdatedAt,
-                FullName = contactRequest.FullName,
-                Email = contactRequest.Email,
-                ServiceType = contactRequest.ServiceType,
-                PhoneNumber = contactRequest.PhoneNumber,
-                Message = contactRequest.Message
             };
         }
     }

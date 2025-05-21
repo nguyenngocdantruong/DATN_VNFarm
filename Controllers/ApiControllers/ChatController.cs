@@ -4,11 +4,11 @@ using VNFarm.DTOs.Filters;
 using VNFarm.DTOs.Request;
 using VNFarm.DTOs.Response;
 using VNFarm.Entities;
-using VNFarm.Interfaces.Services;
 using VNFarm.Enums;
 using PusherServer;
 using Microsoft.EntityFrameworkCore;
 using VNFarm.Mappers;
+using VNFarm.Services.Interfaces;
 
 namespace VNFarm.Controllers.ApiControllers
 {
@@ -20,16 +20,19 @@ namespace VNFarm.Controllers.ApiControllers
         private readonly IChatRoomService _chatRoomService;
         private readonly IJwtTokenService _jwtTokenService;
         private readonly IUserService _userService;
+        private readonly IStoreService _storeService;
         private readonly ILogger<ChatController> _logger;
         private readonly Pusher _pusher;
         public ChatController(
             IChatRoomService chatRoomService,
             IUserService userService,
+            IStoreService storeService,
             IJwtTokenService jwtTokenService,
             Pusher pusher,
             ILogger<ChatController> logger)
         {
             _chatRoomService = chatRoomService;
+            _storeService = storeService;
             _userService = userService;
             _jwtTokenService = jwtTokenService;
             _logger = logger;
@@ -176,9 +179,12 @@ namespace VNFarm.Controllers.ApiControllers
                     return Unauthorized("Không tìm thấy thông tin người dùng");
 
                 // Kiểm tra người dùng đích tồn tại
-                var targetUser = await _userService.GetByIdAsync(request.TargetUserId);
-                if (targetUser == null)
+                var targetStore = await _storeService.GetByIdAsync(request.TargetUserId);
+                var targetUser = await _userService.GetByIdAsync(targetStore?.OwnerId ?? -1);
+                if (targetStore == null || targetUser == null)
                     return NotFound("Không tìm thấy người dùng đích");
+
+                request.TargetUserId = targetUser.Id;
 
                 // Kiểm tra xem đã có phòng chat giữa hai người dùng chưa
                 var filter = new ChatRoomCriteriaFilter
@@ -192,10 +198,10 @@ namespace VNFarm.Controllers.ApiControllers
                 // Tìm phòng chat hiện có giữa người dùng hiện tại và người dùng đích
                 var existingRoom = (await chatRooms
                     .FirstOrDefaultAsync(c => 
-                        (c.BuyerId == currentUserId && c.SellerId == request.TargetUserId) || 
-                        (c.SellerId == currentUserId && c.BuyerId == request.TargetUserId)));
+                        (c.BuyerId == currentUserId && c.SellerId == targetStore.OwnerId) || 
+                        (c.SellerId == currentUserId && c.BuyerId == targetStore.OwnerId)));
 
-                var existingRoomDTO = existingRoom.ToResponseDTO();
+                var existingRoomDTO = existingRoom?.ToResponseDTO();
                 if (existingRoomDTO != null)
                 {
                     _logger.LogInformation("Returning existing chat room between users {CurrentUser} and {TargetUser}", currentUserId, request.TargetUserId);

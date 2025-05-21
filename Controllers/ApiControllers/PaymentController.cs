@@ -5,8 +5,8 @@ using System;
 using System.Threading.Tasks;
 using VNFarm.DTOs.Request;
 using VNFarm.Enums;
-using VNFarm.Interfaces.External;
-using VNFarm.Interfaces.Services;
+using VNFarm.Services.External.Interfaces;
+using VNFarm.Services.Interfaces;
 using VNPAY.NET;
 using VNPAY.NET.Enums;
 using VNPAY.NET.Models;
@@ -16,23 +16,33 @@ namespace VNFarm.Controllers.ApiControllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class PaymentController : ControllerBase
     {
         private readonly ILogger<PaymentController> _logger;
         private readonly IPaymentService _paymentService;
         private readonly IOrderService _orderService;
         private readonly IJwtTokenService _jwtTokenService;
+        private readonly IProductService _productService;
+        private readonly IEmailService _emailService;
+        private readonly IUserService _userService;
 
         public PaymentController(
             ILogger<PaymentController> logger,
             IOrderService orderService,
             IPaymentService paymentService,
-            IJwtTokenService jwtTokenService)
+            IJwtTokenService jwtTokenService,
+            IProductService productService,
+            IEmailService emailService,
+            IUserService userService)
         {
             _logger = logger;
             _paymentService = paymentService;
             _orderService = orderService;
             _jwtTokenService = jwtTokenService;
+            _productService = productService;
+            _emailService = emailService;
+            _userService = userService;
         }
 
         protected int? GetCurrentUserId()
@@ -180,6 +190,20 @@ namespace VNFarm.Controllers.ApiControllers
                         }
                         else{
                             _logger.LogInformation("Cập nhật trạng thái thanh toán thành công");
+                            
+                            // Cập nhật số lượng đã bán của sản phẩm
+                            var orderItems = await _orderService.GetOrderItemsAsync(order.Id);
+                            foreach (var item in orderItems)
+                            {
+                                await _productService.UpdateSoldQuantityAsync(item.ProductId, item.Quantity);
+                            }
+
+                            // Gửi email xác nhận thanh toán
+                            var user = await _userService.GetByIdAsync(order.BuyerId);
+                            if (user != null && user.Email != null)
+                            {
+                                await _emailService.SendOrderPaymentSuccessEmailAsync(user.Email, user.FullName, order, paymentResult);
+                            }
                         }
                         
                     }
@@ -195,28 +219,6 @@ namespace VNFarm.Controllers.ApiControllers
 
             return NotFound("Không tìm thấy thông tin thanh toán.");
         }
-        /* Payment result
-        {
-            "paymentId": 638697289176052600,
-            "isSuccess": true,
-            "description": "1",
-            "timestamp": "2024-12-13T23:21:59",
-            "vnpayTransactionId": 14742893,
-            "paymentMethod": "ATM",
-            "paymentResponse": {
-                "code": 0,
-                "description": "Giao dịch thành công"
-            },
-            "transactionStatus": {
-                "code": 0,
-                "description": "Giao dịch thành công"
-            },
-            "bankingInfor": {
-                "bankCode": "NCB",
-                "bankTransactionId": "VNP14742893"
-            }
-        }
-         */
     }
 }
 

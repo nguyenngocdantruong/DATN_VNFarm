@@ -19,15 +19,6 @@ namespace VNFarm.Helpers
             order.ShippingDistrict = addressRequestDTO.ShippingDistrict;
             order.ShippingWard = addressRequestDTO.ShippingWard;
         }
-        public static void UpdateFromRequestDto(this BusinessRegistration businessRegistration, BusinessRegistrationRequestDTO businessRegistrationRequestDTO)
-        {
-            businessRegistration.UserId = businessRegistrationRequestDTO.UserId;
-            businessRegistration.BusinessName = businessRegistrationRequestDTO.BusinessName;
-            businessRegistration.BusinessType = businessRegistrationRequestDTO.BusinessType;
-            businessRegistration.TaxCode = businessRegistrationRequestDTO.TaxCode;
-            businessRegistration.BusinessLicenseUrl = businessRegistrationRequestDTO.BusinessLicenseUrl;
-            businessRegistration.Address = businessRegistrationRequestDTO.Address;
-        }
         public static void UpdateFromRequestDto(this Category category, CategoryRequestDTO categoryRequestDTO)
         {
             category.Name = categoryRequestDTO.Name;
@@ -82,15 +73,15 @@ namespace VNFarm.Helpers
             notification.LinkUrl = notificationRequestDTO.LinkUrl;
             notification.Type = notificationRequestDTO.Type;
         }
-        public static void UpdateFromRequestDto(this OrderDetail orderDetail, OrderDetailRequestDTO orderDetailRequestDTO)
-        {
-            if(orderDetailRequestDTO.OrderId != orderDetail.OrderId)
-            {
-                throw new ArgumentException("Mã đơn hàng không hợp lệ");
-            }
-            orderDetail.ProductId = orderDetailRequestDTO.ProductId;
-            orderDetail.Quantity = orderDetailRequestDTO.Quantity;
-        }
+        // public static void UpdateFromRequestDto(this OrderDetail orderDetail, OrderDetailRequestDTO orderDetailRequestDTO)
+        // {
+        //     if(orderDetailRequestDTO.OrderId != orderDetail.OrderId)
+        //     {
+        //         throw new ArgumentException("Mã đơn hàng không hợp lệ");
+        //     }
+        //     orderDetail.ProductId = orderDetailRequestDTO.ProductId;
+        //     orderDetail.Quantity = orderDetailRequestDTO.Quantity;
+        // }
         public static void UpdateFromRequestDto(this Order order, OrderRequestDTO orderRequestDTO)
         {
             order.OrderCode = orderRequestDTO.OrderCode;
@@ -110,14 +101,14 @@ namespace VNFarm.Helpers
             orderTimeline.Status = orderTimelineRequestDTO.Status;
             orderTimeline.Description = orderTimelineRequestDTO.Description;
         }
-        public static void UpdateFromRequestDto(this PaymentMethod paymentMethod, PaymentMethodRequestDTO paymentMethodRequestDTO)
-        {
-            paymentMethod.CardName = paymentMethodRequestDTO.CardName;
-            paymentMethod.PaymentType = paymentMethodRequestDTO.PaymentType;
-            paymentMethod.AccountNumber = paymentMethodRequestDTO.AccountNumber;
-            paymentMethod.AccountHolderName = paymentMethodRequestDTO.AccountHolderName;
-            paymentMethod.BankName = paymentMethodRequestDTO.BankName;
-        }
+        // public static void UpdateFromRequestDto(this PaymentMethod paymentMethod, PaymentMethodRequestDTO paymentMethodRequestDTO)
+        // {
+        //     paymentMethod.CardName = paymentMethodRequestDTO.CardName;
+        //     paymentMethod.PaymentType = paymentMethodRequestDTO.PaymentType;
+        //     paymentMethod.AccountNumber = paymentMethodRequestDTO.AccountNumber;
+        //     paymentMethod.AccountHolderName = paymentMethodRequestDTO.AccountHolderName;
+        //     paymentMethod.BankName = paymentMethodRequestDTO.BankName;
+        // }
         public static void UpdateFromRequestDto(this Product product, ProductRequestDTO productRequestDTO)
         {
             if(product.Id != productRequestDTO.Id)
@@ -137,17 +128,8 @@ namespace VNFarm.Helpers
             }
             if(productRequestDTO.ImageFile != null)
             {
-                product.ImageUrl = productRequestDTO.ImageUrl;
+                product.ImageUrl = productRequestDTO.ImageUrl ?? "no-image.webp";
             }
-        }
-        public static void UpdateFromRequestDto(this RegistrationApprovalResult registrationApprovalResult, RegistrationApprovalResultRequestDTO registrationApprovalResultRequestDTO)
-        {
-            if(registrationApprovalResult.RegistrationId != registrationApprovalResultRequestDTO.RegistrationId)
-            {
-                throw new ArgumentException("Mã đăng ký không hợp lệ");
-            }
-            registrationApprovalResult.ApprovalResult = registrationApprovalResultRequestDTO.ApprovalResult;
-            registrationApprovalResult.Note = registrationApprovalResultRequestDTO.Note;
         }
         public static void UpdateFromRequestDto(this Order order, ShippingRequestDTO shippingRequestDTO)
         {
@@ -178,19 +160,19 @@ namespace VNFarm.Helpers
                 store.LogoUrl = storeRequestDTO.LogoUrl;
             }
         }
-        public static void UpdateFromRequestDto(this Transaction transaction, TransactionRequestDTO transactionRequestDTO)
-        {
-            if(transaction.TransactionCode != transactionRequestDTO.TransactionCode)
-            {
-                throw new ArgumentException("Mã giao dịch không hợp lệ");
-            }
-            if(transaction.OrderId != transactionRequestDTO.OrderId)
-            {
-                throw new ArgumentException("Mã đơn hàng không hợp lệ");
-            }
-            transaction.Details = transactionRequestDTO.Details ?? "";
-            transaction.PaymentMethod = transactionRequestDTO.PaymentMethod;
-        }
+        // public static void UpdateFromRequestDto(this Transaction transaction, TransactionRequestDTO transactionRequestDTO)
+        // {
+        //     if(transaction.TransactionCode != transactionRequestDTO.TransactionCode)
+        //     {
+        //         throw new ArgumentException("Mã giao dịch không hợp lệ");
+        //     }
+        //     if(transaction.OrderId != transactionRequestDTO.OrderId)
+        //     {
+        //         throw new ArgumentException("Mã đơn hàng không hợp lệ");
+        //     }
+        //     transaction.Details = transactionRequestDTO.Details ?? "";
+        //     transaction.PaymentMethod = transactionRequestDTO.PaymentMethod;
+        // }
         public static void UpdateFromRequestDto(this User user, UserRequestDTO userRequestDTO)
         {
             if(user.Id != userRequestDTO.Id)
@@ -202,7 +184,7 @@ namespace VNFarm.Helpers
             user.PhoneNumber = userRequestDTO.PhoneNumber;
             if(userRequestDTO.PasswordNew != null)
             {
-                user.PasswordHash = userRequestDTO.PasswordNew;
+                user.PasswordHash = AuthUtils.GenerateMd5Hash(userRequestDTO.PasswordNew);
             }
             if(userRequestDTO.Address != null)
             {

@@ -36,7 +36,7 @@ namespace VNFarm.Entities
         public StoreStatus VerificationStatus { get; set; } = StoreStatus.Pending;
         
         // Điểm đánh giá trung bình của cửa hàng
-        public decimal AverageRating { get; set; } = 5;
+        public double AverageRating { get; set; } = 5;
         
         // Số lượt đánh giá của cửa hàng
         public int ReviewCount { get; set; } = 0;

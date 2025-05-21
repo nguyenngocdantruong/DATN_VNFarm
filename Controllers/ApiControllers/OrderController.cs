@@ -8,13 +8,16 @@ using VNFarm.DTOs.Request;
 using VNFarm.DTOs.Response;
 using VNFarm.Entities;
 using VNFarm.Enums;
-using VNFarm.Interfaces.Services;
 using Microsoft.Extensions.DependencyInjection;
-using VNFarm.Interfaces.External;
 using VNFarm.Helpers;
+using Microsoft.AspNetCore.Authorization;
+using VNFarm.Services.Interfaces;
+using VNFarm.Services.External.Interfaces;
+using DTOs.Request;
 
 namespace VNFarm.Controllers.ApiControllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class OrderController : ApiBaseController<Order, OrderRequestDTO, OrderResponseDTO>
@@ -23,7 +26,6 @@ namespace VNFarm.Controllers.ApiControllers
         private readonly IUserService _userService;
         private readonly IStoreService _storeService;
         private readonly IDiscountService _discountService;
-        private readonly IEmailService _emailService;
         public OrderController(IOrderService orderService,
             IUserService userService,
             IStoreService storeService,
@@ -36,7 +38,6 @@ namespace VNFarm.Controllers.ApiControllers
             _userService = userService;
             _storeService = storeService;
             _discountService = discountService;
-            _emailService = emailService;
         }
 
         /// <summary>
@@ -45,6 +46,15 @@ namespace VNFarm.Controllers.ApiControllers
         [HttpGet("user/{userId}")]
         public async Task<ActionResult<IEnumerable<OrderResponseDTO>>> GetOrdersByUser(int userId)
         {
+            var currentUserId = GetCurrentUserId();
+            if(!IsCurrentUserAdmin){
+                if(currentUserId == null || currentUserId != userId){
+                    return Unauthorized(new {
+                        success = false,
+                        message = "Bạn không có quyền xem đơn hàng của người dùng khác"
+                    });
+                }
+            }
             var orders = await _orderService.GetOrdersByUserIdAsync(userId);
             return Ok(orders);
         }
@@ -95,6 +105,7 @@ namespace VNFarm.Controllers.ApiControllers
         /// <summary>
         /// Lấy tổng doanh thu của cửa hàng
         /// </summary>
+        [Authorize(Roles = "Admin,Seller")]
         [HttpGet("revenue/store/{storeId}")]
         public async Task<ActionResult<decimal>> GetTotalRevenueByStore(int storeId)
         {
@@ -105,6 +116,7 @@ namespace VNFarm.Controllers.ApiControllers
         /// <summary>
         /// Lấy tổng doanh thu theo khoảng thời gian
         /// </summary>
+        [Authorize(Roles = "Admin,Seller")]
         [HttpGet("revenue/date-range")]
         public async Task<ActionResult<decimal>> GetTotalRevenueByDateRange([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
         {
@@ -130,11 +142,15 @@ namespace VNFarm.Controllers.ApiControllers
             var orders = await _orderService.Query(filter);
             var totalCount = orders.Count();
             var results = await _orderService.ApplyPagingAndSortingAsync(orders, filter);
-            results = await Task.WhenAll(results.Select(async m => await IncludeNavigation(m)));
+            var resultList = new List<OrderResponseDTO>();
+            foreach (var item in results)
+            {
+                resultList.Add(await IncludeNavigation(item));
+            }
             return Ok(new
             {
                 success = true,
-                data = results,
+                data = resultList,
                 totalCount = totalCount
             });
         }
@@ -179,21 +195,6 @@ namespace VNFarm.Controllers.ApiControllers
             {
                 return BadRequest(new { success = false, message = "Trạng thái không hợp lệ" });
             }
-            var user = await _userService.GetByIdAsync(order.BuyerId);
-            if (user != null && !string.IsNullOrEmpty(user.Email))
-            {
-                // Gửi email thông báo cập nhật trạng thái đơn hàng nếu có thay đổi trạng thái
-                try
-                {
-                    var orderContents = OrderUtils.GetOrderEventTypeForForm();
-                    var content = orderContents.TryGetValue((int)orderTimelineRequest.EventType, out var value) ? value.ToString() : "Không thể xác định trạng thái";
-                    await _emailService.SendOrderStatusUpdateAsync(user.Email, id, content ?? "Không thể xác định trạng thái");
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Lỗi khi gửi email thông báo cập nhật trạng thái đơn hàng {OrderId}", id);
-                }
-            }
 
             var timeline = await _orderService.AddOrderTimelineAsync(id, orderTimelineRequest);
             if (timeline == null)
@@ -206,6 +207,7 @@ namespace VNFarm.Controllers.ApiControllers
         /// <summary>
         /// Cập nhật địa chỉ đơn hàng
         /// </summary>
+        [Authorize(Roles = "Admin,Buyer")]
         [HttpPut("{id}/address")]
         public async Task<ActionResult> UpdateOrderAddress(int id, [FromBody] AddressRequestDTO addressRequest)
         {
@@ -219,6 +221,7 @@ namespace VNFarm.Controllers.ApiControllers
         /// <summary>
         /// Cập nhật thông tin vận chuyển
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}/shipping")]
         public async Task<ActionResult> UpdateOrderShipping(int id, [FromBody] ShippingRequestDTO shippingRequest)
         {
@@ -232,6 +235,7 @@ namespace VNFarm.Controllers.ApiControllers
         /// <summary>
         /// Cập nhật trạng thái thanh toán
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}/payment-status/{status}")]
         public async Task<ActionResult> UpdateOrderPaymentStatus(int id, PaymentStatus status)
         {
@@ -247,6 +251,7 @@ namespace VNFarm.Controllers.ApiControllers
         /// <summary>
         /// Tính thông số đơn hàng
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpGet("stats")]
         public async Task<ActionResult> GetOrderStats()
         {
@@ -271,35 +276,6 @@ namespace VNFarm.Controllers.ApiControllers
                 data = stats
             });
         }
-        /// <summary>
-        /// Tính tổng tiền đơn hàng
-        /// </summary>
-        [HttpGet("{id}/total-amount")]
-        public async Task<ActionResult<decimal>> GetOrderTotalAmount(int id)
-        {
-            var amount = await _orderService.CalculateOrderTotalAmountAsync(id);
-            return Ok(new { TotalAmount = amount });
-        }
-
-        /// <summary>
-        /// Tính phí vận chuyển
-        /// </summary>
-        [HttpGet("{id}/shipping-fee")]
-        public async Task<ActionResult<decimal>> GetOrderShippingFee(int id)
-        {
-            var fee = await _orderService.CalculateOrderShippingFeeAsync(id);
-            return Ok(new { ShippingFee = fee });
-        }
-
-        /// <summary>
-        /// Tính thuế
-        /// </summary>
-        [HttpGet("{id}/tax-amount")]
-        public async Task<ActionResult<decimal>> GetOrderTaxAmount(int id)
-        {
-            var tax = await _orderService.CalculateOrderTaxAmountAsync(id);
-            return Ok(new { TaxAmount = tax });
-        }
 
         /// <summary>
         /// Tính số tiền giảm giá
@@ -309,16 +285,6 @@ namespace VNFarm.Controllers.ApiControllers
         {
             var discount = await _orderService.CalculateOrderDiscountAmountAsync(id);
             return Ok(new { DiscountAmount = discount });
-        }
-
-        /// <summary>
-        /// Tính tổng tiền cuối cùng
-        /// </summary>
-        [HttpGet("{id}/final-amount")]
-        public async Task<ActionResult<decimal>> GetOrderFinalAmount(int id)
-        {
-            var amount = await _orderService.CalculateOrderFinalAmountAsync(id);
-            return Ok(new { FinalAmount = amount });
         }
         #endregion
 
@@ -443,6 +409,7 @@ namespace VNFarm.Controllers.ApiControllers
         /// <summary>
         /// Cập nhật trạng thái đơn hàng và thanh toán (Admin)
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}/admin-update")]
         public async Task<ActionResult> AdminUpdateOrderStatus(int id, [FromBody] OrderAdminUpdateDTO updateRequest)
         {
@@ -477,13 +444,6 @@ namespace VNFarm.Controllers.ApiControllers
                     };
                     
                     await _orderService.AddOrderTimelineAsync(id, paymentTimelineRequest);
-                    
-                    // Gửi email thông báo cho khách hàng
-                    var buyer = await _userService.GetByIdAsync(order.BuyerId);
-                    if (buyer != null && !string.IsNullOrEmpty(buyer.Email))
-                    {
-                        await _emailService.SendOrderStatusUpdateAsync(buyer.Email, id, $"Trạng thái thanh toán đơn hàng của bạn đã được cập nhật thành: {GetPaymentStatusName(updateRequest.PaymentStatus.Value)}");
-                    }
                 }
 
                 // Cập nhật trạng thái đơn hàng
@@ -501,26 +461,6 @@ namespace VNFarm.Controllers.ApiControllers
                     };
                     
                     await _orderService.AddOrderTimelineAsync(id, orderTimelineRequest);
-                    
-                    // Gửi email thông báo cho khách hàng
-                    var buyer = await _userService.GetByIdAsync(order.BuyerId);
-                    if (buyer != null && !string.IsNullOrEmpty(buyer.Email))
-                    {
-                        await _emailService.SendOrderStatusUpdateAsync(buyer.Email, id, $"Đơn hàng của bạn đã được cập nhật sang trạng thái: {GetStatusName(updateRequest.Status.Value)}");
-                    }
-                    
-                    // Gửi email thông báo cho các cửa hàng liên quan
-                    var orderItems = await _orderService.GetOrderItemsAsync(id);
-                    var storeIds = orderItems.Select(item => item.ShopId).Distinct().ToList();
-                    
-                    foreach (var storeId in storeIds)
-                    {
-                        var store = await _storeService.GetByIdAsync(storeId);
-                        if (store != null && !string.IsNullOrEmpty(store.Email))
-                        {
-                            await _emailService.SendOrderStatusUpdateAsync(store.Email, id, $"Đơn hàng #{order.OrderCode} đã được cập nhật sang trạng thái: {GetStatusName(updateRequest.Status.Value)}");
-                        }
-                    }
                 }
 
                 // Lấy đơn hàng đã cập nhật với đầy đủ thông tin
@@ -539,6 +479,7 @@ namespace VNFarm.Controllers.ApiControllers
         /// <summary>
         /// Cập nhật thông tin vận chuyển và địa chỉ đơn hàng (Admin)
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}/admin-shipping-update")]
         public async Task<ActionResult> AdminUpdateOrderShipping(int id, [FromBody] OrderAdminShippingUpdateDTO updateRequest)
         {
@@ -581,13 +522,6 @@ namespace VNFarm.Controllers.ApiControllers
                     };
                     
                     await _orderService.AddOrderTimelineAsync(id, shippingTimelineRequest);
-                    
-                    // Gửi email thông báo cho khách hàng
-                    var buyer = await _userService.GetByIdAsync(order.BuyerId);
-                    if (buyer != null && !string.IsNullOrEmpty(buyer.Email))
-                    {
-                        await _emailService.SendOrderStatusUpdateAsync(buyer.Email, id, "Thông tin vận chuyển đơn hàng của bạn đã được cập nhật");
-                    }
                 }
 
                 // Cập nhật thông tin địa chỉ
@@ -713,6 +647,7 @@ namespace VNFarm.Controllers.ApiControllers
         /// <summary>
         /// Lấy đơn hàng cho seller với thông tin phù hợp
         /// </summary>
+        [Authorize(Roles = "Seller")]
         [HttpPost("seller")]
         public async Task<ActionResult<OrderForSellerResponseDTO>> GetOrdersForSeller([FromBody] OrderCriteriaFilter filter)
         {
@@ -817,7 +752,8 @@ namespace VNFarm.Controllers.ApiControllers
 
         /// <summary>
         /// Lấy thông tin chi tiết đơn hàng cho seller theo ID
-        /// </summary>
+        /// </summary>.
+        [Authorize(Roles = "Seller")]
         [HttpGet("seller/{id}")]
         public async Task<ActionResult<OrderForSellerResponseDTO>> GetOrderForSellerById(int id)
         {
@@ -910,6 +846,7 @@ namespace VNFarm.Controllers.ApiControllers
         /// <summary>
         /// Cập nhật trạng thái chi tiết đơn hàng cho seller
         /// </summary>
+        [Authorize(Roles = "Seller")]
         [HttpPut("seller/item/{orderId}/{orderItemId}/status")]
         public async Task<ActionResult> UpdateOrderItemStatusForSeller(int orderId, int orderItemId, [FromBody] OrderItemStatusUpdateDTO updateRequest)
         {
@@ -1011,43 +948,6 @@ namespace VNFarm.Controllers.ApiControllers
                 _logger.LogError(ex, "Lỗi khi cập nhật trạng thái sản phẩm {OrderId}, {OrderItemId}", orderId, orderItemId);
                 return StatusCode(500, new { success = false, message = "Đã xảy ra lỗi khi xử lý yêu cầu" });
             }
-        }
-
-        // Class DTO cho cập nhật trạng thái OrderItem
-        public class OrderItemStatusUpdateDTO
-        {
-            public required OrderItemStatus Status { get; set; }
-        }
-
-        // Phương thức hỗ trợ chuyển đổi OrderItemStatus sang OrderEventType
-        private OrderEventType GetOrderEventTypeFromOrderItemStatus(OrderItemStatus status)
-        {
-            return status switch
-            {
-                OrderItemStatus.Processing => OrderEventType.OrderAcceptedBySeller,
-                OrderItemStatus.Packed => OrderEventType.OrderReadyToShip,
-                OrderItemStatus.Shipped => OrderEventType.OrderShipped,
-                OrderItemStatus.Delivered => OrderEventType.OrderCompleted,
-                OrderItemStatus.Cancelled => OrderEventType.OrderCancelled,
-                OrderItemStatus.Returned => OrderEventType.OrderRefunded,
-                _ => OrderEventType.OrderReadyToShip,
-            };
-        }
-
-        // Phương thức lấy tên trạng thái OrderItem
-        private string GetOrderItemStatusName(OrderItemStatus status)
-        {
-            return status switch
-            {
-                OrderItemStatus.Pending => "Chờ xử lý",
-                OrderItemStatus.Processing => "Đang xử lý",
-                OrderItemStatus.Packed => "Đã đóng gói",
-                OrderItemStatus.Shipped => "Đã giao cho đơn vị vận chuyển",
-                OrderItemStatus.Delivered => "Đã giao hàng",
-                OrderItemStatus.Cancelled => "Đã hủy",
-                OrderItemStatus.Returned => "Đã trả hàng",
-                _ => "Không xác định",
-            };
         }
     }
 }

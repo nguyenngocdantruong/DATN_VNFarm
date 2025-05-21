@@ -13,7 +13,7 @@ namespace VNFarm.DTOs.Response
         public required StoreType BusinessType { get; set; }
         public required StoreStatus VerificationStatus { get; set; }
         public required bool IsActive { get; set; }
-        public required decimal AverageRating { get; set; }
+        public required double AverageRating { get; set; }
         public required int ReviewCount { get; set; }
         
         #region User Information

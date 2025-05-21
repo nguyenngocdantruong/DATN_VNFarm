@@ -9,9 +9,9 @@ namespace VNFarm.Entities
         // Tên danh mục
         public string Name { get; set; } = "";
         // Giá thấp nhất
-        public decimal MinPrice { get; set; }
+        public int MinPrice { get; set; }
         // Giá cao nhất
-        public decimal MaxPrice { get; set; }
+        public int MaxPrice { get; set; }
         // Mô tả danh mục
         public string Description { get; set; } = "";
         

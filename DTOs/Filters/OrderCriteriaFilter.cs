@@ -10,8 +10,8 @@ namespace VNFarm.DTOs.Filters
         public PaymentMethodEnum PaymentMethod { get; set; } = PaymentMethodEnum.All;
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public decimal? MinTotal { get; set; } = 0;
-        public decimal? MaxTotal { get; set; } = decimal.MaxValue;
+        public int? MinTotal { get; set; } = 0;
+        public int? MaxTotal { get; set; } = 100000000;
         public int? StoreId {get;set;}
         public int? UserId {get;set;}
     }

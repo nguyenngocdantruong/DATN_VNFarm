@@ -10,9 +10,10 @@ using VNFarm.DTOs.Response;
 using VNFarm.Entities;
 using VNFarm.Enums;
 using VNFarm.Helpers;
-using VNFarm.Interfaces.Repositories;
-using VNFarm.Interfaces.Services;
 using VNFarm.Mappers;
+using VNFarm.Repositories.Interfaces;
+using VNFarm.Services.External.Interfaces;
+using VNFarm.Services.Interfaces;
 
 namespace VNFarm.Services
 {
@@ -24,19 +25,24 @@ namespace VNFarm.Services
         private readonly IDiscountRepository _discountRepository;
         private readonly IProductRepository _productRepository;
         private readonly ICartRepository _cartRepository;
-
+        private readonly IEmailService _emailService;
+        private readonly IUserRepository _userRepository;
         public OrderService(
             IRepository<Order> repository,
             IOrderRepository orderRepository,
             IDiscountRepository discountRepository,
             IProductRepository productRepository,
             ICartRepository cartRepository,
+            IEmailService emailService,
+            IUserRepository userRepository,
             ILogger<OrderService> logger) : base(repository)
         {
             _orderRepository = orderRepository;
             _discountRepository = discountRepository;
             _productRepository = productRepository;
             _cartRepository = cartRepository;
+            _emailService = emailService;
+            _userRepository = userRepository;
             _logger = logger;
         }
         #endregion
@@ -106,14 +112,12 @@ namespace VNFarm.Services
             var query = await _repository.GetQueryableAsync();
             if (filter is OrderCriteriaFilter orderCriteriaFilter)
             {
-                // if (orderCriteriaFilter.StoreId.HasValue)
-                //     query = query.Where(o => o.StoreId == orderCriteriaFilter.StoreId.Value);
-
                 if (orderCriteriaFilter.UserId.HasValue)
                     query = query.Where(o => o.BuyerId == orderCriteriaFilter.UserId.Value);
 
                 if (orderCriteriaFilter.StoreId.HasValue)
-                    query = query.Where(o => o.OrderItems.Any(item => item.Product != null && item.Product.StoreId == orderCriteriaFilter.StoreId.Value));
+                    query = query.Where(o => o.OrderItems.Any(item => item.Product != null && 
+                                                     item.Product.StoreId == orderCriteriaFilter.StoreId.Value));
 
                 if (!string.IsNullOrEmpty(orderCriteriaFilter.SearchTerm))
                     query = query.Where(o => o.Notes.Contains(orderCriteriaFilter.SearchTerm) || o.OrderCode.Contains(orderCriteriaFilter.SearchTerm));
@@ -196,6 +200,14 @@ namespace VNFarm.Services
             if (order == null) return false;
 
             order.Status = status;
+            if(status == OrderStatus.Completed)
+            {
+                var user = await _userRepository.GetByIdAsync(order.BuyerId);
+                if (user != null)
+                {
+                    await _emailService.SendOrderStatusUpdateEmailAsync(user.Email, user.FullName, order.OrderCode, "Đã hoàn thành");
+                }
+            }
             order.UpdatedAt = DateTime.UtcNow;
 
             await _repository.UpdateAsync(order);
@@ -242,12 +254,12 @@ namespace VNFarm.Services
                 OrderId = orderId,
                 ProductId = orderItemRequest.ProductId,
                 Quantity = orderItemRequest.Quantity,
-                UnitPrice = orderItemRequest.UnitPrice,
+                UnitPrice = (int)orderItemRequest.UnitPrice,
                 ShopId = orderItemRequest.ShopId,
                 Unit = product.Unit,
                 ShippingFee = 0,
-                TaxAmount = orderItemRequest.UnitPrice * orderItemRequest.Quantity * 0.1m,
-                Subtotal = orderItemRequest.UnitPrice * orderItemRequest.Quantity * 1.1m,
+                TaxAmount = (int)(orderItemRequest.UnitPrice * orderItemRequest.Quantity * 10 / 100),
+                Subtotal = (int)(orderItemRequest.UnitPrice * orderItemRequest.Quantity * 110 / 100),
                 PackagingStatus = orderItemRequest.PackagingStatus,
                 Product = product
             };
@@ -308,48 +320,69 @@ namespace VNFarm.Services
         #endregion
 
         #region Order Calculations
-        public async Task<decimal> GetTotalRevenueByStoreIdAsync(int storeId)
+        public async Task<int> GetTotalRevenueByStoreIdAsync(int storeId)
         {
-            var orders = await _repository.FindAsync(o => o.OrderItems.Any(item => item.Product != null && item.Product.StoreId == storeId));
-            return orders.Sum(o => o.TotalAmount);
+            // Lấy các đơn hàng đã hoàn thành và đã thanh toán
+            IEnumerable<Order> orders = await _orderRepository.GetOrdersByStoreIdAsync(storeId: storeId);
+            int totalRevenue = 0;
+            
+            // Chỉ tính doanh thu từ các sản phẩm thuộc cửa hàng
+            foreach (var order in orders)
+            {
+                foreach (var item in order.OrderItems)
+                {
+                    if (item.ShopId == storeId)
+                    {
+                        totalRevenue += item.UnitPrice * item.Quantity;
+                    }
+                }
+            }
+            
+            return totalRevenue;
         }
 
-        public async Task<decimal> GetTotalRevenueByDateRangeAsync(DateTime startDate, DateTime endDate)
+        public async Task<int> GetTotalRevenueByDateRangeAsync(DateTime startDate, DateTime endDate)
         {
+            // Lấy các đơn hàng đã hoàn thành và đã thanh toán trong khoảng thời gian
             var orders = await _repository.FindAsync(
-                o => o.CreatedAt >= startDate && o.CreatedAt <= endDate
+                o => o.CreatedAt >= startDate && 
+                     o.CreatedAt <= endDate &&
+                     (o.Status == OrderStatus.Completed || o.Status == OrderStatus.Delivered) && 
+                     o.PaymentStatus == PaymentStatus.Paid
             );
+            
             return orders.Sum(o => o.TotalAmount);
         }
 
-        public async Task<decimal> CalculateOrderTotalAmountAsync(int orderId)
+        public async Task<int> GetMonthlyRevenueByStoreAsync(int storeId, DateTime startDate, DateTime endDate)
         {
-            var order = await _orderRepository.GetByIdAsync(orderId);
-            if (order == null) return 0;
-            var orderDetails = await _orderRepository.GetOrderDetailAsync(orderId);
-            var totalAmount = orderDetails.Sum(od => od.Subtotal);
-            return totalAmount;
+            // Lấy các đơn hàng đã hoàn thành và đã thanh toán trong khoảng thời gian
+            var orders = await _repository.FindAsync(o => 
+                o.CreatedAt >= startDate && 
+                o.CreatedAt <= endDate &&
+                (o.Status == OrderStatus.Completed || o.Status == OrderStatus.Delivered) && 
+                o.PaymentStatus == PaymentStatus.Paid &&
+                o.OrderItems.Any(item => item.Product != null && item.Product.StoreId == storeId)
+            );
+            
+            int totalRevenue = 0;
+            
+            // Chỉ tính doanh thu từ các sản phẩm thuộc cửa hàng
+            foreach (var order in orders)
+            {
+                foreach (var item in order.OrderItems)
+                {
+                    if (item.ShopId == storeId)
+                    {
+                        totalRevenue += item.UnitPrice * item.Quantity;
+                    }
+                }
+            }
+            
+            return totalRevenue;
         }
 
-        public async Task<decimal> CalculateOrderShippingFeeAsync(int orderId)
-        {
-            var order = await _orderRepository.GetByIdAsync(orderId);
-            if (order == null) return 0;
-            var orderDetails = await _orderRepository.GetOrderDetailAsync(orderId);
-            var shippingFee = orderDetails.Sum(od => od.ShippingFee);
-            return shippingFee;
-        }
-
-        public async Task<decimal> CalculateOrderTaxAmountAsync(int orderId)
-        {
-            var order = await _orderRepository.GetByIdAsync(orderId);
-            if (order == null) return 0;
-            var orderDetails = await _orderRepository.GetOrderDetailAsync(orderId);
-            var taxAmount = orderDetails.Sum(od => od.TaxAmount);
-            return taxAmount;
-        }
-
-        public async Task<decimal> CalculateOrderDiscountAmountAsync(int orderId)
+        public async Task<int> CalculateOrderDiscountAmountAsync(int orderId)
         {
             var order = await _orderRepository.GetByIdAsync(orderId);
             var discountVoucher = await _discountRepository.GetByIdAsync(order?.DiscountId);
@@ -371,17 +404,7 @@ namespace VNFarm.Services
             }
             return discountAmount;
         }
-
-        public async Task<decimal> CalculateOrderFinalAmountAsync(int orderId)
-        {
-            var order = await _orderRepository.GetByIdAsync(orderId);
-            if (order == null) return 0;
-            var orderDetails = await _orderRepository.GetOrderDetailAsync(orderId);
-            var totalAmount = orderDetails.Sum(od => od.Subtotal);
-            var discountAmount = await CalculateOrderDiscountAmountAsync(orderId);
-            var finalAmount = totalAmount - discountAmount;
-            return finalAmount;
-        }
+        
         #endregion
 
         #region Discount Management
@@ -424,6 +447,13 @@ namespace VNFarm.Services
         {
             try
             {
+                // 0. Lấy thông tin người dùng
+                var user = await _userRepository.GetByIdAsync(userId);
+                if (user == null)
+                {
+                    throw new Exception("Không tìm thấy người dùng");
+                }
+
                 // 1. Lấy thông tin giỏ hàng của người dùng
                 var cart = await _cartRepository.GetCartByUserIdAsync(userId);
                 if (cart == null)
@@ -464,9 +494,9 @@ namespace VNFarm.Services
                 await _repository.AddAsync(order);
 
                 // 5. Tạo chi tiết đơn hàng từ các mục trong giỏ hàng
-                decimal totalAmount = 0;
-                decimal shippingFee = 0;
-                decimal taxAmount = 0;
+                int totalAmount = 0;
+                int shippingFee = 0;
+                int taxAmount = 0;
 
                 // Lấy danh sách CartItem được chọn
                 var selectedCartItems = new List<CartItem>();
@@ -491,8 +521,8 @@ namespace VNFarm.Services
                         var product = cartItem.Product;
                         if (product != null)
                         {
-                            decimal itemPrice = product.Price * cartItem.Quantity;
-                            decimal itemTax = itemPrice * 0.1m; // Thuế 10%
+                            int itemPrice = product.Price * cartItem.Quantity;
+                            int itemTax = itemPrice * 10 / 100; // Thuế 10%
                             
                             var orderItem = new OrderItem
                             {
@@ -514,6 +544,9 @@ namespace VNFarm.Services
                             // Cập nhật tổng tiền
                             totalAmount += itemPrice;
                             taxAmount += itemTax;
+                            
+                            // Cập nhật số lượng tồn kho sản phẩm
+                            await _productRepository.UpdateStockAsync(product.Id, product.StockQuantity - cartItem.Quantity);
                         }
                     }
                 }
@@ -524,10 +557,13 @@ namespace VNFarm.Services
                 order.TaxAmount = taxAmount;
                 
                 // Tính giảm giá nếu có
-                decimal discountAmount = 0;
+                int discountAmount = 0;
                 if (order.DiscountId.HasValue)
                 {
                     discountAmount = await CalculateOrderDiscountAmountAsync(order.Id);
+                    
+                    // Giảm số lượng mã giảm giá sau khi sử dụng
+                    await _discountRepository.DecrementQuantityAsync(order.DiscountId.Value);
                 }
                 
                 order.DiscountAmount = discountAmount;
@@ -562,7 +598,10 @@ namespace VNFarm.Services
                 
                 await _orderRepository.SaveChangesAsync();
 
-                // 9. Trả về OrderResponseDTO
+                //9. Gửi email xác nhận đơn hàng
+                await _emailService.SendOrderConfirmationEmailAsync(user.Email, user.FullName, order.OrderCode, order.TotalAmount);
+
+                //10. Trả về OrderResponseDTO
                 return MapToDTO(order);
             }
             catch (Exception ex)

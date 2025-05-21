@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using VNFarm.Data;
 using VNFarm.Entities;
-using VNFarm.Interfaces.Repositories;
+using VNFarm.Repositories.Interfaces;
 
 namespace VNFarm.Repositories
 {

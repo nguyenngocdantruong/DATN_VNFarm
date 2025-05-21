@@ -2,12 +2,12 @@ using Microsoft.EntityFrameworkCore;
 using VNFarm.DTOs.Filters;
 using VNFarm.Entities;
 using VNFarm.Enums;
-using VNFarm.Interfaces.Repositories;
-using VNFarm.Interfaces.Services;
 using VNFarm.Helpers;
 using VNFarm.DTOs.Request;
 using VNFarm.DTOs.Response;
 using VNFarm.Mappers;
+using VNFarm.Repositories.Interfaces;
+using VNFarm.Services.Interfaces;
 
 namespace VNFarm.Services
 {
@@ -77,9 +77,10 @@ namespace VNFarm.Services
                 // Apply search filter
                 if (!string.IsNullOrEmpty(productCriteriaFilter.SearchTerm))
                 {
+                    productCriteriaFilter.SearchTerm = productCriteriaFilter.SearchTerm.Trim().ToLower();
                     query = query.Where(p =>
-                        p.Name.Contains(productCriteriaFilter.SearchTerm, StringComparison.OrdinalIgnoreCase) ||
-                        p.Description.Contains(productCriteriaFilter.SearchTerm, StringComparison.OrdinalIgnoreCase)
+                        p.Name.ToLower().Contains(productCriteriaFilter.SearchTerm) ||
+                        p.Description.ToLower().Contains(productCriteriaFilter.SearchTerm)
                     );
                 }
 
@@ -131,8 +132,9 @@ namespace VNFarm.Services
                 // Apply origin filter
                 if (!string.IsNullOrEmpty(productCriteriaFilter.Origin))
                 {
+                    productCriteriaFilter.Origin = productCriteriaFilter.Origin.Trim().ToLower();
                     query = query.Where(p =>
-                        p.Origin.Contains(productCriteriaFilter.Origin, StringComparison.OrdinalIgnoreCase)
+                        p.Origin.ToLower().Contains(productCriteriaFilter.Origin)
                     );
                 }
                 return query;
@@ -239,6 +241,25 @@ namespace VNFarm.Services
                 await _productRepository.UpdateStockAsync(productId, quantity);
             }
         }
+        
+        public async Task<bool> UpdateSoldQuantityAsync(int productId, int soldQuantity)
+        {
+            try
+            {
+                var product = await _productRepository.GetByIdAsync(productId);
+                if (product == null) return false;
+                
+                // Cập nhật số lượng đã bán
+                product.SoldQuantity += soldQuantity;
+                
+                return await _productRepository.UpdateAsync(product);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Lỗi khi cập nhật số lượng đã bán cho sản phẩm: {productId}");
+                return false;
+            }
+        }
         #endregion
 
         #region Review Management
@@ -257,6 +278,27 @@ namespace VNFarm.Services
             {
                 _logger.LogError(ex, $"Lỗi khi lấy đánh giá cho sản phẩm: {productId}");
                 return Enumerable.Empty<ReviewResponseDTO>();
+            }
+        }
+        
+        public async Task<bool> AddReviewAsync(ReviewRequestDTO reviewRequestDTO)
+        {
+            try
+            {
+                if (reviewRequestDTO.ImageFile != null)
+                {
+                    var imageUrl = await FileUpload.UploadFile(reviewRequestDTO.ImageFile, FileUpload.ReviewFolder);
+                    reviewRequestDTO.ImageUrl = imageUrl;
+                }
+                
+                var review = reviewRequestDTO.ToEntity();
+                await _productRepository.AddReviewAsync(review);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Lỗi khi thêm đánh giá sản phẩm");
+                return false;
             }
         }
         #endregion

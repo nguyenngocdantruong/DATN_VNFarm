@@ -9,9 +9,10 @@ using VNFarm.DTOs.Response;
 using VNFarm.Entities;
 using VNFarm.Enums;
 using VNFarm.Helpers;
-using VNFarm.Interfaces.Repositories;
-using VNFarm.Interfaces.Services;
 using VNFarm.Mappers;
+using VNFarm.Repositories.Interfaces;
+using VNFarm.Services.Interfaces;
+using VNFarm.Services.External.Interfaces;
 
 namespace VNFarm.Services
 {
@@ -21,15 +22,44 @@ namespace VNFarm.Services
         private readonly IDiscountRepository _discountRepository;
         private readonly IStoreRepository _storeRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IEmailService _emailService;
 
         public DiscountService(
             IDiscountRepository _repository,
             IStoreRepository storeRepository,
-            IUserRepository userRepository) : base(_repository)
+            IUserRepository userRepository,
+            IEmailService emailService) : base(_repository)
         {
             _discountRepository = _repository;
             _storeRepository = storeRepository;
             _userRepository = userRepository;
+            _emailService = emailService;
+        }
+        #endregion
+
+        #region CRUD
+        public override async Task<DiscountResponseDTO?> AddAsync(DiscountRequestDTO? dto)
+        {
+            if(dto != null && dto.Type == DiscountType.Percentage)
+            {
+                dto.DiscountAmount = Math.Clamp(dto.DiscountAmount, 1, 100);
+            }
+            var result = await base.AddAsync(dto);
+            if(result != null)
+            {
+                var userReceived = new List<User>();
+                if(result.UserId == null){
+                    userReceived = (await _userRepository.FindAsync(u => u.IsActive == true && u.DiscountNotificationsEnabled)).ToList();
+                }
+                else{
+                    userReceived = (await _userRepository.FindAsync(u => u.Id == result.UserId)).ToList();
+                }
+                foreach(var user in userReceived)
+                {
+                    await _emailService.SendDiscountCreatedEmailAsync(user.Email, user.FullName, result.Code, result.Description, result.StartDate, result.EndDate, result.DiscountValueText, result.RemainingQuantity);
+                }
+            }
+            return result;
         }
         #endregion
 

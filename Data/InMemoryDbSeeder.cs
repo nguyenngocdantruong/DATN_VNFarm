@@ -26,21 +26,16 @@ namespace VNFarm.Data.Data
             {
                 logger.LogInformation("Bắt đầu khởi tạo dữ liệu mẫu cho InMemory Database");
 
-                // Thêm dữ liệu mẫu cho từng entity
                 await SeedUsersAsync(context);
                 await SeedCategoriesAsync(context);
                 await SeedStoresAsync(context);
                 await SeedProductsAsync(context);
                 await SeedOrdersAsync(context);
-                await SeedOrderDetailsAsync(context);
                 await SeedReviewsAsync(context);
-                await SeedTransactionsAsync(context);
                 await SeedChatRoomsAsync(context);
                 await SeedChatsAsync(context);
                 await SeedNotificationsAsync(context);
-                await SeedPaymentMethodsAsync(context);
-                await SeedBusinessRegistrationsAsync(context);
-                await SeedOrderTimelinesAsync(context);
+                // await SeedOrderTimelinesAsync(context);
                 await SeedDiscountsAsync(context);
 
 
@@ -104,8 +99,8 @@ namespace VNFarm.Data.Data
             {
                 var stores = new List<Store>
                 {
-                    new Store { Id = 1, Name = "Fruit Paradise", Description = "Chuyên cung cấp trái cây tươi", Address = "Tiền Giang", PhoneNumber = "0987654324", Email = "fruit@vnfarm.com", LogoUrl = "/images/stores/fruit.png", IsActive = true, VerificationStatus = StoreStatus.Verified, AverageRating = 4.7m, ReviewCount = 120, UserId = 2, CreatedAt = DateTime.Now },
-                    new Store { Id = 2, Name = "Admin Store", Description = "Cửa hàng quản trị viên", Address = "Hà Nội", PhoneNumber = "0987654321", Email = "admin@vnfarm.com", LogoUrl = "/images/stores/admin.png", IsActive = true, VerificationStatus = StoreStatus.Verified, AverageRating = 4.8m, ReviewCount = 150, UserId = 1, CreatedAt = DateTime.Now }
+                    new Store { Id = 1, Name = "Fruit Paradise", Description = "Chuyên cung cấp trái cây tươi", Address = "Tiền Giang", PhoneNumber = "0987654324", Email = "fruit@vnfarm.com", LogoUrl = "/images/stores/fruit.png", IsActive = true, VerificationStatus = StoreStatus.Verified, AverageRating = (float)4.7, ReviewCount = 120, UserId = 2, CreatedAt = DateTime.Now },
+                    new Store { Id = 2, Name = "Admin Store", Description = "Cửa hàng quản trị viên", Address = "Hà Nội", PhoneNumber = "0987654321", Email = "admin@vnfarm.com", LogoUrl = "/images/stores/admin.png", IsActive = true, VerificationStatus = StoreStatus.Verified, AverageRating = (float)4.8, ReviewCount = 150, UserId = 1, CreatedAt = DateTime.Now }
                 };
 
                 await context.Stores.AddRangeAsync(stores);
@@ -120,22 +115,22 @@ namespace VNFarm.Data.Data
                 var products = new List<Product>
                 {
                     // Sản phẩm của cửa hàng Fruit Paradise (StoreId = 1, UserId = 2)
-                    new Product { Id = 1, Name = "Việt quất", Description = "Việt quất tươi ngon, giàu chất chống oxy hóa", Price = 25000, ImageUrl = "products1-min.jpg", StockQuantity = 0, Unit = Unit.Kg, SoldQuantity = 50, StoreId = 1, CategoryId = 2, IsActive = false, Origin = "Đà Lạt", AverageRating = 4.5m, TotalSoldQuantity = 50, ReviewCount = 10, ReviewStar1Count = 0, ReviewStar2Count = 0, ReviewStar3Count = 1, ReviewStar4Count = 3, ReviewStar5Count = 6, CreatedAt = DateTime.Now },
-                    new Product { Id = 2, Name = "Sữa tươi", Description = "Sữa tươi thanh trùng nguyên chất", Price = 15000, ImageUrl = "products2-min.jpg", StockQuantity = 200, Unit = Unit.Bag, SoldQuantity = 100, StoreId = 1, CategoryId = 6, IsActive = true, Origin = "Việt Nam", AverageRating = 4.3m, TotalSoldQuantity = 100, ReviewCount = 15, ReviewStar1Count = 0, ReviewStar2Count = 1, ReviewStar3Count = 2, ReviewStar4Count = 7, ReviewStar5Count = 5, CreatedAt = DateTime.Now },
-                    new Product { Id = 3, Name = "Sữa hạnh nhân", Description = "Sữa hạnh nhân hữu cơ, không đường", Price = 20000, ImageUrl = "products3-min.jpg", StockQuantity = 150, Unit = Unit.Bag, SoldQuantity = 75, StoreId = 1, CategoryId = 6, IsActive = true, Origin = "Mỹ", AverageRating = 4.4m, TotalSoldQuantity = 75, ReviewCount = 12, ReviewStar1Count = 0, ReviewStar2Count = 0, ReviewStar3Count = 2, ReviewStar4Count = 5, ReviewStar5Count = 5, CreatedAt = DateTime.Now },
+                    new Product { Id = 1, Name = "Việt quất", Description = "Việt quất tươi ngon, giàu chất chống oxy hóa", Price = 25000, ImageUrl = "products1-min.jpg", StockQuantity = 0, Unit = Unit.Kg, SoldQuantity = 50, StoreId = 1, CategoryId = 2, IsActive = false, Origin = "Đà Lạt", AverageRating = (float)4.5, TotalSoldQuantity = 50, ReviewCount = 10, ReviewStar1Count = 0, ReviewStar2Count = 0, ReviewStar3Count = 1, ReviewStar4Count = 3, ReviewStar5Count = 6, CreatedAt = DateTime.Now },
+                    new Product { Id = 2, Name = "Sữa tươi", Description = "Sữa tươi thanh trùng nguyên chất", Price = 15000, ImageUrl = "products2-min.jpg", StockQuantity = 200, Unit = Unit.Bag, SoldQuantity = 100, StoreId = 1, CategoryId = 6, IsActive = true, Origin = "Việt Nam", AverageRating = (float)4.3, TotalSoldQuantity = 100, ReviewCount = 15, ReviewStar1Count = 0, ReviewStar2Count = 1, ReviewStar3Count = 2, ReviewStar4Count = 7, ReviewStar5Count = 5, CreatedAt = DateTime.Now },
+                    new Product { Id = 3, Name = "Sữa hạnh nhân", Description = "Sữa hạnh nhân hữu cơ, không đường", Price = 20000, ImageUrl = "products3-min.jpg", StockQuantity = 150, Unit = Unit.Bag, SoldQuantity = 75, StoreId = 1, CategoryId = 6, IsActive = true, Origin = "Mỹ", AverageRating = (float)4.4, TotalSoldQuantity = 75, ReviewCount = 12, ReviewStar1Count = 0, ReviewStar2Count = 0, ReviewStar3Count = 2, ReviewStar4Count = 5, ReviewStar5Count = 5, CreatedAt = DateTime.Now },
                     
                     // Sản phẩm của cửa hàng Admin Store (StoreId = 2, UserId = 1)
-                    new Product { Id = 4, Name = "Súp lơ", Description = "Súp lơ xanh tươi ngon", Price = 80000, ImageUrl = "products4-min.jpg", StockQuantity = 80, Unit = Unit.Kg, SoldQuantity = 30, StoreId = 2, CategoryId = 1, IsActive = false, Origin = "Đà Lạt", AverageRating = 4.8m, TotalSoldQuantity = 30, ReviewCount = 8, ReviewStar1Count = 0, ReviewStar2Count = 0, ReviewStar3Count = 0, ReviewStar4Count = 2, ReviewStar5Count = 6, CreatedAt = DateTime.Now },
-                    new Product { Id = 5, Name = "Súp lơ", Description = "Súp lơ tươi hữu cơ", Price = 45000, ImageUrl = "products5-min.jpg", StockQuantity = 120, Unit = Unit.Kg, SoldQuantity = 60, StoreId = 2, CategoryId = 1, IsActive = true, Origin = "Đà Lạt", AverageRating = 4.6m, TotalSoldQuantity = 60, ReviewCount = 20, ReviewStar1Count = 0, ReviewStar2Count = 1, ReviewStar3Count = 1, ReviewStar4Count = 5, ReviewStar5Count = 13, CreatedAt = DateTime.Now },
+                    new Product { Id = 4, Name = "Súp lơ", Description = "Súp lơ xanh tươi ngon", Price = 80000, ImageUrl = "products4-min.jpg", StockQuantity = 80, Unit = Unit.Kg, SoldQuantity = 30, StoreId = 2, CategoryId = 1, IsActive = false, Origin = "Đà Lạt", AverageRating = (float)4.8, TotalSoldQuantity = 30, ReviewCount = 8, ReviewStar1Count = 0, ReviewStar2Count = 0, ReviewStar3Count = 0, ReviewStar4Count = 2, ReviewStar5Count = 6, CreatedAt = DateTime.Now },
+                    new Product { Id = 5, Name = "Súp lơ", Description = "Súp lơ tươi hữu cơ", Price = 45000, ImageUrl = "products5-min.jpg", StockQuantity = 120, Unit = Unit.Kg, SoldQuantity = 60, StoreId = 2, CategoryId = 1, IsActive = true, Origin = "Đà Lạt", AverageRating = (float)4.6, TotalSoldQuantity = 60, ReviewCount = 20, ReviewStar1Count = 0, ReviewStar2Count = 1, ReviewStar3Count = 1, ReviewStar4Count = 5, ReviewStar5Count = 13, CreatedAt = DateTime.Now },
                     
                     // Thêm các sản phẩm của Fruit Paradise
-                    new Product { Id = 6, Name = "Thanh long", Description = "Thanh long ruột đỏ Bình Thuận", Price = 90000, ImageUrl = "products14-min.jpg", StockQuantity = 0, Unit = Unit.Kg, SoldQuantity = 55, StoreId = 1, CategoryId = 2, IsActive = true, Origin = "Bình Thuận", AverageRating = 4.9m, TotalSoldQuantity = 55, ReviewCount = 22, ReviewStar1Count = 0, ReviewStar2Count = 0, ReviewStar3Count = 0, ReviewStar4Count = 2, ReviewStar5Count = 20, CreatedAt = DateTime.Now },
-                    new Product { Id = 7, Name = "Nho", Description = "Nho xanh không hạt", Price = 35000, ImageUrl = "products7-min.jpg", StockQuantity = 0, Unit = Unit.Kg, SoldQuantity = 100, StoreId = 1, CategoryId = 2, IsActive = false, Origin = "Ninh Thuận", AverageRating = 5.0m, TotalSoldQuantity = 100, ReviewCount = 25, ReviewStar1Count = 0, ReviewStar2Count = 0, ReviewStar3Count = 0, ReviewStar4Count = 0, ReviewStar5Count = 25, CreatedAt = DateTime.Now },
-                    new Product { Id = 8, Name = "Vải thiều", Description = "Vải thiều tươi ngon từ Bắc Giang", Price = 25000, ImageUrl = "products8-min.jpg", StockQuantity = 150, Unit = Unit.Kg, SoldQuantity = 75, StoreId = 1, CategoryId = 2, IsActive = true, Origin = "Bắc Giang", AverageRating = 4.5m, TotalSoldQuantity = 75, ReviewCount = 18, ReviewStar1Count = 0, ReviewStar2Count = 1, ReviewStar3Count = 1, ReviewStar4Count = 7, ReviewStar5Count = 9, CreatedAt = DateTime.Now },
+                    new Product { Id = 6, Name = "Thanh long", Description = "Thanh long ruột đỏ Bình Thuận", Price = 90000, ImageUrl = "products14-min.jpg", StockQuantity = 0, Unit = Unit.Kg, SoldQuantity = 55, StoreId = 1, CategoryId = 2, IsActive = true, Origin = "Bình Thuận", AverageRating = (float)4.9, TotalSoldQuantity = 55, ReviewCount = 22, ReviewStar1Count = 0, ReviewStar2Count = 0, ReviewStar3Count = 0, ReviewStar4Count = 2, ReviewStar5Count = 20, CreatedAt = DateTime.Now },
+                    new Product { Id = 7, Name = "Nho", Description = "Nho xanh không hạt", Price = 35000, ImageUrl = "products7-min.jpg", StockQuantity = 0, Unit = Unit.Kg, SoldQuantity = 100, StoreId = 1, CategoryId = 2, IsActive = false, Origin = "Ninh Thuận", AverageRating = (float)5.0, TotalSoldQuantity = 100, ReviewCount = 25, ReviewStar1Count = 0, ReviewStar2Count = 0, ReviewStar3Count = 0, ReviewStar4Count = 0, ReviewStar5Count = 25, CreatedAt = DateTime.Now },
+                    new Product { Id = 8, Name = "Vải thiều", Description = "Vải thiều tươi ngon từ Bắc Giang", Price = 25000, ImageUrl = "products8-min.jpg", StockQuantity = 150, Unit = Unit.Kg, SoldQuantity = 75, StoreId = 1, CategoryId = 2, IsActive = true, Origin = "Bắc Giang", AverageRating = (float)4.5, TotalSoldQuantity = 75, ReviewCount = 18, ReviewStar1Count = 0, ReviewStar2Count = 1, ReviewStar3Count = 1, ReviewStar4Count = 7, ReviewStar5Count = 9, CreatedAt = DateTime.Now },
                     
                     // Thêm các sản phẩm của Admin Store
-                    new Product { Id = 9, Name = "Thịt bò", Description = "Thịt bò tươi ngon, thăn ngoại", Price = 30000, ImageUrl = "products9-min.jpg", StockQuantity = 180, Unit = Unit.Kg, SoldQuantity = 90, StoreId = 2, CategoryId = 4, IsActive = false, Origin = "Việt Nam", AverageRating = 4.6m, TotalSoldQuantity = 90, ReviewCount = 22, ReviewStar1Count = 0, ReviewStar2Count = 1, ReviewStar3Count = 1, ReviewStar4Count = 6, ReviewStar5Count = 14, CreatedAt = DateTime.Now },
-                    new Product { Id = 10, Name = "Sườn bò", Description = "Sườn bò tươi ngon", Price = 120000, ImageUrl = "products10-min.jpg", StockQuantity = 0, Unit = Unit.Kg, SoldQuantity = 25, StoreId = 2, CategoryId = 4, IsActive = true, Origin = "Việt Nam", AverageRating = 4.7m, TotalSoldQuantity = 25, ReviewCount = 12, ReviewStar1Count = 0, ReviewStar2Count = 0, ReviewStar3Count = 1, ReviewStar4Count = 2, ReviewStar5Count = 9, CreatedAt = DateTime.Now }
+                    new Product { Id = 9, Name = "Thịt bò", Description = "Thịt bò tươi ngon, thăn ngoại", Price = 30000, ImageUrl = "products9-min.jpg", StockQuantity = 180, Unit = Unit.Kg, SoldQuantity = 90, StoreId = 2, CategoryId = 4, IsActive = false, Origin = "Việt Nam", AverageRating = (float)4.6, TotalSoldQuantity = 90, ReviewCount = 22, ReviewStar1Count = 0, ReviewStar2Count = 1, ReviewStar3Count = 1, ReviewStar4Count = 6, ReviewStar5Count = 14, CreatedAt = DateTime.Now },
+                    new Product { Id = 10, Name = "Sườn bò", Description = "Sườn bò tươi ngon", Price = 120000, ImageUrl = "products10-min.jpg", StockQuantity = 0, Unit = Unit.Kg, SoldQuantity = 25, StoreId = 2, CategoryId = 4, IsActive = true, Origin = "Việt Nam", AverageRating = (float)4.7, TotalSoldQuantity = 25, ReviewCount = 12, ReviewStar1Count = 0, ReviewStar2Count = 0, ReviewStar3Count = 1, ReviewStar4Count = 2, ReviewStar5Count = 9, CreatedAt = DateTime.Now }
                 };
 
                 await context.Products.AddRangeAsync(products);
@@ -218,436 +213,6 @@ namespace VNFarm.Data.Data
             }
         }
 
-        private static async Task SeedOrderDetailsAsync(VNFarmContext context)
-        {
-            if (!context.OrderDetails.Any())
-            {
-                var orderDetails = new List<OrderDetail>
-                {
-                    // Đơn hàng #1
-                    new OrderDetail {
-                        Id = 1,
-                        OrderId = 1,
-                        ProductId = 1,
-                        Quantity = 2,
-                        UnitPrice = 25000,
-                        Subtotal = 50000,
-                        CreatedAt = DateTime.Now.AddDays(-5)
-                    },
-                    new OrderDetail {
-                        Id = 2,
-                        OrderId = 1,
-                        ProductId = 2,
-                        Quantity = 3,
-                        UnitPrice = 15000,
-                        Subtotal = 45000,
-                        CreatedAt = DateTime.Now.AddDays(-5)
-                    },
-                    new OrderDetail {
-                        Id = 3,
-                        OrderId = 1,
-                        ProductId = 3,
-                        Quantity = 2,
-                        UnitPrice = 20000,
-                        Subtotal = 40000,
-                        CreatedAt = DateTime.Now.AddDays(-5)
-                    },
-                    
-                    // Đơn hàng #2
-                    new OrderDetail {
-                        Id = 4,
-                        OrderId = 2,
-                        ProductId = 4,
-                        Quantity = 2,
-                        UnitPrice = 80000,
-                        Subtotal = 160000,
-                        CreatedAt = DateTime.Now.AddDays(-3)
-                    },
-                    new OrderDetail {
-                        Id = 5,
-                        OrderId = 2,
-                        ProductId = 5,
-                        Quantity = 2,
-                        UnitPrice = 45000,
-                        Subtotal = 90000,
-                        CreatedAt = DateTime.Now.AddDays(-3)
-                    },
-                    
-                    // Đơn hàng #3
-                    new OrderDetail {
-                        Id = 6,
-                        OrderId = 3,
-                        ProductId = 7,
-                        Quantity = 10,
-                        UnitPrice = 35000,
-                        Subtotal = 350000,
-                        CreatedAt = DateTime.Now.AddDays(-1)
-                    },
-                    
-                    // Đơn hàng #4
-                    new OrderDetail {
-                        Id = 7,
-                        OrderId = 4,
-                        ProductId = 2,
-                        Quantity = 5,
-                        UnitPrice = 15000,
-                        Subtotal = 75000,
-                        CreatedAt = DateTime.Now.AddDays(-7)
-                    },
-                    new OrderDetail {
-                        Id = 8,
-                        OrderId = 4,
-                        ProductId = 3,
-                        Quantity = 3,
-                        UnitPrice = 20000,
-                        Subtotal = 60000,
-                        CreatedAt = DateTime.Now.AddDays(-7)
-                    },
-                    new OrderDetail {
-                        Id = 9,
-                        OrderId = 4,
-                        ProductId = 1,
-                        Quantity = 2,
-                        UnitPrice = 25000,
-                        Subtotal = 50000,
-                        CreatedAt = DateTime.Now.AddDays(-7)
-                    },
-                    
-                    // Đơn hàng #5
-                    new OrderDetail {
-                        Id = 10,
-                        OrderId = 5,
-                        ProductId = 6,
-                        Quantity = 3,
-                        UnitPrice = 55000,
-                        Subtotal = 165000,
-                        CreatedAt = DateTime.Now.AddDays(-10)
-                    },
-                    new OrderDetail {
-                        Id = 11,
-                        OrderId = 5,
-                        ProductId = 5,
-                        Quantity = 3,
-                        UnitPrice = 45000,
-                        Subtotal = 135000,
-                        CreatedAt = DateTime.Now.AddDays(-10)
-                    },
-                    
-                    // Đơn hàng #6
-                    new OrderDetail {
-                        Id = 12,
-                        OrderId = 6,
-                        ProductId = 9,
-                        Quantity = 5,
-                        UnitPrice = 30000,
-                        Subtotal = 150000,
-                        CreatedAt = DateTime.Now.AddDays(-15)
-                    },
-                    new OrderDetail {
-                        Id = 13,
-                        OrderId = 6,
-                        ProductId = 7,
-                        Quantity = 5,
-                        UnitPrice = 35000,
-                        Subtotal = 175000,
-                        CreatedAt = DateTime.Now.AddDays(-15)
-                    },
-                    new OrderDetail {
-                        Id = 14,
-                        OrderId = 6,
-                        ProductId = 8,
-                        Quantity = 3,
-                        UnitPrice = 25000,
-                        Subtotal = 75000,
-                        CreatedAt = DateTime.Now.AddDays(-15)
-                    },
-                    
-                    // Đơn hàng #7
-                    new OrderDetail {
-                        Id = 15,
-                        OrderId = 7,
-                        ProductId = 10,
-                        Quantity = 2,
-                        UnitPrice = 120000,
-                        Subtotal = 240000,
-                        CreatedAt = DateTime.Now.AddDays(-8)
-                    },
-                    new OrderDetail {
-                        Id = 16,
-                        OrderId = 7,
-                        ProductId = 3,
-                        Quantity = 2,
-                        UnitPrice = 20000,
-                        Subtotal = 40000,
-                        CreatedAt = DateTime.Now.AddDays(-8)
-                    },
-                    
-                    // Đơn hàng #8
-                    new OrderDetail {
-                        Id = 17,
-                        OrderId = 8,
-                        ProductId = 13,
-                        Quantity = 2,
-                        UnitPrice = 45000,
-                        Subtotal = 90000,
-                        CreatedAt = DateTime.Now.AddDays(-2)
-                    },
-                    new OrderDetail {
-                        Id = 18,
-                        OrderId = 8,
-                        ProductId = 14,
-                        Quantity = 1,
-                        UnitPrice = 90000,
-                        Subtotal = 90000,
-                        CreatedAt = DateTime.Now.AddDays(-2)
-                    },
-                    
-                    // Đơn hàng #9
-                    new OrderDetail {
-                        Id = 19,
-                        OrderId = 9,
-                        ProductId = 16,
-                        Quantity = 3,
-                        UnitPrice = 75000,
-                        Subtotal = 225000,
-                        CreatedAt = DateTime.Now.AddDays(-4)
-                    },
-                    new OrderDetail {
-                        Id = 20,
-                        OrderId = 9,
-                        ProductId = 17,
-                        Quantity = 1,
-                        UnitPrice = 120000,
-                        Subtotal = 120000,
-                        CreatedAt = DateTime.Now.AddDays(-4)
-                    },
-                    
-                    // Đơn hàng #10
-                    new OrderDetail {
-                        Id = 21,
-                        OrderId = 10,
-                        ProductId = 19,
-                        Quantity = 3,
-                        UnitPrice = 55000,
-                        Subtotal = 165000,
-                        CreatedAt = DateTime.Now.AddDays(-6)
-                    },
-                    new OrderDetail {
-                        Id = 22,
-                        OrderId = 10,
-                        ProductId = 20,
-                        Quantity = 3,
-                        UnitPrice = 30000,
-                        Subtotal = 90000,
-                        CreatedAt = DateTime.Now.AddDays(-6)
-                    },
-                    
-                    // Đơn hàng #11
-                    new OrderDetail {
-                        Id = 23,
-                        OrderId = 11,
-                        ProductId = 22,
-                        Quantity = 4,
-                        UnitPrice = 40000,
-                        Subtotal = 160000,
-                        CreatedAt = DateTime.Now.AddDays(-12)
-                    },
-                    new OrderDetail {
-                        Id = 24,
-                        OrderId = 11,
-                        ProductId = 23,
-                        Quantity = 3,
-                        UnitPrice = 50000,
-                        Subtotal = 150000,
-                        CreatedAt = DateTime.Now.AddDays(-12)
-                    },
-                    
-                    // Đơn hàng #12
-                    new OrderDetail {
-                        Id = 25,
-                        OrderId = 12,
-                        ProductId = 25,
-                        Quantity = 2,
-                        UnitPrice = 200000,
-                        Subtotal = 400000,
-                        CreatedAt = DateTime.Now.AddDays(-1)
-                    },
-                    new OrderDetail {
-                        Id = 26,
-                        OrderId = 12,
-                        ProductId = 26,
-                        Quantity = 1,
-                        UnitPrice = 50000,
-                        Subtotal = 50000,
-                        CreatedAt = DateTime.Now.AddDays(-1)
-                    },
-                    
-                    // Đơn hàng #13
-                    new OrderDetail {
-                        Id = 27,
-                        OrderId = 13,
-                        ProductId = 28,
-                        Quantity = 1,
-                        UnitPrice = 180000,
-                        Subtotal = 180000,
-                        CreatedAt = DateTime.Now.AddDays(-3)
-                    },
-                    new OrderDetail {
-                        Id = 28,
-                        OrderId = 13,
-                        ProductId = 30,
-                        Quantity = 1,
-                        UnitPrice = 20000,
-                        Subtotal = 20000,
-                        CreatedAt = DateTime.Now.AddDays(-3)
-                    },
-                    
-                    // Đơn hàng #14
-                    new OrderDetail {
-                        Id = 29,
-                        OrderId = 14,
-                        ProductId = 1,
-                        Quantity = 5,
-                        UnitPrice = 25000,
-                        Subtotal = 125000,
-                        CreatedAt = DateTime.Now.AddDays(-5)
-                    },
-                    new OrderDetail {
-                        Id = 30,
-                        OrderId = 14,
-                        ProductId = 2,
-                        Quantity = 7,
-                        UnitPrice = 15000,
-                        Subtotal = 105000,
-                        CreatedAt = DateTime.Now.AddDays(-5)
-                    },
-                    new OrderDetail {
-                        Id = 31,
-                        OrderId = 14,
-                        ProductId = 3,
-                        Quantity = 7,
-                        UnitPrice = 20000,
-                        Subtotal = 140000,
-                        CreatedAt = DateTime.Now.AddDays(-5)
-                    },
-                    
-                    // Đơn hàng #15
-                    new OrderDetail {
-                        Id = 32,
-                        OrderId = 15,
-                        ProductId = 4,
-                        Quantity = 3,
-                        UnitPrice = 80000,
-                        Subtotal = 240000,
-                        CreatedAt = DateTime.Now.AddDays(-9)
-                    },
-                    
-                    // Đơn hàng #16
-                    new OrderDetail {
-                        Id = 33,
-                        OrderId = 16,
-                        ProductId = 7,
-                        Quantity = 5,
-                        UnitPrice = 35000,
-                        Subtotal = 175000,
-                        CreatedAt = DateTime.Now.AddDays(-7)
-                    },
-                    new OrderDetail {
-                        Id = 34,
-                        OrderId = 16,
-                        ProductId = 9,
-                        Quantity = 3,
-                        UnitPrice = 30000,
-                        Subtotal = 90000,
-                        CreatedAt = DateTime.Now.AddDays(-7)
-                    },
-                    
-                    // Đơn hàng #17
-                    new OrderDetail {
-                        Id = 35,
-                        OrderId = 17,
-                        ProductId = 10,
-                        Quantity = 2,
-                        UnitPrice = 120000,
-                        Subtotal = 240000,
-                        CreatedAt = DateTime.Now.AddDays(-14)
-                    },
-                    new OrderDetail {
-                        Id = 36,
-                        OrderId = 17,
-                        ProductId = 11,
-                        Quantity = 1,
-                        UnitPrice = 90000,
-                        Subtotal = 90000,
-                        CreatedAt = DateTime.Now.AddDays(-14)
-                    },
-                    
-                    // Đơn hàng #18
-                    new OrderDetail {
-                        Id = 37,
-                        OrderId = 18,
-                        ProductId = 14,
-                        Quantity = 3,
-                        UnitPrice = 90000,
-                        Subtotal = 270000,
-                        CreatedAt = DateTime.Now.AddDays(-2)
-                    },
-                    new OrderDetail {
-                        Id = 38,
-                        OrderId = 18,
-                        ProductId = 15,
-                        Quantity = 4,
-                        UnitPrice = 35000,
-                        Subtotal = 140000,
-                        CreatedAt = DateTime.Now.AddDays(-2)
-                    },
-                    
-                    // Đơn hàng #19
-                    new OrderDetail {
-                        Id = 39,
-                        OrderId = 19,
-                        ProductId = 18,
-                        Quantity = 3,
-                        UnitPrice = 25000,
-                        Subtotal = 75000,
-                        CreatedAt = DateTime.Now.AddDays(-4)
-                    },
-                    new OrderDetail {
-                        Id = 40,
-                        OrderId = 19,
-                        ProductId = 16,
-                        Quantity = 1,
-                        UnitPrice = 75000,
-                        Subtotal = 75000,
-                        CreatedAt = DateTime.Now.AddDays(-4)
-                    },
-                    
-                    // Đơn hàng #20
-                    new OrderDetail {
-                        Id = 41,
-                        OrderId = 20,
-                        ProductId = 20,
-                        Quantity = 4,
-                        UnitPrice = 30000,
-                        Subtotal = 120000,
-                        CreatedAt = DateTime.Now.AddDays(-1)
-                    },
-                    new OrderDetail {
-                        Id = 42,
-                        OrderId = 20,
-                        ProductId = 21,
-                        Quantity = 3,
-                        UnitPrice = 65000,
-                        Subtotal = 195000,
-                        CreatedAt = DateTime.Now.AddDays(-1)
-                    }
-                };
-
-                await context.OrderDetails.AddRangeAsync(orderDetails);
-                await context.SaveChangesAsync();
-            }
-        }
-
         private static async Task SeedReviewsAsync(VNFarmContext context)
         {
             if (!context.Reviews.Any())
@@ -662,22 +227,6 @@ namespace VNFarm.Data.Data
                 };
 
                 await context.Reviews.AddRangeAsync(reviews);
-                await context.SaveChangesAsync();
-            }
-        }
-
-        private static async Task SeedTransactionsAsync(VNFarmContext context)
-        {
-            if (!context.Transactions.Any())
-            {
-                var transactions = new List<Transaction>
-                {
-                    new Transaction { Id = 1, OrderId = 1, BuyerId = 3, Amount = 150000, Status = TransactionStatus.Success, PaymentMethod = PaymentMethodEnum.PaymentAfter, CreatedAt = DateTime.Now.AddDays(-5) },
-                    new Transaction { Id = 2, OrderId = 2, BuyerId = 3, Amount = 250000, Status = TransactionStatus.Pending, PaymentMethod = PaymentMethodEnum.BankTransfer, CreatedAt = DateTime.Now.AddDays(-3) },
-                    new Transaction { Id = 3, OrderId = 3, BuyerId = 3, Amount = 350000, Status = TransactionStatus.Success, PaymentMethod = PaymentMethodEnum.VNPay, CreatedAt = DateTime.Now.AddDays(-1) }
-                };
-
-                await context.Transactions.AddRangeAsync(transactions);
                 await context.SaveChangesAsync();
             }
         }
@@ -776,91 +325,6 @@ namespace VNFarm.Data.Data
                 };
 
                 await context.Notifications.AddRangeAsync(notifications);
-                await context.SaveChangesAsync();
-            }
-        }
-
-        private static async Task SeedPaymentMethodsAsync(VNFarmContext context)
-        {
-            if (!context.PaymentMethods.Any())
-            {
-                var paymentMethods = new List<PaymentMethod>
-                {
-                    new PaymentMethod
-                    {
-                        Id = 1,
-                        CardName = "Vietcombank",
-                        PaymentType = PaymentType.Bank,
-                        AccountNumber = "1234567890",
-                        AccountHolderName = "Admin User",
-                        BankName = "Vietcombank",
-                        UserId = 1,
-                        CreatedAt = DateTime.UtcNow
-                    },
-                    new PaymentMethod
-                    {
-                        Id = 2,
-                        CardName = "Techcombank",
-                        PaymentType = PaymentType.Bank,
-                        AccountNumber = "0987654321",
-                        AccountHolderName = "Fruit Paradise",
-                        BankName = "Techcombank",
-                        UserId = 2,
-                        CreatedAt = DateTime.UtcNow.AddDays(-1)
-                    },
-                    new PaymentMethod
-                    {
-                        Id = 3,
-                        CardName = "Momo",
-                        PaymentType = PaymentType.Momo,
-                        AccountNumber = "0123456789",
-                        AccountHolderName = "Nguyễn Văn A",
-                        BankName = "Momo",
-                        UserId = 3,
-                        CreatedAt = DateTime.UtcNow.AddDays(-2)
-                    }
-                };
-
-                await context.PaymentMethods.AddRangeAsync(paymentMethods);
-                await context.SaveChangesAsync();
-            }
-        }
-
-        private static async Task SeedBusinessRegistrationsAsync(VNFarmContext context)
-        {
-            if (!context.BusinessRegistrations.Any())
-            {
-                var businessRegistrations = new List<BusinessRegistration>
-                {
-                    new BusinessRegistration
-                    {
-                        Id = 1,
-                        BusinessType = StoreType.Farmer,
-                        Address = "123 Đường Lê Lợi, Quận 1, TP.HCM",
-                        TaxCode = "0123456789",
-                        BusinessName = "Nông Trại Xanh",
-                        BusinessLicenseUrl = "https://example.com/licenses/1.pdf",
-                        Notes = "Nông trại trồng rau sạch",
-                        RegistrationStatus = RegistrationStatus.Approved,
-                        UserId = 2,
-                        CreatedAt = DateTime.UtcNow
-                    },
-                    new BusinessRegistration
-                    {
-                        Id = 2,
-                        BusinessType = StoreType.Company,
-                        Address = "456 Đường Nguyễn Huệ, Quận 1, TP.HCM",
-                        TaxCode = "9876543210",
-                        BusinessName = "Phân Phối Nông Sản Việt",
-                        BusinessLicenseUrl = "https://example.com/licenses/2.pdf",
-                        Notes = "Phân phối nông sản toàn quốc",
-                        RegistrationStatus = RegistrationStatus.Pending,
-                        UserId = 3,
-                        CreatedAt = DateTime.UtcNow.AddDays(-1)
-                    }
-                };
-
-                await context.BusinessRegistrations.AddRangeAsync(businessRegistrations);
                 await context.SaveChangesAsync();
             }
         }

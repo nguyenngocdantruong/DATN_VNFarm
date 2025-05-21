@@ -4,27 +4,31 @@ using VNFarm.DTOs.Response;
 using VNFarm.Entities;
 using VNFarm.Enums;
 using VNFarm.Helpers;
-using VNFarm.Interfaces.Services;
 using VNFarm.DTOs.Filters;
 using Microsoft.EntityFrameworkCore;
-
+using VNFarm.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 namespace VNFarm.Controllers.ApiControllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ReviewController : ApiBaseController<Review, ReviewRequestDTO, ReviewResponseDTO>
     {
         private readonly IReviewService _reviewService;
-        private readonly IOrderService _orderService;   
-        public ReviewController(IReviewService reviewService, IOrderService orderService, IJwtTokenService jwtTokenService, ILogger<ApiBaseController<Review, ReviewRequestDTO, ReviewResponseDTO>> logger) : base(reviewService, jwtTokenService, logger)
+        private readonly IOrderService _orderService;
+        private readonly IProductService _productService;
+        public ReviewController(IProductService productService, IReviewService reviewService, IOrderService orderService, IJwtTokenService jwtTokenService, ILogger<ApiBaseController<Review, ReviewRequestDTO, ReviewResponseDTO>> logger) : base(reviewService, jwtTokenService, logger)
         {
             _reviewService = reviewService;
             _orderService = orderService;
+            _productService = productService;
         }
         
         /// <summary>
         /// Thêm đánh giá sản phẩm
         /// </summary>
+        [Authorize(Roles = "User,Buyer")]
         public override async Task<IActionResult> AddAsync([FromForm] ReviewRequestDTO dto)
         {
             var userId = GetCurrentUserId();
@@ -85,6 +89,7 @@ namespace VNFarm.Controllers.ApiControllers
         /// <summary>
         /// Lấy đánh giá theo sản phẩm
         /// </summary>
+        [AllowAnonymous]
         [HttpGet("product/{productId}")]
         public async Task<ActionResult<IEnumerable<ReviewResponseDTO>>> GetReviewsByProductId(int productId)
         {
@@ -204,6 +209,7 @@ namespace VNFarm.Controllers.ApiControllers
         /// <summary>
         /// Lọc đánh giá theo nhiều tiêu chí
         /// </summary>
+        [AllowAnonymous]
         [HttpPost("filter")]
         public async Task<IActionResult> FilterReviews([FromBody] ReviewFilterCriteria filter)
         {
@@ -212,7 +218,12 @@ namespace VNFarm.Controllers.ApiControllers
                 var query = await _reviewService.Query(filter);
                 var count = await query.CountAsync();
                 var results = await _reviewService.ApplyPagingAndSortingAsync(query, filter);
-                
+                results = await Task.WhenAll(results.Select(async (item) =>
+                {
+                    if(item != null)
+                        item.Product = await _productService.GetByIdAsync(item.ProductId);
+                    return item;
+                }));
                 return Ok(new { 
                     success = true, 
                     data = results,
@@ -232,8 +243,9 @@ namespace VNFarm.Controllers.ApiControllers
         /// <summary>
         /// Lấy danh sách đánh giá của một người dùng cụ thể
         /// </summary>
+        [AllowAnonymous]
         [HttpGet("user/{userId}")]
-        public async Task<IActionResult> GetReviewsByUserId(int userId, [FromQuery] ReviewFilterCriteria filter = null)
+        public async Task<IActionResult> GetReviewsByUserId(int userId, [FromQuery] ReviewFilterCriteria filter)
         {
             try
             {

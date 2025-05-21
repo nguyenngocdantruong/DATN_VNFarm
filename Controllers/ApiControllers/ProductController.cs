@@ -10,7 +10,7 @@ using VNFarm.DTOs.Request;
 using VNFarm.DTOs.Response;
 using VNFarm.Entities;
 using VNFarm.Helpers;
-using VNFarm.Interfaces.Services;
+using VNFarm.Services.Interfaces;
 
 namespace VNFarm.Controllers.ApiControllers
 {
@@ -77,12 +77,10 @@ namespace VNFarm.Controllers.ApiControllers
         [HttpPost("filter")]
         public async Task<ActionResult<IEnumerable<ProductResponseDTO>>> GetProducts([FromBody] ProductCriteriaFilter filter)
         {
-            _logger.LogInformation("Filter: {Filter}", filter);
             var query = await _productService.Query(filter);
             query = query.Include(m => m.Category);
             var totalCount = query.Count();
             var products = await _productService.ApplyPagingAndSortingAsync(query, filter);
-            _logger.LogInformation("Products: {Products}", products);
             return Ok(new {
                 success = true,
                 data = products,

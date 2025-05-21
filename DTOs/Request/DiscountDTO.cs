@@ -37,13 +37,13 @@ namespace VNFarm.DTOs.Request
         public int? UserId { get; set; }
 
         [Required(ErrorMessage = "Giá trị giảm giá là bắt buộc")]
-        [Range(0, double.MaxValue, ErrorMessage = "Giá trị giảm giá phải lớn hơn hoặc bằng 0")]
-        public decimal DiscountAmount { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "Giá trị giảm giá phải lớn hơn 0")]
+        public int DiscountAmount { get; set; }
         
-        [Range(0, double.MaxValue, ErrorMessage = "Giá trị đơn hàng tối thiểu phải lớn hơn hoặc bằng 0")]
-        public decimal MinimumOrderAmount { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "Giá trị đơn hàng tối thiểu phải lớn hơn hoặc bằng 0")]
+        public int MinimumOrderAmount { get; set; }
         
-        [Range(0, double.MaxValue, ErrorMessage = "Giá trị giảm tối đa phải lớn hơn hoặc bằng 0")]
-        public decimal MaximumDiscountAmount { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "Giá trị giảm tối đa phải lớn hơn 0")]
+        public int MaximumDiscountAmount { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using VNFarm.Data;
 using VNFarm.DTOs.Filters;
 using VNFarm.Entities;
-using VNFarm.Interfaces.Repositories;
+using VNFarm.Repositories.Interfaces;
 
 namespace VNFarm.Repositories
 {

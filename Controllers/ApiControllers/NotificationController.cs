@@ -5,14 +5,15 @@ using VNFarm.Enums;
 using VNFarm.DTOs.Request;
 using VNFarm.DTOs.Response;
 using VNFarm.Entities;
-using VNFarm.Interfaces.Services;
 using VNFarm.DTOs.Filters;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.Authorization;
+using VNFarm.Services.Interfaces;
 namespace VNFarm.Controllers.ApiControllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class NotificationController : ApiBaseController<Notification, NotificationRequestDTO, NotificationResponseDTO>
     {
         private readonly INotificationService _notificationService;
@@ -28,6 +29,15 @@ namespace VNFarm.Controllers.ApiControllers
         [HttpGet("user/{userId}")]
         public async Task<ActionResult<IEnumerable<NotificationResponseDTO>>> GetNotificationsByUser(int userId)
         {
+            var currentUserId = GetCurrentUserId();
+            if(currentUserId == null || currentUserId != userId){
+                return Unauthorized(new {
+                    totalCount = 0,
+                    data = new List<NotificationResponseDTO>(),
+                    success = false,
+                    message = "Bạn không có quyền truy cập vào thông báo của người dùng này"
+                });
+            }
             var notifications = await _notificationService.GetByUserIdAsync(userId);
             return Ok(notifications);
         }
@@ -35,6 +45,7 @@ namespace VNFarm.Controllers.ApiControllers
         /// <summary>
         /// Gửi thông báo đến người dùng
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpPost("send/user/{userId}")]
         public async Task<ActionResult> SendToUser(int userId, [FromBody] NotificationRequestDTO request)
         {
@@ -48,6 +59,7 @@ namespace VNFarm.Controllers.ApiControllers
         /// <summary>
         /// Gửi thông báo đến tất cả người dùng
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpPost("send/all")]
         public async Task<ActionResult> SendToAllUsers([FromBody] NotificationRequestDTO request)
         {
@@ -61,6 +73,7 @@ namespace VNFarm.Controllers.ApiControllers
         /// <summary>
         /// Xóa tất cả thông báo của người dùng
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpDelete("user/{userId}")]
         public async Task<ActionResult> DeleteAllForUser(int userId)
         {

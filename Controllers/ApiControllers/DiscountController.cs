@@ -6,15 +6,16 @@ using VNFarm.DTOs.Request;
 using VNFarm.DTOs.Response;
 using VNFarm.Entities;
 using VNFarm.Enums;
-using VNFarm.Interfaces.Services;
-using VNFarm.Interfaces.Repositories;
 using System.Linq;
 using System;
+using VNFarm.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VNFarm.Controllers.ApiControllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class DiscountController : ApiBaseController<Discount, DiscountRequestDTO, DiscountResponseDTO>
     {
         private readonly IDiscountService _discountService;
@@ -39,6 +40,7 @@ namespace VNFarm.Controllers.ApiControllers
         /// <summary>
         /// Lấy mã giảm giá theo mã code
         /// </summary>
+        [AllowAnonymous]
         [HttpGet("code/{code}")]
         public async Task<ActionResult<DiscountResponseDTO>> GetDiscountByCode(string code)
         {
@@ -82,6 +84,7 @@ namespace VNFarm.Controllers.ApiControllers
         /// <summary>
         /// Kiểm tra tính hợp lệ của mã giảm giá
         /// </summary>
+        [AllowAnonymous]
         [HttpGet("validate/{code}")]
         public async Task<ActionResult> ValidateDiscount(string code, [FromQuery] int? userId = null, [FromQuery] int? storeId = null)
         {
@@ -95,6 +98,7 @@ namespace VNFarm.Controllers.ApiControllers
         /// <summary>
         /// Giảm số lượng mã giảm giá sau khi sử dụng
         /// </summary>
+        [AllowAnonymous]
         [HttpPut("{id}/decrement")]
         public async Task<ActionResult> DecrementDiscountQuantity(int id)
         {
@@ -125,13 +129,20 @@ namespace VNFarm.Controllers.ApiControllers
         public async Task<ActionResult<IEnumerable<DiscountResponseDTO>>> GetDiscountsByFilter([FromBody] DiscountCriteriaFilter filter)
         {
             var discounts = await _discountService.Query(filter);
+            var totalCount = discounts.Count();
             var results = await _discountService.ApplyPagingAndSortingAsync(discounts, filter);
-            return Ok(results);
+            return Ok(new
+            {
+                success = true, 
+                totalCount = totalCount,
+                data = results
+            });
         }
         
         /// <summary>
         /// Áp dụng mã giảm giá cho giỏ hàng
         /// </summary>
+        [AllowAnonymous]
         [HttpPost("voucher")]
         public async Task<ActionResult<VoucherResponseDTO>> ApplyVoucher([FromBody] VoucherRequestDTO request)
         {

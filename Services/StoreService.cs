@@ -8,11 +8,11 @@ using VNFarm.DTOs.Request;
 using VNFarm.DTOs.Response;
 using VNFarm.DTOs.Filters;
 using VNFarm.Entities;
-using VNFarm.Interfaces.Repositories;
-using VNFarm.Interfaces.Services;
 using VNFarm.Enums;
 using VNFarm.Helpers;
 using VNFarm.Mappers;
+using VNFarm.Repositories.Interfaces;
+using VNFarm.Services.Interfaces;
 
 namespace VNFarm.Services
 {
@@ -75,9 +75,11 @@ namespace VNFarm.Services
 
         public override async Task<IEnumerable<StoreResponseDTO?>> QueryAsync(string query)
         {
+            if (string.IsNullOrEmpty(query))
+                return Enumerable.Empty<StoreResponseDTO>();
             var stores = await _storeRepository.FindAsync(s =>
-                s.Name.Contains(query, StringComparison.OrdinalIgnoreCase) ||
-                s.Description.Contains(query, StringComparison.OrdinalIgnoreCase)
+                s.Name.ToLower().Contains(query.ToLower()) ||
+                s.Description.ToLower().Contains(query.ToLower())
             );
             return stores.Select(MapToDTO);
         }
@@ -134,9 +136,10 @@ namespace VNFarm.Services
                 // Apply search filter
                 if (!string.IsNullOrEmpty(storeCriteriaFilter.SearchTerm))
                 {
+                    storeCriteriaFilter.SearchTerm = storeCriteriaFilter.SearchTerm.ToLower();
                     query = query.Where(s =>
-                        s.Name.Contains(storeCriteriaFilter.SearchTerm, StringComparison.OrdinalIgnoreCase) ||
-                        s.Description.Contains(storeCriteriaFilter.SearchTerm, StringComparison.OrdinalIgnoreCase));
+                        s.Name.ToLower().Contains(storeCriteriaFilter.SearchTerm) ||
+                        s.Description.ToLower().Contains(storeCriteriaFilter.SearchTerm));
                 }
 
                 // Apply status storeCriteriaFilter
@@ -152,14 +155,14 @@ namespace VNFarm.Services
                 }
 
                 // Apply rating storeCriteriaFilters
-                if (storeCriteriaFilter.MinRating.HasValue)
-                {
-                    query = query.Where(s => s.AverageRating >= storeCriteriaFilter.MinRating.Value);
-                }
-                if (storeCriteriaFilter.MaxRating.HasValue)
-                {
-                    query = query.Where(s => s.AverageRating <= storeCriteriaFilter.MaxRating.Value);
-                }
+                //if (storeCriteriaFilter.MinRating.HasValue)
+                //{
+                //    query = query.Where(s => s.AverageRating >= storeCriteriaFilter.MinRating.Value);
+                //}
+                //if (storeCriteriaFilter.MaxRating.HasValue)
+                //{
+                //    query = query.Where(s => s.AverageRating <= storeCriteriaFilter.MaxRating.Value);
+                //}
             }
             return query;
         }

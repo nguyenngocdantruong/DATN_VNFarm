@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using VNFarm.Data;
 using VNFarm.Entities;
 using VNFarm.Enums;
-using VNFarm.Interfaces.Repositories;
+using VNFarm.Repositories.Interfaces;
 
 namespace VNFarm.Repositories
 {
@@ -27,8 +27,12 @@ namespace VNFarm.Repositories
         public async Task<IEnumerable<Order>> GetOrdersByStoreIdAsync(int storeId)
         {
             return await _dbSet
-                .Where(o => o.OrderItems.Any(item => item.Product != null && item.Product.StoreId == storeId) && 
-                       !o.IsDeleted)
+                .Include(o => o.OrderItems)
+                .Where(o => 
+                    o.Status == OrderStatus.Completed || o.Status == OrderStatus.Delivered &&
+                    o.PaymentStatus == PaymentStatus.Paid &&
+                    o.OrderItems.Any(item => item.Product != null && item.Product.StoreId == storeId) && 
+                    !o.IsDeleted)
                 .OrderByDescending(o => o.CreatedAt)
                 .ToListAsync();
         }
@@ -96,28 +100,28 @@ namespace VNFarm.Repositories
             return orderTimeline;
         }
 
-        public async Task<OrderDetail> AddOrderDetailAsync(int orderId, OrderDetail orderDetail)
-        {
-            orderDetail.OrderId = orderId;
-            await _context.OrderDetails.AddAsync(orderDetail);
-            await _context.SaveChangesAsync();
-            return orderDetail;
-        }
+        //public async Task<OrderDetail> AddOrderDetailAsync(int orderId, OrderDetail orderDetail)
+        //{
+        //    orderDetail.OrderId = orderId;
+        //    await _context.OrderDetails.AddAsync(orderDetail);
+        //    await _context.SaveChangesAsync();
+        //    return orderDetail;
+        //}
 
-        public async Task<IEnumerable<OrderDetail>> GetOrderDetailAsync(int orderId)
-        {
-            return await _context.OrderDetails
-                .Where(o => o.OrderId == orderId)
-                .ToListAsync();
-        }
+        //public async Task<IEnumerable<OrderDetail>> GetOrderDetailAsync(int orderId)
+        //{
+        //    return await _context.OrderDetails
+        //        .Where(o => o.OrderId == orderId)
+        //        .ToListAsync();
+        //}
 
-        public async Task<bool> UpdateOrderDetailAsync(int orderId, OrderDetail orderDetail)
-        {
-            orderDetail.OrderId = orderId;
-            _context.OrderDetails.Update(orderDetail);
-            await _context.SaveChangesAsync();
-            return true;
-        }
+        //public async Task<bool> UpdateOrderDetailAsync(int orderId, OrderDetail orderDetail)
+        //{
+        //    orderDetail.OrderId = orderId;
+        //    _context.OrderDetails.Update(orderDetail);
+        //    await _context.SaveChangesAsync();
+        //    return true;
+        //}
         
         #region Order Item
         public async Task<OrderItem> AddOrderItemAsync(int orderId, OrderItem orderItem)
@@ -144,6 +148,7 @@ namespace VNFarm.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
+
         #endregion
     }
 } 

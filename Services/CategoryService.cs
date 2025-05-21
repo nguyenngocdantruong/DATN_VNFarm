@@ -8,9 +8,9 @@ using VNFarm.DTOs.Response;
 using VNFarm.Entities;
 using VNFarm.Enums;
 using VNFarm.Helpers;
-using VNFarm.Interfaces.Repositories;
-using VNFarm.Interfaces.Services;
 using VNFarm.Mappers;
+using VNFarm.Repositories.Interfaces;
+using VNFarm.Services.Interfaces;
 
 namespace VNFarm.Services
 {

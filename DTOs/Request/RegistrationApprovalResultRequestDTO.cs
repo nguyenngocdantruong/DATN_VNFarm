@@ -4,6 +4,7 @@ using VNFarm.Enums;
 
 namespace VNFarm.DTOs.Request
 {
+    [Obsolete("Don't use this class anymore")]
     public class RegistrationApprovalResultRequestDTO: BaseRequestDTO
     {
         [Required(ErrorMessage = "Mã đăng ký là bắt buộc")]

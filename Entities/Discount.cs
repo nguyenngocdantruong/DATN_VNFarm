@@ -20,11 +20,11 @@ namespace VNFarm.Entities
         // Loại hình giảm giá
         public DiscountType Type { get; set; } = DiscountType.Percentage;
         // Số tiền giảm giá
-        public decimal DiscountAmount { get; set; }
+        public int DiscountAmount { get; set; }
         // Số tiền tối thiểu để áp dụng
-        public decimal MinimumOrderAmount { get; set; }
+        public int MinimumOrderAmount { get; set; }
         // Số tiền giảm tối đa
-        public decimal MaximumDiscountAmount { get; set; }
+        public int MaximumDiscountAmount { get; set; }
         
         // Can be null if global discount   
         public int? StoreId { get; set; }

@@ -5,3 +5,5 @@ wwwroot/*
 appsettings.Development.json
 appsettings.json
 /template
+data.sql
+logs/*

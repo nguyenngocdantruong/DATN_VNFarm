@@ -7,12 +7,6 @@ namespace VNFarm.Controllers.ApiControllers
     [Route("api/[controller]")]
     public class EnumController : ControllerBase
     {
-        [HttpGet("business-register-statuses")]
-        public IActionResult GetBusinessRegister()
-        {
-            var businessRegister = BusinessRegisterUtils.GetEnumValues();
-            return Ok(businessRegister);
-        }
         [HttpGet("discount-types")]
         public IActionResult GetDiscountTypes()
         {
