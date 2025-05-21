@@ -1,0 +1,69 @@
+{
+  "Serilog": {
+    "MinimumLevel": {
+      "Default": "Information",
+      "Override": {
+        "Microsoft": "Error",
+        "Microsoft.Hosting.Lifetime": "Information",
+        "Microsoft.AspNetCore": "Error",
+        "Microsoft.EntityFrameworkCore": "Error",
+        "System": "Error"
+      }
+    },
+    "WriteTo": [
+      {
+        "Name": "Console"
+      },
+      {
+        "Name": "File",
+        "Args": {
+          "path": "Logs/api_log.txt",
+          "rollingInterval": "Day"
+        }
+      }
+    ],
+    "Enrich": ["FromLogContext", "WithMachineName", "WithThreadId"],
+    "Properties": {
+      "Application": "VNFarm"
+    }
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Error",
+      "Microsoft": "Error",
+      "Microsoft.Hosting.Lifetime": "Error",
+      "Microsoft.AspNetCore": "Error",
+      "Microsoft.EntityFrameworkCore": "Error",
+      "VNFarm": "Information"
+    }
+  },
+  "AllowedHosts": "*",
+  "ConnectionStrings": {
+    "SqlServer": ""
+  },
+  "Jwt": {
+    "Key": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "Issuer": "VNFarm",
+    "Audience": "VNFarmUsers"
+  },
+  "Vnpay": {
+    "TmnCode": "XXXXXXXX",
+    "HashSecret": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "BaseUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html",
+    "ReturnUrl": "http://localhost:5172/api/Payment/Callback"
+  },
+  "EmailSettings": {
+    "SmtpServer": "smtp.gmail.com",
+    "SmtpPort": 587,
+    "SmtpUsername": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "SmtpPassword": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "SenderEmail": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "SenderName": "VNFarm"
+  },
+  "Pusher": {
+    "AppId": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "Key": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "Secret": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "Cluster": "ap1"
+  }
+}

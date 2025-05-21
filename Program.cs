@@ -149,7 +149,7 @@ builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IDiscountService, DiscountService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
-builder.Services.AddTransient<IEmailService, TempMailService>();
+builder.Services.AddTransient<IEmailService, EmailService>();
 
 
 // Add Pusher
